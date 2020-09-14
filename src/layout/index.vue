@@ -1,7 +1,7 @@
 <template>
   <div>
     <w-header></w-header>
-    <w-siderbar></w-siderbar>
+    <w-sidebar></w-sidebar>
 
     <w-main></w-main>
   </div>
@@ -9,13 +9,13 @@
 
 <script>
 import wHeader from "@/components/Layout/Header";
-import wSiderbar from "@/components/Layout/Siderbar";
+import wSidebar from "@/components/Layout/Sidebar";
 import wMain from "@/components/Layout/Main";
 
 export default {
   name: "wIndex",
 
-  components: { wHeader, wSiderbar, wMain },
+  components: { wHeader, wSidebar, wMain },
 
   mixins: [],
 

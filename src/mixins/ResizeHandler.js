@@ -1,3 +1,6 @@
+
+'use strict'
+
 import store from '@/store'
 
 const { body } = document
@@ -31,9 +34,7 @@ export default {
       const rect = body.getBoundingClientRect()
       return rect.width - 1 < WIDTH
     },
-    $_resizeHandler() {
-      console.log(123);
-      
+    $_resizeHandler() {     
       if (!document.hidden) {
         const isMobile = this.$_isMobile()
        // store.dispatch('app/toggleDevice', isMobile ? 'mobile' : 'desktop')

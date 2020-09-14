@@ -1,0 +1,18 @@
+.center-show {
+  margin: auto;
+}
+
+.center-item {
+  margin: auto;
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.right-icon {
+  cursor: pointer;
+  font-size: 24px;
+
+  &:focus {
+    outline: 0;
+  }
+}

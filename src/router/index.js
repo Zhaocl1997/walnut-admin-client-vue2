@@ -1,3 +1,6 @@
+
+'use strict'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
@@ -32,6 +35,11 @@ const routes = [
     path: '/index',
     name: 'index',
     component: () => import(/* webpackChunkName: "index" */ '../layout/index.vue')
+  },
+  {
+    path: '/tool/components/document',
+    name: 'document',
+    component: () => import(/* webpackChunkName: "document" */ '../views/Tools/Document/index.vue')
   }
 ]
 
