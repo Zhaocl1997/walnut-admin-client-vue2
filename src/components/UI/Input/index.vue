@@ -7,20 +7,10 @@
     :content="computedTooltipContent"
   >
     <el-popover placement="right" width="180" trigger="manual" v-model="popoverVisible">
-      <div v-if="type === 'password'">
-        <div :class="titleClasses" class="mb8 mt8">
-          <i class="el-icon-info" />
-          {{ title }}
-        </div>
-        <div class="password-base" :class="divClasses"></div>
+      <div class="mb8">
+        <i class="el-icon-warning" /> 提示
       </div>
-
-      <div v-else>
-        <div class="mb8">
-          <i class="el-icon-warning" /> 提示
-        </div>
-        <div style="color:orangered;">{{ popoverContent }}</div>
-      </div>
+      <div style="color:orangered;">{{ popoverContent }}</div>
 
       <el-input-number
         slot="reference"
@@ -123,11 +113,6 @@ export default {
 
   data() {
     return {
-      title: "强度：无",
-      one: false,
-      two: false,
-      three: false,
-
       popoverContent: "",
       popoverVisible: false
     };
@@ -154,71 +139,6 @@ export default {
       return this.tooltipContent !== "这是tooltip内容"
         ? this.tooltipContent
         : String(this.selfValue);
-    },
-
-    stateOne() {
-      return this.one && !this.two && !this.three;
-    },
-    stateTwo() {
-      return !this.one && this.two && !this.three;
-    },
-    stateThree() {
-      return !this.one && !this.two && this.three;
-    },
-    divClasses() {
-      return {
-        one: this.stateOne,
-        two: this.stateTwo,
-        three: this.stateThree
-      };
-    },
-    titleClasses() {
-      return {
-        titleOne: this.stateOne,
-        titleTwo: this.stateTwo,
-        titleThree: this.stateThree
-      };
-    }
-  },
-
-  watch: {
-    selfValue(newV) {
-      if (newV) {
-        const msgText = checkStrong(newV);
-
-        switch (msgText) {
-          case 0:
-            this.one = false;
-            this.two = false;
-            this.three = false;
-            this.title = "强度：无";
-            break;
-
-          case 1:
-            this.one = true;
-            this.two = false;
-            this.three = false;
-            this.title = "强度：弱";
-            break;
-
-          case 2:
-            this.one = false;
-            this.two = true;
-            this.three = false;
-            this.title = "强度：中";
-            break;
-
-          case 3:
-            this.one = false;
-            this.two = false;
-            this.three = true;
-            this.title = "强度：强";
-            break;
-
-          default:
-            break;
-        }
-      }
     }
   },
 
@@ -259,8 +179,6 @@ export default {
     calcType() {
       if (this.type === "textarea") {
         return "textarea";
-      } else if (this.type === "password") {
-        return "password";
       } else {
         return "text";
       }
@@ -329,20 +247,11 @@ export default {
     onFocus() {
       this.popoverVisible = false;
 
-      if (this.type === "password") {
-        this.popoverVisible = true;
-        this.popoverContent =
-          "您的密码复杂度太低（密码中必须包含大小写字母、数字、特殊字符）";
-      }
       this.$emit("focus");
     },
 
     /* 模糊事件 */
     onBlur() {
-      if (this.type === "password") {
-        this.popoverVisible = false;
-      }
-
       setTimeout(() => {
         if (isEmpty(this.selfValue)) {
           return;
@@ -386,35 +295,4 @@ export default {
 </script>
 
 <style scoped>
-.password-base {
-  width: 150px;
-  height: 10px;
-  border-radius: 10px;
-  margin: 10px;
-  background: #eee;
-}
-.one {
-  width: 50px;
-  transition: width 0.5s;
-  background-color: rgba(255, 0, 0, 0.6);
-}
-.two {
-  width: 100px;
-  transition: width 0.5s;
-  background-color: rgba(0, 128, 0, 0.6);
-}
-.three {
-  width: 150px;
-  transition: width 0.5s;
-  background-color: rgba(0, 0, 255, 0.6);
-}
-.titleOne {
-  color: rgba(255, 0, 0, 0.6);
-}
-.titleTwo {
-  color: rgba(0, 128, 0, 0.6);
-}
-.titleThree {
-  color: rgba(0, 0, 255, 0.6);
-}
 </style>

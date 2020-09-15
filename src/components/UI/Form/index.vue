@@ -16,8 +16,13 @@
     @submit.native.prevent
   >
     <!-- layout -->
-    <el-row :gutter="gutter" id="form-item">
-      <el-col v-for="item in model" :key="item.prop" :span="item.span ? item.span : span">
+    <el-row :gutter="gutter" id="form-items">
+      <el-col
+        v-for="item in model"
+        :key="item.prop"
+        :span="item.span ? item.span : span"
+        :style="item.float ? `float:${item.float};text-align:${item.float}`: ''"
+      >
         <!-- form-item -->
         <el-form-item
           :key="item.prop"
@@ -31,7 +36,12 @@
           :size="item.size"
         >
           <!-- Input -->
-          <w-input v-if="showItem(item, FORM_TYPE.INPUT)" v-model="value[item.prop]" v-bind="item"></w-input>
+          <w-input
+            v-if="showItem(item, FORM_TYPE.INPUT)"
+            v-model="value[item.prop]"
+            v-bind="item"
+            @keyup="onEnterKeyup"
+          ></w-input>
 
           <!-- date -->
           <w-date v-if="showItem(item, FORM_TYPE.DATE)" v-model="value[item.prop]" v-bind="item"></w-date>
@@ -56,13 +66,20 @@
           <!-- tag -->
           <w-tag v-if="showItem(item, FORM_TYPE.TAG)" v-model="value[item.prop]" v-bind="item"></w-tag>
 
+          <!-- checkbox -->
+          <w-checkbox
+            v-if="showItem(item, FORM_TYPE.CHECKBOX)"
+            v-model="value[item.prop]"
+            v-bind="item"
+          >{{ item.text }}</w-checkbox>
+
           <!-- named slot -->
           <slot v-if="showSlot(item)" :name="item.prop"></slot>
         </el-form-item>
       </el-col>
     </el-row>
 
-    <div v-if="query || mock || print" style="text-align:center;">
+    <div style="text-align:center;">
       <w-button v-if="mock" type="primary" icon="el-icon-edit" class="mr10" @click="onMock">模 拟</w-button>
 
       <w-button v-if="mock" type="warning" class="mr10" icon="el-icon-delete" @click="onReset">清 空</w-button>
@@ -86,6 +103,8 @@ import wTime from "../Time";
 import wSelect from "../Select";
 import wSwitch from "../Switch";
 import wTag from "../Tag";
+import wCheckbox from "../Checkbox";
+
 import mockData from "@/mock";
 import { FORM_TYPE } from "@/utils/constant";
 
@@ -99,7 +118,8 @@ export default {
     wTime,
     wSelect,
     wSwitch,
-    wTag
+    wTag,
+    wCheckbox
   },
 
   mixins: [],
@@ -108,7 +128,7 @@ export default {
     return {
       FORM_TYPE: FORM_TYPE,
       printObj: {
-        id: "form-item",
+        id: "form-items",
         popTitle: this.popTitle,
         extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>'
       }
@@ -125,7 +145,7 @@ export default {
     rules: Object,
     inline: Boolean,
     labelPosition: String,
-    labelWidth: { type: String, default: "60px" },
+    labelWidth: String,
     hideRequiredAsterisk: Boolean,
     showMessage: Boolean,
     inlineMessage: Boolean,
@@ -139,12 +159,15 @@ export default {
     query: Boolean,
     mock: Boolean,
     print: Boolean,
-    span: { type: Number, default: 8 },
+    span: Number,
     gutter: Number,
     popTitle: String
   },
 
   methods: {
+    onEnterKeyup() {
+      this.$emit("keyup");
+    },
     onQuery() {
       this.$emit("query");
     },

@@ -23,7 +23,8 @@ export const FORM_TYPE = {
     TIME: "Time",
     SELECT: "Select",
     SWITCH: "Switch",
-    TAG: "Tag"
+    TAG: "Tag",
+    CHECKBOX: "Checkbox"
 }
 
 export const INPUT_TYPE = {

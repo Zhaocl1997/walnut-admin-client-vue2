@@ -18,6 +18,10 @@
           <date-area></date-area>
         </el-tab-pane>
 
+        <el-tab-pane label="wCheckbox" name="wCheckbox">
+          <checkbox-area></checkbox-area>
+        </el-tab-pane>
+
         <el-tab-pane label="wTime" name="wTime">
           <time-area></time-area>
         </el-tab-pane>
@@ -72,6 +76,7 @@
 import ButtonArea from "./components/Button";
 import InputArea from "./components/Input";
 import DateArea from "./components/Date";
+import CheckboxArea from "./components/Checkbox";
 import TimeArea from "./components/Time";
 import FormArea from "./components/Form";
 import SelectArea from "./components/Select";
@@ -98,6 +103,7 @@ export default {
     ButtonArea,
     InputArea,
     DateArea,
+    CheckboxArea,
     TimeArea,
     FormArea,
     SelectArea,

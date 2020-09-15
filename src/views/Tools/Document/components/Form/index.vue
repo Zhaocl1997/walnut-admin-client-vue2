@@ -9,6 +9,7 @@
       :model="formModel"
       v-model="form"
       :gutter="gutter"
+      :span="8"
       label-width="120px"
       mock
       print
@@ -161,6 +162,12 @@ export default {
           draggable: true,
           valueFormat: ",",
           span: 24
+        },
+        {
+          wType: "Checkbox",
+          prop: "formCheckbox",
+          label: "多选框表单项",
+          text: "记住密码"
         }
       ],
       form: {}

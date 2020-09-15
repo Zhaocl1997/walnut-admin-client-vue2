@@ -10,7 +10,11 @@
       <br />
       <router-link to="/index">index</router-link>
 
-      <el-form
+      <w-form v-model="form" :model="formModel" :rules="formRules" @keyup="onSignin">
+        <w-button type="primary" block slot="formButton" @click="onSignin">登&nbsp;录</w-button>
+      </w-form>
+
+      <!-- <el-form
         ref="signinForm"
         status-icon
         :rules="rules"
@@ -40,7 +44,7 @@
           ></el-input>
         </el-form-item>
 
-        <!-- <el-checkbox v-model="checked" class="signin-con-savePass">记住密码</el-checkbox> -->
+        <el-checkbox v-model="checked" class="signin-con-savePass">记住密码</el-checkbox>
 
         <el-button
           type="primary"
@@ -58,7 +62,7 @@
 
         <router-link to="/signup" class="signin-con-signup">免费注册</router-link>
 
-        <!-- <div class="signin-con-findpass">
+        <div class="signin-con-findpass">
           <el-dropdown trigger="click" @command="onCommand">
             <span class="el-dropdown-link">找回密码</span>
             <el-dropdown-menu slot="dropdown">
@@ -66,27 +70,57 @@
               <el-dropdown-item command="email">邮箱找回</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </div>-->
-      </el-form>
+        </div>
+      </el-form>-->
     </div>
   </div>
 </template>
 
 <script>
-import { signin } from "@/api";
-import { mockSigninData } from "@/utils/mock";
+import wButton from "@/components/UI/Button";
+import wForm from "@/components/UI/Form";
+import cookie from "@/utils/cookie";
 
 export default {
   name: "wSignin",
 
-  components: {},
+  components: { wButton, wForm },
 
   mixins: [],
 
   data() {
     return {
-      signinData: {},
-      rules: {}
+      form: {
+        rememberMe: true
+      },
+      formRules: {},
+      formModel: [
+        {
+          wType: "Input",
+          prop: "name",
+          label: "",
+          placeholder: "账号",
+          clearable: true,
+          prefixIcon: "el-icon-user-solid"
+        },
+        {
+          wType: "Input",
+          prop: "password",
+          label: "",
+          placeholder: "密码",
+          type: "password",
+          clearable: true,
+          showPassIcon: true,
+          prefixIcon: "el-icon-key"
+        },
+        {
+          wType: "Checkbox",
+          prop: "rememberMe",
+          label: "",
+          text: "记住密码",
+          float: "left"
+        }
+      ]
     };
   },
 
@@ -98,26 +132,23 @@ export default {
 
   methods: {
     onSignin() {
-      this.$store
-        .dispatch("Signin", this.signinData)
-        .then(() => {
-          console.log(123);
-        })
-        .catch(() => {
-          console.log(312);
-          // this.loading = false;
-          // this.getCode();
-        });
-    },
-
-    onMock() {
-      console.log(mockSigninData);
+      this.$store.dispatch("Signin", this.form).then(() => {
+        if (this.form.rememberMe) {
+          cookie.set("username", this.form.name);
+          cookie.set("userpass", this.form.password);
+        }
+      });
     }
   },
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    const name = cookie.get("username");
+    const pass = cookie.get("userpass");
+
+    console.log(name, pass);
+  },
 
   beforeCreate() {},
 
@@ -135,7 +166,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .signin {
   height: 100%;
   width: 100%;
@@ -148,45 +179,47 @@ export default {
     rgba(40, 180, 133, 0.6)
   );
   text-align: center;
-}
-.signin-con {
-  padding: 15px;
-  background: white;
-  border-radius: 30px;
-  box-shadow: 5px 5px 5px black;
 
-  height: 560px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  &-con {
+    padding: 15px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 5px 5px 5px black;
+
+    height: 560px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+  }
 }
-.signin-con-header > img {
-  margin-top: 30px;
-  width: 300px;
-  margin-bottom: 30px;
-}
-.signin-con-btn {
-  position: relative;
-  top: 30px;
-  right: 0;
-}
-.signin-con-savePass {
-  position: absolute;
-  bottom: 170px;
-  left: 20px;
-}
-.signin-con-signup {
-  position: absolute;
-  bottom: 90px;
-  left: 20px;
-  color: #777;
-}
-.signin-con-findpass {
-  cursor: pointer;
-  position: absolute;
-  bottom: 90px;
-  right: 20px;
-  color: #777;
-}
+// .signin-con-header > img {
+//   margin-top: 30px;
+//   width: 300px;
+//   margin-bottom: 30px;
+// }
+// .signin-con-btn {
+//   position: relative;
+//   top: 30px;
+//   right: 0;
+// }
+// .signin-con-savePass {
+//   position: absolute;
+//   bottom: 170px;
+//   left: 20px;
+// }
+// .signin-con-signup {
+//   position: absolute;
+//   bottom: 90px;
+//   left: 20px;
+//   color: #777;
+// }
+// .signin-con-findpass {
+//   cursor: pointer;
+//   position: absolute;
+//   bottom: 90px;
+//   right: 20px;
+//   color: #777;
+// }
 </style>

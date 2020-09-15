@@ -1,6 +1,8 @@
 
 'use strict'
 
+import router from '../../router'
+
 import { signin } from "@/api"
 import { TYPES } from '../types'
 import { getToken, setToken, removeToken } from '@/utils/auth'
@@ -44,13 +46,15 @@ const user = {
     // 登录
     Signin({ commit }, data) {
       return new Promise((resolve, reject) => {
-        signin(data).then(res => {
-          setToken(res.data.token)
-          commit(TYPES.SET_TOKEN, res.data.token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        signin(data)
+          .then(res => {
+            setToken(res.data.token)
+            commit(TYPES.SET_TOKEN, res.data.token)
+            router.push("/index")
+            resolve()
+          }).catch(e => {
+            reject(e)
+          })
       })
     },
 
