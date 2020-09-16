@@ -15,6 +15,10 @@
       print
       popTitle="walnut-admin"
     >
+      <div slot="formNumber">
+        <p style="color:red;font-size:10px">数字表单项</p>
+      </div>
+
       <w-input
         slot="formPass"
         v-model="form.formPass"
@@ -57,13 +61,14 @@ export default {
         {
           wType: "Input",
           prop: "formNumber",
-          label: "数字表单项",
+          label: "", // 数字表单项
           type: "number",
           step: 5,
           max: 30,
           min: 5,
           precision: 2,
-          placeholder: "数字输入框"
+          placeholder: "数字输入框",
+          labelSlot: true
         },
         {
           wType: "Input",

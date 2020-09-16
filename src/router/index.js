@@ -40,6 +40,17 @@ const routes = [
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // }
   {
+    path: '/redirect',
+    // component: Layout,
+    // hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import(/* webpackChunkName: "signup" */ '../views/Redirect/index.vue')
+      }
+    ]
+  },
+  {
     path: '/signin',
     name: 'signin',
     component: () => import(/* webpackChunkName: "signin" */ '../views/Auth/Signin.vue')

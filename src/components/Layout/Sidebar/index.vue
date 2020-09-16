@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar">
+  <div id="sidebar-container">
     <div :class="{'has-logo':showLogo}">
       <logo v-if="showLogo" :collapse="isCollapse" />
       <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import sidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/variables.scss";
@@ -47,6 +47,8 @@ export default {
 
   computed: {
     // ...mapGetters(["permission_routes", "sidebar"]),
+    ...mapGetters(["sidebar"]),
+
     activeMenu() {
       const route = this.$route;
       const { meta, path } = route;
@@ -63,7 +65,7 @@ export default {
       return variables;
     },
     isCollapse() {
-      return false; // !this.sidebar.opened;
+      return !this.sidebar.isOpened;
     }
   },
 
@@ -94,12 +96,4 @@ export default {
 </script>
 
 <style scoped>
-#sidebar {
-  position: absolute;
-  left: 0;
-  top: 50px;
-  bottom: 0;
-  width: 200px;
-  background-color: grey;
-}
 </style>

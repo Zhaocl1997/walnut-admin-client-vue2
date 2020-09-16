@@ -59,14 +59,15 @@ export default {
 
   methods: {
     onSetSize(size) {
-      localStorage.setItem("size", size);
-      this.$ELEMENT.size = size;
-      // this.refreshView();
+      this.$store.dispatch("app/setSize", size);
       this.$message.success("尺寸更换成功");
+
+      // this.refreshView();
     },
+
     refreshView() {
       // In order to make the cached page re-rendered
-      this.$store.dispatch("tagsView/delAllCachedViews", this.$route);
+      // this.$store.dispatch("tagsView/delAllCachedViews", this.$route);
       const { fullPath } = this.$route;
       this.$nextTick(() => {
         this.$router.replace({

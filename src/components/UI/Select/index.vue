@@ -382,10 +382,24 @@ export default {
     },
 
     onChange(v) {
+      this.queryParams = {
+        [this.optionLabel]: "",
+        pageNum: 1,
+        pageSize: 10
+      };
+      this.init();
       this.$emit("change", v);
     },
 
     onVisibleChange(v) {
+      if (!v) {
+        this.queryParams = {
+          [this.optionLabel]: "",
+          pageNum: 1,
+          pageSize: 10
+        };
+        this.init();
+      }
       this.$emit("visible-change", v);
     },
 

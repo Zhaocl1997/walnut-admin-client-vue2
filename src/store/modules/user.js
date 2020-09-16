@@ -4,7 +4,7 @@
 import router from '../../router'
 
 import { signin } from "@/api"
-import { TYPES } from '../types'
+import { STORE_TYPES } from '@/utils/constant'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -19,7 +19,7 @@ const user = {
   },
 
   mutations: {
-    [TYPES.SET_TOKEN]: (state, token) => {
+    [STORE_TYPES.SET_TOKEN]: (state, token) => {
       state.token = token
     },
     // SET_NAME: (state, name) => {
@@ -49,7 +49,7 @@ const user = {
         signin(data)
           .then(res => {
             setToken(res.data.token)
-            commit(TYPES.SET_TOKEN, res.data.token)
+            commit(STORE_TYPES.SET_TOKEN, res.data.token)
             router.push("/index")
             resolve()
           }).catch(e => {

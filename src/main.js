@@ -13,8 +13,9 @@ import './assets/styles/index.scss' // style
 import Element from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
 import './assets/styles/element-variables.scss'
+
 Vue.use(Element, {
-  size: localStorage.getItem("size")
+  size: store.getters.size
 })
 
 import Print from 'vue-print-nb'
@@ -26,6 +27,7 @@ Vue.use(directive)
 import log from './utils/logs'
 import copy from './utils/clipboard'
 import { checkBox, openLoading } from '@/components/UI/Message'
+
 Vue.prototype.$log = log
 Vue.prototype.$copy = copy
 Vue.prototype.$checkBox = checkBox
