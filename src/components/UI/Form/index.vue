@@ -194,9 +194,7 @@ export default {
 
   created() {},
 
-  mounted() {
-    console.log(this.$slots);
-  },
+  mounted() {},
 
   beforeCreate() {},
 
