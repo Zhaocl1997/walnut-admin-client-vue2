@@ -76,15 +76,18 @@ export default {
       set(val) {
         this.$emit("input", val);
       }
+    },
+    isSplit() {
+      return isEmpty(this.valueFormat);
     }
   },
 
   watch: {
     value(newV, oldV) {
-      if (!isEmpty(newV) && newV != oldV) {
+      if (!isEmpty(newV)) {
         this.selfValue = newV;
 
-        if (isEmpty(this.valueFormat)) {
+        if (this.isSplit) {
           this.tagArr = newV;
         } else {
           const temp = newV.split(",");
@@ -119,7 +122,7 @@ export default {
         return;
       }
 
-      if (!this.valueFormat) {
+      if (this.isSplit) {
         this.selfValue.map(i => {
           this.tagArr.push(i);
         });
@@ -133,9 +136,9 @@ export default {
     },
 
     onClose(tag) {
-      if (isEmpty(this.valueFormat)) {
+      if (this.isSplit) {
         this.selfValue.splice(this.selfValue.indexOf(tag), 1);
-        this.tagArr.splice(this.tagArr.indexOf(tag), 1);
+        // this.tagArr.splice(this.tagArr.indexOf(tag), 1);
       } else {
         this.tagArr.splice(this.tagArr.indexOf(tag), 1);
         const temp = this.selfValue.split(this.valueFormat);
@@ -153,23 +156,21 @@ export default {
     },
 
     onInputConfirm() {
-      if (
-        !isEmpty(this.selfValue) &&
-        ((this.selfValue.includes(this.inputValue) &&
-          isEmpty(this.valueFormat)) ||
-          this.tagArr.includes(this.inputValue))
-      ) {
+      let inputValue = this.inputValue;
+
+      if (this.selfValue.includes(inputValue)) {
         this.$message.info("请不要添加重复信息");
         return;
       }
 
-      let inputValue = this.inputValue;
       if (inputValue) {
         inputValue = String(inputValue);
         this.tagArr.push(inputValue);
 
-        if (!this.valueFormat) {
-          this.selfValue.push(inputValue);
+        if (this.isSplit) {
+          if (!this.selfValue.includes(inputValue)) {
+            this.selfValue.push(inputValue);
+          }
         } else {
           if (isEmpty(this.selfValue)) {
             this.selfValue = inputValue;
@@ -193,7 +194,7 @@ export default {
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
         },
         onEnd: evt => {
-          if (isEmpty(this.valueFormat)) {
+          if (this.isSplit) {
             const targetRow = this.selfValue.splice(evt.oldIndex, 1)[0];
             this.selfValue.splice(evt.newIndex, 0, targetRow);
             this.$emit("input", this.selfValue);
