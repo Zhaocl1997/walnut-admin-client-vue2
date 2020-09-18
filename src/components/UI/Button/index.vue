@@ -14,6 +14,7 @@
       :width="popoverWidth"
       :trigger="computedPopconfirmTrigger"
       v-model="popoverVisible"
+      :popperClass="popperClass"
     >
       <div v-if="popConfirm">
         <p style="margin: 3px;">{{ popoverContent }}</p>
@@ -21,6 +22,10 @@
           <el-button size="mini" type="text" @click="popoverVisible = false">取消</el-button>
           <el-button type="primary" size="mini" @click="popoverConfirm">确定</el-button>
         </div>
+      </div>
+
+      <div v-if="$slots.popover">
+        <slot name="popover"></slot>
       </div>
 
       <el-button
@@ -116,6 +121,7 @@ export default {
     popoverContent: { type: String, default: "popoverContent" },
     popoverPlacement: { type: String, default: "top" },
     popoverTrigger: { type: String, default: "hover" },
+    popperClass: String,
 
     popConfirm: { type: Boolean, default: false }
   },

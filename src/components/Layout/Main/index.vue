@@ -1,6 +1,6 @@
 <template>
-  <div id="main">
-    <w-tag></w-tag>
+  <div id="main-wrapper">
+    <w-header-tag></w-header-tag>
 
     <div id="container">main</div>
 
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import wTag from "./Tags";
+import wHeaderTag from "./Tags";
 import wFooter from "./Footer";
 
 export default {
   name: "wMain",
 
-  components: { wTag, wFooter },
+  components: { wHeaderTag, wFooter },
 
   mixins: [],
 
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#main-wrapper {
   position: absolute;
   top: 50px;
   left: 200px;
@@ -64,13 +64,6 @@ export default {
   height: -moz-calc(100% - 50px);
   padding: 10px;
 
-  width: 100%;
   background-color: lightgrey;
-}
-
-#container {
-  position: absolute;
-  top: 20px;
-  left: 0;
 }
 </style>

@@ -2,26 +2,35 @@
 'use strict'
 
 const ls = (function () {
-    // 设置localStorage
+    // set
     function set(key, value) {
-        localStorage.setItem(key, JSON.stringify(value))
-    }
-
-    // 获取localStorage
-    function get(key) {
-        if (JSON.parse(localStorage.getItem(key)) === null) {
-            return false
+        if (typeof value === 'string') {
+            localStorage.setItem(key, value)
         } else {
-            return JSON.parse(localStorage.getItem(key))
+            localStorage.setItem(key, JSON.stringify(value))
         }
     }
 
-    // 移除localStorage
+    // get
+    function get(key) {
+        const value = localStorage.getItem(key)
+        console.log(value);
+
+        if (value === null) {
+            return
+        } else if (typeof value === 'string') {
+            return value
+        } else {
+            return JSON.parse(value)
+        }
+    }
+
+    // remove
     function remove(key) {
         localStorage.removeItem(key)
     }
 
-    // 清空localStorage
+    // clear
     function clear() {
         localStorage.clear()
     }

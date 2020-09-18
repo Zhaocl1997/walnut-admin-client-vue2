@@ -35,6 +35,11 @@
           :inlineMessage="item.inlineMessage"
           :size="item.size"
         >
+          <!-- label slot -->
+          <span v-if="item.labelSlot" slot="label">
+            <slot :name="item.prop" />
+          </span>
+
           <!-- Input -->
           <w-input
             v-if="showItem(item, FORM_TYPE.INPUT)"

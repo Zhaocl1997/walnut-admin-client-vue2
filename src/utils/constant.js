@@ -61,3 +61,10 @@ export const EMAIL_OPTIONS = [
     { value: "@sohu.com" },
     { value: "@sogou.com" }
 ]
+
+export const STORE_TYPES = {
+    SET_TOKEN: 'SET_TOKEN',
+    SET_SIZE: 'SET_SIZE',
+    SET_COLOR: 'SET_COLOR',
+    TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR'
+}

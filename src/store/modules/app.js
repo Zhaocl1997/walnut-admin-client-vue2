@@ -1,44 +1,45 @@
 
 'use strict'
 
-import Cookies from 'js-cookie'
+import ls from '@/utils/localStorage'
+import { STORE_TYPES } from '@/utils/constant'
 
 const state = {
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    isOpened: ls.get('sidebar') ? !!+ls.get('sidebar') : true,
     withoutAnimation: false
   },
   device: 'desktop',
-  size: Cookies.get('size') || 'medium'
+  size: ls.get('size')
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
-    state.sidebar.opened = !state.sidebar.opened
+  [STORE_TYPES.TOGGLE_SIDEBAR]: state => {
+    state.sidebar.isOpened = !state.sidebar.isOpened
     state.sidebar.withoutAnimation = false
-    if (state.sidebar.opened) {
-      Cookies.set('sidebarStatus', 1)
+    if (state.sidebar.isOpened) {
+      ls.set('sidebar', 1)
     } else {
-      Cookies.set('sidebarStatus', 0)
+      ls.set('sidebar', 0)
     }
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
-    Cookies.set('sidebarStatus', 0)
-    state.sidebar.opened = false
+    ls.set('sidebar', 0)
+    state.sidebar.isOpened = false
     state.sidebar.withoutAnimation = withoutAnimation
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
   },
-  SET_SIZE: (state, size) => {
+  [STORE_TYPES.SET_SIZE]: (state, size) => {
     state.size = size
-    Cookies.set('size', size)
+    ls.set('size', size)
   }
 }
 
 const actions = {
   toggleSideBar({ commit }) {
-    commit('TOGGLE_SIDEBAR')
+    commit(STORE_TYPES.TOGGLE_SIDEBAR)
   },
   closeSideBar({ commit }, { withoutAnimation }) {
     commit('CLOSE_SIDEBAR', withoutAnimation)
@@ -47,7 +48,7 @@ const actions = {
     commit('TOGGLE_DEVICE', device)
   },
   setSize({ commit }, size) {
-    commit('SET_SIZE', size)
+    commit(STORE_TYPES.SET_SIZE, size)
   }
 }
 
