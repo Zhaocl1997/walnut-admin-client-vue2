@@ -124,13 +124,16 @@ export const isEmpty = (val) => {
 }
 
 export const deepClone = target => {
-    if (isObject(target)) {
-        let cloneTarget = isArray(target) ? [] : {}
-        for (const key in target) {
-            cloneTarget[key] = deepClone(target[key])
-        }
-        return cloneTarget
-    } else {
-        return target
+    if (!target && typeof target !== 'object') {
+        throw new Error('error arguments', 'deepClone')
     }
+    const targetObj = target.constructor === Array ? [] : {}
+    Object.keys(target).forEach(keys => {
+        if (target[keys] && typeof target[keys] === 'object') {
+            targetObj[keys] = deepClone(target[keys])
+        } else {
+            targetObj[keys] = target[keys]
+        }
+    })
+    return targetObj
 }

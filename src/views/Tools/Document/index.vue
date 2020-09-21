@@ -67,6 +67,10 @@
           <w-right-panel></w-right-panel>
           <w-lock></w-lock>
         </el-tab-pane>
+
+        <el-tab-pane label="wTable" name="wTable">
+          <table-area></table-area>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -87,6 +91,7 @@ import TagArea from "./components/Tag";
 import TreeArea from "./components/Tree";
 import SelectTreeArea from "./components/SelectTree";
 import IconSelectArea from "./components/IconSelect";
+import TableArea from "./components/Table";
 
 import wSizeSelect from "@/components/UI/SizeSelect";
 import wScreenFull from "@/components/UI/Screenfull";
@@ -114,6 +119,8 @@ export default {
     TreeArea,
     SelectTreeArea,
     IconSelectArea,
+    TableArea,
+
     wSizeSelect,
     wScreenFull,
     wGithub,

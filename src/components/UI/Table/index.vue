@@ -1,37 +1,36 @@
 <template>
   <div class="ui-table">
+    <!-- 右边table设置区域 -->
     <div class="mb8" style="float:right;" v-if="showSettings">
-      <w-button type="info" @click="listFunc" icon="el-icon-refresh" tooltip tooltipContent="刷新"></w-button>
+      <!-- 刷新 -->
+      <el-tooltip effect="dark" content="刷新" placement="top">
+        <w-icon icon="sync" class="table-settings-icon" @click="listFunc"></w-icon>
+      </el-tooltip>
 
-      <w-button
-        type="info"
-        popover
-        popover-title
-        popoverTrigger="click"
-        popperClass="table-settings"
-        popoverPlacement="bottom"
-        icon="el-icon-setting"
-        tooltip
-        tooltipContent="列设置"
-      >
-        <div slot="popover">
+      <!-- 列 -->
+      <el-tooltip effect="dark" content="列设置" placement="top">
+        <el-popover placement="bottom" trigger="click" popper-class="table-settings">
           <span class="table-header-info" v-if="header.find(i => i.fixed === 'left')">固定在左侧</span>
           <ul class="table-header-left">
             <li v-for="item in header.filter(i => i.fixed === 'left')" :key="item.prop">
-              <svg-icon icon-class="fixed-left"></svg-icon>
+              <w-icon icon="fixed-left"></w-icon>
               <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
             </li>
           </ul>
 
           <el-divider v-if="header.find(i => i.fixed === 'left')"></el-divider>
 
-          <span class="table-header-info">不固定</span>
+          <span class="table-header-info">
+            不固定
+            <w-button class="reset-button" type="text" @click="onReset">重置</w-button>
+          </span>
+
           <ul class="table-header">
             <li v-for="item in header.filter(i => !i.fixed)" :key="item.prop">
-              <svg-icon
-                :icon-class="item.disabled ? 'lock' : 'drag'"
+              <w-icon
+                :icon="item.disabled ? 'lock' : 'drag'"
                 :style="item.disabled ? 'cursor:initial;font-size:11px;vertical-align:baseline;' : 'cursor:move;font-size:12px;margin-top:1px;'"
-              ></svg-icon>
+              ></w-icon>
               <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
             </li>
           </ul>
@@ -41,30 +40,32 @@
           <span class="table-header-info" v-if="header.find(i => i.fixed === 'right')">固定在右侧</span>
           <ul class="table-header-right">
             <li v-for="item in header.filter(i => i.fixed === 'right')" :key="item.prop">
-              <svg-icon icon-class="fixed-right"></svg-icon>
+              <w-icon icon="fixed-right"></w-icon>
               <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
             </li>
           </ul>
-        </div>
-      </w-button>
 
-      <w-button type="info" tooltip tooltipContent="全屏">
-        <w-screenfull style="font-size:12px;" />
-      </w-button>
+          <w-icon slot="reference" icon="setting" class="table-settings-icon"></w-icon>
+        </el-popover>
+      </el-tooltip>
 
-      <w-button type="info" tooltip tooltipContent="密度" style="padding:0">
+      <!-- 全屏 -->
+      <el-tooltip effect="dark" content="全屏" placement="top">
+        <w-screenfull class="table-settings-icon" />
+      </el-tooltip>
+
+      <!-- 密度 -->
+      <el-tooltip effect="dark" content="密度" placement="top">
         <el-dropdown @command="onDensity" trigger="click">
-          <div>
-            <svg-icon icon-class="density" style="font-size:12px;margin-right:-3px;color:white;"></svg-icon>
-          </div>
+          <w-icon icon="vertical-align-middl" class="table-settings-icon"></w-icon>
 
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="0">紧凑</el-dropdown-item>
-            <el-dropdown-item command="1">中等</el-dropdown-item>
-            <el-dropdown-item command="2">宽裕</el-dropdown-item>
+            <el-dropdown-item command="0" key="0">紧凑</el-dropdown-item>
+            <el-dropdown-item command="1" key="1">中等</el-dropdown-item>
+            <el-dropdown-item command="2" key="2">宽裕</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </w-button>
+      </el-tooltip>
     </div>
 
     <div>
@@ -182,6 +183,8 @@ import wButton from "../Button";
 import wScreenfull from "../Screenfull";
 import wPagination from "../Pagination";
 
+import { deepClone } from "@/utils";
+
 export default {
   name: "wTable",
 
@@ -201,8 +204,10 @@ export default {
   data() {
     return {
       header: [], // 表头
-      deviation: 0, // 偏差
-      rowHeight: ""
+      deviation: 0, // index和select带来的偏差
+      fixedDeviation: 0, // fixed left 带来的偏差
+      rowHeight: "",
+      cachedHeader: []
     };
   },
 
@@ -231,21 +236,40 @@ export default {
   watch: {
     tableHeader(newV) {
       if (newV) {
-        this.init();
+        this.header = newV;
       }
     }
   },
 
   props: {
-    tableData: { type: Array, required: true },
+    // custom
+    value: Array,
+    showSettings: { type: Boolean, default: true },
 
-    size: String,
+    hasSelect: Boolean,
+    hasIndex: Boolean,
 
     page: { type: Boolean, default: true },
+    pageNum: { type: Number, required: true },
+    pageSize: { type: Number, required: true },
+    total: { type: Number, required: true },
 
     rowSort: { type: Boolean, default: true },
-
     colSort: { type: Boolean, default: true },
+
+    tableHeader: { type: Array, required: true },
+    tableData: { type: Array, required: true },
+    tableName: String,
+
+    selectable: Function,
+    reserveSelection: Boolean,
+
+    listFunc: { type: Function, required: true },
+    selectFunc: { type: Function, default: () => {} },
+    sortFuc: { type: Function, default: () => {} },
+
+    // origin
+    size: String,
 
     height: [String, Number],
 
@@ -329,47 +353,26 @@ export default {
 
     lazy: Boolean,
 
-    load: Function,
-
-    sortFuc: { type: Function, default: () => {} },
-
-    tableHeader: { type: Array, required: true },
-    tableName: { type: String, required: true },
-
-    selectable: Function,
-    reserveSelection: Boolean,
-
-    pageNum: { type: Number, required: true },
-    pageSize: { type: Number, required: true },
-    total: { type: Number, required: true },
-
-    listFunc: { type: Function, required: true },
-    selectFunc: { type: Function, default: () => {} },
-
-    hasSelect: { type: Boolean, default: false },
-    hasIndex: { type: Boolean, default: false },
-    showSettings: { type: Boolean, default: true }
+    load: Function
   },
 
   methods: {
     // 初始化
     init() {
-      const arr = [];
+      const temp = [];
 
-      // 重构 添加key
       this.tableHeader.map(i => {
-        arr.push({
+        temp.push({
           ...i,
-          key: i.prop,
-          show: true
+          show: i.show === false ? false : true // 是否显示列的标识
         });
       });
 
-      this.header = arr;
-      this.transferData = arr;
+      this.header = temp;
 
-      // 从local里取出表头
-      this.getLocalHeader();
+      this.cachedHeader = Object.freeze(deepClone(temp));
+
+      this.$emit("update:tableHeader", this.header);
 
       // 计算偏差
       if (this.hasSelect) {
@@ -378,6 +381,13 @@ export default {
 
       if (this.hasIndex) {
         this.deviation += 1;
+      }
+
+      for (let i = 0; i < this.header.length; i++) {
+        const e = this.header[i];
+        if (e.fixed && e.fixed === "left") {
+          this.fixedDeviation += 1;
+        }
       }
     },
 
@@ -407,7 +417,7 @@ export default {
           this.header.splice(e.oldIndex - this.deviation, 1);
           this.header.splice(e.newIndex - this.deviation, 0, oldItem);
 
-          this.setLocalHeader();
+          this.$emit("update:tableHeader", this.header);
         }
       });
     },
@@ -424,7 +434,7 @@ export default {
           this.header.splice(e.oldIndex + this.deviation, 1);
           this.header.splice(e.newIndex + this.deviation, 0, oldItem);
 
-          this.setLocalHeader();
+          this.$emit("update:tableHeader", this.header);
         }
       });
     },
@@ -449,49 +459,9 @@ export default {
       }
     },
 
-    // 保存table表头信息
-    onConfirm() {
-      const arr = this.transferData.filter(
-        i => !this.transferValue.includes(i.key)
-      );
-      this.header = arr;
-
-      this.transferVisible = false;
-
-      this.setLocalHeader();
-    },
-
-    // 将表头存入local
-    setLocalHeader() {
-      localStorage.setItem(this.tableName, JSON.stringify(this.header));
-
-      // this.reload();
-    },
-
-    // 从local取出表头
-    getLocalHeader() {
-      const arr = JSON.parse(localStorage.getItem(this.tableName));
-
-      if (isEmpty(arr)) {
-        return;
-      }
-
-      this.header = arr;
-
-      let a = [];
-
-      arr.map(i => {
-        a.push(i.key);
-      });
-
-      let b = [];
-
-      this.transferData.map(i => {
-        b.push(i.key);
-      });
-
-      const hasValues = b.filter(v => a.indexOf(v) === -1);
-      this.transferValue = hasValues;
+    // 重置
+    onReset() {
+      this.header = deepClone(this.cachedHeader);
     }
   },
 
@@ -506,9 +476,8 @@ export default {
 
     if (this.colSort) {
       this.columnDrop();
+      this.settingsDrop();
     }
-
-    this.settingsDrop();
   },
 
   beforeCreate() {},
@@ -528,6 +497,13 @@ export default {
 </script>
 
 <style lang="scss">
+.table-settings-icon {
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
 .table-settings {
   &.el-popover--plain {
     padding: 0;
