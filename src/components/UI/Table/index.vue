@@ -13,8 +13,9 @@
           <!-- 左侧固定 -->
           <template v-if="hasFixedLeft">
             <span class="table-header__info">固定在左侧</span>
+
             <ul>
-              <li v-for="item in header.filter(i => i.fixed === 'left')" :key="item.prop">
+              <li v-for="item in leftFixedHeader" :key="item.prop">
                 <w-icon icon="verticalright"></w-icon>
                 <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
               </li>
@@ -30,11 +31,8 @@
           </span>
 
           <ul class="table-header__main">
-            <li v-for="item in header.filter(i => !i.fixed)" :key="item.prop">
-              <w-icon
-                :icon="item.disabled ? 'lock' : 'drag'"
-                :style="item.disabled ? 'cursor:initial;' : 'cursor:move;'"
-              ></w-icon>
+            <li v-for="item in commonHeader" :key="item.prop">
+              <w-icon icon="drag"></w-icon>
               <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
             </li>
           </ul>
@@ -44,7 +42,7 @@
 
             <span class="table-header__info">固定在右侧</span>
             <ul>
-              <li v-for="item in header.filter(i => i.fixed === 'right')" :key="item.prop">
+              <li v-for="item in rightFixedHeader" :key="item.prop">
                 <w-icon icon="verticalleft"></w-icon>
                 <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
               </li>
@@ -241,6 +239,15 @@ export default {
     },
     hasFixedRight() {
       return this.header.find(i => i.fixed === "right");
+    },
+    leftFixedHeader() {
+      return this.header.filter(i => i.fixed === "left");
+    },
+    rightFixedHeader() {
+      return this.header.filter(i => i.fixed === "right");
+    },
+    commonHeader() {
+      return this.header.filter(i => !i.fixed);
     }
   },
 
@@ -428,6 +435,7 @@ export default {
     // 配置项列拖拽
     setDrop() {
       const target = document.querySelector(".table-header__main");
+      console.log(target);
 
       Sortable.create(target, {
         animation: 180,
@@ -438,6 +446,10 @@ export default {
           this.header.splice(e.newIndex + this.deviation, 0, oldItem);
 
           this.$emit("update:tableHeader", this.header);
+
+          this.$nextTick(() => {
+            this.$refs.table.doLayout();
+          });
         }
       });
     },
