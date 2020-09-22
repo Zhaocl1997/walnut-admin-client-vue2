@@ -8,19 +8,18 @@
       </el-tooltip>
 
       <!-- 列 -->
-      <el-tooltip effect="dark" content="列设置" placement="top">
+      <el-tooltip content="列设置" placement="top">
         <el-popover placement="bottom" trigger="click" popper-class="table-settings__popover">
           <!-- 左侧固定 -->
           <template v-if="hasFixedLeft">
             <span class="table-header__info">固定在左侧</span>
-
             <ul>
-              <li v-for="item in leftFixedHeader" :key="item.prop">
-                <w-icon icon="verticalright"></w-icon>
-                <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
-              </li>
+              <w-header-column-item
+                main-icon="verticalright"
+                :header="leftFixedHeader"
+                @change="onChange"
+              ></w-header-column-item>
             </ul>
-
             <el-divider></el-divider>
           </template>
 
@@ -31,21 +30,20 @@
           </span>
 
           <ul class="table-header__main">
-            <li v-for="item in commonHeader" :key="item.prop">
-              <w-icon icon="drag"></w-icon>
-              <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
-            </li>
+            <w-header-column-item main-icon="drag" :header="commonHeader" @change="onChange"></w-header-column-item>
           </ul>
 
+          <!-- 右侧固定 -->
           <template v-if="hasFixedRight">
             <el-divider></el-divider>
 
             <span class="table-header__info">固定在右侧</span>
             <ul>
-              <li v-for="item in rightFixedHeader" :key="item.prop">
-                <w-icon icon="verticalleft"></w-icon>
-                <el-checkbox v-model="item.show" :disabled="item.disabled">{{ item.label }}</el-checkbox>
-              </li>
+              <w-header-column-item
+                main-icon="verticalleft"
+                :header="rightFixedHeader"
+                @change="onChange"
+              ></w-header-column-item>
             </ul>
           </template>
 
@@ -186,6 +184,7 @@ import Sortable from "sortablejs";
 import wButton from "../Button";
 import wScreenfull from "../Screenfull";
 import wPagination from "../Pagination";
+import wHeaderColumnItem from "./item";
 
 import { deepClone } from "@/utils";
 
@@ -201,7 +200,12 @@ export default {
     prop: ""
   },
 
-  components: { wButton, wScreenfull, wPagination },
+  components: {
+    wButton,
+    wScreenfull,
+    wPagination,
+    wHeaderColumnItem
+  },
 
   mixins: [],
 
@@ -209,7 +213,7 @@ export default {
     return {
       header: [],
       deviation: 0, // fixed left 带来的偏差
-      rowHeight: "",
+      rowHeight: {},
       cachedHeader: []
     };
   },
@@ -252,11 +256,11 @@ export default {
   },
 
   watch: {
-    tableHeader(newV) {
-      if (newV) {
-        this.header = newV;
-      }
-    }
+    // tableHeader(newV) {
+    //   if (newV) {
+    //     this.header = newV;
+    //   }
+    // }
   },
 
   props: {
@@ -381,7 +385,8 @@ export default {
       this.tableHeader.map(i => {
         temp.push({
           ...i,
-          show: i.show === false ? false : true // 是否显示列的标识
+          show: i.show === false ? false : true, // 是否显示列的标识
+          visible: false
         });
       });
 
@@ -399,6 +404,12 @@ export default {
           this.deviation += 1;
         }
       }
+    },
+
+    // 值变化时改变数组相应项
+    onChange(v) {
+      const index = this.header.findIndex(i => i.prop === v.prop);
+      this.$set(this.header, index, v);
     },
 
     // 行拖拽
@@ -434,8 +445,7 @@ export default {
 
     // 配置项列拖拽
     setDrop() {
-      const target = document.querySelector(".table-header__main");
-      console.log(target);
+      const target = document.querySelector(".table-header__main div");
 
       Sortable.create(target, {
         animation: 180,
@@ -446,10 +456,6 @@ export default {
           this.header.splice(e.newIndex + this.deviation, 0, oldItem);
 
           this.$emit("update:tableHeader", this.header);
-
-          this.$nextTick(() => {
-            this.$refs.table.doLayout();
-          });
         }
       });
     },
@@ -514,7 +520,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .w-table {
   .table-settings__icon {
     display: inline-block;

@@ -22,6 +22,8 @@ $--table-border: 1px solid#dfe6ec;
 /* icon font path, required */
 $--font-path: "~element-ui/lib/theme-chalk/fonts";
 
+
+ 
 /* table fixed的列样式不全 */
 .el-table > .el-table__fixed-right {
   height: 100% !important; //设置高优先，以覆盖内联样式
