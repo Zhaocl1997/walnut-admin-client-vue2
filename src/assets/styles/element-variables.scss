@@ -4,10 +4,10 @@
 **/
 
 /* theme color */
-$--color-primary: #409EFF;
-$--color-success: #67C23A;
-$--color-warning: #E6A23C;
-$--color-danger: #F56C6C;
+$--color-primary: #409eff;
+$--color-success: #67c23a;
+$--color-warning: #e6a23c;
+$--color-danger: #f56c6c;
 $--color-info: #909399;
 
 $--button-font-weight: 400;
@@ -17,10 +17,28 @@ $--button-font-weight: 400;
 $--border-color-light: #dfe4ed;
 $--border-color-lighter: #e6ebf5;
 
-$--table-border:1px solid#dfe6ec;
+$--table-border: 1px solid#dfe6ec;
 
 /* icon font path, required */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+/* table fixed的列样式不全 */
+.el-table > .el-table__fixed-right {
+  height: 100% !important; //设置高优先，以覆盖内联样式
+}
+
+.el-table > .el-table__fixed-left {
+  height: 100% !important; //设置高优先，以覆盖内联样式
+}
+
+/* table fixed header 错位问题 */
+.el-table th.gutter {
+  display: table-cell !important;
+}
+
+.el-table colgroup.gutter {
+  display: table-cell !important;
+}
 
 @import "~element-ui/packages/theme-chalk/src/index";
 

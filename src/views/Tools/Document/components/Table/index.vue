@@ -8,6 +8,8 @@
       :total="total"
       :listFunc="init"
       v-loading="loading"
+      hasIndex
+      hasSelect
     ></w-table>
   </div>
 </template>
@@ -34,7 +36,56 @@ export default {
 
   data() {
     return {
-      tableHeader: [],
+      tableHeader: [
+        {
+          label: "姓名",
+          prop: "name",
+          width: "100px",
+          fixed: "left"
+        },
+        {
+          label: "性别",
+          prop: "sex",
+          width: "50px",
+          fixed: "left"
+        },
+        {
+          label: "年龄",
+          prop: "age",
+          width: "100px"
+        },
+        {
+          label: "出生年月",
+          prop: "birth",
+          width: "100px"
+        },
+        {
+          label: "省份",
+          prop: "province",
+          width: "100px"
+        },
+        {
+          label: "城市",
+          prop: "city",
+          width: "100px"
+        },
+        {
+          label: "区县",
+          prop: "country",
+          width: "100px"
+        },
+        {
+          label: "个人网址",
+          prop: "site",
+          width: "100px"
+        },
+        {
+          label: "状态",
+          prop: "status",
+          width: "100px",
+          fixed: "right"
+        }
+      ],
       tableData: [],
       total: 0,
       loading: false,
@@ -57,17 +108,18 @@ export default {
       this.loading = true;
       const result = getDataList(this.queryFormData);
       console.log(result);
-      
 
       this.tableData = result.data;
       this.total = result.total;
-      this.loading = true;
+      this.loading = false;
     }
   },
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    this.init();
+  },
 
   beforeCreate() {},
 

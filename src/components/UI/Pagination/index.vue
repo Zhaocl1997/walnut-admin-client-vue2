@@ -1,15 +1,17 @@
 <template>
-  <el-pagination
-    :background="background"
-    :current-page.sync="currentPage"
-    :page-size.sync="pageSize"
-    :layout="layout"
-    :page-sizes="pageSizes"
-    :total="total"
-    v-bind="$attrs"
-    @size-change="onSizeChange"
-    @current-change="onCurrentChange"
-  ></el-pagination>
+  <div class="pagination-container">
+    <el-pagination
+      :background="background"
+      :current-page.sync="currentPage"
+      :page-size.sync="pageSize"
+      :layout="layout"
+      :page-sizes="pageSizes"
+      :total="total"
+      v-bind="$attrs"
+      @size-change="onSizeChange"
+      @current-change="onCurrentChange"
+    ></el-pagination>
+  </div>
 </template>
 
 <script>
@@ -56,7 +58,7 @@ export default {
 
     pageSizes: {
       type: Array,
-      default: () => [10, 20, 30, 50, 100, 200]
+      default: () => [10, 20, 30, 50, 100]
     },
 
     layout: {
@@ -102,4 +104,11 @@ export default {
 </script>
 
 <style scoped>
+.pagination-container {
+  position: relative;
+  height: 25px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  padding: 0 20px !important;
+}
 </style>
