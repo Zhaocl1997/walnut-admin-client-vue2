@@ -8,9 +8,6 @@
 */
 import CryptoJS from 'crypto-js'
 
-console.log(CryptoJS);
-
-
 const crypto = (function () {
     const KP = {
         key: '1234567812345678', // 秘钥 16*n:

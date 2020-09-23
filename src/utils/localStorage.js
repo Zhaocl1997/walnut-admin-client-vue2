@@ -14,8 +14,6 @@ const ls = (function () {
     // get
     function get(key) {
         const value = localStorage.getItem(key)
-        console.log(value);
-
         if (value === null) {
             return
         } else if (typeof value === 'string') {

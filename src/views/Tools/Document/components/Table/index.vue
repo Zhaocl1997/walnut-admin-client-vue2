@@ -41,6 +41,7 @@ export default {
           label: "姓名",
           prop: "name",
           width: "100px",
+          disabled: true,
           fixed: "left"
         },
         {
@@ -77,7 +78,8 @@ export default {
         {
           label: "个人网址",
           prop: "site",
-          width: "100px"
+          width: "100px",
+          fixed: "right"
         },
         {
           label: "状态",

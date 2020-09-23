@@ -13,13 +13,9 @@
           <!-- 左侧固定 -->
           <template v-if="hasFixedLeft">
             <span class="table-header__info">固定在左侧</span>
-            <ul>
-              <w-header-column-item
-                main-icon="verticalright"
-                :header="leftFixedHeader"
-                @change="onChange"
-              ></w-header-column-item>
-            </ul>
+
+            <w-header-column-item :header.sync="header" @change="onChange" type="left"></w-header-column-item>
+
             <el-divider></el-divider>
           </template>
 
@@ -29,22 +25,15 @@
             <w-button class="reset-button" type="text" @click="onReset">重置</w-button>
           </span>
 
-          <ul class="table-header__main">
-            <w-header-column-item main-icon="drag" :header="commonHeader" @change="onChange"></w-header-column-item>
-          </ul>
+          <w-header-column-item :header.sync="header" @change="onChange"></w-header-column-item>
 
           <!-- 右侧固定 -->
           <template v-if="hasFixedRight">
             <el-divider></el-divider>
 
             <span class="table-header__info">固定在右侧</span>
-            <ul>
-              <w-header-column-item
-                main-icon="verticalleft"
-                :header="rightFixedHeader"
-                @change="onChange"
-              ></w-header-column-item>
-            </ul>
+
+            <w-header-column-item :header.sync="header" @change="onChange" type="right"></w-header-column-item>
           </template>
 
           <w-icon slot="reference" icon="setting" class="table-settings__icon"></w-icon>
@@ -386,7 +375,7 @@ export default {
         temp.push({
           ...i,
           show: i.show === false ? false : true, // 是否显示列的标识
-          visible: false
+          visible: false // hover固定列显示
         });
       });
 
@@ -443,23 +432,6 @@ export default {
       });
     },
 
-    // 配置项列拖拽
-    setDrop() {
-      const target = document.querySelector(".table-header__main div");
-
-      Sortable.create(target, {
-        animation: 180,
-        delay: 0,
-        onEnd: e => {
-          const oldItem = this.header[e.oldIndex + this.deviation];
-          this.header.splice(e.oldIndex + this.deviation, 1);
-          this.header.splice(e.newIndex + this.deviation, 0, oldItem);
-
-          this.$emit("update:tableHeader", this.header);
-        }
-      });
-    },
-
     // 密度
     onDensity(v) {
       switch (v) {
@@ -497,10 +469,6 @@ export default {
 
     if (this.colSort) {
       this.columnDrop();
-    }
-
-    if (this.showSettings) {
-      this.setDrop();
     }
   },
 
