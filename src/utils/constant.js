@@ -3,6 +3,12 @@
 
 export const ALL_STRING = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678" /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
 
+export const TABLE_COL_TYPE = {
+    LEFT: 'left',
+    COMMON: 'common',
+    RIGHT: 'right'
+}
+
 export const REGEX = {
     EMAIL: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
     PHONE: /^1[3456789]\d{9}$/,

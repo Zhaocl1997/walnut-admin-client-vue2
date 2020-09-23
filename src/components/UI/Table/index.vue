@@ -14,7 +14,7 @@
           <template v-if="hasFixedLeft">
             <span class="table-header__info">固定在左侧</span>
 
-            <w-header-column-item :header.sync="header" @change="onChange" type="left"></w-header-column-item>
+            <w-header-column-item :header.sync="header" type="left"></w-header-column-item>
 
             <el-divider></el-divider>
           </template>
@@ -25,7 +25,7 @@
             <w-button class="reset-button" type="text" @click="onReset">重置</w-button>
           </span>
 
-          <w-header-column-item :header.sync="header" @change="onChange"></w-header-column-item>
+          <w-header-column-item :header.sync="header" type="common"></w-header-column-item>
 
           <!-- 右侧固定 -->
           <template v-if="hasFixedRight">
@@ -33,7 +33,7 @@
 
             <span class="table-header__info">固定在右侧</span>
 
-            <w-header-column-item :header.sync="header" @change="onChange" type="right"></w-header-column-item>
+            <w-header-column-item :header.sync="header" type="right"></w-header-column-item>
           </template>
 
           <w-icon slot="reference" icon="setting" class="table-settings__icon"></w-icon>
@@ -232,24 +232,15 @@ export default {
     },
     hasFixedRight() {
       return this.header.find(i => i.fixed === "right");
-    },
-    leftFixedHeader() {
-      return this.header.filter(i => i.fixed === "left");
-    },
-    rightFixedHeader() {
-      return this.header.filter(i => i.fixed === "right");
-    },
-    commonHeader() {
-      return this.header.filter(i => !i.fixed);
     }
   },
 
   watch: {
-    // tableHeader(newV) {
-    //   if (newV) {
-    //     this.header = newV;
-    //   }
-    // }
+    header(newV) {     
+      if (newV) {        
+        this.$emit("update:tableHeader", this.header);
+      }
+    }
   },
 
   props: {
@@ -393,12 +384,6 @@ export default {
           this.deviation += 1;
         }
       }
-    },
-
-    // 值变化时改变数组相应项
-    onChange(v) {
-      const index = this.header.findIndex(i => i.prop === v.prop);
-      this.$set(this.header, index, v);
     },
 
     // 行拖拽

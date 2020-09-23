@@ -1,12 +1,12 @@
 <template>
   <div :class="className">
     <ul>
-      <li
-        v-for="(item, index) in targetHeader"
-        :key="item.prop"
-        @click.stop.prevent="onClick(index)"
-      >
-        <div class="pointer" @mouseover="onMouseOver(index)" @mouseleave="onMouseLeave(index)">
+      <li v-for="item in groupHeader" :key="item.prop" @click.stop.prevent="onClick($event, item)">
+        <div
+          class="pointer"
+          @mouseover="onMouseOver($event, item)"
+          @mouseleave="onMouseLeave($event, item)"
+        >
           <w-icon icon="draggable" style="cursor:move;"></w-icon>
 
           <el-checkbox v-model="item.show" :disabled="item.disabled">
@@ -15,22 +15,26 @@
 
           <div style="float:right;" v-show="item.visible">
             <el-tooltip content="不固定" placement="top">
-              <w-icon v-if="!type" icon="vertical-align-middl" @click.stop="onReset(index)"></w-icon>
+              <w-icon
+                v-if="type !== TABLE_COL_TYPE.COMMON"
+                icon="vertical-align-middl"
+                @click.stop="onSetCommon($event, item)"
+              ></w-icon>
             </el-tooltip>
 
             <el-tooltip content="固定在列首" placement="top">
               <w-icon
-                v-if="type !== 'left'"
+                v-if="type !== TABLE_COL_TYPE.LEFT"
                 icon="vertical-align-top"
-                @click.stop="onSetStart(index)"
+                @click.stop="onSetStart($event, item)"
               ></w-icon>
             </el-tooltip>
 
             <el-tooltip content="固定在列尾" plalcement="top">
               <w-icon
-                v-if="type !== 'right'"
+                v-if="type !== TABLE_COL_TYPE.RIGHT"
                 icon="vertical-align-botto"
-                @click.stop="onSetEnd(index)"
+                @click.stop="onSetEnd($event, item)"
               ></w-icon>
             </el-tooltip>
           </div>
@@ -42,6 +46,7 @@
 
 <script>
 import Sortable from "sortablejs";
+import { TABLE_COL_TYPE } from "@/utils/constant";
 
 export default {
   name: "wTableColumnItem",
@@ -60,42 +65,26 @@ export default {
   mixins: [],
 
   data() {
-    return {};
+    return {
+      TABLE_COL_TYPE: TABLE_COL_TYPE
+    };
   },
 
   computed: {
     className() {
       return `table-header__main-${this.type}`;
     },
-    targetHeader: {
-      get() {
-        if (this.type) {
-          return this.header.filter(i => i.fixed == this.type);
-        } else {
-          return this.header.filter(i => !i.fixed);
-        }
-      },
-      set(newV) {
-        this.$emit("update:header", newV);
+    groupHeader() {
+      this.$emit("update:header", this.header);
+
+      if (
+        this.type === TABLE_COL_TYPE.LEFT ||
+        this.type === TABLE_COL_TYPE.RIGHT
+      ) {
+        return this.header.filter(i => i.fixed == this.type);
+      } else {
+        return this.header.filter(i => !i.fixed);
       }
-    },
-    leftDeviation() {
-      let ret = 0;
-      this.header.map(i => {
-        if (i.fixed && i.fixed === "left") {
-          ret += 1;
-        }
-      });
-      return ret;
-    },
-    commonDeviation() {
-      let ret = 0;
-      this.header.map(i => {
-        if (!i.fixed) {
-          ret += 1;
-        }
-      });
-      return ret;
     }
   },
 
@@ -107,6 +96,36 @@ export default {
   },
 
   methods: {
+    calcDeviation() {
+      let ret = 0;
+
+      switch (this.type) {
+        case TABLE_COL_TYPE.LEFT:
+          ret = 0;
+          break;
+
+        case TABLE_COL_TYPE.COMMON:
+          this.header.map(i => {
+            if (i.fixed && i.fixed === TABLE_COL_TYPE.LEFT) {
+              ret += 1;
+            }
+          });
+          break;
+
+        case TABLE_COL_TYPE.RIGHT:
+          this.header.map(i => {
+            if (i.fixed !== TABLE_COL_TYPE.RIGHT) {
+              ret += 1;
+            }
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      return ret;
+    },
     onSetDrag() {
       const target = document.querySelector(`.${this.className} ul`);
 
@@ -114,54 +133,75 @@ export default {
         animation: 180,
         delay: 0,
         onEnd: e => {
-          const oldItem = this.header[e.oldIndex];
-          this.header.splice(e.oldIndex, 1);
-          this.header.splice(e.newIndex, 0, oldItem);
+          const d = this.calcDeviation();
+
+          const oldItem = this.header[e.oldIndex + d];
+          this.header.splice(e.oldIndex + d, 1);
+          this.header.splice(e.newIndex + d, 0, oldItem);
         }
       });
     },
-    onClick(i) {
-      let index;
-      switch (this.type) {
-        case "left":
-          index = i;
-          break;
+    findItemIndex(item) {
+      const index = this.header.findIndex(i => i.prop === item.prop);
+      return index;
+    },
+    onClick(evt, item) {
+      const index = this.findItemIndex(item);
 
-        case "right":
-          index = i + this.leftDeviation + this.commonDeviation;
-          break;
+      this.$set(this.header, index, {
+        ...this.header[index],
+        show: !this.header[index].show
+      });
+    },
+    onMouseOver(evt, item) {
+      const index = this.findItemIndex(item);
 
-        default:
-          index = i + this.leftDeviation;
-          break;
-      }
-      this.header[index].show = !this.header[index].show;
-      // this.$emit("change", this.header[i]);
+      this.$set(this.header, index, {
+        ...this.header[index],
+        visible: true
+      });
     },
-    onSetStart(i) {
-      this.header[i].fixed = "left";
-      // this.$emit("change", this.header[i]);
+    onMouseLeave(evt, item) {
+      const index = this.findItemIndex(item);
+
+      this.$set(this.header, index, {
+        ...this.header[index],
+        visible: false
+      });
     },
-    onSetEnd(i) {
-      this.header[i].fixed = "right";
-      // this.$emit("change", this.header[i]);
+    onSetStart(evt, item) {
+      const index = this.findItemIndex(item);
+
+      this.$set(this.header, index, {
+        ...this.header[index],
+        fixed: TABLE_COL_TYPE.LEFT
+      });
     },
-    onReset(i) {
-      this.header[i].fixed = "";
-      // this.$emit("change", this.header[i]);
+    onSetEnd(evt, item) {
+      const index = this.findItemIndex(item);
+
+      this.$set(this.header, index, {
+        ...this.header[index],
+        fixed: TABLE_COL_TYPE.RIGHT
+      });
     },
-    onMouseOver(i) {
-      this.header[i].visible = true;
-    },
-    onMouseLeave(i) {
-      this.header[i].visible = false;
+    onSetCommon(evt, item) {
+      const index = this.findItemIndex(item);
+
+      delete this.header[index].fixed;
+
+      this.$set(this.header, index, {
+        ...this.header[index]
+      });
     }
   },
 
   created() {},
 
   mounted() {
-    this.onSetDrag();
+    this.$nextTick(() => {
+      this.onSetDrag();
+    });
   },
 
   beforeCreate() {},
@@ -181,9 +221,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table-header__main,
-.table-header__main-left,
-.table-header__main-right {
+.table-header__main-common {
   font-size: 16px;
   list-style: none;
   margin: 0;
