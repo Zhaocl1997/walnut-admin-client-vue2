@@ -6,6 +6,7 @@
           class="pointer"
           @mouseover="onMouseOver($event, item)"
           @mouseleave="onMouseLeave($event, item)"
+          :id="item.prop"
         >
           <w-icon icon="draggable" style="cursor:move;"></w-icon>
 
@@ -47,6 +48,7 @@
 <script>
 import Sortable from "sortablejs";
 import { TABLE_COL_TYPE } from "@/utils/constant";
+import { randomId } from "@/utils";
 
 export default {
   name: "wTableColumnItem",
@@ -66,7 +68,8 @@ export default {
 
   data() {
     return {
-      TABLE_COL_TYPE: TABLE_COL_TYPE
+      TABLE_COL_TYPE: TABLE_COL_TYPE,
+      style: {}
     };
   },
 
@@ -156,6 +159,9 @@ export default {
     onMouseOver(evt, item) {
       const index = this.findItemIndex(item);
 
+      const target = document.getElementById(item.prop);
+      target.style.backgroundColor = "rgba(240,248,255,.8)";
+
       this.$set(this.header, index, {
         ...this.header[index],
         visible: true
@@ -163,6 +169,9 @@ export default {
     },
     onMouseLeave(evt, item) {
       const index = this.findItemIndex(item);
+
+      const target = document.getElementById(item.prop);
+      target.style.backgroundColor = "";
 
       this.$set(this.header, index, {
         ...this.header[index],
