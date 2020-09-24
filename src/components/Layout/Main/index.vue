@@ -2,7 +2,9 @@
   <div id="main-wrapper">
     <w-header-tag></w-header-tag>
 
-    <div id="container">main</div>
+    <div id="content-container">
+      <router-view></router-view>
+    </div>
 
     <w-footer></w-footer>
   </div>

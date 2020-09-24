@@ -19,7 +19,7 @@ const service = axios.create({
 service.interceptors.request.use(config => {
     if (config.type === 'form') {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    }
+    }   
     config.headers['Authorization'] = 'Bearer ' + getToken()
     return config
 }, error => {
@@ -28,7 +28,7 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {   
-    console.log(res.data);
+    console.warn(res.data);
     
     return res.data
     

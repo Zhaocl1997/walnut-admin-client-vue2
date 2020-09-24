@@ -12,10 +12,6 @@ const routes = [
         ]
     },
     {
-        path: "/login",
-        hidden: true
-    },
-    {
         name: "System",
         path: "/system",
         redirect: "noRedirect",

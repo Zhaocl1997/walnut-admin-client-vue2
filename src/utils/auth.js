@@ -5,10 +5,7 @@ import ls from './localStorage'
 import config from './config'
 
 export function getToken() {
-    const user = ls.get(config.TOKEN_KEY)
-    if (user && user.token) {
-        return user.token
-    }
+    return ls.get(config.TOKEN_KEY)
 }
 
 export function setToken(token) {

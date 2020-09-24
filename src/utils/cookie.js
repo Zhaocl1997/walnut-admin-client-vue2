@@ -5,7 +5,7 @@ import crypto from "./crypto";
 
 const cookie = (function () {
     const set = (name, val, exdays = 7) => {
-        val = crypto.base64.en(val)
+        // val = crypto.base64.en(val)
 
         /* set expire time */
         const exdate = new Date()
@@ -25,7 +25,8 @@ const cookie = (function () {
                 if (arr[i].includes(name)) {
                     /* split again */
                     const val = arr[i].split('=')[1]
-                    result = crypto.base64.de(val)
+                    result = val
+                    // result = crypto.base64.de(val)
                 }
             }
         }

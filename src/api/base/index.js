@@ -10,12 +10,11 @@ export default class BaseAPI {
     }
 
     list() {
-        return async function index(params) {
+        const model = this.model
+        const action = this.action
+        return function index(params) {
             const url = `/api/v1/${model}/${action}`
-            const result = await axios.post(url, params)
-            if (result.status === true) {
-                return result.data
-            }
+            return axios.post(url, params)
         }
     }
 }

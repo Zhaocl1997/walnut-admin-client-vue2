@@ -67,13 +67,35 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Layout',
+    name: 'main',
     component: () => import(/* webpackChunkName: "main" */ '../layout/index.vue'),
     children: [
       {
         path: '/components',
         name: 'document',
         component: () => import(/* webpackChunkName: "document" */ '../views/Tools/Document/index.vue')
+      },
+      {
+        path: '/system',
+        name: 'system',
+        component: () => import(/* webpackChunkName: "system" */ '../views/System'),
+        children: [
+          {
+            path: 'user',
+            name: 'user',
+            component: () => import(/* webpackChunkName: "user" */ '../views/System/User')
+          },
+          {
+            path: 'role',
+            name: 'role',
+            component: () => import(/* webpackChunkName: "role" */ '../views/System/Role')
+          },
+          {
+            path: 'menu',
+            name: 'menu',
+            component: () => import(/* webpackChunkName: "menu" */ '../views/System/Menu')
+          }
+        ]
       }
     ]
   }

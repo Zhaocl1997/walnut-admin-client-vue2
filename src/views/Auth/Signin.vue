@@ -138,16 +138,25 @@ export default {
           cookie.set("userpass", this.form.password);
         }
       });
+    },
+    setField() {
+      const name = cookie.get("username");
+      const pass = cookie.get("userpass");
+
+      if (name) {
+        this.$set(this.form, "name", name);
+      }
+
+      if (pass) {
+        this.$set(this.form, "password", pass);
+      }
     }
   },
 
   created() {},
 
   mounted() {
-    const name = cookie.get("username");
-    const pass = cookie.get("userpass");
-
-    console.log(name, pass);
+    this.setField();
   },
 
   beforeCreate() {},
