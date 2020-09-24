@@ -59,111 +59,109 @@
       </el-tooltip>
     </div>
 
-    <div class="w-table">
-      <el-table
-        ref="table"
-        :data="tableData"
-        :size="size"
-        :height="height"
-        :maxHeight="maxHeight"
-        :fit="fit"
-        :stripe="stripe"
-        :border="border"
-        :rowKey="rowKey"
-        :showHeader="showHeader"
-        :showSummary="showSummary"
-        :sumText="sumText"
-        :summaryMethod="summaryMethod"
-        :rowClassName="rowClassName"
-        :rowStyle="cRowStyle"
-        :cellClassName="cellClassName"
-        :cellStyle="cellStyle"
-        :headerRowClassName="headerRowClassName"
-        :headerRowStyle="headerRowStyle"
-        :headerCellClassName="headerCellClassName"
-        :headerCellStyle="headerCellStyle"
-        :highlightCurrentRow="highlightCurrentRow"
-        :currentRowKey="currentRowKey"
-        :emptyText="emptyText"
-        :expandRowKeys="expandRowKeys"
-        :defaultExpandAll="defaultExpandAll"
-        :defaultSort="defaultSort"
-        :tooltipEffect="tooltipEffect"
-        :spanMethod="spanMethod"
-        :selectOnIndeterminate="selectOnIndeterminate"
-        :indent="indent"
-        :treeProps="treeProps"
-        :lazy="lazy"
-        :load="load"
-        @sort-change="sortFuc"
-        @selection-change="selectFunc"
-      >
-        <!-- 多选 -->
-        <el-table-column
-          v-if="hasSelect"
-          type="selection"
-          width="50"
-          align="center"
-          fixed="left"
-          key="select"
-          :selectable="selectable"
-          :reserveSelection="reserveSelection"
-        ></el-table-column>
+    <el-table
+      ref="table"
+      :data="tableData"
+      :size="size"
+      :height="height"
+      :maxHeight="maxHeight"
+      :fit="fit"
+      :stripe="stripe"
+      :border="border"
+      :rowKey="rowKey"
+      :showHeader="showHeader"
+      :showSummary="showSummary"
+      :sumText="sumText"
+      :summaryMethod="summaryMethod"
+      :rowClassName="rowClassName"
+      :rowStyle="cRowStyle"
+      :cellClassName="cellClassName"
+      :cellStyle="cellStyle"
+      :headerRowClassName="headerRowClassName"
+      :headerRowStyle="headerRowStyle"
+      :headerCellClassName="headerCellClassName"
+      :headerCellStyle="headerCellStyle"
+      :highlightCurrentRow="highlightCurrentRow"
+      :currentRowKey="currentRowKey"
+      :emptyText="emptyText"
+      :expandRowKeys="expandRowKeys"
+      :defaultExpandAll="defaultExpandAll"
+      :defaultSort="defaultSort"
+      :tooltipEffect="tooltipEffect"
+      :spanMethod="spanMethod"
+      :selectOnIndeterminate="selectOnIndeterminate"
+      :indent="indent"
+      :treeProps="treeProps"
+      :lazy="lazy"
+      :load="load"
+      @sort-change="sortFuc"
+      @selection-change="selectFunc"
+    >
+      <!-- 多选 -->
+      <el-table-column
+        v-if="hasSelect"
+        type="selection"
+        width="50"
+        align="center"
+        fixed="left"
+        key="select"
+        :selectable="selectable"
+        :reserveSelection="reserveSelection"
+      ></el-table-column>
 
-        <!-- 序号 -->
+      <!-- 序号 -->
+      <el-table-column
+        v-if="hasIndex"
+        label="序号"
+        type="index"
+        width="50"
+        align="center"
+        fixed="left"
+        key="index"
+      >
+        <template slot-scope="scope">
+          <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
+        </template>
+      </el-table-column>
+
+      <template v-for="(item, index) in header">
+        <!-- 普通列和自定义列 -->
         <el-table-column
-          v-if="hasIndex"
-          label="序号"
-          type="index"
-          width="50"
-          align="center"
-          fixed="left"
-          key="index"
+          v-if="item.show"
+          :key="index"
+          :label="item.label"
+          :prop="item.prop"
+          :type="item.type"
+          :min-width="item.width"
+          :fixed="item.fixed"
+          :formatter="item.formatter"
+          :row-key="index.toString()"
+          :column-key="index.toString()"
+          :align="item.align ? item.align : 'center'"
+          :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
+          :sortable="item.sortable ? 'custom' : false"
+          :sort-orders="['ascending', 'descending']"
         >
           <template slot-scope="scope">
-            <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
+            <!-- 自定义列 -->
+            <slot v-if="item.slot" :row="scope.row" :index="scope.$index" :name="item.prop"></slot>
+            <!-- format列 -->
+            <span v-else-if="item.formatter">{{ item.formatter(scope.row, scope.column) }}</span>
+            <!-- 正常列 -->
+            <span v-else>{{ scope.row[item.prop] }}</span>
           </template>
         </el-table-column>
+      </template>
+    </el-table>
 
-        <template v-for="(item, index) in header">
-          <!-- 普通列和自定义列 -->
-          <el-table-column
-            v-if="item.show"
-            :key="index"
-            :label="item.label"
-            :prop="item.prop"
-            :type="item.type"
-            :min-width="item.width"
-            :fixed="item.fixed"
-            :formatter="item.formatter"
-            :row-key="index.toString()"
-            :column-key="index.toString()"
-            :align="item.align ? item.align : 'center'"
-            :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
-            :sortable="item.sortable ? 'custom' : false"
-            :sort-orders="['ascending', 'descending']"
-          >
-            <template slot-scope="scope">
-              <!-- 自定义列 -->
-              <slot v-if="item.slot" :row="scope.row" :index="scope.$index" :name="item.prop"></slot>
-              <!-- format列 -->
-              <span v-else-if="item.formatter">{{ item.formatter(scope.row, scope.column) }}</span>
-              <!-- 正常列 -->
-              <span v-else>{{ scope.row[item.prop] }}</span>
-            </template>
-          </el-table-column>
-        </template>
-      </el-table>
-
-      <!-- 分页 -->
-      <w-pagination
-        v-if="page"
-        :total="total"
-        :page.sync="myPageNum"
-        :limit.sync="myPageSize"
-        @pagination="listFunc"
-      ></w-pagination>
-    </div>
+    <!-- 分页 -->
+    <w-pagination
+      v-if="page"
+      :total="total"
+      :page.sync="myPageNum"
+      :limit.sync="myPageSize"
+      @pagination="listFunc"
+    ></w-pagination>
   </div>
 </template>
 
@@ -236,8 +234,8 @@ export default {
   },
 
   watch: {
-    header(newV) {     
-      if (newV) {        
+    header(newV) {
+      if (newV) {
         this.$emit("update:tableHeader", this.header);
       }
     }

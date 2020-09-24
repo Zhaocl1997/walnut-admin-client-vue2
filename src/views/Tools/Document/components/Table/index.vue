@@ -40,15 +40,12 @@ export default {
         {
           label: "姓名",
           prop: "name",
-          width: "100px",
-          disabled: true,
-          fixed: "left"
+          width: "100px"
         },
         {
           label: "性别",
           prop: "sex",
-          width: "50px",
-          fixed: "left"
+          width: "50px"
         },
         {
           label: "年龄",
@@ -78,14 +75,12 @@ export default {
         {
           label: "个人网址",
           prop: "site",
-          width: "100px",
-          fixed: "right"
+          width: "100px"
         },
         {
           label: "状态",
           prop: "status",
-          width: "100px",
-          fixed: "right"
+          width: "100px"
         }
       ],
       tableData: [],

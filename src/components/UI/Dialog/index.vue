@@ -8,7 +8,7 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :destroy-on-close="false"
-    top="5vh"
+    :top="top"
     append-to-body
     @close="onCancel"
     v-dialogDrag="dialogDrag"
@@ -68,7 +68,8 @@ export default {
     confirmText: { type: String, default: "确 定" },
     cancelText: { type: String, default: "取 消" },
 
-    width: { type: String, default: "80%" },
+    width: String,
+    top: String,
     fullscreen: { type: Boolean, default: false },
     center: { type: Boolean, default: false },
 

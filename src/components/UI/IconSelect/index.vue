@@ -12,6 +12,7 @@
       :dialogVisible.sync="visible"
       dialogTitle="选择你的图标"
       :footer="false"
+      top="2vh"
     >
       <w-input
         v-model="filters"
@@ -25,7 +26,7 @@
 
       <br />
 
-      <el-tabs v-model="activeName" tab-position="left" @tab-click="onTabClick">
+      <el-tabs class="mt10" v-model="activeName" tab-position="left" @tab-click="onTabClick">
         <el-tab-pane :label="key" :name="key" v-for="(val, key) in icons" :key="key">
           <div class="main-container">
             <template v-for="item in val">
@@ -133,7 +134,7 @@ export default {
 
 <style scoped>
 .main-container {
-  height: 50vh;
+  height: 65vh;
   overflow-y: scroll;
 }
 .main-container::-webkit-scrollbar {

@@ -15,14 +15,14 @@ const tags = [
         title: '首页'
     },
     {
-        fullPath: '/tool/components/document',
+        fullPath: '/components',
         hash: '',
         meta: {
             icon: 'component',
             title: '组件库'
         },
-        name: 'Components/document',
-        path: '/tool/components/document',
+        name: 'Components',
+        path: '/components',
         title: '组件库'
     }
 ]
