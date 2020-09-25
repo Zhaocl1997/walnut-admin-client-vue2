@@ -12,7 +12,11 @@
       :span="8"
       label-width="120px"
       mock
+      query
+      reset
       print
+      fold
+      default-fold
       popTitle="walnut-admin"
     >
       <div slot="formNumber">
@@ -171,7 +175,7 @@ export default {
         {
           wType: "Checkbox",
           prop: "formCheckbox",
-          label: "多选框表单项",
+          label: "勾选框表单项",
           text: "记住密码"
         }
       ],

@@ -18,7 +18,7 @@
     <!-- layout -->
     <el-row :gutter="gutter" id="form-items">
       <el-col
-        v-for="item in model"
+        v-for="item in formModel"
         :key="item.prop"
         :span="item.span ? item.span : span"
         :style="item.float ? `float:${item.float};text-align:${item.float}`: ''"
@@ -84,19 +84,58 @@
       </el-col>
     </el-row>
 
-    <div style="text-align:center;">
-      <w-button v-if="mock" type="primary" icon="el-icon-edit" class="mr10" @click="onMock">模 拟</w-button>
+    <!-- button slot -->
+    <el-form-item class="block" v-if="showAction">
+      <w-button v-if="mock" type="success" class="mr10" @click="onMock" tooltip tooltipContent="模拟">
+        <i class="el-icon-edit"></i>
+      </w-button>
 
-      <w-button v-if="mock" type="warning" class="mr10" icon="el-icon-delete" @click="onReset">清 空</w-button>
+      <w-button
+        v-if="query"
+        type="primary"
+        class="mr10"
+        @click="onQuery"
+        tooltip
+        tooltipContent="查询"
+      >
+        <i class="el-icon-search"></i>
+      </w-button>
 
-      <w-button v-if="query" type="primary" icon="el-icon-search" class="mr10" @click="onQuery">搜 索</w-button>
+      <w-button
+        v-if="reset"
+        type="warning"
+        class="mr10"
+        @click="onReset"
+        tooltip
+        tooltipContent="重置"
+      >
+        <i class="el-icon-refresh"></i>
+      </w-button>
 
-      <w-button v-if="query" type="warning" class="mr10" icon="el-icon-refresh" @click="onReset">重 置</w-button>
+      <w-button
+        v-if="print"
+        type="info"
+        class="mr10"
+        v-print="printObj"
+        tooltip
+        tooltipContent="打印"
+      >
+        <i class="el-icon-printer"></i>
+      </w-button>
 
-      <w-button v-if="print" type="info" icon="el-icon-printer" class="mr10" v-print="printObj">打 印</w-button>
+      <w-button
+        v-if="fold"
+        type="info"
+        class="mr10"
+        @click="onToggleFold"
+        tooltip
+        :tooltipContent="hidden ? '展开' : '收起'"
+      >
+        <i :class="hidden ? 'el-icon-arrow-down' : 'el-icon-arrow-up'" />
+      </w-button>
 
       <slot name="formButton" />
-    </div>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -132,15 +171,26 @@ export default {
   data() {
     return {
       FORM_TYPE: FORM_TYPE,
+      hidden: false,
+      formModel: this.model,
       printObj: {
         id: "form-items",
-        popTitle: this.popTitle,
-        extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>'
+        popTitle: this.popTitle
       }
     };
   },
 
-  computed: {},
+  computed: {
+    showAction() {
+      return (
+        this.mock ||
+        this.query ||
+        this.reset ||
+        this.print ||
+        this.$slots.formButton
+      );
+    }
+  },
 
   watch: {},
 
@@ -161,28 +211,44 @@ export default {
 
     // custom
     model: { type: Array, required: true },
-    query: Boolean,
     mock: Boolean,
+    query: Boolean,
+    reset: Boolean,
     print: Boolean,
+    fold: Boolean,
+    countToFold: { type: Number, default: 3 },
+    defaultFold: Boolean,
+
     span: Number,
     gutter: Number,
     popTitle: String
   },
 
   methods: {
-    onEnterKeyup() {
-      this.$emit("keyup");
+    onMock() {
+      const result = mockData(this.formModel);
+      this.$emit("input", result);
     },
     onQuery() {
       this.$emit("query");
     },
     onReset() {
       this.$refs.form.resetFields();
+      this.$emit("input", {});
       this.$emit("reset");
     },
-    onMock() {
-      const result = mockData(this.model);
-      this.$emit("input", result);
+    onToggleFold() {
+      this.hidden = !this.hidden;
+
+      if (!this.hidden) {
+        this.formModel = this.model;
+      } else {
+        this.formModel = this.model.slice(0, this.countToFold);
+      }
+    },
+
+    onEnterKeyup() {
+      this.$emit("keyup");
     },
     showItem(item, TYPE) {
       return item.wType === TYPE && !item.slot;
@@ -194,7 +260,12 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    if (this.defaultFold) {
+      this.hidden = true;
+      this.formModel = this.model.slice(0, this.countToFold);
+    }
+  },
 
   beforeCreate() {},
 

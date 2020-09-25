@@ -120,6 +120,10 @@ const mockData = options => {
                 }
                 break;
 
+            case FORM_TYPE.CHECKBOX:
+                result[e.prop] = Random.boolean()
+                break;
+
             default:
                 break;
         }

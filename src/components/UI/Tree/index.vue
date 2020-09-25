@@ -110,9 +110,7 @@ export default {
       if (this.multiple) {
         this.$refs.tree.setCheckedKeys(this.value);
       } else {
-        console.log("asdasd");
         this.$refs.tree.setChecked(this.value, true, false);
-        // this.$refs.tree.setCurrentKey(this.value);
       }
     },
 

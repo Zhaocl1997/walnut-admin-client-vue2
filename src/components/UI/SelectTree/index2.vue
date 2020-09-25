@@ -82,7 +82,6 @@ export default {
         this.$refs.tree.setCheckedKeys(this.value);
       } else {
         this.mineStatusValue = this.value;
-        console.log(this.mineStatusValue);
       }
     }, 2000);
   },
