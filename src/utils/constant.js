@@ -44,7 +44,12 @@ export const INPUT_TYPE = {
 
 export const DATE_TYPE = {
     DATE: 'date',
-    DATETIME: 'datetime'
+    DATETIME: 'datetime',
+    DATERANGE: 'daterange',
+    DATETIMERANGE: 'datetimerange',
+    WEEK: 'week',
+    MONTH: 'month',
+    YEAR: 'year'
 }
 
 export const TIME_TYPE = {

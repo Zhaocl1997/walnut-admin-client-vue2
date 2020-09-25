@@ -2,7 +2,7 @@
   <div id="main-wrapper">
     <w-header-tag></w-header-tag>
 
-    <div id="content-container">
+    <div id="main-container">
       <router-view></router-view>
     </div>
 
@@ -67,5 +67,9 @@ export default {
   padding: 10px;
 
   background-color: lightgrey;
+}
+
+#main-container {
+  background: rgba(236, 223, 223, 0.8);
 }
 </style>

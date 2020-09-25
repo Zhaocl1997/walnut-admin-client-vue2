@@ -24,6 +24,7 @@
 
     <el-time-picker
       v-if="type === 'picker'"
+      :isRange="isRange"
       v-model="selfValue"
       :readonly="readonly"
       :disabled="disabled"
@@ -87,7 +88,8 @@ export default {
     align: String,
     pickerOptions: Object,
     defaultValue: Date,
-    valueFormat: String
+    valueFormat: String,
+    isRange: Boolean
   },
 
   methods: {

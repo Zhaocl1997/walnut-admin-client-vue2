@@ -7,9 +7,11 @@
     :collapse-tags="collapse"
     :placeholder="placeholder"
     @clear="onClear"
+    @remove-tag="onRemoveTag"
   >
     <el-option :value="selfValue" style="min-height:200px;overflow-y:scroll;">
       <w-tree
+        ref="tree"
         v-model="selfValue"
         :data="data"
         :multiple="multiple"
@@ -89,10 +91,10 @@ export default {
 
   methods: {
     feedBack() {
-      if (!this.multiple) {
-        // console.log(123);
+      if (this.multiple) {
+        this.$refs.tree.$children[0].setCheckedKeys(this.value);
       } else {
-        // console.log(this.selfLabel);
+        this.selfValue = this.value;
       }
     },
 
@@ -115,6 +117,12 @@ export default {
     // clear
     onClear() {
       this.$emit("input", "");
+    },
+
+    onRemoveTag(v) {
+      console.log(v);
+      console.log(this.selfValue);
+      
     }
   },
 

@@ -108,9 +108,11 @@ export default {
   methods: {
     feedBack() {
       if (this.multiple) {
-       // this.$refs.tree.setCheckedKeys(this.value);
+        this.$refs.tree.setCheckedKeys(this.value);
       } else {
-      //  this.$refs.tree.setCurrentKey(this.value);
+        console.log("asdasd");
+        this.$refs.tree.setChecked(this.value, true, false);
+        // this.$refs.tree.setCurrentKey(this.value);
       }
     },
 

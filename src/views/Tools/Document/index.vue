@@ -14,36 +14,24 @@
           <input-area></input-area>
         </el-tab-pane>
 
-        <el-tab-pane label="wDate" name="wDate">
-          <date-area></date-area>
+        <el-tab-pane label="wSelect" name="wSelect">
+          <select-area></select-area>
         </el-tab-pane>
 
-        <el-tab-pane label="wCheckbox" name="wCheckbox">
-          <checkbox-area></checkbox-area>
+        <el-tab-pane label="wDate" name="wDate">
+          <date-area></date-area>
         </el-tab-pane>
 
         <el-tab-pane label="wTime" name="wTime">
           <time-area></time-area>
         </el-tab-pane>
 
-        <el-tab-pane label="wSelect" name="wSelect">
-          <select-area></select-area>
-        </el-tab-pane>
-
-        <el-tab-pane label="wEditor" name="wEditor">
-          <editor-area></editor-area>
-        </el-tab-pane>
-
-        <el-tab-pane label="wDialog" name="wDialog">
-          <dialog-area></dialog-area>
+        <el-tab-pane label="wTag" name="wTag">
+          <tag-area></tag-area>
         </el-tab-pane>
 
         <el-tab-pane label="wSwitch" name="wSwitch">
           <switch-area></switch-area>
-        </el-tab-pane>
-
-        <el-tab-pane label="wTag" name="wTag">
-          <tag-area></tag-area>
         </el-tab-pane>
 
         <el-tab-pane label="wTree" name="wTree">
@@ -52,6 +40,18 @@
 
         <el-tab-pane label="wSelectTree" name="wSelectTree">
           <select-tree-area></select-tree-area>
+        </el-tab-pane>
+
+        <el-tab-pane label="wCheckbox" name="wCheckbox">
+          <checkbox-area></checkbox-area>
+        </el-tab-pane>
+
+        <el-tab-pane label="wEditor" name="wEditor">
+          <editor-area></editor-area>
+        </el-tab-pane>
+
+        <el-tab-pane label="wDialog" name="wDialog">
+          <dialog-area></dialog-area>
         </el-tab-pane>
 
         <el-tab-pane label="wIconSelect" name="wIconSelect">
@@ -148,21 +148,7 @@ export default {
 
   created() {},
 
-  mounted() {
-    setTimeout(() => {
-      this.$log.capsule("标题1", "内容1", "primary");
-      this.$log.capsule("标题2", "内容2", "success");
-      this.$log.capsule("标题3", "内容3", "warning");
-      this.$log.capsule("标题4", "内容4", "danger");
-      this.$log.capsule("标题5", "内容5", "info");
-
-      this.$log.primary("打印1");
-      this.$log.success("打印2");
-      this.$log.warning("打印3");
-      this.$log.danger("打印4");
-      this.$log.info("打印5");
-    }, 1000);
-  },
+  mounted() {},
 
   beforeCreate() {},
 

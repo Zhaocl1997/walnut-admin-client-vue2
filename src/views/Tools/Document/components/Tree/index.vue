@@ -114,8 +114,8 @@ export default {
         }
       ],
 
-      tree1: "",
-      tree2: "",
+      tree1: 14,
+      tree2: [9, 17],
       tree3: "",
       tree4: "",
       tree5: ""

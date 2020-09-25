@@ -28,7 +28,7 @@
 
       <el-tabs class="mt10" v-model="activeName" tab-position="left" @tab-click="onTabClick">
         <el-tab-pane :label="key" :name="key" v-for="(val, key) in icons" :key="key">
-          <div class="main-container">
+          <div class="w-icon_main-con">
             <template v-for="item in val">
               <div class="icon-container" :key="item">
                 <w-icon :icon="item" class="icon-self" @click="onChoose(item)"></w-icon>
@@ -133,26 +133,26 @@ export default {
 </script>
 
 <style scoped>
-.main-container {
+.w-icon_main-con {
   height: 65vh;
   overflow-y: scroll;
 }
-.main-container::-webkit-scrollbar {
+.w-icon_main-con::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
 }
 
-.main-container::-webkit-scrollbar-thumb {
+.w-icon_main-con::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 10px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #535353;
 }
 
-.main-container::-webkit-scrollbar-track {
+.w-icon_main-con::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #ededed;
 }

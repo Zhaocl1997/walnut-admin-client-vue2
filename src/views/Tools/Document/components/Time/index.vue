@@ -1,10 +1,13 @@
 <template>
   <div class="center-item">
-    <p>w-time select当前绑定值：{{ time1 }}</p>
-    <w-time v-model="time1" type="select" placeholder="请选择时间"></w-time>
+    <p>w-time select时间：{{ time1 }}</p>
+    <w-time v-model="time1" type="select"></w-time>
 
-    <p>w-time picker当前绑定值：{{ time2 }}</p>
-    <w-time v-model="time2" type="picker" placeholder="请选择时间"></w-time>
+    <p>w-time picker时间：{{ time2 }}</p>
+    <w-time v-model="time2" type="picker"></w-time>
+
+    <p>w-time 时间范围：{{ time3 }}</p>
+    <w-time v-model="time3" type="picker" is-range></w-time>
   </div>
 </template>
 
