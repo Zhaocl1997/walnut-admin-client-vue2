@@ -7,13 +7,13 @@
     <w-checkbox v-model="checkboxInfo2" disabled>disabled</w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo3 }}</p>
-    <w-checkbox v-model="checkboxInfo3" :options="options">multiple</w-checkbox>
+    <w-checkbox v-model="checkboxInfo3" :options="options" multiple>multiple</w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo4 }}</p>
-    <w-checkbox v-model="checkboxInfo4" :options="options" multiple button>button-type</w-checkbox>
+    <w-checkbox v-model="checkboxInfo4" :options="options" multiple button>multiple-button</w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo5 }}</p>
-    <w-checkbox v-model="checkboxInfo5" :options="options" multiple border>border-type</w-checkbox>
+    <w-checkbox v-model="checkboxInfo5" :options="options" multiple border>multiple-border</w-checkbox>
   </div>
 </template>
 

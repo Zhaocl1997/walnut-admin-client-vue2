@@ -41,9 +41,9 @@
       </el-tooltip>
 
       <!-- 全屏 -->
-      <el-tooltip effect="dark" content="全屏" placement="top">
+      <!-- <el-tooltip effect="dark" content="全屏" placement="top"> -->
         <w-screenfull class="table-settings__icon" />
-      </el-tooltip>
+      <!-- </el-tooltip> -->
 
       <!-- 密度 -->
       <el-tooltip effect="dark" content="密度" placement="top">
@@ -95,7 +95,7 @@
       :lazy="lazy"
       :load="load"
       @sort-change="sortFuc"
-      @selection-change="selectFunc"
+      @selection-change="selectionChange"
     >
       <!-- 多选 -->
       <el-table-column
@@ -156,6 +156,7 @@
 
     <!-- 分页 -->
     <w-pagination
+      style="float:right"
       v-if="page"
       :total="total"
       :page.sync="myPageNum"
@@ -264,7 +265,7 @@ export default {
     reserveSelection: Boolean,
 
     listFunc: { type: Function, required: true },
-    selectFunc: { type: Function, default: () => {} },
+    selectionChange: { type: Function, default: () => {} },
     sortFuc: { type: Function, default: () => {} },
 
     // origin

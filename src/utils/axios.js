@@ -4,6 +4,7 @@
 import axios from 'axios'
 import { getToken } from './auth'
 import config from './config'
+import { Notification } from 'element-ui'
 
 // 创建axios实例
 const service = axios.create({
@@ -19,7 +20,7 @@ const service = axios.create({
 service.interceptors.request.use(config => {
     if (config.type === 'form') {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    }   
+    }
     config.headers['Authorization'] = 'Bearer ' + getToken()
     return config
 }, error => {
@@ -27,11 +28,41 @@ service.interceptors.request.use(config => {
 })
 
 // 响应拦截器
-service.interceptors.response.use(res => {   
-    console.warn(res.data);
-    
-    return res.data
-    
+service.interceptors.response.use(res => {
+    console.log(res);
+
+    switch (res.status) {
+        case 200:
+            switch (res.data.code) {
+                case '000000':
+                    return res.data.data
+
+                case '999999':
+                    return Notification.error({
+                        title: res.data.message
+                    })
+
+                default:
+                    break;
+            }
+            break;
+
+        case 400:
+            break;
+
+        case 401:
+            break;
+
+        case 404:
+            break;
+
+        case 500:
+            break;
+
+        default:
+            break;
+    }
+
     const code = res.data.code
     if (code === 401) {
         // MessageBox.confirm(
@@ -55,7 +86,9 @@ service.interceptors.response.use(res => {
         // })
         return Promise.reject('error')
     } else {
-        return res.data
+        if (res.data.code === '000000') {
+            return res.data.data
+        }
     }
 }, error => {
     console.log(error)
@@ -64,7 +97,7 @@ service.interceptors.response.use(res => {
     //     type: 'error',
     //     duration: 5 * 1000
     // })
-    // return Promise.reject(error)
+    return Promise.reject(error)
 })
 
 export default service

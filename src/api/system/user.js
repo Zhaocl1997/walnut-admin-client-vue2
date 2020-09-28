@@ -9,6 +9,10 @@ export function signin(data) {
     return axios.post(url, data)
 }
 
-const userBaseAPI = new BaseAPI('user', 'index')
+const userBaseAPI = new BaseAPI('user')
 
-export const getUserList = userBaseAPI.list()
+export const userIndex = userBaseAPI.index()
+export const userCreate = userBaseAPI.create()
+export const userRead = userBaseAPI.read()
+export const userUpdate = userBaseAPI.update()
+export const userDelete = userBaseAPI.delete()

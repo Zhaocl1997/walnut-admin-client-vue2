@@ -202,10 +202,10 @@ export default {
     labelPosition: String,
     labelWidth: String,
     hideRequiredAsterisk: Boolean,
-    showMessage: Boolean,
+    showMessage: { type: Boolean, default: true },
     inlineMessage: Boolean,
     statusIcon: Boolean,
-    validateOnRuleChange: Boolean,
+    validateOnRuleChange: { type: Boolean, default: true },
     size: String,
     disabled: Boolean,
 

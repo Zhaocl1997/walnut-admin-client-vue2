@@ -7,7 +7,7 @@
     :center="center"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
-    :destroy-on-close="false"
+    :destroy-on-close="destroyOnClose"
     :top="top"
     append-to-body
     @close="onCancel"
@@ -68,13 +68,14 @@ export default {
     confirmText: { type: String, default: "确 定" },
     cancelText: { type: String, default: "取 消" },
 
-    width: String,
+    width: { type: String, default: "30%" },
     top: String,
     fullscreen: { type: Boolean, default: false },
     center: { type: Boolean, default: false },
+    destroyOnClose: Boolean,
 
     loading: { type: String, default: "0" },
-    footer: { type: Boolean, default: true },
+    footer: Boolean,
     dialogDrag: { type: Array, default: () => [] }
   },
 

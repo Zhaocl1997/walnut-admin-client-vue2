@@ -2,19 +2,38 @@
 'use strict'
 
 import axios from '@/utils/axios'
+import settings from '@/utils/setting'
 
 export default class BaseAPI {
-    constructor(model, action) {
+    constructor(model) {
         this.model = model
-        this.action = action
     }
 
-    list() {
+    base(action) {
         const model = this.model
-        const action = this.action
         return function index(params) {
-            const url = `/api/v1/${model}/${action}`
+            const url = `/api/${settings.APIVersion}/${model}/${action}`
             return axios.post(url, params)
         }
+    }
+
+    index() {
+        return this.base('index')
+    }
+
+    create() {
+        return this.base('create')
+    }
+
+    read() {
+        return this.base('read')
+    }
+
+    update() {
+        return this.base('update')
+    }
+
+    delete() {
+        return this.base('delete')
     }
 }
