@@ -47,9 +47,9 @@ const user = {
     Signin({ commit }, data) {
       return new Promise((resolve, reject) => {
         signin(data)
-          .then(res => {
-            setToken(res.data.token)
-            commit(STORE_TYPES.SET_TOKEN, res.data.token)
+          .then(res => {            
+            setToken(res.token)
+            commit(STORE_TYPES.SET_TOKEN, res.token)
             router.push("/index")
             resolve()
           }).catch(e => {

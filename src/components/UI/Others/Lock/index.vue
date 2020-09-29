@@ -1,24 +1,30 @@
 <template>
-  <div class="center-show">
-    <p>w-editor 当前绑定值：{{ editorValue }}</p>
-    <w-editor v-model="editorValue"></w-editor>
+  <div>
+    <el-tooltip effect="dark" content="Lock" placement="bottom">
+      <w-icon icon="lock" @click="onLock"></w-icon>
+    </el-tooltip>
   </div>
 </template>
 
 <script>
-import wEditor from "@/components/UI/Base/Editor";
-
 export default {
-  name: "",
+  name: "wLock",
 
-  components: { wEditor },
+  inject: [],
+
+  provide() {},
+
+  model: {
+    event: "",
+    prop: ""
+  },
+
+  components: {},
 
   mixins: [],
 
   data() {
-    return {
-      editorValue: ""
-    };
+    return {};
   },
 
   computed: {},
@@ -27,7 +33,9 @@ export default {
 
   props: {},
 
-  methods: {},
+  methods: {
+    onLock() {}
+  },
 
   created() {},
 

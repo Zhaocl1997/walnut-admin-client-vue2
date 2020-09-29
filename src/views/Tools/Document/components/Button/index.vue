@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import wButton from "@/components/UI/Button";
+import wButton from "@/components/UI/Base/Button";
 
 export default {
   name: "",

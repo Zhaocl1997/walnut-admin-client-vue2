@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import wTime from "@/components/UI/Time";
+import wTime from "@/components/UI/Base/Time";
 
 export default {
   name: "",

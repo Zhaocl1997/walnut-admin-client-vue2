@@ -1,21 +1,21 @@
 <template>
   <div>
-    <w-header></w-header>
-    <w-sidebar></w-sidebar>
+    <the-header></the-header>
+    <the-sidebar></the-sidebar>
 
-    <w-main></w-main>
+    <the-main></the-main>
   </div>
 </template>
 
 <script>
-import wHeader from "@/components/Layout/Header";
-import wSidebar from "@/components/Layout/Sidebar";
-import wMain from "@/components/Layout/Main";
+import TheHeader from "@/components/Layout/TheHeader";
+import TheSidebar from "@/components/Layout/TheSidebar";
+import TheMain from "@/components/Layout/TheMain";
 
 export default {
   name: "wIndex",
 
-  components: { wHeader, wSidebar, wMain },
+  components: { TheHeader, TheSidebar, TheMain },
 
   mixins: [],
 

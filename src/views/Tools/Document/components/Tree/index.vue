@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import wTree from "@/components/UI/Tree";
+import wTree from "@/components/UI/Base/Tree";
 
 export default {
   name: "",

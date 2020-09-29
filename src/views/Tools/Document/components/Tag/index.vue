@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import wTag from "@/components/UI/Tag";
+import wTag from "@/components/UI/Base/Tag";
 
 export default {
   name: "",

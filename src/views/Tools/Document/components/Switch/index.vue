@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import wSwitch from "@/components/UI/Switch";
+import wSwitch from "@/components/UI/Base/Switch";
 
 export default {
   name: "",

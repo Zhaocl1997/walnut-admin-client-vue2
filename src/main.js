@@ -26,7 +26,7 @@ Vue.use(directive)
 
 import log from './utils/logs'
 import copy from './utils/clipboard'
-import { checkBox, openLoading } from '@/components/UI/Message'
+import { checkBox, openLoading } from '@/components/UI/Base/Message'
 
 Vue.prototype.$log = log
 Vue.prototype.$copy = copy

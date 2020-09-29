@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import wSelect from "@/components/UI/Select/index2";
+import wSelect from "@/components/UI/Base/Select/index2";
 
 export default {
   name: "",

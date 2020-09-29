@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import wIconSelect from "@/components/UI/IconSelect";
+import wIconSelect from "@/components/UI/Others/IconSelect";
 
 export default {
   name: "",

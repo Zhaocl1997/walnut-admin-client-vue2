@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import wButton from "@/components/UI/Button";
-import wDialog from "@/components/UI/Dialog";
+import wButton from "@/components/UI/Base/Button";
+import wDialog from "@/components/UI/Base/Dialog";
 
 export default {
   name: "",

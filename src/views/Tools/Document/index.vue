@@ -58,7 +58,7 @@
           <icon-select-area></icon-select-area>
         </el-tab-pane>
 
-        <el-tab-pane label="wHeaderItem" name="wHeaderItem">
+        <!-- <el-tab-pane label="wHeaderItem" name="wHeaderItem">
           <w-size-select></w-size-select>
           <w-theme-picker></w-theme-picker>
           <w-screen-full></w-screen-full>
@@ -66,7 +66,7 @@
           <w-avatar url="https://iot-avatar.oss-cn-hangzhou.aliyuncs.com/Avaritia.jpg"></w-avatar>
           <w-right-panel></w-right-panel>
           <w-lock></w-lock>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="wTable" name="wTable">
           <table-area></table-area>
@@ -93,13 +93,13 @@ import SelectTreeArea from "./components/SelectTree";
 import IconSelectArea from "./components/IconSelect";
 import TableArea from "./components/Table";
 
-import wSizeSelect from "@/components/UI/SizeSelect";
-import wScreenFull from "@/components/UI/Screenfull";
-import wGithub from "@/components/UI/Github";
-import wThemePicker from "@/components/UI/ThemePicker";
-import wAvatar from "@/components/UI/Avatar";
-import wRightPanel from "@/components/UI/RightPanel";
-import wLock from "@/components/UI/Lock";
+import wSizeSelect from "@/components/UI/Others/SizeSelect";
+import wScreenFull from "@/components/UI/Others/Screenfull";
+import wGithub from "@/components/UI/Others/Github";
+import wThemePicker from "@/components/UI/Others/ThemePicker";
+import wAvatar from "@/components/UI/Others/Avatar";
+import wRightPanel from "@/components/UI/Others/RightPanel";
+import wLock from "@/components/UI/Others/Lock";
 
 export default {
   name: "wDocument",

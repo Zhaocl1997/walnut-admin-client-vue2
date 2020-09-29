@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import wButton from "@/components/UI/Button";
-import wInput from "@/components/UI/Input";
+import wButton from "@/components/UI/Base/Button";
+import wInput from "@/components/UI/Base/Input";
 
 export default {
   name: "",

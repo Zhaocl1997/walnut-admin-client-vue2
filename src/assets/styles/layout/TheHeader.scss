@@ -1,0 +1,51 @@
+#header-container {
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  background: $custom;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  /*   .hamburger-container {
+    line-height: 46px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.025);
+    }
+  }
+
+  .breadcrumb-container {
+    float: left;
+  }
+
+  .errLog-container {
+    display: inline-block;
+    vertical-align: top;
+  } */
+
+  .header_left-container {
+  }
+
+  .header_right-container {
+    .header_right-item_con {
+      line-height: 50px;
+
+      .header-right-item {
+        cursor: pointer;
+        font-size: 24px;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      &.hover-effect {
+        transition: background 0.3s;
+      }
+    }
+  }
+}

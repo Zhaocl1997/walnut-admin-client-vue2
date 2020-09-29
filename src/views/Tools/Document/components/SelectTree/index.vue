@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import wSelectTree from "@/components/UI/SelectTree/index2";
+import wSelectTree from "@/components/UI/Base/SelectTree/index2";
 
 export default {
   name: "",

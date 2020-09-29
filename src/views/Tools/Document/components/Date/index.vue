@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import wDate from "@/components/UI/Date";
+import wDate from "@/components/UI/Base/Date";
 
 export default {
   name: "",

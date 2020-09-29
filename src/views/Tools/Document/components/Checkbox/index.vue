@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import wCheckbox from "@/components/UI/Checkbox";
+import wCheckbox from "@/components/UI/Base/Checkbox";
 
 export default {
   name: "",

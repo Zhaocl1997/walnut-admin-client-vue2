@@ -64,12 +64,13 @@
 </template>
 
 <script>
-import wInput from "@/components/UI/Input";
-import wButton from "@/components/UI/Button";
-import wTable from "@/components/UI/Table";
-import wForm from "@/components/UI/Form";
-import wDialog from "@/components/UI/Dialog";
-import wActionBox from "@/components/UI/ActionBox";
+import wInput from "@/components/UI/Base/Input";
+import wButton from "@/components/UI/Base/Button";
+import wTable from "@/components/UI/Base/Table";
+import wForm from "@/components/UI/Base/Form";
+import wDialog from "@/components/UI/Base/Dialog";
+
+import wActionBox from "@/components/UI/Advanced/ActionBox";
 
 import {
   userIndex,

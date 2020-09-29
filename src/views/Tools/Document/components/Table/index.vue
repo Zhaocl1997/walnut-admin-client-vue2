@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import wTable from "@/components/UI/Table";
+import wTable from "@/components/UI/Base/Table";
 import getDataList from "@/mock/table";
 
 export default {

@@ -77,8 +77,8 @@
 </template>
 
 <script>
-import wButton from "@/components/UI/Button";
-import wForm from "@/components/UI/Form";
+import wButton from "@/components/UI/Base/Button";
+import wForm from "@/components/UI/Base/Form";
 import cookie from "@/utils/cookie";
 
 export default {
