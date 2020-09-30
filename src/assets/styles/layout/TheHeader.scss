@@ -1,7 +1,15 @@
 #header-container {
-  height: 50px;
-  width: 100%;
+/*   height: 50px;
   position: fixed;
+  top: 0;
+  left: $sideBarWidth;
+  width: 100%;
+  background: $custom;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); */
+
+  height: 50px;
+  overflow: hidden;
+  position: relative;
   background: $custom;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 

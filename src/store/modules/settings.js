@@ -1,17 +1,23 @@
 
 'use strict'
 
-import variables from '@/assets/styles/element-variables.scss'
-import defaultSettings from '@/settings'
+// import variables from '@/assets/styles/element-variables.scss'
+// import defaultSettings from '@/settings'
 
-const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
+// const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
 
 const state = {
-  theme: variables.theme,
-  showSettings: showSettings,
-  tagsView: tagsView,
-  fixedHeader: fixedHeader,
-  sidebarLogo: sidebarLogo
+  // theme: variables.theme,
+  // showSettings: showSettings,
+  // tagsView: tagsView,
+  // fixedHeader: fixedHeader,
+  // sidebarLogo: sidebarLogo
+
+  headerRender: true,
+  logoRender: true,
+  sidebarRender: true,
+  tagsRender: true,
+  footerRender: true
 }
 
 const mutations = {
@@ -23,7 +29,7 @@ const mutations = {
 }
 
 const actions = {
-  changeSetting({ commit }, data) {
+  changeSettings({ commit }, data) {
     commit('CHANGE_SETTING', data)
   }
 }

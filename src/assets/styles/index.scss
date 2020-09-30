@@ -1,9 +1,13 @@
 @import "./global.scss";
 @import "./variables.scss";
 @import "./common.scss";
-@import "./layout/logo.scss";
+
+@import "./layout/TheFooter.scss";
 @import "./layout/TheHeader.scss";
-@import "./layout/sidebar.scss";
+@import "./layout/TheLogo.scss";
+@import "./layout/TheMain.scss";
+@import "./layout/TheSidebar.scss";
+@import "./layout/ThsTags.scss";
 
 * {
   margin: 0;
@@ -28,9 +32,8 @@ body {
   /* font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif; */
   box-sizing: border-box;
   font-size: 10px;
-  font-family: "Microsoft Yahei", "PingFang SC", Avenir, "Segoe UI",
-    "Hiragino Sans GB", STHeiti, "Microsoft Sans Serif", "WenQuanYi Micro Hei",
-    sans-serif;
+  font-family: "Microsoft Yahei", "PingFang SC", Avenir, "Segoe UI", "Hiragino Sans GB", STHeiti, "Microsoft Sans Serif",
+    "WenQuanYi Micro Hei", sans-serif;
 }
 
 a,

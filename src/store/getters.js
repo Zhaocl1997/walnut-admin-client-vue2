@@ -2,9 +2,11 @@
 'use strict'
 
 const getters = {
+  /* app */
   sidebar: state => state.app.sidebar,
-  size: state => state.app.size,
   device: state => state.app.device,
+  size: state => state.app.size,
+
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
   token: state => state.user.token,

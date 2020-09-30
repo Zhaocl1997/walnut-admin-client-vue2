@@ -1,23 +1,28 @@
 <template>
   <div id="main-wrapper">
-    <the-tags></the-tags>
+    <the-header v-if="headerRender"></the-header>
+    <the-tags v-if="tagsRender"></the-tags>
 
     <div id="main-container">
+      <w-settings></w-settings>
       <router-view></router-view>
     </div>
 
-    <the-footer></the-footer>
+    <the-footer v-if="footerRender"></the-footer>
   </div>
 </template>
 
 <script>
-import TheTags from "../TheTags";
-import TheFooter from "../TheFooter";
+import TheHeader from "@/components/Layout/TheHeader";
+import TheTags from "@/components/Layout/TheTags";
+import TheFooter from "@/components/Layout/TheFooter";
+
+import wSettings from "@/components/UI/Others/Settings";
 
 export default {
   name: "wMain",
 
-  components: { TheTags, TheFooter },
+  components: { TheHeader, TheTags, TheFooter, wSettings },
 
   mixins: [],
 
@@ -25,7 +30,17 @@ export default {
     return {};
   },
 
-  computed: {},
+  computed: {
+    headerRender() {
+      return this.$store.state.settings.headerRender;
+    },
+    tagsRender() {
+      return this.$store.state.settings.tagsRender;
+    },
+    footerRender() {
+      return this.$store.state.settings.footerRender;
+    }
+  },
 
   watch: {},
 
@@ -56,15 +71,10 @@ export default {
 <style scoped>
 #main-wrapper {
   position: absolute;
-  top: 50px;
+  top: 0;
   left: 200px;
   bottom: 0;
   right: 0;
-
-  height: calc(100% - 50px);
-  height: -webkit-calc(100% - 50px);
-  height: -moz-calc(100% - 50px);
-  padding: 10px;
 
   background-color: lightgrey;
 }

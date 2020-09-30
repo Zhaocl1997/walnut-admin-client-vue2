@@ -24,9 +24,13 @@ Vue.use(Print)
 import directive from '@/directive'
 Vue.use(directive)
 
+import wIcon from '@/components/UI/Base/Icons'
+Vue.component('w-icon', wIcon)
+
 import log from './utils/logs'
 import copy from './utils/clipboard'
 import { checkBox, openLoading } from '@/components/UI/Base/Message'
+
 
 Vue.prototype.$log = log
 Vue.prototype.$copy = copy

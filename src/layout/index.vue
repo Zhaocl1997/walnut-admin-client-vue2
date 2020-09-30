@@ -1,21 +1,18 @@
 <template>
   <div>
-    <the-header></the-header>
-    <the-sidebar></the-sidebar>
-
+    <the-sidebar v-if="sidebarRender"></the-sidebar>
     <the-main></the-main>
   </div>
 </template>
 
 <script>
-import TheHeader from "@/components/Layout/TheHeader";
 import TheSidebar from "@/components/Layout/TheSidebar";
 import TheMain from "@/components/Layout/TheMain";
 
 export default {
   name: "wIndex",
 
-  components: { TheHeader, TheSidebar, TheMain },
+  components: { TheSidebar, TheMain },
 
   mixins: [],
 
@@ -23,7 +20,11 @@ export default {
     return {};
   },
 
-  computed: {},
+  computed: {
+    sidebarRender() {
+      return this.$store.state.settings.sidebarRender;
+    }
+  },
 
   mixins: [],
 

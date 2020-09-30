@@ -1,7 +1,8 @@
 <template>
   <div id="sidebar-container">
     <div :class="{'has-logo':showLogo}">
-      <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
+      <the-logo v-if="logoRender" />
+
       <el-scrollbar wrap-class="scrollbar-wrapper">
         <el-menu
           :default-active="activeMenu"
@@ -27,7 +28,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import Logo from "./Logo";
+
+import TheLogo from "../TheLogo";
 import sidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/variables.scss";
 import routes from "@/utils/routes";
@@ -35,7 +37,7 @@ import routes from "@/utils/routes";
 export default {
   name: "wSidebar",
 
-  components: { sidebarItem },
+  components: { TheLogo, sidebarItem },
 
   mixins: [],
 
@@ -48,6 +50,10 @@ export default {
   computed: {
     // ...mapGetters(["permission_routes", "sidebar"]),
     ...mapGetters(["sidebar"]),
+
+    logoRender() {
+      return this.$store.state.settings.logoRender;
+    },
 
     activeMenu() {
       const route = this.$route;

@@ -98,7 +98,6 @@ import wScreenFull from "@/components/UI/Others/Screenfull";
 import wGithub from "@/components/UI/Others/Github";
 import wThemePicker from "@/components/UI/Others/ThemePicker";
 import wAvatar from "@/components/UI/Others/Avatar";
-import wRightPanel from "@/components/UI/Others/RightPanel";
 import wLock from "@/components/UI/Others/Lock";
 
 export default {
@@ -126,7 +125,6 @@ export default {
     wGithub,
     wThemePicker,
     wAvatar,
-    wRightPanel,
     wLock
   },
 
