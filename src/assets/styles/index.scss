@@ -1,6 +1,7 @@
 @import "./global.scss";
 @import "./variables.scss";
 @import "./common.scss";
+@import "./transition.scss";
 
 @import "./layout/TheFooter.scss";
 @import "./layout/TheHeader.scss";
@@ -31,6 +32,7 @@ body,
 body {
   /* font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif; */
   box-sizing: border-box;
+  overflow: hidden;
   font-size: 10px;
   font-family: "Microsoft Yahei", "PingFang SC", Avenir, "Segoe UI", "Hiragino Sans GB", STHeiti, "Microsoft Sans Serif",
     "WenQuanYi Micro Hei", sans-serif;

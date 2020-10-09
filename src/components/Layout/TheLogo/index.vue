@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import logo from "@/assets/img/logo/logo.png";
+import logo from "@/assets/logo.png";
 import { title } from "@/utils/setting";
 
 export default {

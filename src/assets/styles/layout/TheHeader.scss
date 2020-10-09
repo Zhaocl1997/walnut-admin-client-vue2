@@ -1,5 +1,5 @@
 #header-container {
-/*   height: 50px;
+  /*   height: 50px;
   position: fixed;
   top: 0;
   left: $sideBarWidth;
@@ -7,11 +7,10 @@
   background: $custom;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); */
 
-  height: 50px;
-  overflow: hidden;
-  position: relative;
+  height: $--layout-headerHeight;
+  z-index: $--layout-zindex;
   background: $custom;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 
   /*   .hamburger-container {
     line-height: 46px;

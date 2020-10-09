@@ -1,0 +1,10 @@
+#main-wrapper {
+    height: 100%;
+    transition: margin-left 0.28s;
+    margin-left: $--layout-sideBarWidth;
+}
+
+#main-container {
+    height: calc(100vh - #{$--layout-headerHeight} - #{$--layout-tagsHeight} - #{$--layout-footerHeight});
+    background: rgba(177, 171, 171, 0.8);
+}

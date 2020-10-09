@@ -4,9 +4,10 @@
     <the-tags v-if="tagsRender"></the-tags>
 
     <div id="main-container">
-      <w-settings></w-settings>
       <router-view></router-view>
     </div>
+
+    <w-settings></w-settings>
 
     <the-footer v-if="footerRender"></the-footer>
   </div>
@@ -68,18 +69,5 @@ export default {
 };
 </script>
 
-<style scoped>
-#main-wrapper {
-  position: absolute;
-  top: 0;
-  left: 200px;
-  bottom: 0;
-  right: 0;
-
-  background-color: lightgrey;
-}
-
-#main-container {
-  background: rgba(236, 223, 223, 0.8);
-}
+<style lang="scss" scoped>
 </style>
