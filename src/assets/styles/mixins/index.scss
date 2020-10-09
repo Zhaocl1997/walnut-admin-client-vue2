@@ -1,0 +1,10 @@
+@mixin sidebarRender($width) {
+    margin-left: $width;
+    [sidebarRender="false"] & {
+        margin-left: 0;
+    }
+
+    [sidebarRender="true"] & {
+        margin-left: $--layout-sideBarWidth;
+    }
+}

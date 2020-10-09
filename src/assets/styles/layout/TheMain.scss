@@ -1,7 +1,7 @@
 #main-wrapper {
     height: 100%;
-    transition: margin-left 0.28s;
-    margin-left: $--layout-sideBarWidth;
+    transition: margin-left 0.3s;
+    @include sidebarRender($--layout-sideBarWidth);
 }
 
 #main-container {

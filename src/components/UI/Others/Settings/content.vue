@@ -84,6 +84,11 @@ export default {
         return this.$store.state.settings.sidebarRender;
       },
       set(val) {
+        window.document.documentElement.setAttribute(
+          "sidebarRender",
+          val.toString()
+        );
+
         this.$store.dispatch("settings/changeSettings", {
           key: "sidebarRender",
           value: val
