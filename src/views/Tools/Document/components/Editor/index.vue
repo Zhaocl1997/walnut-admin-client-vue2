@@ -1,5 +1,5 @@
 <template>
-  <div class="center-show">
+  <div>
     <p>w-editor 当前绑定值：{{ editorValue }}</p>
     <w-editor v-model="editorValue"></w-editor>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="mb10">
+    <el-card class="u-mb10">
       <w-action-box
         :number="selected.length"
         @create="onCreate"

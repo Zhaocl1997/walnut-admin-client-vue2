@@ -7,7 +7,7 @@
     :content="computedTooltipContent"
   >
     <el-popover placement="right" width="180" trigger="manual" v-model="popoverVisible">
-      <div class="mb8">
+      <div class="u-mb8">
         <i class="el-icon-warning" /> 提示
       </div>
       <div style="color:orangered;">{{ popoverContent }}</div>

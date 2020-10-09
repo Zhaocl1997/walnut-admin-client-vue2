@@ -1,0 +1,3 @@
+@function mainHeight($header, $tags, $footers) {
+  @return calc(100vh - #{$header} - #{$tags} - #{$footers});
+}

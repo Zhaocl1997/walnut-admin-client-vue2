@@ -1,0 +1,16 @@
+#main-wrapper {
+  height: 100%;
+  transition: margin-left 0.3s;
+  @include toggleSidebar($--layout-sideBarWidth);
+}
+
+#main-container {
+  /* @include toggleMain(); */
+  height: mainHeight(
+    $--layout-headerHeight,
+    $--layout-tagsHeight,
+    $--layout-footerHeight
+  );
+
+  background: rgba(177, 171, 171, 0.8);
+}

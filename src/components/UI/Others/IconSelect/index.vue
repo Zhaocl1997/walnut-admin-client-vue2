@@ -26,7 +26,7 @@
 
       <br />
 
-      <el-tabs class="mt10" v-model="activeName" tab-position="left" @tab-click="onTabClick">
+      <el-tabs class="u-mt10" v-model="activeName" tab-position="left" @tab-click="onTabClick">
         <el-tab-pane :label="key" :name="key" v-for="(val, key) in icons" :key="key">
           <div class="w-icon_main-con">
             <template v-for="item in val">

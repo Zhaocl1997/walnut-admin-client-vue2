@@ -36,7 +36,19 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    this.$log.primary("primary");
+    this.$log.success("success");
+    this.$log.warning("warning");
+    this.$log.danger("danger");
+    this.$log.info("info");
+
+    this.$log.capsule("title1", "capsule1", "primary");
+    this.$log.capsule("title2", "capsule2", "success");
+    this.$log.capsule("title3", "capsule3", "warning");
+    this.$log.capsule("title4", "capsule4", "danger");
+    this.$log.capsule("title5", "capsule5", "info");
+  },
 
   beforeCreate() {},
 

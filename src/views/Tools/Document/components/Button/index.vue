@@ -2,7 +2,7 @@
   <div>
     <p>w-button 当前绑定值：{{ buttonInfo }}</p>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" delay="10" block>延迟按钮</w-button>
       <w-button @click="onClick" loading="10">加载按钮</w-button>
       <w-button @click="onClick" tooltip>轻提示按钮</w-button>
@@ -15,7 +15,7 @@
       >确认框按钮</w-button>
     </div>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" disabled>默认按钮</w-button>
       <w-button @click="onClick" type="primary">主要按钮</w-button>
       <w-button @click="onClick" type="success">成功按钮</w-button>
@@ -24,7 +24,7 @@
       <w-button @click="onClick" type="danger">危险按钮</w-button>
     </div>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" plain disabled>朴素按钮</w-button>
       <w-button @click="onClick" type="primary" plain>主要按钮</w-button>
       <w-button @click="onClick" type="success" plain>成功按钮</w-button>
@@ -33,7 +33,7 @@
       <w-button @click="onClick" type="danger" plain>危险按钮</w-button>
     </div>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" round disabled>圆角按钮</w-button>
       <w-button @click="onClick" type="primary" round>主要按钮</w-button>
       <w-button @click="onClick" type="success" round>成功按钮</w-button>
@@ -42,7 +42,7 @@
       <w-button @click="onClick" type="danger" round>危险按钮</w-button>
     </div>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" icon="el-icon-search" circle></w-button>
       <w-button @click="onClick" type="primary" icon="el-icon-edit" circle></w-button>
       <w-button @click="onClick" type="success" icon="el-icon-check" circle></w-button>
@@ -51,7 +51,7 @@
       <w-button @click="onClick" type="danger" icon="el-icon-delete" circle></w-button>
     </div>
 
-    <div class="mb8">
+    <div class="u-mb8">
       <w-button @click="onClick" type="text">文字按钮</w-button>
       <w-button @click="onClick" type="text" disabled>文字按钮</w-button>
     </div>

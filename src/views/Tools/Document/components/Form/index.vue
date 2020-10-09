@@ -1,5 +1,5 @@
 <template>
-  <div class="center-show">
+  <div>
     <p>w-form 当前绑定值：{{ form }}</p>
     <div style="width:80%;margin:auto;">
       <el-slider v-model="gutter"></el-slider>

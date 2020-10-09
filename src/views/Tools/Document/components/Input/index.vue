@@ -2,7 +2,7 @@
   <div class="center-item">
     <p>w-input 当前绑定值：{{ input1 }}</p>
     <w-input v-model="input1" placeholder="普通输入框" clearable tooltip block>
-      <w-icon class="pointer" icon="file-copy" slot="append" @click="onCopy"></w-icon>
+      <w-icon class="u-pointer" icon="file-copy" slot="append" @click="onCopy"></w-icon>
     </w-input>
 
     <p>w-input 当前绑定值：{{ input2 }}</p>

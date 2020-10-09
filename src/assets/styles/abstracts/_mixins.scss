@@ -1,0 +1,102 @@
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// layout css
+@mixin toggleSidebar($width) {
+  margin-left: $width;
+  [toggleSidebar="false"] & {
+    margin-left: 0;
+  }
+
+  [toggleSidebar="true"] & {
+    margin-left: $--layout-sideBarWidth;
+  }
+}
+
+@mixin toggleHeader($header: $--layout-headerHeight) {
+  height: $header;
+
+  [toggleHeader="false"] & {
+    height: 0;
+  }
+
+  [toggleHeader="true"] & {
+    height: $header;
+  }
+}
+
+@mixin toggleMain(
+  $header: $--layout-headerHeight,
+  $tags: $--layout-tagsHeight,
+  $footer: $--layout-footerHeight
+) {
+  height: calc(100vh - #{$header} - #{$tags} - #{$footer});
+
+  [toggleMain="false"] & {
+    height: calc(100vh - #{$header} - #{$tags} - #{$footer});
+  }
+
+  [toggleMain="true"] & {
+    height: calc(100vh - #{$header} - #{$tags} - #{$footer});
+  }
+}
+
+// MEDIA QUERY MANAGER
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    // 600px
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-port {
+    // 900px
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-land {
+    // 1200px
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == big-desktop {
+    // 1800px
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    }
+  }
+}

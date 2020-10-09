@@ -85,15 +85,22 @@
     </el-row>
 
     <!-- button slot -->
-    <el-form-item class="block" v-if="showAction">
-      <w-button v-if="mock" type="success" class="mr10" @click="onMock" tooltip tooltipContent="模拟">
+    <el-form-item class="u-block" v-if="showAction">
+      <w-button
+        v-if="mock"
+        type="success"
+        class="u-mr10"
+        @click="onMock"
+        tooltip
+        tooltipContent="模拟"
+      >
         <i class="el-icon-edit"></i>
       </w-button>
 
       <w-button
         v-if="query"
         type="primary"
-        class="mr10"
+        class="u-mr10"
         @click="onQuery"
         tooltip
         tooltipContent="查询"
@@ -104,7 +111,7 @@
       <w-button
         v-if="reset"
         type="warning"
-        class="mr10"
+        class="u-mr10"
         @click="onReset"
         tooltip
         tooltipContent="重置"
@@ -115,7 +122,7 @@
       <w-button
         v-if="print"
         type="info"
-        class="mr10"
+        class="u-mr10"
         v-print="printObj"
         tooltip
         tooltipContent="打印"
@@ -126,7 +133,7 @@
       <w-button
         v-if="fold"
         type="info"
-        class="mr10"
+        class="u-mr10"
         @click="onToggleFold"
         tooltip
         :tooltipContent="hidden ? '展开' : '收起'"

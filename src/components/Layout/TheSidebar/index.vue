@@ -31,7 +31,7 @@ import { mapGetters } from "vuex";
 
 import TheLogo from "../TheLogo";
 import sidebarItem from "./SidebarItem";
-import variables from "@/assets/styles/variables.scss";
+import variables from "@/assets/styles/abstracts/_variables.scss";
 import routes from "@/utils/routes";
 
 export default {

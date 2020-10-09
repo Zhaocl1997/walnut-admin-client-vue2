@@ -8,11 +8,10 @@ import router from './router'
 import store from './store'
 
 import './assets/icons' // icon
-import './assets/styles/index.scss' // style
+import './assets/styles/main.scss' // style
 
 import Element from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
-import './assets/styles/element-variables.scss'
+import './assets/styles/vendors/_element.scss'
 
 Vue.use(Element, {
   size: store.getters.size

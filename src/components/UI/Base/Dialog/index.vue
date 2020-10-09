@@ -19,7 +19,7 @@
       <span>{{ dialogTitle }}</span>
       <el-tooltip
         v-if="dialogDrag.includes('fullscreen')"
-        class="ml8"
+        class="u-ml8"
         effect="dark"
         content="双击头部可全屏对话框"
         placement="right"

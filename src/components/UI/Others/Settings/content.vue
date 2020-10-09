@@ -14,7 +14,7 @@
 
       <div class="drawer-item">
         <span>Logo</span>
-        <el-switch v-model="logoRender" class="drawer-switch" />
+        <el-switch v-model="logoRender" :disabled="!sidebarRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -62,6 +62,11 @@ export default {
         return this.$store.state.settings.headerRender;
       },
       set(val) {
+        window.document.documentElement.setAttribute(
+          "toggleHeader",
+          val.toString()
+        );
+
         this.$store.dispatch("settings/changeSettings", {
           key: "headerRender",
           value: val
@@ -85,7 +90,7 @@ export default {
       },
       set(val) {
         window.document.documentElement.setAttribute(
-          "sidebarRender",
+          "toggleSidebar",
           val.toString()
         );
 

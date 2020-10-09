@@ -1,7 +1,7 @@
 
 'use strict'
 
-import variables from '@/assets/styles/element-variables.scss'
+import variables from '@/assets/styles/vendors/_element.scss'
 import { THEME_TYPE } from './constant'
 
 const log = {}

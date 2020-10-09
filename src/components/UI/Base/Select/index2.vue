@@ -239,8 +239,6 @@ export default {
         return;
       }
 
-      this.$log.success("123123");
-
       this.selfLoading = true;
 
       const res = await this.initFunc(this.queryParams);

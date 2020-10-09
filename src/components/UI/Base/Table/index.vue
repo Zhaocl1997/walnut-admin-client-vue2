@@ -1,7 +1,7 @@
 <template>
   <div class="w-table">
     <!-- 右边table设置区域 -->
-    <div class="mb8" style="float:right;" v-if="showSettings">
+    <div class="u-mb8" style="float:right;" v-if="showSettings">
       <!-- 刷新 -->
       <el-tooltip effect="dark" content="刷新" placement="top">
         <w-icon icon="sync" class="table-settings__icon" @click="listFunc"></w-icon>

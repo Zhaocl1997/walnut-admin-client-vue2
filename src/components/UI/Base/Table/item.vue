@@ -3,7 +3,7 @@
     <ul>
       <li v-for="item in groupHeader" :key="item.prop" @click.stop.prevent="onClick($event, item)">
         <div
-          class="pointer"
+          class="u-pointer"
           @mouseover="onMouseOver($event, item)"
           @mouseleave="onMouseLeave($event, item)"
           :id="item.prop"
@@ -11,7 +11,7 @@
           <w-icon icon="draggable" style="cursor:move;"></w-icon>
 
           <el-checkbox v-model="item.show" :disabled="item.disabled">
-            <span class="one-line" style="max-width:150px;padding-right:20px;">{{ item.label }}</span>
+            <span class="u-one-line" style="max-width:150px;padding-right:20px;">{{ item.label }}</span>
           </el-checkbox>
 
           <div style="float:right;" v-show="item.visible">

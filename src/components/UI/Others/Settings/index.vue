@@ -151,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/element-variables";
+@import "@/assets/styles/vendors/_element.scss";
 
 .draggable-container {
   position: fixed;
