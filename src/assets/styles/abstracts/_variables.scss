@@ -43,9 +43,9 @@ $--layout-zindex: 1001;
   subMenuHover: $subMenuHover;
   subMenuHoverText: $subMenuHoverText;
 
-  $--layout-sideBarWidth: $--layout-sideBarWidth;
-  $--layout-tagsHeight: $--layout-tagsHeight;
-  $--layout-footerHeight: $--layout-footerHeight;
-  $--layout-headerHeight: $--layout-headerHeight;
-  $--layout-zindex: $--layout-zindex;
+  layout_sideBarWidth: $--layout-sideBarWidth;
+  layout_tagsHeight: $--layout-tagsHeight;
+  layout_footerHeight: $--layout-footerHeight;
+  layout_headerHeight: $--layout-headerHeight;
+  layout_zindex: $--layout-zindex;
 }

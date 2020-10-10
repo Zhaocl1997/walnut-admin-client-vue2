@@ -3,7 +3,7 @@
     <the-header v-if="headerRender"></the-header>
     <the-tags v-if="tagsRender"></the-tags>
 
-    <div id="main-container">
+    <div :style="style" id="main-container">
       <router-view></router-view>
     </div>
 
@@ -17,8 +17,9 @@
 import TheHeader from "@/components/Layout/TheHeader";
 import TheTags from "@/components/Layout/TheTags";
 import TheFooter from "@/components/Layout/TheFooter";
-
 import wSettings from "@/components/UI/Others/Settings";
+
+import layoutSettings from "@/assets/styles/abstracts/_variables.scss";
 
 export default {
   name: "wMain",
@@ -40,6 +41,21 @@ export default {
     },
     footerRender() {
       return this.$store.state.settings.footerRender;
+    },
+    layoutSettings() {
+      return layoutSettings;
+    },
+    style() {
+      return {
+        height:
+          "calc(100vh - " +
+          this.layoutSettings.layout_footerHeight +
+          " - " +
+          this.layoutSettings.layout_headerHeight +
+          " - " +
+          this.layoutSettings.layout_tagsHeight +
+          ")"
+      };
     }
   },
 
@@ -51,7 +67,9 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    console.log(this.style);
+  },
 
   beforeCreate() {},
 

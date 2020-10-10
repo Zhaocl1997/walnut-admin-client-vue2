@@ -6,11 +6,8 @@
 
 #main-container {
   /* @include toggleMain(); */
-  height: mainHeight(
-    $--layout-headerHeight,
-    $--layout-tagsHeight,
-    $--layout-footerHeight
-  );
+  /* height: calc(100vh - #{$--layout-headerHeight} - #{$--layout-tagsHeight} - #{$--layout-footerHeight}); */
+  /* height: mainHeight($--layout-headerHeight, $--layout-tagsHeight, $--layout-footerHeight); */
 
   background: rgba(177, 171, 171, 0.8);
 }

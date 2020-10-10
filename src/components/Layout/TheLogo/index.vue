@@ -37,7 +37,7 @@ export default {
   watch: {},
 
   props: {
-    collapse: { type: Boolean, required: true }
+    collapse: Boolean
   },
 
   methods: {},

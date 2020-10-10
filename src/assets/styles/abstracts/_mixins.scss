@@ -25,23 +25,19 @@
   }
 }
 
-@mixin toggleHeader($header: $--layout-headerHeight) {
-  height: $header;
+@mixin toggleHeader($height) {
+  height: $height;
 
   [toggleHeader="false"] & {
     height: 0;
   }
 
   [toggleHeader="true"] & {
-    height: $header;
+    height: $--layout-headerHeight;
   }
 }
 
-@mixin toggleMain(
-  $header: $--layout-headerHeight,
-  $tags: $--layout-tagsHeight,
-  $footer: $--layout-footerHeight
-) {
+@mixin toggleMain($header: $--layout-headerHeight, $tags: $--layout-tagsHeight, $footer: $--layout-footerHeight) {
   height: calc(100vh - #{$header} - #{$tags} - #{$footer});
 
   [toggleMain="false"] & {
