@@ -102,8 +102,6 @@ export default {
 
   data() {
     return {
-      format: undefined,
-
       queryFormData: {
         pageNum: 1,
         pageSize: 10
@@ -220,7 +218,8 @@ export default {
           label: "密码",
           placeholder: "请输入密码",
           type: "password",
-          slot: true
+          slot: true,
+          show: this.dialogTitle === "新增用户"
         },
         {
           wType: "Input",
@@ -246,6 +245,9 @@ export default {
           optionValue: "_id"
         }
       ];
+    },
+    format() {
+      return format;
     }
   },
 
@@ -256,7 +258,6 @@ export default {
   methods: {
     init() {
       this.getTableData();
-      this.format = format;
 
       roleIndex().then(res => {
         this.roleOptions = res.data;
@@ -271,6 +272,10 @@ export default {
     onUpdate() {
       this.dialogVisible = true;
       this.dialogTitle = "编辑用户";
+
+      userRead({ _id: this.selected[0]._id }).then(res => {
+        this.dialogFormData = res.data;
+      });
     },
 
     onDelete() {
@@ -300,7 +305,11 @@ export default {
       this.$refs.userForm.$children[0].validate(valid => {
         if (valid) {
           if (this.dialogFormData._id) {
-            console.log("update");
+            userUpdate(this.dialogFormData).then(res => {
+              this.$message.success("编辑成功");
+              this.onDialogCancel();
+              this.getTableData();
+            });
           } else {
             userCreate(this.dialogFormData).then(res => {
               this.$message.success("添加成功");

@@ -1,6 +1,16 @@
 #footer-container {
-    height: $--layout-footerHeight;
-    z-index: $--layout-zindex;
-    background: $custom;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100vw;
+
+  @include toggleSidebar($--layout-sidebar-width);
+  transition: margin-left 0.3s;
+
+  height: $--layout-footer-height;
+  z-index: $--layout-zindex;
+  background: $custom;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 }

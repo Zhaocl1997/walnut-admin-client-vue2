@@ -50,16 +50,24 @@ export default {
   mixins: [],
 
   data() {
-    return {};
+    return {
+      defaultExpandedKeys: []
+    };
   },
 
   computed: {},
 
-  watch: {},
+  watch: {
+    value(newV, oldV) {
+      if (newV && newV != oldV) {
+        this.feedBack();
+      }
+    }
+  },
 
   props: {
     // origin
-    data: { type: Array, required: true },
+    data: Array,
     emptyText: String,
 
     renderAfterExpand: Boolean,
@@ -73,7 +81,7 @@ export default {
 
     autoExpandParent: Boolean,
     defaultCheckedKeys: Array,
-    defaultExpandedKeys: Array,
+    // defaultExpandedKeys: Array,
     currentNodeKey: [String, Number],
     renderContent: Function,
     showCheckbox: Boolean,
@@ -83,7 +91,8 @@ export default {
     allowDrag: Function,
     allowDrop: Function,
     props: {
-      default() {
+      type: Object,
+      default: function() {
         return {
           children: "children",
           label: "label",
@@ -107,8 +116,12 @@ export default {
 
   methods: {
     feedBack() {
+      if (!this.value) {
+        return;
+      }
       if (this.multiple) {
         this.$refs.tree.setCheckedKeys(this.value);
+        this.defaultExpandedKeys = this.value;
       } else {
         this.$refs.tree.setChecked(this.value, true, false);
       }

@@ -17,7 +17,8 @@ const state = {
   logoRender: true,
   sidebarRender: true,
   tagsRender: true,
-  footerRender: true
+  footerRender: true,
+  sidebarCollapse: false
 }
 
 const mutations = {

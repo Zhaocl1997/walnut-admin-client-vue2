@@ -1,13 +1,13 @@
 #main-wrapper {
   height: 100%;
+  @include toggleSidebar($--layout-sidebar-width);
   transition: margin-left 0.3s;
-  @include toggleSidebar($--layout-sideBarWidth);
 }
 
 #main-container {
-  /* @include toggleMain(); */
-  /* height: calc(100vh - #{$--layout-headerHeight} - #{$--layout-tagsHeight} - #{$--layout-footerHeight}); */
-  /* height: mainHeight($--layout-headerHeight, $--layout-tagsHeight, $--layout-footerHeight); */
-
-  background: rgba(177, 171, 171, 0.8);
+  /* height: calc(
+    100vh - #{$--layout-header-height} - #{$--layout-tags-height} - #{$--layout-footer-height}
+  ); */
+  height: 100%;
+  padding: 1rem;
 }

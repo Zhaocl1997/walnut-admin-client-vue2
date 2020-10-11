@@ -62,11 +62,6 @@ export default {
         return this.$store.state.settings.headerRender;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "toggleHeader",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "headerRender",
           value: val

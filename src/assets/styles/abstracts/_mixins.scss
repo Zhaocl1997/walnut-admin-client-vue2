@@ -21,31 +21,7 @@
   }
 
   [toggleSidebar="true"] & {
-    margin-left: $--layout-sideBarWidth;
-  }
-}
-
-@mixin toggleHeader($height) {
-  height: $height;
-
-  [toggleHeader="false"] & {
-    height: 0;
-  }
-
-  [toggleHeader="true"] & {
-    height: $--layout-headerHeight;
-  }
-}
-
-@mixin toggleMain($header: $--layout-headerHeight, $tags: $--layout-tagsHeight, $footer: $--layout-footerHeight) {
-  height: calc(100vh - #{$header} - #{$tags} - #{$footer});
-
-  [toggleMain="false"] & {
-    height: calc(100vh - #{$header} - #{$tags} - #{$footer});
-  }
-
-  [toggleMain="true"] & {
-    height: calc(100vh - #{$header} - #{$tags} - #{$footer});
+    margin-left: $--layout-sidebar-width;
   }
 }
 

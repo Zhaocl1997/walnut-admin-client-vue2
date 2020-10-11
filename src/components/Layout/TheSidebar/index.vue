@@ -1,34 +1,30 @@
 <template>
   <div id="sidebar-container">
-    <div :class="{'has-logo':showLogo}">
-      <the-logo v-if="logoRender" />
+    <the-logo v-if="logoRender" :collapse="isCollapse" />
 
-      <el-scrollbar wrap-class="scrollbar-wrapper">
-        <el-menu
-          :default-active="activeMenu"
-          :collapse="isCollapse"
-          :background-color="variables.menuBg"
-          :text-color="variables.menuText"
-          :unique-opened="true"
-          :active-text-color="variables.menuActiveText"
-          :collapse-transition="false"
-          mode="vertical"
-        >
-          <sidebar-item
-            v-for="route in routes"
-            :key="route.path"
-            :item="route"
-            :base-path="route.path"
-          ></sidebar-item>
-        </el-menu>
-      </el-scrollbar>
-    </div>
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="$route.path"
+        :collapse="isCollapse"
+        :background-color="variables.menuBg"
+        :text-color="variables.menuText"
+        :active-text-color="variables.menuActiveText"
+        :collapse-transition="false"
+        unique-opened
+        mode="vertical"
+      >
+        <sidebar-item
+          v-for="route in routes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        ></sidebar-item>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 import TheLogo from "../TheLogo";
 import sidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/abstracts/_variables.scss";
@@ -48,11 +44,12 @@ export default {
   },
 
   computed: {
-    // ...mapGetters(["permission_routes", "sidebar"]),
-    ...mapGetters(["sidebar"]),
-
     logoRender() {
       return this.$store.state.settings.logoRender;
+    },
+
+    isCollapse() {
+      return this.$store.state.settings.sidebarCollapse;
     },
 
     activeMenu() {
@@ -64,14 +61,9 @@ export default {
       }
       return path;
     },
-    showLogo() {
-      return true; // this.$store.state.settings.sidebarLogo;
-    },
+
     variables() {
       return variables;
-    },
-    isCollapse() {
-      return !this.sidebar.isOpened;
     }
   },
 

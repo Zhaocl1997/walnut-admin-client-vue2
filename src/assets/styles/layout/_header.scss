@@ -7,8 +7,7 @@
   background: $custom;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); */
 
-  @include toggleHeader($--layout-headerHeight);
-  /* height: $--layout-headerHeight; */
+  height: $--layout-header-height;
   z-index: $--layout-zindex;
   background: $custom;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
@@ -36,9 +35,23 @@
   } */
 
   .header_left-container {
+    display: inline-block;
+
+    .header_left-item_con {
+      line-height: 50px;
+
+      .header-left-item {
+        cursor: pointer;
+        font-size: 24px;
+        color: white;
+        margin: 10px 0 0 3px;
+      }
+    }
   }
 
   .header_right-container {
+    float: right;
+
     .header_right-item_con {
       line-height: 50px;
 

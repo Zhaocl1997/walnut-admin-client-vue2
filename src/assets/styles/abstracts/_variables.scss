@@ -24,10 +24,6 @@ $subMenuBg: #f2f2f2;
 $subMenuHover: #ba0713;
 $subMenuHoverText: #fff;
 
-$--layout-headerHeight: 50px;
-$--layout-tagsHeight: 30px;
-$--layout-footerHeight: 20px;
-$--layout-sideBarWidth: 200px;
 $--layout-zindex: 1001;
 
 // the :export directive is the magic sauce for webpack
@@ -43,9 +39,5 @@ $--layout-zindex: 1001;
   subMenuHover: $subMenuHover;
   subMenuHoverText: $subMenuHoverText;
 
-  layout_sideBarWidth: $--layout-sideBarWidth;
-  layout_tagsHeight: $--layout-tagsHeight;
-  layout_footerHeight: $--layout-footerHeight;
-  layout_headerHeight: $--layout-headerHeight;
   layout_zindex: $--layout-zindex;
 }

@@ -1,5 +1,8 @@
+
 'use strict'
+
 const path = require('path')
+const scssVariables = require('./src/settings')
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -24,11 +27,15 @@ module.exports = {
     publicPath: '/',
     outputDir: 'dist',
     assetsDir: 'static',
-    lintOnSave: process.env.NODE_ENV === 'development',
-    productionSourceMap: false,
+    lintOnSave: process.env.NODE_ENV !== 'production',
+    productionSourceMap: process.env.NODE_ENV !== 'development',
     devServer: {
-        port: port,
+        hot: true,
         open: true,
+        host: '0.0.0.0',
+        port: port,
+        https: false,
+        hotOnly: false,
         overlay: {
             warnings: false,
             errors: true
@@ -116,5 +123,28 @@ module.exports = {
                     config.optimization.runtimeChunk('single')
                 }
             )
+    },
+    css: {
+        // // 是否使用css分离插件 ExtractTextPlugin
+        // extract: false,
+
+        // // 开启 CSS source maps?
+        // sourceMap: false,
+
+        // // 启用 CSS modules for all css / pre-processor files.
+        // requireModuleExtension: false,
+
+        loaderOptions: {
+            // by default the `sass` option will apply to both syntaxes
+            // because `scss` syntax is also processed by sass-loader underlyingly
+            // but when configuring the `prependData` option
+            // `scss` syntax requires an semicolon at the end of a statement, while `sass` syntax requires none
+            // in that case, we can target the `scss` syntax separately using the `scss` option
+            scss: {
+                additionalData: Object.keys(scssVariables)
+                    .map(k => `\$${k.replace('_', '-')}: ${scssVariables[k]};`)
+                    .join('\n')
+            }
+        }
     }
 }

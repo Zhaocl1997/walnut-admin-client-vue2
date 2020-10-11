@@ -5,6 +5,7 @@ import axios from 'axios'
 import { getToken } from './auth'
 import config from './config'
 import { Notification } from 'element-ui'
+import router from '../router'
 
 // 创建axios实例
 const service = axios.create({
@@ -29,18 +30,27 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
-    console.log(res);
-
     switch (res.status) {
         case 200:
             switch (res.data.code) {
                 case '000000':
+                    // success
                     return res.data.data
 
-                case '999999':
-                    return Notification.error({
+                case '888888':
+                    // unauthenticated
+                    router.push('/signin')
+                    Notification.error({
                         title: res.data.message
                     })
+                    return Promise.reject()
+
+                case '999999':
+                    // 服务器错误
+                    Notification.error({
+                        title: res.data.message
+                    })
+                    return Promise.reject()
 
                 default:
                     break;
@@ -63,33 +73,33 @@ service.interceptors.response.use(res => {
             break;
     }
 
-    const code = res.data.code
-    if (code === 401) {
-        // MessageBox.confirm(
-        //     //'登录状态已过期，您可以继续留在该页面，或者重新登录',
-        //     '登录状态已过期，请重新登录',
-        //     '系统提示',
-        //     {
-        //         confirmButtonText: '重新登录',
-        //         //cancelButtonText: '取消',
-        //         showCancelButton: false,
-        //         type: 'warning'
-        //     }
-        // ).then(() => {
-        //     store.dispatch('LogOut').then(() => {
-        //         location.reload() // 为了重新实例化vue-router对象 避免bug
-        //     })
-        // })
-    } else if (code !== 200) {
-        // Notification.error({
-        //     title: res.data.msg
-        // })
-        return Promise.reject('error')
-    } else {
-        if (res.data.code === '000000') {
-            return res.data.data
-        }
-    }
+    // const code = res.data.code
+    // if (code === 401) {
+    //     // MessageBox.confirm(
+    //     //     //'登录状态已过期，您可以继续留在该页面，或者重新登录',
+    //     //     '登录状态已过期，请重新登录',
+    //     //     '系统提示',
+    //     //     {
+    //     //         confirmButtonText: '重新登录',
+    //     //         //cancelButtonText: '取消',
+    //     //         showCancelButton: false,
+    //     //         type: 'warning'
+    //     //     }
+    //     // ).then(() => {
+    //     //     store.dispatch('LogOut').then(() => {
+    //     //         location.reload() // 为了重新实例化vue-router对象 避免bug
+    //     //     })
+    //     // })
+    // } else if (code !== 200) {
+    //     // Notification.error({
+    //     //     title: res.data.msg
+    //     // })
+    //     return Promise.reject('error')
+    // } else {
+    //     if (res.data.code === '000000') {
+    //         return res.data.data
+    //     }
+    // }
 }, error => {
     console.log(error)
     // Message({

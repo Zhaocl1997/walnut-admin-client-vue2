@@ -34,6 +34,7 @@
           :showMessage="item.showMessage"
           :inlineMessage="item.inlineMessage"
           :size="item.size"
+          v-if="calcShow(item)"
         >
           <!-- label slot -->
           <span v-if="item.labelSlot" slot="label">
@@ -77,6 +78,9 @@
             v-model="value[item.prop]"
             v-bind="item"
           >{{ item.text }}</w-checkbox>
+
+          <!-- tree -->
+          <w-tree v-if="showItem(item, FORM_TYPE.TREE)" v-model="value[item.prop]" v-bind="item"></w-tree>
 
           <!-- named slot -->
           <slot v-if="showSlot(item)" :name="item.prop"></slot>
@@ -155,6 +159,7 @@ import wSelect from "../Select";
 import wSwitch from "../Switch";
 import wTag from "../Tag";
 import wCheckbox from "../Checkbox";
+import wTree from "../Tree";
 
 import mockData from "@/mock";
 import { FORM_TYPE } from "@/utils/constant";
@@ -170,7 +175,8 @@ export default {
     wSelect,
     wSwitch,
     wTag,
-    wCheckbox
+    wCheckbox,
+    wTree
   },
 
   mixins: [],
@@ -179,7 +185,7 @@ export default {
     return {
       FORM_TYPE: FORM_TYPE,
       hidden: false,
-      formModel: this.model,
+      formModel: [],
       printObj: {
         id: "form-items",
         popTitle: this.popTitle
@@ -199,7 +205,14 @@ export default {
     }
   },
 
-  watch: {},
+  watch: {
+    model: {
+      immediate: true,
+      handler(newV, oldV) {
+        this.formModel = newV;
+      }
+    }
+  },
 
   props: {
     // origin
@@ -262,6 +275,10 @@ export default {
     },
     showSlot(item) {
       return item.slot && this.$slots[item.prop];
+    },
+    calcShow(item) {
+      const isShow = item.show === undefined ? true : item.show;
+      return isShow;
     }
   },
 

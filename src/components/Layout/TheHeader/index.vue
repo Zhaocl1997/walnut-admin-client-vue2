@@ -2,8 +2,10 @@
   <div id="header-container">
     <div class="header_left-container">
       <el-row :gutter="10" type="flex" justify="start">
-        <el-col :span="8">
-          <!-- <the-logo></the-logo> -->
+        <el-col :span="1.5">
+          <div class="header_left-item_con">
+            <w-hamburger class="header-left-item" :is-active="isCollapse" @toggleClick="toggleSideBar"></w-hamburger>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -54,7 +56,8 @@
 </template>
 
 <script>
-import TheLogo from "../TheLogo";
+import wHamburger from "@/components/UI/Others/Hamburger";
+
 import wSizeSelect from "@/components/UI/Others/SizeSelect";
 import wScreenFull from "@/components/UI/Others/Screenfull";
 import wGithub from "@/components/UI/Others/Github";
@@ -66,7 +69,8 @@ export default {
   name: "TheHeader",
 
   components: {
-    TheLogo,
+    wHamburger,
+
     wSizeSelect,
     wScreenFull,
     wGithub,
@@ -81,13 +85,24 @@ export default {
     return {};
   },
 
-  computed: {},
+  computed: {
+    isCollapse() {
+      return this.$store.state.settings.sidebarCollapse;
+    }
+  },
 
   watch: {},
 
   props: {},
 
-  methods: {},
+  methods: {
+    toggleSideBar() {
+      this.$store.dispatch("settings/changeSettings", {
+        key: "sidebarCollapse",
+        value: !this.isCollapse
+      });
+    }
+  },
 
   created() {},
 

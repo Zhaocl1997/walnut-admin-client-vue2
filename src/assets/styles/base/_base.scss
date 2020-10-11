@@ -23,9 +23,21 @@ html {
   @include respond(big-desktop) {
     font-size: 75%; //1rem = 12, 12/16
   }
+
+  overflow-y: scroll;
+}
+
+:root {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:root body {
+  position: absolute;
 }
 
 body {
+  width: 100vw;
   box-sizing: border-box;
   overflow: hidden;
 }

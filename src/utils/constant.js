@@ -30,7 +30,8 @@ export const FORM_TYPE = {
     SELECT: "Select",
     SWITCH: "Switch",
     TAG: "Tag",
-    CHECKBOX: "Checkbox"
+    CHECKBOX: "Checkbox",
+    TREE: "Tree"
 }
 
 export const INPUT_TYPE = {
