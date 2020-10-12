@@ -20,9 +20,6 @@ Vue.use(Element, {
 import Print from 'vue-print-nb'
 Vue.use(Print)
 
-import Fragment from 'vue-fragment'
-Vue.use(Fragment.Plugin)
-
 import directive from '@/directive'
 Vue.use(directive)
 

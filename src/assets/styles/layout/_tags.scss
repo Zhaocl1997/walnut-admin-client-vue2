@@ -1,4 +1,6 @@
 #tags-container {
+    position: relative;
+
     height: $--layout-tags-height;
     z-index: $--layout-zindex;
     background: $custom;

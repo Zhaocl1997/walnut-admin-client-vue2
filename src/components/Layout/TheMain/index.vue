@@ -1,7 +1,9 @@
 <template>
   <div id="main-wrapper">
-    <the-header v-if="headerRender"></the-header>
-    <the-tags v-if="tagsRender"></the-tags>
+    <div :class="{'fixed-header': headerFixed}">
+      <the-header v-if="headerRender"></the-header>
+      <the-tags v-if="tagsRender"></the-tags>
+    </div>
 
     <div id="main-container">
       <router-view></router-view>
@@ -31,6 +33,9 @@ export default {
   },
 
   computed: {
+    headerFixed() {
+      return this.$store.state.settings.headerFixed;
+    },
     headerRender() {
       return this.$store.state.settings.headerRender;
     },

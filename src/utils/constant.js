@@ -31,7 +31,8 @@ export const FORM_TYPE = {
     SWITCH: "Switch",
     TAG: "Tag",
     CHECKBOX: "Checkbox",
-    TREE: "Tree"
+    TREE: "Tree",
+    RADIO: "Radio"
 }
 
 export const INPUT_TYPE = {

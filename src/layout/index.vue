@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-wrapper">
     <the-sidebar v-if="sidebarRender"></the-sidebar>
     <the-main></the-main>
   </div>

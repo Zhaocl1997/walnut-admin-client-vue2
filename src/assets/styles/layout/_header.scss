@@ -1,11 +1,5 @@
 #header-container {
-  /*   height: 50px;
-  position: fixed;
-  top: 0;
-  left: $sideBarWidth;
-  width: 100%;
-  background: $custom;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); */
+  position: relative;
 
   height: $--layout-header-height;
   z-index: $--layout-zindex;
@@ -42,9 +36,9 @@
 
       .header-left-item {
         cursor: pointer;
-        font-size: 24px;
+        font-size: 20px;
         color: white;
-        margin: 10px 0 0 3px;
+        margin: 14px 0 0 3px;
       }
     }
   }

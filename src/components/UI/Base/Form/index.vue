@@ -82,6 +82,9 @@
           <!-- tree -->
           <w-tree v-if="showItem(item, FORM_TYPE.TREE)" v-model="value[item.prop]" v-bind="item"></w-tree>
 
+          <!-- radio -->
+          <w-radio v-if="showItem(item, FORM_TYPE.RADIO)" v-model="value[item.prop]" v-bind="item"></w-radio>
+
           <!-- named slot -->
           <slot v-if="showSlot(item)" :name="item.prop"></slot>
         </el-form-item>
@@ -160,6 +163,7 @@ import wSwitch from "../Switch";
 import wTag from "../Tag";
 import wCheckbox from "../Checkbox";
 import wTree from "../Tree";
+import wRadio from "../Radio";
 
 import mockData from "@/mock";
 import { FORM_TYPE } from "@/utils/constant";
@@ -176,7 +180,8 @@ export default {
     wSwitch,
     wTag,
     wCheckbox,
-    wTree
+    wTree,
+    wRadio
   },
 
   mixins: [],

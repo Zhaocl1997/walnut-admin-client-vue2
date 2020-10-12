@@ -70,6 +70,10 @@
       <el-tab-pane label="wTable" name="wTable">
         <table-area></table-area>
       </el-tab-pane>
+
+      <el-tab-pane label="wRadio" name="wRadio">
+        <radio-area></radio-area>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -90,6 +94,7 @@ import TreeArea from "./components/Tree";
 import SelectTreeArea from "./components/SelectTree";
 import IconSelectArea from "./components/IconSelect";
 import TableArea from "./components/Table";
+import RadioArea from "./components/Radio";
 
 import wSizeSelect from "@/components/UI/Others/SizeSelect";
 import wScreenFull from "@/components/UI/Others/Screenfull";
@@ -117,6 +122,7 @@ export default {
     SelectTreeArea,
     IconSelectArea,
     TableArea,
+    RadioArea,
 
     wSizeSelect,
     wScreenFull,

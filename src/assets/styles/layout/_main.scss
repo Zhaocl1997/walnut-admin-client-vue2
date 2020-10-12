@@ -1,13 +1,28 @@
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 #main-wrapper {
   height: 100%;
   @include toggleSidebar($--layout-sidebar-width);
   transition: margin-left 0.3s;
-}
 
-#main-container {
-  /* height: calc(
-    100vh - #{$--layout-header-height} - #{$--layout-tags-height} - #{$--layout-footer-height}
-  ); */
-  height: 100%;
-  padding: 1rem;
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    width: 100vw;
+
+    @include toggleSidebar($--layout-sidebar-width);
+    transition: width 0.3s;
+  }
+
+  #main-container {
+    height: 100%;
+    padding: 1rem;
+  }
 }

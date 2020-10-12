@@ -13,6 +13,7 @@ const state = {
   // fixedHeader: fixedHeader,
   // sidebarLogo: sidebarLogo
 
+  headerFixed: false,
   headerRender: true,
   logoRender: true,
   sidebarRender: true,

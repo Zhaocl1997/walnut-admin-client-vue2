@@ -8,27 +8,32 @@
       </div>
 
       <div class="drawer-item">
-        <span>Header</span>
+        <span>HeaderRender</span>
         <el-switch v-model="headerRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>Logo</span>
+        <span>Headerfixed</span>
+        <el-switch v-model="headerFixed" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
+        <span>LogoRender</span>
         <el-switch v-model="logoRender" :disabled="!sidebarRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>Sidebar</span>
+        <span>SidebarRender</span>
         <el-switch v-model="sidebarRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>Tags</span>
+        <span>TagsRender</span>
         <el-switch v-model="tagsRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>Footer</span>
+        <span>FooterRender</span>
         <el-switch v-model="footerRender" class="drawer-switch" />
       </div>
     </div>
@@ -64,6 +69,17 @@ export default {
       set(val) {
         this.$store.dispatch("settings/changeSettings", {
           key: "headerRender",
+          value: val
+        });
+      }
+    },
+    headerFixed: {
+      get() {
+        return this.$store.state.settings.headerFixed;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "headerFixed",
           value: val
         });
       }
