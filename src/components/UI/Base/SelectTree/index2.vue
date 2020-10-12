@@ -10,30 +10,40 @@
     :placeholder="placeholder"
     @change="onSelectChange"
     @clear="onClear"
+    @remove-tag="onRemoveTag"
   >
     <el-option :value="mineStatusValue" style="height:200px;overflow-y:scroll;">
-      <el-tree
-        ref="tree"
-        node-key="id"
+      <w-tree
+        ref="wTree"
+        v-model="selfValue"
         :data="data"
-        :props="treeProps"
-        :show-checkbox="multiple"
-        :accordion="selfAccordion"
-        highlight-current
+        :multiple="multiple"
         @check-change="onCheckChange"
-        @node-click="onNodeClick"
-      ></el-tree>
+        :node-key="treeProps.id"
+        :props="props"
+      ></w-tree>
     </el-option>
   </el-select>
 </template>
 
 <script>
+import wTree from "../Tree";
+import { findNodeById } from "@/mock";
+import ValueMixins from "@/mixins/Value";
+
 export default {
   name: "UISelectTree",
+
+  components: { wTree },
+
+  mixins: [ValueMixins],
+
   data() {
     return {
       mineStatus: "",
-      mineStatusValue: []
+      mineStatusValue: [],
+
+      defaultCheckedKeys: []
     };
   },
   props: {
@@ -61,59 +71,105 @@ export default {
     }
   },
   watch: {
-    value(newV) {
-      if (newV) {
-        if (this.multiple && this.data.length !== 0) {
-          this.$refs.tree.setCheckedKeys(newV);
-        } else {
-          this.mineStatusValue = newV;
-        }
-      }
-    }
+    // value(newV) {
+    //   if (newV) {
+    //     if (this.multiple && this.data.length !== 0) {
+    //       this.$refs.tree.setCheckedKeys(newV);
+    //     } else {
+    //       this.mineStatusValue = newV;
+    //     }
+    //   }
+    // }
   },
   computed: {
     selfAccordion() {
       return !this.multiple;
+    },
+    props() {
+      return {
+        id: this.treeProps.id,
+        children: this.treeProps.children,
+        label: this.treeProps.label
+      };
     }
   },
   mounted() {
-    setTimeout(() => {
-      if (this.multiple && this.data.length !== 0) {
-        this.$refs.tree.setCheckedKeys(this.value);
-      } else {
-        this.mineStatusValue = this.value;
-      }
-    }, 2000);
+    this.feedback();
   },
   methods: {
+    feedback() {
+      if (this.data.length == 0) {
+        return;
+      }
+
+      if (this.multiple) {
+        const arrLabel = [];
+        const arrNode = [];
+
+        this.value.map(i => {
+          const node = findNodeById(
+            i,
+            this.data,
+            this.treeProps.id,
+            this.props,
+            true
+          );
+
+          arrNode.push(node);
+          arrLabel.push(node[this.props.label]);
+        });
+
+        this.mineStatus = arrLabel;
+        this.mineStatusValue = arrNode;
+      } else {
+        const arrLabel = findNodeById(
+          this.value,
+          this.data,
+          this.treeProps.id,
+          this.props,
+          true
+        )[this.props.label];
+
+        this.mineStatus = arrLabel;
+
+        this.mineStatusValue = [this.value];
+      }
+    },
+
+    onInput(v) {
+      this.$emit("input", v);
+    },
+
+    onRemoveTag(v) {
+      console.log(v);
+    },
+
     // select框值改变时候触发的事件
     onSelectChange(v) {
       let arr = [];
 
       for (let i = 0; i < this.mineStatusValue.length; i++) {
         for (let j = 0; j < v.length; j++) {
-          if (v[j] === this.mineStatusValue[i].label) {
+          if (v[j] === this.mineStatusValue[i][this.props.label]) {
             arr.push(this.mineStatusValue[i]);
           }
         }
       }
 
-      this.$refs.tree.setCheckedNodes(arr);
-
       let newV = [];
-      arr.map(i => newV.push(i.id));
+      arr.map(i => newV.push(i[this.props.id]));
       this.$emit("input", newV);
     },
 
     // 多选: check变化
     onCheckChange() {
       // 这里两个true，1. 是否只是叶子节点 2. 是否包含半选节点（就是使得选择的时候不包含父节点）
-      let res = this.$refs.tree.getCheckedNodes(true, true);
+      let res = this.$refs.wTree.$children[0].getCheckedNodes(true, false);
 
       let arrLabel = [];
       let arr = [];
       res.forEach(item => {
-        arrLabel.push(item.label);
+        arrLabel.push(item[this.props.label]);
         arr.push(item);
       });
 
@@ -121,7 +177,7 @@ export default {
       this.mineStatus = arrLabel;
 
       let newV = [];
-      arr.map(i => newV.push(i.id));
+      arr.map(i => newV.push(i[this.props.id]));
       this.$emit("input", newV);
     },
 
@@ -131,9 +187,9 @@ export default {
         return;
       }
 
-      this.mineStatusValue = data.id;
-      this.mineStatus = data.label;
-      this.$emit("input", data.id);
+      this.mineStatusValue = data[this.props.id];
+      this.mineStatus = data[this.props.label];
+      this.$emit("input", data[this.props.id]);
     },
 
     // 单选：清空
@@ -154,12 +210,14 @@ export default {
 .el-select-dropdown__item::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #535353;
 }
 
 .el-select-dropdown__item::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #ededed;

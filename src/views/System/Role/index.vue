@@ -186,7 +186,6 @@ export default {
       this.getTableData();
 
       menuOptions().then(res => {
-        console.log(res);
         this.menuOptions = res.data;
       });
     },

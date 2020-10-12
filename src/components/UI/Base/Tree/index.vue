@@ -58,11 +58,11 @@ export default {
   computed: {},
 
   watch: {
-    value(newV, oldV) {
-      if (newV && newV != oldV) {
-        this.feedBack();
-      }
-    }
+    // value(newV, oldV) {
+    //   if (newV && oldV && newV !== oldV) {
+    //     this.feedBack();
+    //   }
+    // }
   },
 
   props: {
@@ -120,8 +120,11 @@ export default {
         return;
       }
       if (this.multiple) {
-        this.$refs.tree.setCheckedKeys(this.value);
         this.defaultExpandedKeys = this.value;
+
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.value);
+        });
       } else {
         this.$refs.tree.setChecked(this.value, true, false);
       }

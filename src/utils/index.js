@@ -6,7 +6,7 @@ import { REGEX, ALL_STRING } from './constant'
 
 const isType = type => target => `[object ${type}]` === Object.prototype.toString.call(target)
 export const isArray = isType('Array')
-const isObject = isType('Object')
+export const isObject = isType('Object')
 // const isNumber = isType('Number')
 const isString = isType('String')
 
@@ -126,6 +126,35 @@ export const checkStrong = (val) => {
     }
     return modes
 }
+
+export function isEqual(a, b) {
+    if (a === b) return true
+
+    // object
+    if (isObject(a) && isObject(b) &&
+        Object.keys(a).length === Object.keys(b).length) {
+        for (const key in a) {
+            if (a.hasOwnProperty(key)) {
+                if (!isEqual(a[key], b[key]))
+                    // key different
+                    return false
+            }
+        }
+    } else
+        // array
+        if (isArray(a) && isArray(a) && a.length === b.length) {
+            for (let i = 0, length = a.length; i < length; i++) {
+                if (!isEqual(a[i], b[i]))
+                    // item different
+                    return false
+            }
+        } else {
+            // other false
+            return false
+        }
+    return true
+}
+
 
 export const randomId = (len = 32) => {
     const $chars = ALL_STRING

@@ -143,6 +143,8 @@ const mockData = options => {
         }
     }
 
+    console.log(result);
+
     return result
 }
 
@@ -155,7 +157,7 @@ const mockData = options => {
  * @param {Boolean} onlyId 是否返回ID数组，默认false
  * @return {Array}
  */
-const flatTreeToArray = (
+export const flatTreeToArray = (
     data,
     nodeKey = 'id',
     prop = {
@@ -199,7 +201,7 @@ const flatTreeToArray = (
  * @param {Boolean} onlyTarget 是否返回节点元素，默认false
  * @return {Object | Boolean}
  */
-const findNodeById = (
+export const findNodeById = (
     id,
     data,
     nodeKey = 'id',

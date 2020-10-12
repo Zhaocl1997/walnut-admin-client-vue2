@@ -5,11 +5,15 @@
 
     <p>w-select-tree 当前绑定值：{{ selectTree2 }}</p>
     <w-select-tree v-model="selectTree2" :data="data" multiple></w-select-tree>
+
+    <p>w-select-tree 当前绑定值：{{ selectTree3 }}</p>
+    <w-select-tree v-model="selectTree3" :data="menuOptions" multiple :treeProps="treeProps"></w-select-tree>
   </div>
 </template>
 
 <script>
 import wSelectTree from "@/components/UI/Base/SelectTree/index2";
+import { menuOptions } from "@/api/system/menu";
 
 export default {
   name: "",
@@ -114,9 +118,16 @@ export default {
         }
       ],
 
-      selectTree1: "7",
+      menuOptions: [],
+      treeProps: {
+        id: "_id",
+        label: "title",
+        children: "subs"
+      },
+
+      selectTree1: 7,
       selectTree2: [13, 14],
-      selectTree3: "",
+      selectTree3: [],
       selectTree4: "",
       selectTree5: ""
     };
@@ -132,7 +143,11 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    menuOptions().then(res => {
+      this.menuOptions = res.data;
+    });
+  },
 
   beforeCreate() {},
 
