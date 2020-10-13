@@ -4,17 +4,26 @@
       <h3 class="drawer-title">Layout Settings</h3>
 
       <div class="drawer-item">
+        <h4>Layout</h4>
+      </div>
+
+      <div class="drawer-item">
+        <span>Headerfixed</span>
+        <el-switch v-model="headerFixed" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
+        <span>Footerfixed</span>
+        <el-switch v-model="footerFixed" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
         <h4>Content</h4>
       </div>
 
       <div class="drawer-item">
         <span>HeaderRender</span>
         <el-switch v-model="headerRender" class="drawer-switch" />
-      </div>
-
-      <div class="drawer-item">
-        <span>Headerfixed</span>
-        <el-switch v-model="headerFixed" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -62,6 +71,38 @@ export default {
   },
 
   computed: {
+    headerFixed: {
+      get() {
+        return this.$store.state.settings.headerFixed;
+      },
+      set(val) {
+        window.document.documentElement.setAttribute(
+          "fixHeader",
+          val.toString()
+        );
+
+        this.$store.dispatch("settings/changeSettings", {
+          key: "headerFixed",
+          value: val
+        });
+      }
+    },
+    footerFixed: {
+      get() {
+        return this.$store.state.settings.footerFixed;
+      },
+      set(val) {
+        window.document.documentElement.setAttribute(
+          "fixFooter",
+          val.toString()
+        );
+
+        this.$store.dispatch("settings/changeSettings", {
+          key: "footerFixed",
+          value: val
+        });
+      }
+    },
     headerRender: {
       get() {
         return this.$store.state.settings.headerRender;
@@ -69,17 +110,6 @@ export default {
       set(val) {
         this.$store.dispatch("settings/changeSettings", {
           key: "headerRender",
-          value: val
-        });
-      }
-    },
-    headerFixed: {
-      get() {
-        return this.$store.state.settings.headerFixed;
-      },
-      set(val) {
-        this.$store.dispatch("settings/changeSettings", {
-          key: "headerFixed",
           value: val
         });
       }

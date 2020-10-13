@@ -13,15 +13,53 @@
   transform: translate(-50%, -50%);
 }
 
-// layout css
-@mixin toggleSidebar($width) {
-  margin-left: $width;
+@mixin toggleSidebar(
+  $width: calc(100vw - #{$--layout-sidebar-width}),
+  $ml: $--layout-sidebar-width
+) {
+  margin-left: $ml;
+  width: $width;
+
+  /*   @if $--layout-header-fixed = "false" {
+    color: red;
+  } @else {
+    color: blue;
+  }
+ */
   [toggleSidebar="false"] & {
     margin-left: 0;
+    width: 100vw;
   }
 
   [toggleSidebar="true"] & {
-    margin-left: $--layout-sidebar-width;
+    margin-left: $ml;
+    width: $width;
+  }
+}
+
+@mixin fixFooter($mb: $--layout-footer-height) {
+  margin-bottom: $mb;
+
+  [fixFooter="false"] & {
+    margin-bottom: 0;
+  }
+
+  [fixFooter="true"] & {
+    margin-bottom: $mb;
+  }
+}
+
+@mixin fixHeader(
+  $mt: calc(#{$--layout-header-height} + #{$--layout-tags-height})
+) {
+  margin-top: $mt;
+
+  [fixHeader="false"] & {
+    margin-top: 0;
+  }
+
+  [fixHeader="true"] & {
+    margin-top: $mt;
   }
 }
 

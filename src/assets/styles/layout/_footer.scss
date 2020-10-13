@@ -1,14 +1,5 @@
 #footer-container {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  width: 100vw;
-
-  @include toggleSidebar($--layout-sidebar-width);
-  transition: margin-left 0.3s;
-
+  @include toggleSidebar();
   height: $--layout-footer-height;
   z-index: $--layout-zindex;
   background: $custom;

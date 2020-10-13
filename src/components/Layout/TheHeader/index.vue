@@ -7,7 +7,7 @@
             <w-hamburger
               class="header-left-item"
               :is-active="isCollapse"
-              @toggleClick="toggleSideBar"
+              @toggleClick="onToggleSideBar"
             ></w-hamburger>
           </div>
         </el-col>
@@ -100,7 +100,7 @@ export default {
   props: {},
 
   methods: {
-    toggleSideBar() {
+    onToggleSideBar() {
       this.$store.dispatch("settings/changeSettings", {
         key: "sidebarCollapse",
         value: !this.isCollapse

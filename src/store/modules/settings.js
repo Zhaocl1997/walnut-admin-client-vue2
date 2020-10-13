@@ -2,23 +2,32 @@
 'use strict'
 
 // import variables from '@/assets/styles/element-variables.scss'
-// import defaultSettings from '@/settings'
 
-// const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
+import defaultSettings from '@/settings'
+console.log(defaultSettings);
+
+const {
+  headerFixed,
+  footerFixed,
+
+  headerRender,
+  logoRender,
+  sidebarRender,
+  tagsRender,
+  footerRender
+} = defaultSettings
 
 const state = {
   // theme: variables.theme,
-  // showSettings: showSettings,
-  // tagsView: tagsView,
-  // fixedHeader: fixedHeader,
-  // sidebarLogo: sidebarLogo
+  headerFixed,
+  footerFixed,
 
-  headerFixed: false,
-  headerRender: true,
-  logoRender: true,
-  sidebarRender: true,
-  tagsRender: true,
-  footerRender: true,
+  headerRender,
+  logoRender,
+  sidebarRender,
+  tagsRender,
+  footerRender,
+
   sidebarCollapse: false
 }
 

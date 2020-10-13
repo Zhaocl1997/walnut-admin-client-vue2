@@ -1,4 +1,5 @@
 #header-container {
+  @include toggleSidebar();
   height: $--layout-header-height;
   z-index: $--layout-zindex;
   background: $custom;

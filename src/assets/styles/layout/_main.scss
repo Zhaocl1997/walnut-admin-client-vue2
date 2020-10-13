@@ -8,16 +8,18 @@
 
   #main-wrapper {
     min-height: 100%;
-    width: 100%;
-    @include toggleSidebar($--layout-sidebar-width);
-    transition: margin-left 0.3s;
     position: relative;
 
     #main-container {
-      // min-height: calc(100vh - #{$--layout-header-height} -#{$--layout-tags-height} - #{$--layout-footer-height});
-      min-height: 100%;
-      width: 100%;
+      min-height: calc(
+        100vh - #{$--layout-header-height} - #{$--layout-tags-height} - #{$--layout-footer-height}
+      );
       position: relative;
+
+      @include fixFooter;
+      @include fixHeader;
+      @include toggleSidebar;
+      transition: margin-left 0.3s;
     }
   }
 }
@@ -26,10 +28,10 @@
   position: fixed;
   top: 0;
   right: 0;
-  z-index: $--layout-zindex;
-  width: calc(100% - #{$--layout-sidebar-width});
 }
 
-.fixed-header + #main-container {
-  padding-top: calc(#{$--layout-header-height} + #{$--layout-tags-height});
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }

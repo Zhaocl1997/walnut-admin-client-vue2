@@ -11,7 +11,7 @@
 
     <w-settings></w-settings>
 
-    <the-footer v-if="footerRender"></the-footer>
+    <the-footer :class="{'fixed-footer': footerFixed}" v-if="footerRender"></the-footer>
   </div>
 </template>
 
@@ -35,6 +35,9 @@ export default {
   computed: {
     headerFixed() {
       return this.$store.state.settings.headerFixed;
+    },
+    footerFixed() {
+      return this.$store.state.settings.footerFixed;
     },
     headerRender() {
       return this.$store.state.settings.headerRender;

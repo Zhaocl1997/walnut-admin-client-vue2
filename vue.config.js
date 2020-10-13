@@ -8,6 +8,15 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
+function camel2Line(str, type = "_") {
+    return str.replace(/([A-Z])/g, `${type}$1`).toLowerCase();
+}
+
+// css additionalData
+const additionalData = Object.keys(scssVariables)
+    .map(k => `\$--layout-${camel2Line(k, '-')}: ${scssVariables[k]};`)
+    .join('\n')
+
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -141,9 +150,7 @@ module.exports = {
             // `scss` syntax requires an semicolon at the end of a statement, while `sass` syntax requires none
             // in that case, we can target the `scss` syntax separately using the `scss` option
             scss: {
-                additionalData: Object.keys(scssVariables)
-                    .map(k => `\$${k.replace('_', '-')}: ${scssVariables[k]};`)
-                    .join('\n')
+                additionalData: additionalData
             }
         }
     }
