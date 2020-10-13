@@ -1,6 +1,4 @@
 #header-container {
-  position: relative;
-
   height: $--layout-header-height;
   z-index: $--layout-zindex;
   background: $custom;
@@ -45,6 +43,7 @@
 
   .header_right-container {
     float: right;
+    margin-right: 1rem;
 
     .header_right-item_con {
       line-height: 50px;
@@ -56,9 +55,6 @@
 
       &:hover {
         background: rgba(0, 0, 0, 0.15);
-      }
-
-      &.hover-effect {
         transition: background 0.3s;
       }
     }
