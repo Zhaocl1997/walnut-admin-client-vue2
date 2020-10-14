@@ -1,8 +1,8 @@
 <template>
   <div id="main-wrapper">
     <div :class="{'fixed-header': headerFixed}">
-      <the-header v-if="headerRender"></the-header>
-      <the-tags v-if="tagsRender"></the-tags>
+      <TheHeader v-if="headerRender"></TheHeader>
+      <TheTags v-if="tagsRender"></TheTags>
     </div>
 
     <div id="main-container">
@@ -11,7 +11,7 @@
 
     <w-settings></w-settings>
 
-    <the-footer :class="{'fixed-footer': footerFixed}" v-if="footerRender"></the-footer>
+    <TheFooter :class="{'fixed-footer': footerFixed}" v-if="footerRender"></TheFooter>
   </div>
 </template>
 
@@ -36,15 +36,19 @@ export default {
     headerFixed() {
       return this.$store.state.settings.headerFixed;
     },
+
     footerFixed() {
       return this.$store.state.settings.footerFixed;
     },
+
     headerRender() {
       return this.$store.state.settings.headerRender;
     },
+
     tagsRender() {
       return this.$store.state.settings.tagsRender;
     },
+
     footerRender() {
       return this.$store.state.settings.footerRender;
     }

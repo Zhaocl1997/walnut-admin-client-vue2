@@ -23,6 +23,9 @@
         :span="item.span ? item.span : span"
         :style="item.float ? `float:${item.float};text-align:${item.float}`: ''"
       >
+        <!-- divider -->
+        <el-divider v-if="showItem(item, FORM_TYPE.DIVIDER)">{{ item.title }}</el-divider>
+
         <!-- form-item -->
         <el-form-item
           :key="item.prop"

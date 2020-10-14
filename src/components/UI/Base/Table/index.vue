@@ -42,7 +42,7 @@
 
       <!-- 全屏 -->
       <!-- <el-tooltip effect="dark" content="全屏" placement="top"> -->
-        <w-screenfull class="table-settings__icon" />
+      <w-screenfull class="table-settings__icon" />
       <!-- </el-tooltip> -->
 
       <!-- 密度 -->
@@ -172,7 +172,7 @@ import Sortable from "sortablejs";
 import wButton from "../Button";
 import wScreenfull from "../../Others/Screenfull";
 import wPagination from "../Pagination";
-import wHeaderColumnItem from "./item";
+import wHeaderColumnItem from "./components/item";
 
 import { deepClone } from "@/utils";
 

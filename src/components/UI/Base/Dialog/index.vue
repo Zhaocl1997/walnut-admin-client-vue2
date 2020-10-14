@@ -76,7 +76,14 @@ export default {
 
     loading: { type: String, default: "0" },
     footer: Boolean,
-    dialogDrag: { type: Array, default: () => [] }
+
+    dialogDrag: {
+      type: Array,
+      default: () => [],
+      validator: value => {
+        return ["draggable", "fullscreen", "dragwidth"].includes(value);
+      }
+    }
   },
 
   methods: {

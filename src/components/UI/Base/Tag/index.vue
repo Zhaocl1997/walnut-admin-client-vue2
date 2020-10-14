@@ -23,6 +23,7 @@
         v-model="inputValue"
         :width="inputWidth"
         @keyup="onInputConfirm"
+        @blur="onInputConfirm"
       ></w-input>
 
       <w-button
@@ -158,7 +159,7 @@ export default {
     onInputConfirm() {
       let inputValue = this.inputValue;
 
-      if (this.selfValue.includes(inputValue)) {
+      if (this.selfValue && this.selfValue.includes(inputValue)) {
         this.$message.info("请不要添加重复信息");
         return;
       }
