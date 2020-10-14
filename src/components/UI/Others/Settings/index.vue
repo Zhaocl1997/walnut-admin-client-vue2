@@ -158,6 +158,7 @@ export default {
   right: 5%;
   bottom: 10%;
   text-align: center;
+  z-index: 999999;
 
   .draggable-icon-container {
     position: absolute;

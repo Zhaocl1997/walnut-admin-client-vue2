@@ -4,7 +4,6 @@
 // import variables from '@/assets/styles/element-variables.scss'
 
 import defaultSettings from '@/settings'
-console.log(defaultSettings);
 
 const {
   headerFixed,

@@ -57,4 +57,9 @@ module.exports = {
      */
     footerRender: true,
 
+    /**
+     * layout z-index
+     */
+    zIndex: 1001,
+
 }

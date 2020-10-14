@@ -21,6 +21,14 @@ export default {
   },
 
   computed: {
+    headerFixed() {
+      return this.$store.state.settings.headerFixed;
+    },
+
+    footerFixed() {
+      return this.$store.state.settings.footerFixed;
+    },
+
     sidebarRender() {
       return this.$store.state.settings.sidebarRender;
     }
@@ -32,7 +40,34 @@ export default {
 
   props: {},
 
-  methods: {},
+  methods: {
+    init() {
+      this.setHeaderFixed();
+      this.setFooterFixed();
+      this.setSidebarRender();
+    },
+
+    setHeaderFixed() {
+      window.document.documentElement.setAttribute(
+        "fixHeader",
+        this.headerFixed.toString()
+      );
+    },
+
+    setFooterFixed() {
+      window.document.documentElement.setAttribute(
+        "fixFooter",
+        this.footerFixed.toString()
+      );
+    },
+
+    setSidebarRender() {
+      window.document.documentElement.setAttribute(
+        "toggleSidebar",
+        this.sidebarRender.toString()
+      );
+    }
+  },
 
   created() {},
 
@@ -48,6 +83,8 @@ export default {
     this.$log.capsule("title3", "capsule3", "warning");
     this.$log.capsule("title4", "capsule4", "danger");
     this.$log.capsule("title5", "capsule5", "info");
+
+    this.init();
   },
 
   beforeCreate() {},

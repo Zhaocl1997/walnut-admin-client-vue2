@@ -7,30 +7,34 @@
   }
 
   #main-wrapper {
-    min-height: 100%;
+    height: 100%;
     position: relative;
 
     #main-container {
+      background-color: lightgrey;
       min-height: calc(
         100vh - #{$--layout-header-height} - #{$--layout-tags-height} - #{$--layout-footer-height}
       );
       position: relative;
+      padding: 1rem;
 
       @include fixFooter;
       @include fixHeader;
       @include toggleSidebar;
-      transition: margin-left 0.3s;
+      transition: all 0.3s;
     }
   }
 }
 
 .fixed-header {
+  z-index: $--layout-z-index;
   position: fixed;
   top: 0;
   right: 0;
 }
 
 .fixed-footer {
+  z-index: $--layout-z-index;
   position: fixed;
   bottom: 0;
   right: 0;

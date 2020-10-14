@@ -79,10 +79,10 @@ export default {
 
     dialogDrag: {
       type: Array,
-      default: () => [],
-      validator: value => {
-        return ["draggable", "fullscreen", "dragwidth"].includes(value);
-      }
+      default: () => ["draggable"],
+      // validator: value => {
+      //   return ["draggable", "fullscreen", "dragwidth"].includes(value);
+      // }
     }
   },
 

@@ -24,8 +24,6 @@ $subMenuBg: #f2f2f2;
 $subMenuHover: #ba0713;
 $subMenuHoverText: #fff;
 
-$--layout-zindex: 1001;
-
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
@@ -38,6 +36,4 @@ $--layout-zindex: 1001;
   subMenuBg: $subMenuBg;
   subMenuHover: $subMenuHover;
   subMenuHoverText: $subMenuHoverText;
-
-  layout_zindex: $--layout-zindex;
 }

@@ -17,6 +17,9 @@ const additionalData = Object.keys(scssVariables)
     .map(k => `\$--layout-${camel2Line(k, '-')}: ${scssVariables[k]};`)
     .join('\n')
 
+console.log(additionalData);
+
+
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run

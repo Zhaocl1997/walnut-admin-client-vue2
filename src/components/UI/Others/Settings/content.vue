@@ -87,6 +87,7 @@ export default {
         });
       }
     },
+
     footerFixed: {
       get() {
         return this.$store.state.settings.footerFixed;
@@ -103,17 +104,29 @@ export default {
         });
       }
     },
+
     headerRender: {
       get() {
         return this.$store.state.settings.headerRender;
       },
       set(val) {
+        window.document.documentElement.setAttribute(
+          "fixHeader",
+          val.toString()
+        );
+
+        this.$store.dispatch("settings/changeSettings", {
+          key: "headerFixed",
+          value: val
+        });
+
         this.$store.dispatch("settings/changeSettings", {
           key: "headerRender",
           value: val
         });
       }
     },
+
     logoRender: {
       get() {
         return this.$store.state.settings.logoRender;
@@ -125,6 +138,7 @@ export default {
         });
       }
     },
+
     sidebarRender: {
       get() {
         return this.$store.state.settings.sidebarRender;
@@ -141,22 +155,44 @@ export default {
         });
       }
     },
+
     tagsRender: {
       get() {
         return this.$store.state.settings.tagsRender;
       },
       set(val) {
+        window.document.documentElement.setAttribute(
+          "fixHeader",
+          val.toString()
+        );
+
+        this.$store.dispatch("settings/changeSettings", {
+          key: "headerFixed",
+          value: val
+        });
+
         this.$store.dispatch("settings/changeSettings", {
           key: "tagsRender",
           value: val
         });
       }
     },
+
     footerRender: {
       get() {
         return this.$store.state.settings.footerRender;
       },
       set(val) {
+        window.document.documentElement.setAttribute(
+          "fixFooter",
+          val.toString()
+        );
+
+        this.$store.dispatch("settings/changeSettings", {
+          key: "footerFixed",
+          value: val
+        });
+
         this.$store.dispatch("settings/changeSettings", {
           key: "footerRender",
           value: val

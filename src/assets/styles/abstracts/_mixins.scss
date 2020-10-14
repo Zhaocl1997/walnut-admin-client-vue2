@@ -17,15 +17,14 @@
   $width: calc(100vw - #{$--layout-sidebar-width}),
   $ml: $--layout-sidebar-width
 ) {
-  margin-left: $ml;
-  width: $width;
-
-  /*   @if $--layout-header-fixed = "false" {
-    color: red;
+  @if $--layout-sidebar-render = "false" {
+    margin-left: 0;
+    width: 100vw;
   } @else {
-    color: blue;
+    margin-left: $ml;
+    width: $width;
   }
- */
+
   [toggleSidebar="false"] & {
     margin-left: 0;
     width: 100vw;
@@ -38,7 +37,11 @@
 }
 
 @mixin fixFooter($mb: $--layout-footer-height) {
-  margin-bottom: $mb;
+  @if $--layout-footer-render = "false" {
+    margin-bottom: 0;
+  } @else {
+    margin-bottom: $mb;
+  }
 
   [fixFooter="false"] & {
     margin-bottom: 0;
@@ -52,7 +55,11 @@
 @mixin fixHeader(
   $mt: calc(#{$--layout-header-height} + #{$--layout-tags-height})
 ) {
-  margin-top: $mt;
+  @if $--layout-header-render = "false" {
+    margin-top: 0;
+  } @else {
+    margin-top: $mt;
+  }
 
   [fixHeader="false"] & {
     margin-top: 0;
