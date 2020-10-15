@@ -1,19 +1,22 @@
 <template>
   <div>
     <p>w-checkbox 当前绑定值：{{ checkboxInfo }}</p>
-    <w-checkbox v-model="checkboxInfo">normal</w-checkbox>
+    <w-checkbox v-model="checkboxInfo" label="normal"></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo2 }}</p>
-    <w-checkbox v-model="checkboxInfo2" disabled>disabled</w-checkbox>
+    <w-checkbox v-model="checkboxInfo2" label="disabled" disabled></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo3 }}</p>
-    <w-checkbox v-model="checkboxInfo3" :options="options" multiple>multiple</w-checkbox>
+    <w-checkbox v-model="checkboxInfo3" :options="options" multiple :max="1"></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo4 }}</p>
-    <w-checkbox v-model="checkboxInfo4" :options="options" multiple button>multiple-button</w-checkbox>
+    <w-checkbox v-model="checkboxInfo4" :options="options" multiple></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo5 }}</p>
-    <w-checkbox v-model="checkboxInfo5" :options="options" multiple border>multiple-border</w-checkbox>
+    <w-checkbox v-model="checkboxInfo5" :options="options" multiple button></w-checkbox>
+
+    <p>w-checkbox 当前绑定值：{{ checkboxInfo6 }}</p>
+    <w-checkbox v-model="checkboxInfo6" :options="options" multiple border></w-checkbox>
   </div>
 </template>
 
@@ -38,29 +41,37 @@ export default {
 
   data() {
     return {
-      checkboxInfo: false,
-      checkboxInfo2: true,
-      checkboxInfo3: ["D"],
-      checkboxInfo4: ["A"],
-      checkboxInfo5: [],
-      checkboxInfo6: false,
-      checkboxInfo7: false,
+      checkboxInfo: undefined,
+      checkboxInfo2: undefined,
+      checkboxInfo3: [4],
+      checkboxInfo4: [1, 3],
+      checkboxInfo5: [2, 4],
+      checkboxInfo6: [1, 4],
+      checkboxInfo7: undefined,
+      checkboxInfo8: undefined,
+      checkboxInfo9: undefined,
+      checkboxInfo10: undefined,
 
       options: [
         {
-          value: "A"
+          value: 1,
+          label: "A"
         },
         {
-          value: "B"
+          value: 2,
+          label: "B"
         },
         {
-          value: "C"
+          value: 3,
+          label: "C"
         },
         {
-          value: "D"
+          value: 4,
+          label: "D"
         },
         {
-          value: "E",
+          value: 5,
+          label: "E",
           disabled: true
         }
       ]

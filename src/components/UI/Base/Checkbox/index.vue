@@ -1,15 +1,13 @@
 <template>
   <div>
-    <el-checkbox-group v-if="multiple" v-model="selfValue">
+    <el-checkbox-group v-if="multiple" v-model="selfValue" :min="min" :max="max">
       <template v-if="button">
         <el-checkbox-button
           v-for="item in options"
           :key="item.value"
           :label="item.value"
           :disabled="item.disabled"
-          :min="min"
-          :max="max"
-        ></el-checkbox-button>
+        >{{ item.label }}</el-checkbox-button>
       </template>
 
       <template v-else>
@@ -18,16 +16,12 @@
           :key="item.value"
           :label="item.value"
           :disabled="item.disabled"
-          :min="min"
-          :max="max"
           :border="border"
-        ></el-checkbox>
+        >{{ item.label }}</el-checkbox>
       </template>
     </el-checkbox-group>
 
-    <el-checkbox v-else v-model="selfValue" :disabled="disabled">
-      <span v-if="$slots.default[0]">{{ $slots.default[0].text }}</span>
-    </el-checkbox>
+    <el-checkbox v-on="$listeners" @change="onChange" v-else v-model="normalValue" :disabled="disabled">{{ label }}</el-checkbox>
   </div>
 </template>
 
@@ -51,7 +45,9 @@ export default {
   mixins: [ValueMixins],
 
   data() {
-    return {};
+    return {
+      normalValue: false
+    };
   },
 
   computed: {},
@@ -60,7 +56,10 @@ export default {
 
   props: {
     // origin
-    value: [Boolean, Array],
+    value: {
+      type: [Boolean, Array],
+      default: () => []
+    },
     disabled: Boolean,
     min: Number,
     max: Number,
@@ -70,10 +69,15 @@ export default {
     // custom
     options: Array,
     button: Boolean,
-    multiple: Boolean
+    multiple: Boolean,
+    label: String
   },
 
-  methods: {},
+  methods: {
+    onChange(v) {
+      this.$emit("input", v);
+    }
+  },
 
   created() {},
 

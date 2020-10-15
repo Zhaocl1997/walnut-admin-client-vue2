@@ -80,7 +80,7 @@
             v-if="showItem(item, FORM_TYPE.CHECKBOX)"
             v-model="value[item.prop]"
             v-bind="item"
-          >{{ item.text }}</w-checkbox>
+          ></w-checkbox>
 
           <!-- tree -->
           <w-tree v-if="showItem(item, FORM_TYPE.TREE)" v-model="value[item.prop]" v-bind="item"></w-tree>
