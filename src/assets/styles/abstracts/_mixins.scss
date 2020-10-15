@@ -13,10 +13,7 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin toggleSidebar(
-  $width: calc(100vw - #{$--layout-sidebar-width}),
-  $ml: $--layout-sidebar-width
-) {
+@mixin toggleSidebar($width: calc(100vw - #{$--layout-sidebar-width}), $ml: $--layout-sidebar-width) {
   @if $--layout-sidebar-render = "false" {
     margin-left: 0;
     width: 100vw;
@@ -52,9 +49,7 @@
   }
 }
 
-@mixin fixHeader(
-  $mt: calc(#{$--layout-header-height} + #{$--layout-tags-height})
-) {
+@mixin fixHeader($mt: calc(#{$--layout-header-height} + #{$--layout-tags-height})) {
   @if $--layout-header-render = "false" {
     margin-top: 0;
   } @else {
@@ -67,6 +62,18 @@
 
   [fixHeader="true"] & {
     margin-top: $mt;
+  }
+}
+
+@mixin testHeader() {
+  display: inherit;
+
+  [testHeader="false"] & {
+    display: none;
+  }
+
+  [testHeader="true"] & {
+    display: inherit;
   }
 }
 

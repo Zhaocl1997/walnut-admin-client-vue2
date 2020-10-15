@@ -13,7 +13,9 @@ const {
   logoRender,
   sidebarRender,
   tagsRender,
-  footerRender
+  footerRender,
+
+  footerHeight
 } = defaultSettings
 
 const state = {
@@ -26,6 +28,8 @@ const state = {
   sidebarRender,
   tagsRender,
   footerRender,
+
+  footerHeight,
 
   sidebarCollapse: false
 }

@@ -45,6 +45,11 @@
         <span>FooterRender</span>
         <el-switch v-model="footerRender" class="drawer-switch" />
       </div>
+
+      <div class="drawer-item">
+        <span>FooterHeight</span>
+        <el-slider v-model="footerHeight" :show-tooltip="false" :min="20" :step="10" :marks="marks"></el-slider>
+      </div>
     </div>
   </div>
 </template>
@@ -67,10 +72,27 @@ export default {
   mixins: [],
 
   data() {
-    return {};
+    return {
+      marks: {
+        20: "20px",
+        40: "40px"
+      }
+    };
   },
 
   computed: {
+    footerHeight: {
+      get() {
+        return parseInt(this.$store.state.settings.footerHeight);
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "footerHeight",
+          value: val + "px"
+        });
+      }
+    },
+
     headerFixed: {
       get() {
         return this.$store.state.settings.headerFixed;
@@ -111,7 +133,7 @@ export default {
       },
       set(val) {
         window.document.documentElement.setAttribute(
-          "fixHeader",
+          "testHeader",
           val.toString()
         );
 

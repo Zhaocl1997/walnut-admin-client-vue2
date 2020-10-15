@@ -23,74 +23,79 @@
         :span="item.span ? item.span : span"
         :style="item.float ? `float:${item.float};text-align:${item.float}`: ''"
       >
-        <!-- divider -->
-        <el-divider v-if="showItem(item, FORM_TYPE.DIVIDER)">{{ item.title }}</el-divider>
+        <template v-if="calcShow(item)">
+          <!-- divider -->
+          <el-divider v-if="showItem(item, FORM_TYPE.DIVIDER)">{{ item.title }}</el-divider>
 
-        <!-- form-item -->
-        <el-form-item
-          :key="item.prop"
-          :label="item.label"
-          :prop="item.prop"
-          :labelWidth="item.labelWidth"
-          :required="item.required"
-          :rules="item.rules"
-          :showMessage="item.showMessage"
-          :inlineMessage="item.inlineMessage"
-          :size="item.size"
-          v-if="calcShow(item)"
-        >
-          <!-- label slot -->
-          <span v-if="item.labelSlot" slot="label">
-            <slot :name="item.prop" />
-          </span>
+          <!-- form-item -->
+          <el-form-item
+            :key="item.prop"
+            :label="item.label"
+            :prop="item.prop"
+            :labelWidth="item.labelWidth"
+            :required="item.required"
+            :rules="item.rules"
+            :showMessage="item.showMessage"
+            :inlineMessage="item.inlineMessage"
+            :size="item.size"
+          >
+            <!-- label slot -->
+            <span v-if="item.labelSlot" slot="label">
+              <slot :name="item.prop" />
+            </span>
 
-          <!-- Input -->
-          <w-input
-            v-if="showItem(item, FORM_TYPE.INPUT)"
-            v-model="value[item.prop]"
-            v-bind="item"
-            @keyup="onEnterKeyup"
-          ></w-input>
+            <!-- Input -->
+            <w-input
+              v-if="showItem(item, FORM_TYPE.INPUT)"
+              v-model="value[item.prop]"
+              v-bind="item"
+              @keyup="onEnterKeyup"
+            ></w-input>
 
-          <!-- date -->
-          <w-date v-if="showItem(item, FORM_TYPE.DATE)" v-model="value[item.prop]" v-bind="item"></w-date>
+            <!-- date -->
+            <w-date v-if="showItem(item, FORM_TYPE.DATE)" v-model="value[item.prop]" v-bind="item"></w-date>
 
-          <!-- time -->
-          <w-time v-if="showItem(item, FORM_TYPE.TIME)" v-model="value[item.prop]" v-bind="item"></w-time>
+            <!-- time -->
+            <w-time v-if="showItem(item, FORM_TYPE.TIME)" v-model="value[item.prop]" v-bind="item"></w-time>
 
-          <!-- select -->
-          <w-select
-            v-if="showItem(item, FORM_TYPE.SELECT)"
-            v-model="value[item.prop]"
-            v-bind="item"
-          ></w-select>
+            <!-- select -->
+            <w-select
+              v-if="showItem(item, FORM_TYPE.SELECT)"
+              v-model="value[item.prop]"
+              v-bind="item"
+            ></w-select>
 
-          <!-- switch -->
-          <w-switch
-            v-if="showItem(item, FORM_TYPE.SWITCH)"
-            v-model="value[item.prop]"
-            v-bind="item"
-          ></w-switch>
+            <!-- switch -->
+            <w-switch
+              v-if="showItem(item, FORM_TYPE.SWITCH)"
+              v-model="value[item.prop]"
+              v-bind="item"
+            ></w-switch>
 
-          <!-- tag -->
-          <w-tag v-if="showItem(item, FORM_TYPE.TAG)" v-model="value[item.prop]" v-bind="item"></w-tag>
+            <!-- tag -->
+            <w-tag v-if="showItem(item, FORM_TYPE.TAG)" v-model="value[item.prop]" v-bind="item"></w-tag>
 
-          <!-- checkbox -->
-          <w-checkbox
-            v-if="showItem(item, FORM_TYPE.CHECKBOX)"
-            v-model="value[item.prop]"
-            v-bind="item"
-          ></w-checkbox>
+            <!-- checkbox -->
+            <w-checkbox
+              v-if="showItem(item, FORM_TYPE.CHECKBOX)"
+              v-model="value[item.prop]"
+              v-bind="item"
+            ></w-checkbox>
 
-          <!-- tree -->
-          <w-tree v-if="showItem(item, FORM_TYPE.TREE)" v-model="value[item.prop]" v-bind="item"></w-tree>
+            <!-- tree -->
+            <w-tree v-if="showItem(item, FORM_TYPE.TREE)" v-model="value[item.prop]" v-bind="item"></w-tree>
 
-          <!-- radio -->
-          <w-radio v-if="showItem(item, FORM_TYPE.RADIO)" v-model="value[item.prop]" v-bind="item"></w-radio>
+            <!-- radio -->
+            <w-radio
+              v-if="showItem(item, FORM_TYPE.RADIO)"
+              v-model="value[item.prop]"
+              v-bind="item"
+            ></w-radio>
 
-          <!-- named slot -->
-          <slot v-if="showSlot(item)" :name="item.prop"></slot>
-        </el-form-item>
+            <!-- named slot -->
+            <slot v-if="showSlot(item)" :name="item.prop"></slot>
+          </el-form-item>
+        </template>
       </el-col>
     </el-row>
 
