@@ -1,27 +1,19 @@
 #app {
-  .app-wrapper {
+  #app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
-  }
 
-  #main-wrapper {
-    height: 100%;
-    position: relative;
-
-    #main-container {
-      background-color: lightgrey;
-      min-height: calc(
-        100vh - #{$--layout-header-height} - #{$--layout-tags-height} - #{$--layout-footer-height}
-      );
+    #content-wrapper {
       position: relative;
-      padding: 1rem;
 
-      @include fixFooter;
-      @include fixHeader;
-      @include toggleSidebar;
-      transition: all 0.3s;
+      #main-wrapper {
+        position: relative;
+        background-color: lightgrey;
+        padding: 1rem;
+        transition: all 0.3s;
+      }
     }
   }
 }

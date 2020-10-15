@@ -4,6 +4,10 @@
       <el-row :gutter="10" type="flex" justify="start">
         <el-col :span="1.5">
           <div class="header_left-item_con">
+            <TheLogo />
+          </div>
+
+          <div class="header_left-item_con">
             <w-hamburger
               class="header-left-item"
               :is-active="isCollapse"
@@ -60,6 +64,7 @@
 </template>
 
 <script>
+import TheLogo from "../TheLogo";
 import wHamburger from "@/components/UI/Others/Hamburger";
 
 import wSizeSelect from "@/components/UI/Others/SizeSelect";
@@ -73,6 +78,7 @@ export default {
   name: "TheHeader",
 
   components: {
+    TheLogo,
     wHamburger,
 
     wSizeSelect,

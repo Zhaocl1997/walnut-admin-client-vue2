@@ -2,10 +2,45 @@
 "use strict"
 
 module.exports = {
+    header: {
+        render: true,
+        fixed: false,
+        height: "50px"
+    },
+
+    // sidebar: {
+    //     render: true,
+    //     fixed: false,
+    //     width: "200px"
+    // },
+
+    // tags: {
+    //     render: true,
+    //     fixed: false,
+    //     height: "30px"
+    // },
+
+    // footer: {
+    //     render: true,
+    //     fixed: false,
+    //     height: "20px"
+    // },
+
+    /**
+     * header render
+     */
+    headerRender: true,
+
+    /**
+     * header fixed
+     */
+    headerFixed: false,
+
     /**
      * header height
      */
     headerHeight: "50px",
+
 
     /**
      * tags height
@@ -22,15 +57,12 @@ module.exports = {
      */
     sidebarWidth: "200px",
 
-    /**
-     * header fixed
-     */
-    headerFixed: true,
+
 
     /**
      * footer fixed
      */
-    footerFixed: true,
+    footerFixed: false,
 
     /**
      * logo render
@@ -42,10 +74,7 @@ module.exports = {
      */
     sidebarRender: true,
 
-    /**
-     * header render
-     */
-    headerRender: true,
+
 
     /**
      * tags render

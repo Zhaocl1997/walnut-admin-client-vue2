@@ -16,6 +16,9 @@
   text-align: center;
   overflow: hidden;
 
+  z-index: $--layout-z-index;
+  transition: all 0.3s;
+
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;

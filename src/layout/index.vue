@@ -1,7 +1,22 @@
 <template>
-  <div class="app-wrapper">
-    <the-sidebar v-if="sidebarRender"></the-sidebar>
-    <the-main></the-main>
+  <div id="app-wrapper">
+    <TheHeader :style="headerStyle" :class="{'fixed-header': headerFixed}"></TheHeader>
+
+    <div id="content-wrapper" :style="contentWrapperStyle">
+      <TheSidebar :style="sidebarStyle"></TheSidebar>
+
+      <div :style="contentStyle">
+        <TheTags :style="tagsStyle"></TheTags>
+
+        <div id="main-wrapper" :style="mainStyle">
+          <TheMain></TheMain>
+        </div>
+
+        <TheFooter :style="footerStyle" :class="{'fixed-footer': footerFixed}"></TheFooter>
+      </div>
+    </div>
+
+    <TheSettings></TheSettings>
   </div>
 </template>
 
@@ -9,10 +24,22 @@
 import TheSidebar from "@/components/Layout/TheSidebar";
 import TheMain from "@/components/Layout/TheMain";
 
+import TheHeader from "@/components/Layout/TheHeader";
+import TheTags from "@/components/Layout/TheTags";
+import TheFooter from "@/components/Layout/TheFooter";
+import TheSettings from "@/components/UI/Others/Settings";
+
 export default {
   name: "wIndex",
 
-  components: { TheSidebar, TheMain },
+  components: {
+    TheSidebar,
+    TheMain,
+    TheHeader,
+    TheTags,
+    TheFooter,
+    TheSettings
+  },
 
   mixins: [],
 
@@ -21,16 +48,103 @@ export default {
   },
 
   computed: {
+    settings() {
+      return this.$store.state.settings;
+    },
+
+    headerRender() {
+      return this.settings.headerRender;
+    },
+
     headerFixed() {
-      return this.$store.state.settings.headerFixed;
+      return this.settings.headerFixed;
+    },
+
+    headerHeight() {
+      return this.settings.headerHeight;
+    },
+
+    contentStyle() {
+      return {
+        marginLeft: this.sidebarRender ? this.sidebarWidth : "0px",
+        transition: "all 0.3s"
+      };
     },
 
     footerFixed() {
-      return this.$store.state.settings.footerFixed;
+      return this.settings.footerFixed;
+    },
+
+    tagsRender() {
+      return this.settings.tagsRender;
+    },
+
+    footerRender() {
+      return this.settings.footerRender;
     },
 
     sidebarRender() {
-      return this.$store.state.settings.sidebarRender;
+      return this.settings.sidebarRender;
+    },
+
+    footerHeight() {
+      return this.settings.footerHeight;
+    },
+
+    tagsHeight() {
+      return this.settings.tagsHeight;
+    },
+
+    sidebarWidth() {
+      return this.settings.sidebarWidth;
+    },
+
+    footerStyle() {
+      return {
+        width:
+          this.footerFixed && this.sidebarRender
+            ? `calc(100vw - ${this.sidebarWidth})`
+            : "100vw",
+        height: this.footerHeight,
+        display: this.footerRender ? "inherit" : "none",
+        marginLeft:
+          this.footerFixed && this.sidebarRender ? this.sidebarWidth : "0px"
+      };
+    },
+
+    headerStyle() {
+      return {
+        height: this.headerHeight,
+        display: this.headerRender ? "inherit" : "none"
+      };
+    },
+
+    sidebarStyle() {
+      return {
+        width: this.sidebarWidth,
+        display: this.sidebarRender ? "inherit" : "none"
+      };
+    },
+
+    tagsStyle() {
+      return {
+        height: this.tagsHeight,
+        display: this.tagsRender ? "inherit" : "none"
+      };
+    },
+
+    mainStyle() {
+      return {
+        "min-height": `calc(100vh - ${this.headerHeight} - ${this.tagsHeight} - ${this.footerHeight})`,
+        // marginTop: this.headerFixed ? this.headerHeight : "0px",
+        marginBottom: this.footerFixed ? this.footerHeight : "0px"
+      };
+    },
+
+    contentWrapperStyle() {
+      return {
+        marginTop: this.headerFixed ? this.headerHeight : "0px"
+      };
     }
   },
 
@@ -40,34 +154,7 @@ export default {
 
   props: {},
 
-  methods: {
-    init() {
-      this.setHeaderFixed();
-      this.setFooterFixed();
-      this.setSidebarRender();
-    },
-
-    setHeaderFixed() {
-      window.document.documentElement.setAttribute(
-        "fixHeader",
-        this.headerFixed.toString()
-      );
-    },
-
-    setFooterFixed() {
-      window.document.documentElement.setAttribute(
-        "fixFooter",
-        this.footerFixed.toString()
-      );
-    },
-
-    setSidebarRender() {
-      window.document.documentElement.setAttribute(
-        "toggleSidebar",
-        this.sidebarRender.toString()
-      );
-    }
-  },
+  methods: {},
 
   created() {},
 
@@ -83,8 +170,6 @@ export default {
     this.$log.capsule("title3", "capsule3", "warning");
     this.$log.capsule("title4", "capsule4", "danger");
     this.$log.capsule("title5", "capsule5", "info");
-
-    this.init();
   },
 
   beforeCreate() {},

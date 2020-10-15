@@ -1,9 +1,11 @@
 #header-container {
-  @include toggleSidebar;
+  /* @include toggleSidebar; */
   /* @include testHeader; */
 
   /* height: $--layout-header-height; */
-  z-index: $--layout-z-index;
+  transition: all 0.3s;
+  width: 100vw;
+  z-index: 1888;
   background: $custom;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 

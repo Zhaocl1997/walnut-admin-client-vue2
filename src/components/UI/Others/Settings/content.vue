@@ -48,7 +48,24 @@
 
       <div class="drawer-item">
         <span>FooterHeight</span>
-        <el-slider v-model="footerHeight" :show-tooltip="false" :min="20" :step="10" :marks="marks"></el-slider>
+        <el-slider
+          v-model="footerHeight"
+          :show-tooltip="false"
+          :min="20"
+          :step="10"
+          :marks="sliderMarks"
+        ></el-slider>
+      </div>
+
+      <div class="drawer-item">
+        <span>HeaderHeight</span>
+        <el-slider
+          v-model="headerHeight"
+          :show-tooltip="false"
+          :min="50"
+          :step="10"
+          :marks="sliderMarks"
+        ></el-slider>
       </div>
     </div>
   </div>
@@ -73,9 +90,12 @@ export default {
 
   data() {
     return {
-      marks: {
+      sliderMarks: {
         20: "20px",
-        40: "40px"
+        40: "40px",
+        60: "60px",
+        80: "80px",
+        100: "100px"
       }
     };
   },
@@ -93,16 +113,23 @@ export default {
       }
     },
 
+    headerHeight: {
+      get() {
+        return parseInt(this.$store.state.settings.headerHeight);
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "headerHeight",
+          value: val + "px"
+        });
+      }
+    },
+
     headerFixed: {
       get() {
         return this.$store.state.settings.headerFixed;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "fixHeader",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "headerFixed",
           value: val
@@ -115,11 +142,6 @@ export default {
         return this.$store.state.settings.footerFixed;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "fixFooter",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "footerFixed",
           value: val
@@ -132,11 +154,6 @@ export default {
         return this.$store.state.settings.headerRender;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "testHeader",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "headerFixed",
           value: val
@@ -166,11 +183,6 @@ export default {
         return this.$store.state.settings.sidebarRender;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "toggleSidebar",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "sidebarRender",
           value: val
@@ -183,11 +195,6 @@ export default {
         return this.$store.state.settings.tagsRender;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "fixHeader",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "headerFixed",
           value: val
@@ -205,11 +212,6 @@ export default {
         return this.$store.state.settings.footerRender;
       },
       set(val) {
-        window.document.documentElement.setAttribute(
-          "fixFooter",
-          val.toString()
-        );
-
         this.$store.dispatch("settings/changeSettings", {
           key: "footerFixed",
           value: val

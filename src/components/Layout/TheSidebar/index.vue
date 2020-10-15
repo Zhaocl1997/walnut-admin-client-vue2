@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar-container">
-    <the-logo v-if="logoRender" :collapse="isCollapse" />
+    <!-- <the-logo v-if="logoRender" :collapse="isCollapse" /> -->
 
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu

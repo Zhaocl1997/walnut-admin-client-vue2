@@ -6,20 +6,8 @@
 import defaultSettings from '@/settings'
 
 const {
-  headerFixed,
-  footerFixed,
+  header,
 
-  headerRender,
-  logoRender,
-  sidebarRender,
-  tagsRender,
-  footerRender,
-
-  footerHeight
-} = defaultSettings
-
-const state = {
-  // theme: variables.theme,
   headerFixed,
   footerFixed,
 
@@ -30,6 +18,28 @@ const state = {
   footerRender,
 
   footerHeight,
+  headerHeight,
+  tagsHeight,
+  sidebarWidth
+} = defaultSettings
+
+const state = {
+  headerRender: header.render,
+  headerFixed: header.fixed,
+  headerHeight: header.height,
+
+
+  footerFixed,
+
+  logoRender,
+  sidebarRender,
+  tagsRender,
+  footerRender,
+
+  footerHeight,
+
+  tagsHeight,
+  sidebarWidth,
 
   sidebarCollapse: false
 }
