@@ -8,9 +8,31 @@
       </div>
 
       <div class="drawer-item">
+        <h5>Header</h5>
+      </div>
+
+      <div class="drawer-item">
+        <span>HeaderRender</span>
+        <el-switch v-model="headerRender" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
         <span>Headerfixed</span>
         <el-switch v-model="headerFixed" class="drawer-switch" />
       </div>
+
+      <div class="drawer-item">
+        <span>HeaderHeight</span>
+        <el-slider
+          v-model="headerHeight"
+          :show-tooltip="false"
+          :min="50"
+          :step="10"
+          :marks="sliderMarks"
+        ></el-slider>
+      </div>
+
+      <el-divider></el-divider>
 
       <div class="drawer-item">
         <span>Footerfixed</span>
@@ -19,11 +41,6 @@
 
       <div class="drawer-item">
         <h4>Content</h4>
-      </div>
-
-      <div class="drawer-item">
-        <span>HeaderRender</span>
-        <el-switch v-model="headerRender" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -52,17 +69,6 @@
           v-model="footerHeight"
           :show-tooltip="false"
           :min="20"
-          :step="10"
-          :marks="sliderMarks"
-        ></el-slider>
-      </div>
-
-      <div class="drawer-item">
-        <span>HeaderHeight</span>
-        <el-slider
-          v-model="headerHeight"
-          :show-tooltip="false"
-          :min="50"
           :step="10"
           :marks="sliderMarks"
         ></el-slider>
