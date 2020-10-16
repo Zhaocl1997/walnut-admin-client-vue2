@@ -8,23 +8,23 @@ module.exports = {
         height: "50px"
     },
 
-    // sidebar: {
-    //     render: true,
-    //     fixed: false,
-    //     width: "200px"
-    // },
+    sidebar: {
+        render: true,
+        fixed: false,
+        width: "200px"
+    },
 
-    // tags: {
-    //     render: true,
-    //     fixed: false,
-    //     height: "30px"
-    // },
+    tags: {
+        render: true,
+        fixed: false,
+        height: "30px"
+    },
 
-    // footer: {
-    //     render: true,
-    //     fixed: false,
-    //     height: "20px"
-    // },
+    footer: {
+        render: true,
+        fixed: false,
+        height: "20px"
+    },
 
     /**
      * header render

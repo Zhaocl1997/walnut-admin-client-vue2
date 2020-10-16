@@ -28,7 +28,7 @@
 
 <script>
 import wTree from "../Tree";
-import { findNodeById } from "@/mock";
+import { findNodeById } from "@/utils/tree";
 import ValueMixins from "@/mixins/Value";
 
 export default {

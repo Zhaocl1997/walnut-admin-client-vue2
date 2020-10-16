@@ -7,20 +7,9 @@ import defaultSettings from '@/settings'
 
 const {
   header,
-
-  headerFixed,
-  footerFixed,
-
-  headerRender,
-  logoRender,
-  sidebarRender,
-  tagsRender,
-  footerRender,
-
-  footerHeight,
-  headerHeight,
-  tagsHeight,
-  sidebarWidth
+  sidebar,
+  tags,
+  footer
 } = defaultSettings
 
 const state = {
@@ -28,18 +17,17 @@ const state = {
   headerFixed: header.fixed,
   headerHeight: header.height,
 
+  sidebarRender: sidebar.render,
+  sidebarFixed: sidebar.fixed,
+  sidebarWidth: sidebar.width,
 
-  footerFixed,
+  tagsRender: tags.render,
+  tagsFixed: tags.fixed,
+  tagsHeight: tags.height,
 
-  logoRender,
-  sidebarRender,
-  tagsRender,
-  footerRender,
-
-  footerHeight,
-
-  tagsHeight,
-  sidebarWidth,
+  footerRender: footer.render,
+  footerFixed: footer.fixed,
+  footerHeight: footer.height,
 
   sidebarCollapse: false
 }

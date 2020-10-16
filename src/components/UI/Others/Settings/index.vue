@@ -19,17 +19,17 @@
       :withHeader="withHeader"
       size="20%"
     >
-      <w-settings-content></w-settings-content>
+      <TheSettingsContent></TheSettingsContent>
     </el-drawer>
   </div>
 </template>
 
 <script>
-import wSettingsContent from "./content";
+import TheSettingsContent from "./content";
 import { debounce } from "@/utils";
 
 export default {
-  name: "wSettings",
+  name: "TheSettings",
 
   inject: [],
 
@@ -40,7 +40,7 @@ export default {
     prop: ""
   },
 
-  components: { wSettingsContent },
+  components: { TheSettingsContent },
 
   mixins: [],
 

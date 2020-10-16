@@ -1,38 +1,48 @@
 <template>
   <div class="drawer-container">
     <div>
-      <h3 class="drawer-title">Layout Settings</h3>
+      <h3 class="drawer-title">Settings</h3>
 
-      <div class="drawer-item">
-        <h4>Layout</h4>
-      </div>
+      <el-divider>
+        <div class="drawer-item">
+          <h4>Layout</h4>
+        </div>
+      </el-divider>
 
-      <div class="drawer-item">
-        <h5>Header</h5>
-      </div>
+      <TheHeaderSettings />
 
-      <div class="drawer-item">
-        <span>HeaderRender</span>
-        <el-switch v-model="headerRender" class="drawer-switch" />
-      </div>
+      <!-- <el-collapse>
+        <el-collapse-item title="Header" name="1">
+          <template slot="title">
+            <div class="drawer-item">
+              <h5>Header</h5>
+            </div>
+          </template>
 
-      <div class="drawer-item">
-        <span>Headerfixed</span>
-        <el-switch v-model="headerFixed" class="drawer-switch" />
-      </div>
+          <div class="drawer-item">
+            <span>Render</span>
+            <el-switch v-model="headerRender" class="drawer-switch" />
+          </div>
 
-      <div class="drawer-item">
-        <span>HeaderHeight</span>
-        <el-slider
-          v-model="headerHeight"
-          :show-tooltip="false"
-          :min="50"
-          :step="10"
-          :marks="sliderMarks"
-        ></el-slider>
-      </div>
+          <div class="drawer-item">
+            <span>Fixed</span>
+            <el-switch v-model="headerFixed" class="drawer-switch" />
+          </div>
 
-      <el-divider></el-divider>
+          <div class="drawer-item">
+            <span>Height</span>
+
+            <el-slider
+              style="width:80%;margin:auto;"
+              v-model="headerHeight"
+              :show-tooltip="false"
+              :min="50"
+              :step="10"
+              :marks="sliderMarks"
+            ></el-slider>
+          </div>
+        </el-collapse-item>
+      </el-collapse>-->
 
       <div class="drawer-item">
         <span>Footerfixed</span>
@@ -78,6 +88,8 @@
 </template>
 
 <script>
+import TheHeaderSettings from "./components/HeaderSettings";
+
 export default {
   name: "wSettingsContent",
 
@@ -90,7 +102,9 @@ export default {
     prop: ""
   },
 
-  components: {},
+  components: {
+    TheHeaderSettings
+  },
 
   mixins: [],
 
@@ -102,7 +116,9 @@ export default {
         60: "60px",
         80: "80px",
         100: "100px"
-      }
+      },
+
+      activeNames: ["1"]
     };
   },
 
@@ -257,7 +273,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .drawer-container {
   padding: 24px;
   font-size: 14px;

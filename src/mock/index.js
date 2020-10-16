@@ -3,6 +3,7 @@
 
 import Mock from 'mockjs'
 import { randomId } from '../utils'
+import { treeToArr, arrToTree, findNodeById } from '../utils/tree'
 import { FORM_TYPE, EMAIL_OPTIONS, INPUT_TYPE, DATE_TYPE, TIME_TYPE, PHONE_PREFIX } from '../utils/constant'
 
 const Random = Mock.Random
@@ -127,9 +128,9 @@ const mockData = options => {
 
             case FORM_TYPE.TREE:
                 // console.log(findNodeById("5de86e8b68de45281460c1f9", e.data, e.nodeKey, e.props));
-                // console.log(flatTreeToArray(e.data, e.nodeKey, e.props, true));
+                // console.log(treeToArr(e.data, e.nodeKey, e.props, true));
 
-                const idArr = flatTreeToArray(e.data, e.nodeKey, e.props, true)
+                const idArr = treeToArr(e.data, e.nodeKey, e.props, true)
 
                 if (e.multiple) {
                     result[e.prop] = [Random.pick(idArr)]
@@ -146,90 +147,6 @@ const mockData = options => {
     console.log(result);
 
     return result
-}
-
-/**
- * 平铺树
- * 两种返回值 1、节点数组 2、ID数组
- * @param {Array} data 树结构数组
- * @param {String} nodeKey 唯一key，默认id
- * @param {Object} prop children和label字段key，默认值如下
- * @param {Boolean} onlyId 是否返回ID数组，默认false
- * @return {Array}
- */
-export const flatTreeToArray = (
-    data,
-    nodeKey = 'id',
-    prop = {
-        children: 'children',
-        label: 'label'
-    },
-    onlyId = false
-) => {
-    const retTarget = []
-    const retId = []
-
-    const flat = data => {
-        for (let item of data) {
-            const childrens = item[prop.children]
-            retTarget.push(item)
-
-            if (childrens) {
-                flat(childrens)
-            }
-        }
-    }
-
-    flat(data)
-
-    if (onlyId) {
-        retTarget.map(i => {
-            retId.push(i[nodeKey])
-        })
-    }
-
-    return onlyId ? retId : retTarget
-}
-
-/**
- * 通过ID在树中查找节点
- * 两种返回值 1、布尔值 2、节点对象
- * @param {String | Number} id 想要查找的节点ID
- * @param {Array} data 树结构数组
- * @param {String} nodeKey 唯一key，默认id
- * @param {Object} prop children和label字段key，默认值如下
- * @param {Boolean} onlyTarget 是否返回节点元素，默认false
- * @return {Object | Boolean}
- */
-export const findNodeById = (
-    id,
-    data,
-    nodeKey = 'id',
-    prop = {
-        children: 'children',
-        label: 'label'
-    },
-    onlyTarget = false
-) => {
-    let hasFound = false
-    let ret = {}
-
-    const findNode = data => {
-        if (Array.isArray(data) && !hasFound) {
-            data.forEach(item => {
-                if (item[nodeKey] === id) {
-                    ret = item
-                    hasFound = true
-                } else if (item[prop.children]) {
-                    findNode(item[prop.children])
-                }
-            })
-        }
-    }
-
-    findNode(data)
-
-    return onlyTarget ? ret : hasFound
 }
 
 
