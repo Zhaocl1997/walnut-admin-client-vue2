@@ -8,7 +8,7 @@
           @mouseleave="onMouseLeave($event, item)"
           :id="item.prop"
         >
-          <w-icon icon="draggable" style="cursor:move;"></w-icon>
+          <w-icon icon="draggable" style="cursor:move;float:left;margin-top:3px;"></w-icon>
 
           <el-checkbox v-model="item.show" :disabled="item.disabled">
             <span class="u-one-line" style="max-width:150px;padding-right:20px;">{{ item.label }}</span>
@@ -48,7 +48,6 @@
 <script>
 import Sortable from "sortablejs";
 import { TABLE_COL_TYPE } from "@/utils/constant";
-import { randomId } from "@/utils";
 
 export default {
   name: "wTableColumnItem",
@@ -68,8 +67,7 @@ export default {
 
   data() {
     return {
-      TABLE_COL_TYPE: TABLE_COL_TYPE,
-      style: {}
+      TABLE_COL_TYPE: TABLE_COL_TYPE
     };
   },
 
@@ -129,6 +127,7 @@ export default {
 
       return ret;
     },
+
     onSetDrag() {
       const target = document.querySelector(`.${this.className} ul`);
 
@@ -144,10 +143,12 @@ export default {
         }
       });
     },
+
     findItemIndex(item) {
       const index = this.header.findIndex(i => i.prop === item.prop);
       return index;
     },
+
     onClick(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -156,6 +157,7 @@ export default {
         show: !this.header[index].show
       });
     },
+
     onMouseOver(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -167,6 +169,7 @@ export default {
         visible: true
       });
     },
+
     onMouseLeave(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -178,6 +181,7 @@ export default {
         visible: false
       });
     },
+
     onSetStart(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -186,6 +190,7 @@ export default {
         fixed: TABLE_COL_TYPE.LEFT
       });
     },
+
     onSetEnd(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -194,6 +199,7 @@ export default {
         fixed: TABLE_COL_TYPE.RIGHT
       });
     },
+
     onSetCommon(evt, item) {
       const index = this.findItemIndex(item);
 
@@ -236,23 +242,20 @@ export default {
   margin: 0;
 
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+    width: 5px;
     height: 1px;
   }
 
   &::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
     border-radius: 10px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     background: #535353;
   }
 
   &::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     background: #ededed;

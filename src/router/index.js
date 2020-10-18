@@ -67,8 +67,8 @@ const routes = [
   },
   {
     path: '/',
-    name: 'main',
-    component: () => import(/* webpackChunkName: "main" */ '../layout/index.vue'),
+    name: 'Layout',
+    component: () => import(/* webpackChunkName: "Layout" */ '../layout/index.vue'),
     children: [
       {
         path: '/components',

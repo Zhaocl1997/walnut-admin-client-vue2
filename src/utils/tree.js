@@ -66,6 +66,10 @@ export const arrToTree = (
 ) => {
     const root = data.find(i => i[prop.id] == rootId)
 
+    if (!root) {
+        throw new Error('Root not found')
+    }
+
     const toTree = (data, pid) => {
         const ret = []
         let temp = []

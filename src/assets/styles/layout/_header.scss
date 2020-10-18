@@ -32,16 +32,17 @@
   } */
 
   .header_left-container {
-    display: inline-block;
+    float: left;
+    margin-left: 1rem;
 
     .header_left-item_con {
       line-height: 50px;
 
-      .header-left-item {
+      .header-left-item_ham {
         cursor: pointer;
         font-size: 20px;
         color: white;
-        margin: 14px 0 0 3px;
+        margin: 15px 0 0 15px;
       }
     }
   }

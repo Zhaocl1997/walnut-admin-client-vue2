@@ -10,7 +10,7 @@ module.exports = {
 
     sidebar: {
         render: true,
-        fixed: false,
+        collapsed: false,
         width: "200px"
     },
 

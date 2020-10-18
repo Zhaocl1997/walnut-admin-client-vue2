@@ -22,7 +22,21 @@
           <!-- 正常项 -->
           <span class="table-header__info">
             不固定
-            <w-button class="reset-button" type="text" @click="onReset">重置</w-button>
+            <!-- <el-checkbox
+              size="mini"
+              style="margin-right:5px;"
+              :value="isAllSelected"
+              @change="onSelectAll"
+            >全选</el-checkbox>-->
+
+            <el-checkbox
+              style="margin-right:5px;"
+              :indeterminate="isIndeterminate"
+              v-model="checkAll"
+              @change="handleCheckAllChange"
+            >全选</el-checkbox>
+
+            <w-button size="mini" type="text" @click="onReset">重置</w-button>
           </span>
 
           <w-header-column-item :header.sync="header" type="common"></w-header-column-item>
@@ -202,7 +216,11 @@ export default {
       header: [],
       deviation: 0, // fixed left 带来的偏差
       rowHeight: {},
-      cachedHeader: []
+      cachedHeader: [],
+      isAllSelected: true,
+
+      isIndeterminate: false,
+      checkAll: true
     };
   },
 
@@ -210,6 +228,7 @@ export default {
     cRowStyle() {
       return this.rowHeight ? this.rowHeight : this.rowStyle;
     },
+
     myPageNum: {
       get() {
         return this.pageNum;
@@ -218,6 +237,7 @@ export default {
         this.$emit("update:pageNum", val);
       }
     },
+
     myPageSize: {
       get() {
         return this.pageSize;
@@ -226,9 +246,11 @@ export default {
         this.$emit("update:pageSize", val);
       }
     },
+
     hasFixedLeft() {
       return this.header.find(i => i.fixed === "left");
     },
+
     hasFixedRight() {
       return this.header.find(i => i.fixed === "right");
     }
@@ -237,7 +259,9 @@ export default {
   watch: {
     header(newV) {
       if (newV) {
-        this.$emit("update:tableHeader", this.header);
+        this.handleNewValue(newV);
+
+        this.$emit("update:tableHeader", newV);
       }
     }
   },
@@ -382,6 +406,28 @@ export default {
         if (e.fixed && e.fixed === "left") {
           this.deviation += 1;
         }
+      }
+    },
+
+    // 全选
+    onSelectAll(val) {
+      this.header.map((item, index, arr) => {
+        this.$set(arr, index, { ...item, show: val });
+      });
+    },
+
+    handleCheckAllChange(val) {
+      this.header.map((item, index, arr) => {
+        this.$set(arr, index, { ...item, show: val });
+      });
+    },
+
+    handleNewValue(v) {
+      const isIndeterminate = v.some(i => !i.show);
+
+      if (isIndeterminate) {
+        this.isIndeterminate = true;
+        this.checkAll = false;
       }
     },
 

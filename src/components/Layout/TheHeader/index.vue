@@ -4,12 +4,14 @@
       <el-row :gutter="10" type="flex" justify="start">
         <el-col :span="1.5">
           <div class="header_left-item_con">
-            <TheLogo />
+            <TheLogo :collapse="isCollapse" />
           </div>
+        </el-col>
 
+        <el-col :span="1.5">
           <div class="header_left-item_con">
             <w-hamburger
-              class="header-left-item"
+              class="header-left-item_ham"
               :is-active="isCollapse"
               @toggleClick="onToggleSideBar"
             ></w-hamburger>
@@ -97,7 +99,7 @@ export default {
 
   computed: {
     isCollapse() {
-      return this.$store.state.settings.sidebarCollapse;
+      return this.$store.state.settings.sidebarCollapsed;
     }
   },
 
@@ -108,7 +110,7 @@ export default {
   methods: {
     onToggleSideBar() {
       this.$store.dispatch("settings/changeSettings", {
-        key: "sidebarCollapse",
+        key: "sidebarCollapsed",
         value: !this.isCollapse
       });
     }

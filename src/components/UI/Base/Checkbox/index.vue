@@ -21,7 +21,7 @@
       </template>
     </el-checkbox-group>
 
-    <el-checkbox v-on="$listeners" @change="onChange" v-else v-model="normalValue" :disabled="disabled">{{ label }}</el-checkbox>
+    <el-checkbox v-on="$listeners" @change="onChange" v-else v-model="normalValue" :disabled="disabled">{{ labelText }}</el-checkbox>
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
     options: Array,
     button: Boolean,
     multiple: Boolean,
-    label: String
+    labelText: String
   },
 
   methods: {

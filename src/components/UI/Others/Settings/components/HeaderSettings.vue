@@ -1,37 +1,35 @@
 <template>
-  <el-collapse>
-    <el-collapse-item title="Header" name="1">
-      <template slot="title">
-        <div class="drawer-item">
-          <h5>Header</h5>
-        </div>
-      </template>
-
+  <el-collapse-item title="Header" name="header">
+    <template slot="title">
       <div class="drawer-item">
-        <span>Render</span>
-        <el-switch v-model="headerRender" class="drawer-switch" />
+        <h5>Header</h5>
       </div>
+    </template>
 
-      <div class="drawer-item">
-        <span>Fixed</span>
-        <el-switch v-model="headerFixed" class="drawer-switch" />
-      </div>
+    <div class="drawer-item">
+      <span>Render</span>
+      <el-switch v-model="headerRender" class="drawer-switch" />
+    </div>
 
-      <div class="drawer-item">
-        <span>Height</span>
+    <div class="drawer-item">
+      <span>Fixed</span>
+      <el-switch v-model="headerFixed" :disabled="!headerRender" class="drawer-switch" />
+    </div>
 
-        <el-slider
-          style="width:80%;margin:auto;"
-          v-model="headerHeight"
-          :show-tooltip="false"
-          :min="50"
-          :max="120"
-          :step="10"
-          :marks="headerMarks"
-        ></el-slider>
-      </div>
-    </el-collapse-item>
-  </el-collapse>
+    <div class="drawer-item">
+      <span>Height</span>
+
+      <el-slider
+        style="width:80%;margin:auto;"
+        v-model="headerHeight"
+        :show-tooltip="false"
+        :min="50"
+        :max="120"
+        :step="10"
+        :marks="headerMarks"
+      ></el-slider>
+    </div>
+  </el-collapse-item>
 </template>
 
 <script>
@@ -54,10 +52,11 @@ export default {
   data() {
     return {
       headerMarks: {
-        60: "60px",
-        80: "80px",
-        100: "100px",
-        120: "120px"
+        50: "50px",
+        70: "70px",
+        90: "90px",
+        110: "110px",
+        130: "130px"
       }
     };
   },

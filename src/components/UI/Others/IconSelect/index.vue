@@ -1,6 +1,6 @@
 <template>
   <div>
-    <w-input v-model="selfValue" @focus="onClick" readonly>
+    <w-input v-model="selfValue" @focus="onClick" readonly placeholder="请选择图标">
       <div slot="prepend" @click="onClick">
         <w-icon v-if="selfValue" :icon="selfValue" customClass="right-icon"></w-icon>
         <div v-else>+</div>
@@ -13,6 +13,7 @@
       dialogTitle="选择你的图标"
       :footer="false"
       top="2vh"
+      width="35%"
     >
       <w-input
         v-model="filters"

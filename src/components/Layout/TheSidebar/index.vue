@@ -1,7 +1,5 @@
 <template>
   <div id="sidebar-container">
-    <!-- <the-logo v-if="logoRender" :collapse="isCollapse" /> -->
-
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="$route.path"
@@ -44,22 +42,8 @@ export default {
   },
 
   computed: {
-    logoRender() {
-      return this.$store.state.settings.logoRender;
-    },
-
     isCollapse() {
-      return this.$store.state.settings.sidebarCollapse;
-    },
-
-    activeMenu() {
-      const route = this.$route;
-      const { meta, path } = route;
-      // if set path, the sidebar will highlight the path you set
-      if (meta.activeMenu) {
-        return meta.activeMenu;
-      }
-      return path;
+      return this.$store.state.settings.sidebarCollapsed;
     },
 
     variables() {

@@ -21,16 +21,21 @@
 </template>
 
 <script>
-import TheSidebar from "@/components/Layout/TheSidebar";
-import TheMain from "@/components/Layout/TheMain";
+import { mapState } from "vuex";
 
 import TheHeader from "@/components/Layout/TheHeader";
+import TheSidebar from "@/components/Layout/TheSidebar";
 import TheTags from "@/components/Layout/TheTags";
+import TheMain from "@/components/Layout/TheMain";
 import TheFooter from "@/components/Layout/TheFooter";
 import TheSettings from "@/components/UI/Others/Settings";
 
+import { debounce } from "@/utils";
+
+import ResizeMixin from "../mixins/Resize";
+
 export default {
-  name: "wIndex",
+  name: "Layout",
 
   components: {
     TheSidebar,
@@ -41,77 +46,40 @@ export default {
     TheSettings
   },
 
-  mixins: [],
+  mixins: [ResizeMixin],
 
   data() {
-    return {};
+    return {
+      sidebarMarinTop: true
+    };
   },
 
   computed: {
-    settings() {
-      return this.$store.state.settings;
-    },
+    ...mapState({
+      device: state => state.app.device,
 
-    headerRender() {
-      return this.settings.headerRender;
-    },
+      /* header */
+      headerRender: state => state.settings.headerRender,
+      headerFixed: state => state.settings.headerFixed,
+      headerHeight: state => state.settings.headerHeight,
 
-    headerFixed() {
-      return this.settings.headerFixed;
-    },
+      /* sidebar */
+      sidebarRender: state => state.settings.sidebarRender,
+      sidebarCollapsed: state => state.settings.sidebarCollapsed,
+      sidebarWidth: state => state.settings.sidebarWidth,
 
-    headerHeight() {
-      return this.settings.headerHeight;
-    },
+      /* tags */
+      tagsRender: state => state.settings.tagsRender,
+      // tagsFixed: state => state.settings.tagsFixed,
+      tagsHeight: state => state.settings.tagsHeight,
 
-    contentStyle() {
-      return {
-        marginLeft: this.sidebarRender ? this.sidebarWidth : "0px",
-        transition: "all 0.3s"
-      };
-    },
+      /* footer */
+      footerRender: state => state.settings.footerRender,
+      footerFixed: state => state.settings.footerFixed,
+      footerHeight: state => state.settings.footerHeight
+    }),
 
-    footerFixed() {
-      return this.settings.footerFixed;
-    },
-
-    tagsRender() {
-      return this.settings.tagsRender;
-    },
-
-    footerRender() {
-      return this.settings.footerRender;
-    },
-
-    sidebarRender() {
-      return this.settings.sidebarRender;
-    },
-
-    footerHeight() {
-      return this.settings.footerHeight;
-    },
-
-    tagsHeight() {
-      return this.settings.tagsHeight;
-    },
-
-    sidebarWidth() {
-      return this.settings.sidebarWidth;
-    },
-
-    footerStyle() {
-      return {
-        width:
-          this.footerFixed && this.sidebarRender
-            ? `calc(100vw - ${this.sidebarWidth})`
-            : "100vw",
-        height: this.footerHeight,
-        display: this.footerRender ? "inherit" : "none",
-        marginLeft:
-          this.footerFixed && this.sidebarRender ? this.sidebarWidth : "0px"
-      };
-    },
-
+    /* header-style */
     headerStyle() {
       return {
         height: this.headerHeight,
@@ -119,13 +87,20 @@ export default {
       };
     },
 
+    /* sidebar-style */
     sidebarStyle() {
       return {
-        width: this.sidebarWidth,
-        display: this.sidebarRender ? "inherit" : "none"
+        width: this.sidebarCollapsed ? "63px" : this.sidebarWidth,
+        display: this.sidebarRender ? "inherit" : "none",
+        marginTop: this.sidebarMarinTop
+          ? this.headerRender
+            ? this.headerHeight
+            : "0"
+          : "0"
       };
     },
 
+    /* tags-style */
     tagsStyle() {
       return {
         height: this.tagsHeight,
@@ -133,11 +108,43 @@ export default {
       };
     },
 
+    /* main-style */
     mainStyle() {
       return {
-        "min-height": `calc(100vh - ${this.headerHeight} - ${this.tagsHeight} - ${this.footerHeight})`,
-        // marginTop: this.headerFixed ? this.headerHeight : "0px",
+        "min-height": this.onMainHeight(),
         marginBottom: this.footerFixed ? this.footerHeight : "0px"
+      };
+    },
+
+    /* footer-style */
+    footerStyle() {
+      return {
+        width:
+          this.footerFixed && this.sidebarRender
+            ? this.sidebarCollapsed
+              ? `calc(100vw - 63px)`
+              : `calc(100vw - ${this.sidebarWidth})`
+            : "100vw",
+        height: this.footerHeight,
+        display: this.footerRender ? "inherit" : "none",
+        marginLeft:
+          this.footerFixed && this.sidebarRender
+            ? this.sidebarCollapsed
+              ? "63px"
+              : this.sidebarWidth
+            : "0px"
+      };
+    },
+
+    /* content-style */
+    contentStyle() {
+      return {
+        marginLeft: this.sidebarRender
+          ? this.sidebarCollapsed
+            ? "63px"
+            : this.sidebarWidth
+          : "0px",
+        transition: "all 0.3s"
       };
     },
 
@@ -154,22 +161,66 @@ export default {
 
   props: {},
 
-  methods: {},
+  methods: {
+    init() {
+      console.log(this.device);
+
+      this.$log.primary("primary");
+      this.$log.success("success");
+      this.$log.warning("warning");
+      this.$log.danger("danger");
+      this.$log.info("info");
+
+      this.$log.capsule("title1", "capsule1", "primary");
+      this.$log.capsule("title2", "capsule2", "success");
+      this.$log.capsule("title3", "capsule3", "warning");
+      this.$log.capsule("title4", "capsule4", "danger");
+      this.$log.capsule("title5", "capsule5", "info");
+
+      this.onScroll = debounce(this.onScroll, 50);
+
+      window.addEventListener("scroll", this.onScroll, true);
+    },
+
+    onScroll(e) {
+      const top = document.documentElement.scrollTop;
+
+      if (this.headerFixed) {
+        return;
+      }
+
+      if (top > parseInt(this.headerHeight)) {
+        this.sidebarMarinTop = false;
+      } else {
+        this.sidebarMarinTop = true;
+      }
+    },
+
+    onMainHeight() {
+      if (this.headerRender && this.tagsRender && this.footerRender) {
+        return `calc(100vh - ${this.headerHeight} - ${this.tagsHeight} - ${this.footerHeight})`;
+      } else if (this.headerRender && this.tagsRender) {
+        return `calc(100vh - ${this.headerHeight} - ${this.tagsHeight})`;
+      } else if (this.headerRender && this.footerRender) {
+        return `calc(100vh - ${this.headerHeight} - ${this.footerHeight})`;
+      } else if (this.tagsRender && this.footerRender) {
+        return `calc(100vh - ${this.tagsHeight} - ${this.footerHeight})`;
+      } else if (this.headerRender) {
+        return `calc(100vh - ${this.headerHeight})`;
+      } else if (this.tagsRender) {
+        return `calc(100vh - ${this.tagsHeight})`;
+      } else if (this.footerRender) {
+        return `calc(100vh - ${this.footerHeight})`;
+      } else {
+        return "100vh";
+      }
+    }
+  },
 
   created() {},
 
   mounted() {
-    this.$log.primary("primary");
-    this.$log.success("success");
-    this.$log.warning("warning");
-    this.$log.danger("danger");
-    this.$log.info("info");
-
-    this.$log.capsule("title1", "capsule1", "primary");
-    this.$log.capsule("title2", "capsule2", "success");
-    this.$log.capsule("title3", "capsule3", "warning");
-    this.$log.capsule("title4", "capsule4", "danger");
-    this.$log.capsule("title5", "capsule5", "info");
+    this.init();
   },
 
   beforeCreate() {},
@@ -182,7 +233,9 @@ export default {
 
   beforeDestroy() {},
 
-  destroyed() {},
+  destroyed() {
+    window.removeEventListener("scroll", this.onScroll, true);
+  },
 
   activated() {}
 };

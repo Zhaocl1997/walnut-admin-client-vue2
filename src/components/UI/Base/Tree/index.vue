@@ -70,23 +70,36 @@ export default {
     data: Array,
     emptyText: String,
 
-    renderAfterExpand: Boolean,
+    renderAfterExpand: { type: Boolean, default: true },
     nodeKey: { type: String, default: "id" },
     checkStrictly: Boolean,
     defaultExpandAll: Boolean,
     expandOnClickNode: { type: Boolean, default: false },
 
     checkOnClickNode: Boolean,
-    checkDescendants: Boolean,
+    checkDescendants: {
+      type: Boolean,
+      default: false
+    },
 
-    autoExpandParent: Boolean,
+    autoExpandParent: {
+      type: Boolean,
+      default: true
+    },
+
     defaultCheckedKeys: Array,
     // defaultExpandedKeys: Array,
     currentNodeKey: [String, Number],
     renderContent: Function,
-    showCheckbox: Boolean,
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    },
 
-    draggable: Boolean,
+    draggable: {
+      type: Boolean,
+      default: false
+    },
 
     allowDrag: Function,
     allowDrop: Function,
@@ -100,12 +113,18 @@ export default {
         };
       }
     },
-    lazy: Boolean,
-    highlightCurrent: Boolean,
+    lazy: {
+      type: Boolean,
+      default: false
+    },
+    highlightCurrent: { type: Boolean, default: true },
     load: Function,
     filterNodeMethod: Function,
     accordion: Boolean,
-    indent: Number,
+    indent: {
+      type: Number,
+      default: 18
+    },
 
     iconClass: String,
 
@@ -119,6 +138,7 @@ export default {
       if (!this.value) {
         return;
       }
+
       if (this.multiple) {
         this.defaultExpandedKeys = this.value;
 
@@ -126,7 +146,11 @@ export default {
           this.$refs.tree.setCheckedKeys(this.value);
         });
       } else {
-        this.$refs.tree.setChecked(this.value, true, false);
+        this.defaultExpandedKeys = [this.value];
+
+        this.$nextTick(() => {
+          this.$refs.tree.setCurrentKey(this.value);
+        });
       }
     },
 
@@ -160,9 +184,7 @@ export default {
   created() {},
 
   mounted() {
-    setTimeout(() => {
-      this.feedBack();
-    }, 1000);
+    this.feedBack();
   },
 
   beforeCreate() {},

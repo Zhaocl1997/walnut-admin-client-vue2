@@ -18,7 +18,7 @@ const state = {
   headerHeight: header.height,
 
   sidebarRender: sidebar.render,
-  sidebarFixed: sidebar.fixed,
+  sidebarCollapsed: sidebar.collapsed,
   sidebarWidth: sidebar.width,
 
   tagsRender: tags.render,

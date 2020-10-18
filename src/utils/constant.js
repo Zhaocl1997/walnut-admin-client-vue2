@@ -39,6 +39,8 @@ export const FORM_TYPE = {
 
     DIVIDER: 'Divider',
     UPLOAD: 'Upload',
+    ICON_SELECT: 'IconSelect',
+    TREE_SELECT: 'TreeSelect',
 }
 
 export const INPUT_TYPE = {

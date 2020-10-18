@@ -116,8 +116,7 @@ export default {
         {
           wType: "Checkbox",
           prop: "rememberMe",
-          label: "",
-          text: "记住密码",
+          labelText: "记住密码",
           float: "left"
         }
       ]

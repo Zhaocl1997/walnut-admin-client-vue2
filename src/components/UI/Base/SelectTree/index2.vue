@@ -1,5 +1,6 @@
 <template>
   <el-select
+    ref="treeSelect"
     v-model="mineStatus"
     :size="size"
     :style="`width: ${width}`"
@@ -12,12 +13,13 @@
     @clear="onClear"
     @remove-tag="onRemoveTag"
   >
-    <el-option :value="mineStatusValue" style="height:200px;overflow-y:scroll;">
+    <el-option :value="mineStatusValue" style="height:200px;overflow-y:auto;">
       <w-tree
         ref="wTree"
         v-model="selfValue"
         :data="data"
         :multiple="multiple"
+        @node-click="onNodeClick"
         @check-change="onCheckChange"
         :node-key="treeProps.id"
         :props="props"
@@ -190,6 +192,8 @@ export default {
       this.mineStatusValue = data[this.props.id];
       this.mineStatus = data[this.props.label];
       this.$emit("input", data[this.props.id]);
+
+      this.$refs.treeSelect.blur();
     },
 
     // 单选：清空

@@ -14,9 +14,8 @@
   line-height: 50px;
   background: $custom;
   text-align: center;
-  overflow: hidden;
 
-  z-index: $--layout-z-index;
+  z-index: 1888;
   transition: all 0.3s;
 
   & .sidebar-logo-link {
@@ -32,20 +31,19 @@
 
     & .sidebar-title {
       display: inline-block;
-      margin: 0;
+
       color: #f2bb41;
       font-weight: 600;
       line-height: 50px;
       font-size: 18px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
-      margin-right: 10px;
     }
   }
 
   &.collapse {
     .sidebar-logo {
       margin-right: 0px;
+      margin-left: 10px;
     }
   }
 }
