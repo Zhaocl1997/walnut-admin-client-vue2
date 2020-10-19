@@ -73,15 +73,9 @@ export default {
     }
   },
   watch: {
-    // value(newV) {
-    //   if (newV) {
-    //     if (this.multiple && this.data.length !== 0) {
-    //       this.$refs.tree.setCheckedKeys(newV);
-    //     } else {
-    //       this.mineStatusValue = newV;
-    //     }
-    //   }
-    // }
+    value() {
+      this.feedback();
+    }
   },
   computed: {
     selfAccordion() {
@@ -102,6 +96,11 @@ export default {
     feedback() {
       if (this.data.length == 0) {
         return;
+      }
+
+      if (!this.value) {
+        this.mineStatus = "";
+        this.mineStatusValue = [];
       }
 
       if (this.multiple) {

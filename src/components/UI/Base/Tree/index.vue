@@ -58,11 +58,9 @@ export default {
   computed: {},
 
   watch: {
-    // value(newV, oldV) {
-    //   if (newV && oldV && newV !== oldV) {
-    //     this.feedBack();
-    //   }
-    // }
+    value() {
+      this.feedBack();
+    }
   },
 
   props: {
@@ -136,6 +134,18 @@ export default {
   methods: {
     feedBack() {
       if (!this.value) {
+        if (this.multiple) {
+          this.defaultExpandedKeys = [];
+
+          this.$nextTick(() => {
+            this.$refs.tree.setCheckedKeys(this.value);
+          });
+        } else {
+          this.$nextTick(() => {
+            this.$refs.tree.setCurrentKey(this.value);
+          });
+        }
+
         return;
       }
 
