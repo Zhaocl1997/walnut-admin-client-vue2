@@ -6,8 +6,6 @@
         @create="onCreate"
         @update="onUpdate"
         @delete="onDelete"
-        @import="onImport"
-        @export="onExport"
       ></w-action-box>
     </el-card>
 
@@ -18,17 +16,33 @@
         :pageSize.sync="queryFormData.pageSize"
         :pageNum.sync="queryFormData.pageNum"
         :total="total"
-        :selection-change="onSelectionChange"
         :listFunc="getTableData"
         v-loading="loading"
         hasIndex
-        hasSelect
         row-key="_id"
       >
-        <template slot="action">
-          <w-button type="text" size="mini" icon="el-icon-edit" class="u-mr10">修改</w-button>
-          <w-button type="text" size="mini" icon="el-icon-plus" class="u-mr10">新增</w-button>
-          <w-button type="text" size="mini" icon="el-icon-delete">删除</w-button>
+        <template slot="action" slot-scope="scope">
+          <w-button
+            type="text"
+            size="mini"
+            icon="el-icon-edit"
+            class="u-mr10"
+            @click="onEdit(scope.row._id)"
+          >修改</w-button>
+
+          <w-button
+            type="text"
+            size="mini"
+            icon="el-icon-plus"
+            class="u-mr10"
+            @click="onAdd(scope.row._id)"
+          >新增</w-button>
+
+          <w-button type="text" size="mini" icon="el-icon-delete" @click="onDel(scope.row._id)">删除</w-button>
+        </template>
+
+        <template slot="icon" slot-scope="scope">
+          <w-icon :icon="scope.row.icon"></w-icon>
         </template>
       </w-table>
     </el-card>
@@ -50,11 +64,7 @@
         :span="24"
         :gutter="20"
         label-width="80px"
-      >
-        <template slot="icon" slot-scope="scope">
-          <w-icon :icon="scope.row.icon"></w-icon>
-        </template>
-      </w-form>
+      ></w-form>
     </w-dialog>
   </div>
 </template>
@@ -66,14 +76,6 @@ import wForm from "@/components/UI/Base/Form";
 import wDialog from "@/components/UI/Base/Dialog";
 
 import wActionBox from "@/components/UI/Advanced/ActionBox";
-
-import {
-  userIndex,
-  userCreate,
-  userRead,
-  userUpdate,
-  userDelete
-} from "@/api/system/user";
 
 import {
   menuOptions,
@@ -121,22 +123,27 @@ export default {
       dialogTitle: "",
       dialogFormData: {
         type: "catalog",
-        order: 0,
+        order: 1,
         external: false,
         show: true,
-        status: true
+        status: true,
+        cache: true
       },
       dialogFormRules: {}
     };
   },
 
   computed: {
+    menuType() {
+      return ["menu", "catalog"].includes(this.dialogFormData.type);
+    },
+
     tableHeader() {
       return [
         {
           label: "菜单名称",
           prop: "title",
-          width: "100px"
+          width: "150px"
         },
         {
           label: "图标",
@@ -203,16 +210,10 @@ export default {
               label: "菜单"
             },
             {
-              value: "button",
-              label: "按钮"
+              value: "element",
+              label: "元素"
             }
           ]
-        },
-        {
-          wType: "IconSelect",
-          prop: "icon",
-          label: "菜单图标",
-          span: 12
         },
         {
           wType: "Input",
@@ -223,18 +224,34 @@ export default {
         },
         {
           wType: "Input",
-          prop: "location",
-          label: "路由地址",
-          placeholder: "请输入路由地址",
-          span: 12
-        },
-        {
-          wType: "Input",
           prop: "order",
           label: "显示排序",
           placeholder: "请输入显示排序",
           type: "number",
           span: 12
+        },
+        {
+          wType: "IconSelect",
+          prop: "icon",
+          label: "菜单图标",
+          span: 12,
+          show: this.menuType
+        },
+        {
+          wType: "Input",
+          prop: "location",
+          label: "路由地址",
+          placeholder: "请输入路由地址",
+          span: 12,
+          show: this.menuType
+        },
+        {
+          wType: "Input",
+          prop: "path",
+          label: "组件路径",
+          placeholder: "请输入组件路径",
+          span: 12,
+          show: this.dialogFormData.type === "menu"
         },
         {
           wType: "Radio",
@@ -250,7 +267,8 @@ export default {
               label: "否"
             }
           ],
-          span: 12
+          span: 12,
+          show: this.menuType
         },
         {
           wType: "Radio",
@@ -266,7 +284,8 @@ export default {
               label: "隐藏"
             }
           ],
-          span: 12
+          span: 12,
+          show: this.menuType
         },
         {
           wType: "Radio",
@@ -282,7 +301,25 @@ export default {
               label: "停用"
             }
           ],
-          span: 12
+          span: 12,
+          show: this.menuType
+        },
+        {
+          wType: "Radio",
+          prop: "cache",
+          label: "是否缓存",
+          options: [
+            {
+              value: true,
+              label: "缓存"
+            },
+            {
+              value: false,
+              label: "不缓存"
+            }
+          ],
+          span: 12,
+          show: this.dialogFormData.type === "menu"
         }
       ];
     },
@@ -320,41 +357,31 @@ export default {
       this.dialogVisible = true;
       this.dialogTitle = "编辑菜单";
 
-      userRead({ _id: this.selected[0]._id }).then(res => {
+      menuRead({ _id: this.selected[0] }).then(res => {
         this.dialogFormData = res.data;
       });
     },
 
     onDelete() {
-      userDelete({ _id: this.selected[0]._id }).then(res => {
+      menuDelete({ _id: this.selected }).then(res => {
         this.$message.success("删除成功");
         this.getTableData();
       });
     },
 
-    onImport() {},
-
-    onExport() {},
-
     async getTableData() {
       this.loading = true;
-      const result = await menuIndex();
+      const res = await menuIndex();
 
-      const data = arrToTree(result.data, "5f8c3a3dfd35c823ac00ef1e", true, {
+      const data = arrToTree(res.data, "5f8c3a3dfd35c823ac00ef1e", false, {
         id: "_id",
         parentId: "parentId",
         children: "children"
       });
 
-      console.log(data);
-
-      this.tableData = [data];
-      this.total = result.total;
+      this.tableData = data;
+      this.total = res.total - 1;
       this.loading = false;
-    },
-
-    onSelectionChange(v) {
-      this.selected = v;
     },
 
     onDialogConfirm() {
@@ -380,9 +407,33 @@ export default {
     onDialogCancel() {
       this.dialogVisible = false;
       this.dialogTitle = "";
-      this.dialogFormData = {};
+      this.dialogFormData = {
+        type: "catalog",
+        order: 1,
+        external: false,
+        show: true,
+        status: true,
+        cache: true,
+        parentId: ""
+      };
       this.$refs.menuForm.$children[0].clearValidate();
-    }
+    },
+
+    onEdit(id) {
+      menuRead({ _id: id }).then(res => {
+        this.dialogFormData = res.data;
+        this.dialogVisible = true;
+        this.dialogTitle = "编辑菜单";
+      });
+    },
+
+    onAdd(id) {
+      this.dialogFormData.parentId = id;
+
+      this.onCreate();
+    },
+
+    onDel(id) {}
   },
 
   created() {},

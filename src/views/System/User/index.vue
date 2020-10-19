@@ -204,6 +204,7 @@ export default {
         }
       ];
     },
+
     dialogFormModel() {
       return [
         {
@@ -213,12 +214,9 @@ export default {
           placeholder: "请输入用户名"
         },
         {
-          wType: "Input",
+          wType: "Slot",
           prop: "password",
           label: "密码",
-          placeholder: "请输入密码",
-          type: "password",
-          slot: true,
           show: this.dialogTitle === "新增用户"
         },
         {
@@ -246,6 +244,7 @@ export default {
         }
       ];
     },
+
     format() {
       return format;
     }
@@ -273,13 +272,13 @@ export default {
       this.dialogVisible = true;
       this.dialogTitle = "编辑用户";
 
-      userRead({ _id: this.selected[0]._id }).then(res => {
+      userRead({ _id: this.selected[0] }).then(res => {
         this.dialogFormData = res.data;
       });
     },
 
     onDelete() {
-      userDelete({ _id: this.selected[0]._id }).then(res => {
+      userDelete({ _id: this.selected }).then(res => {
         this.$message.success("删除成功");
         this.getTableData();
       });
@@ -291,14 +290,14 @@ export default {
 
     async getTableData() {
       this.loading = true;
-      const result = await userIndex();
-      this.tableData = result.data;
-      this.total = result.total;
+      const res = await userIndex();
+      this.tableData = res.data;
+      this.total = res.total;
       this.loading = false;
     },
 
     onSelectionChange(v) {
-      this.selected = v;
+      this.selected = v.map(item => item._id);
     },
 
     onDialogConfirm() {

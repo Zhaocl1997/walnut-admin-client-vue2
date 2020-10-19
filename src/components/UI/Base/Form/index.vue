@@ -107,7 +107,7 @@
             ></w-tree-select>
 
             <!-- named slot -->
-            <slot v-if="showSlot(item)" :name="item.prop"></slot>
+            <slot v-if="showItem(item, FORM_TYPE.SLOT)" :name="item.prop"></slot>
           </el-form-item>
         </template>
       </el-col>
@@ -280,14 +280,17 @@ export default {
       const result = mockData(this.formModel);
       this.$emit("input", result);
     },
+
     onQuery() {
       this.$emit("query");
     },
+
     onReset() {
       this.$refs.form.resetFields();
       this.$emit("input", {});
       this.$emit("reset");
     },
+
     onToggleFold() {
       this.hidden = !this.hidden;
 
@@ -301,12 +304,11 @@ export default {
     onEnterKeyup() {
       this.$emit("keyup");
     },
+
     showItem(item, TYPE) {
       return item.wType === TYPE && !item.slot;
     },
-    showSlot(item) {
-      return item.slot && this.$slots[item.prop];
-    },
+
     calcShow(item) {
       const isShow = item.show === undefined ? true : item.show;
       return isShow;

@@ -188,6 +188,23 @@ export default {
       });
       this.$emit("input", arr);
       this.$emit("check-change", data, checked, indeterminate, res);
+    },
+
+    // expand
+    expandAll(val) {
+      let nodes = this.$refs.tree.store.nodesMap;
+      for (let i in nodes) {
+        nodes[i].expanded = val;
+      }
+    },
+
+    // check
+    checkAll(val) {
+      if (val) {
+        this.$refs.tree.setCheckedNodes(this.data);
+      } else {
+        this.$refs.tree.setCheckedKeys([]);
+      }
     }
   },
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-checkbox-group v-if="multiple" v-model="selfValue" :min="min" :max="max">
+    <el-checkbox-group v-if="multiple" v-model="selfValue" :min="min" :max="max" v-on="$listeners">
       <template v-if="button">
         <el-checkbox-button
           v-for="item in options"
@@ -21,7 +21,13 @@
       </template>
     </el-checkbox-group>
 
-    <el-checkbox v-on="$listeners" @change="onChange" v-else v-model="normalValue" :disabled="disabled">{{ labelText }}</el-checkbox>
+    <el-checkbox
+      v-on="$listeners"
+      @change="onChange"
+      v-else
+      v-model="normalValue"
+      :disabled="disabled"
+    >{{ labelText }}</el-checkbox>
   </div>
 </template>
 

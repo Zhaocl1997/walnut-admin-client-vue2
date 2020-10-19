@@ -34,14 +34,34 @@
       @confirm="onDialogConfirm"
     >
       <w-form
-        ref="userForm"
+        ref="roleForm"
         :model="dialogFormModel"
         :rules="dialogFormRules"
         v-model="dialogFormData"
         :span="24"
         label-width="80px"
-        mock
-      ></w-form>
+      >
+        <template slot="menu">
+          <w-checkbox
+            v-model="menuTreeSetting"
+            multiple
+            :options="options"
+            @change="onCheckBoxChange"
+          ></w-checkbox>
+
+          <div style="border:1px solid lightgrey;">
+            <w-tree
+              ref="wTree"
+              node-key="_id"
+              multiple
+              v-model="dialogFormData.menu"
+              :data="this.menuOptions"
+              :props="props"
+              :check-strictly="treeCheck"
+            ></w-tree>
+          </div>
+        </template>
+      </w-form>
     </w-dialog>
   </div>
 </template>
@@ -52,6 +72,8 @@ import wButton from "@/components/UI/Base/Button";
 import wTable from "@/components/UI/Base/Table";
 import wForm from "@/components/UI/Base/Form";
 import wDialog from "@/components/UI/Base/Dialog";
+import wTree from "@/components/UI/Base/Tree";
+import wCheckbox from "@/components/UI/Base/Checkbox";
 
 import wActionBox from "@/components/UI/Advanced/ActionBox";
 
@@ -64,7 +86,7 @@ import {
 } from "@/api/system/role";
 
 import { menuOptions } from "@/api/system/menu";
-
+import { arrToTree } from "@/utils/tree";
 import { format } from "@/utils/time";
 
 export default {
@@ -79,7 +101,16 @@ export default {
     prop: ""
   },
 
-  components: { wInput, wButton, wTable, wForm, wDialog, wActionBox },
+  components: {
+    wInput,
+    wButton,
+    wTable,
+    wForm,
+    wDialog,
+    wTree,
+    wCheckbox,
+    wActionBox
+  },
 
   mixins: [],
 
@@ -99,12 +130,41 @@ export default {
 
       dialogVisible: false,
       dialogTitle: "",
-      dialogFormData: {},
-      dialogFormRules: {}
+      dialogFormData: {
+        order: 0,
+        status: true,
+        menu: []
+      },
+      dialogFormRules: {},
+
+      props: {
+        label: "title",
+        children: "children"
+      },
+
+      menuTreeSetting: [],
+      options: [
+        {
+          value: "0",
+          label: "展开/折叠"
+        },
+        {
+          value: "1",
+          label: "全选/全不选"
+        },
+        {
+          value: "2",
+          label: "父子联动"
+        }
+      ]
     };
   },
 
   computed: {
+    treeCheck() {
+      return this.menuTreeSetting.includes("2");
+    },
+
     tableHeader() {
       return [
         {
@@ -113,8 +173,13 @@ export default {
           width: "100px"
         },
         {
-          label: "角色描述",
-          prop: "describe",
+          label: "权限字符",
+          prop: "permissionCharacter",
+          width: "100px"
+        },
+        {
+          label: "备注",
+          prop: "remark",
           width: "100px"
         },
         {
@@ -143,6 +208,7 @@ export default {
         }
       ];
     },
+
     dialogFormModel() {
       return [
         {
@@ -153,25 +219,47 @@ export default {
         },
         {
           wType: "Input",
-          prop: "describe",
-          label: "角色描述",
-          placeholder: "请输入角色描述"
+          prop: "permissionCharacter",
+          label: "权限字符",
+          placeholder: "请输入权限字符"
         },
         {
-          wType: "Tree",
+          wType: "Input",
+          prop: "order",
+          label: "显示顺序",
+          placeholder: "",
+          type: "number"
+        },
+        {
+          wType: "Radio",
+          prop: "status",
+          label: "角色状态",
+          options: [
+            {
+              value: true,
+              label: "正常"
+            },
+            {
+              value: false,
+              label: "停用"
+            }
+          ]
+        },
+        {
+          wType: "Slot",
           prop: "menu",
-          label: "角色权限",
-          placeholder: "请输入角色权限",
-          data: this.menuOptions,
-          nodeKey: "_id",
-          props: {
-            children: "subs",
-            label: "title"
-          },
-          multiple: true
+          label: "角色权限"
+        },
+        {
+          wType: "Input",
+          prop: "remark",
+          label: "备注",
+          placeholder: "请输入备注",
+          type: "textarea"
         }
       ];
     },
+
     format() {
       return format;
     }
@@ -186,7 +274,13 @@ export default {
       this.getTableData();
 
       menuOptions().then(res => {
-        this.menuOptions = res.data;
+        const data = arrToTree(res.data, "5f8c3a3dfd35c823ac00ef1e", false, {
+          id: "_id",
+          parentId: "parentId",
+          children: "children"
+        });
+
+        this.menuOptions = data;
       });
     },
 
@@ -199,13 +293,13 @@ export default {
       this.dialogVisible = true;
       this.dialogTitle = "编辑用户";
 
-      roleRead({ _id: this.selected[0]._id }).then(res => {
+      roleRead({ _id: this.selected[0] }).then(res => {
         this.dialogFormData = res.data;
       });
     },
 
     onDelete() {
-      roleDelete({ _id: this.selected[0]._id }).then(res => {
+      roleDelete({ _id: this.selected }).then(res => {
         this.$message.success("删除成功");
         this.getTableData();
       });
@@ -217,18 +311,18 @@ export default {
 
     async getTableData() {
       this.loading = true;
-      const result = await roleIndex();
-      this.tableData = result.data;
-      this.total = result.total;
+      const res = await roleIndex();
+      this.tableData = res.data;
+      this.total = res.total;
       this.loading = false;
     },
 
     onSelectionChange(v) {
-      this.selected = v;
+      this.selected = v.map(item => item._id);
     },
 
     onDialogConfirm() {
-      this.$refs.userForm.$children[0].validate(valid => {
+      this.$refs.roleForm.$children[0].validate(valid => {
         if (valid) {
           if (this.dialogFormData._id) {
             roleUpdate(this.dialogFormData).then(res => {
@@ -250,8 +344,26 @@ export default {
     onDialogCancel() {
       this.dialogVisible = false;
       this.dialogTitle = "";
-      this.dialogFormData = {};
-      this.$refs.userForm.$children[0].clearValidate();
+      this.dialogFormData = {
+        order: 0,
+        status: true,
+        menu: []
+      };
+      this.$refs.roleForm.$children[0].clearValidate();
+    },
+
+    onCheckBoxChange(val) {
+      if (val.includes("0")) {
+        this.$refs.wTree.expandAll(true);
+      } else {
+        this.$refs.wTree.expandAll(false);
+      }
+
+      if (val.includes("1")) {
+        this.$refs.wTree.checkAll(true);
+      } else {
+        this.$refs.wTree.checkAll(false);
+      }
     }
   },
 

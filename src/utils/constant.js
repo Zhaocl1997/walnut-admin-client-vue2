@@ -24,6 +24,7 @@ export const THEME_TYPE = {
 }
 
 export const FORM_TYPE = {
+    SLOT: 'Slot',
     INPUT: "Input",
     DATE: "Date",
     TIME: "Time",
