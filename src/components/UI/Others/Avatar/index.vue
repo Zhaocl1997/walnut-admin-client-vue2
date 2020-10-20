@@ -1,15 +1,15 @@
 <template>
-  <el-tooltip effect="dark" content="Avatar" placement="bottom">
+  <div class="avatar-container">
     <el-avatar
       :src="url"
       alt="Avatar"
       :key="url"
       fit="cover"
       :size="24"
-      class="inline avatar"
+      class="avatar"
       @click="onClick"
     ></el-avatar>
-  </el-tooltip>
+  </div>
 </template>
 
 <script>
@@ -68,9 +68,4 @@ export default {
 </script>
 
 <style scoped>
-.avatar {
-  height: 28px;
-  width: 28px;
-  vertical-align: -0.2em;
-}
 </style>

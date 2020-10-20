@@ -1,21 +1,24 @@
 <template>
   <el-select
-    v-model="selfLabel"
+    ref="treeSelect"
+    v-model="selectValue"
+    :size="size"
+    :style="style"
     :multiple="multiple"
     :disabled="disabled"
     :clearable="clearable"
     :collapse-tags="collapse"
-    :placeholder="placeholder"
+    @change="onSelectChange"
     @clear="onClear"
-    @remove-tag="onRemoveTag"
   >
-    <el-option :value="selfValue" style="min-height:200px;overflow-y:scroll;">
+    <el-option :value="optionValue" style="height:200px;overflow-y:auto;">
       <w-tree
-        ref="tree"
+        ref="wTree"
         v-model="selfValue"
         :data="data"
+        :props="treeProps"
         :multiple="multiple"
-        highlight-current
+        :accordion="accordion"
         @node-click="onNodeClick"
         @check-change="onCheckChange"
       ></w-tree>
@@ -24,8 +27,12 @@
 </template>
 
 <script>
-import wTree from "../Tree";
 import ValueMixins from "@/mixins/Value";
+import BlockMixins from "@/mixins/Block";
+
+import wTree from "../Tree";
+
+import { findNodeById } from "@/utils/tree";
 
 export default {
   name: "wSelectTree",
@@ -41,95 +48,157 @@ export default {
 
   components: { wTree },
 
-  mixins: [ValueMixins],
+  mixins: [ValueMixins, BlockMixins()],
 
   data() {
     return {
-      selfLabel: "",
+      selectValue: "",
+      optionValue: [],
 
-      mineStatus: "",
-      mineStatusValue: []
+      defaultProps: {
+        id: "id",
+        label: "label",
+        children: "children",
+        disabled: "disabled"
+      }
     };
   },
 
-  computed: {},
+  computed: {
+    treeProps() {
+      return {
+        ...this.defaultProps,
+        ...this.props
+      };
+    }
+  },
 
   watch: {
-    // value(newV) {
-    //   if (newV) {
-    //     if (this.multiple && this.treeOptions.length !== 0) {
-    //       this.$refs.tree.setCheckedKeys(newV);
-    //     } else {
-    //       this.mineStatusValue = newV;
-    //     }
-    //   }
-    // },
-    // selfValue(newV, oldV) {
-    //   if (newV) {
-    //     if (this.multiple && this.treeOptions.length !== 0) {
-    //       this.$refs.tree.setCheckedKeys(newV);
-    //     } else {
-    //       this.mineStatusValue = newV;
-    //     }
-    //   }
-    // }
+    value() {
+      this.feedback();
+    }
   },
 
   props: {
-    value: [String, Number, Array],
-
+    // origin
+    data: Array,
+    size: String,
     multiple: Boolean,
     disabled: Boolean,
-    clearable: { type: Boolean, default: true },
+    clearable: Boolean,
     collapse: Boolean,
-    accordion: { type: Boolean, default: false },
-    placeholder: { type: String, default: "请选择" },
+    accordion: Boolean,
 
-    data: Array,
+    // custom
+    value: [String, Number, Array],
     props: Object
   },
 
   methods: {
-    feedBack() {
+    // feedback
+    feedback() {
+      if (this.data.length == 0) {
+        return;
+      }
+
+      if (!this.value) {
+        this.selectValue = "";
+        this.optionValue = [];
+      }
+
       if (this.multiple) {
-        this.$refs.tree.$children[0].setCheckedKeys(this.value);
+        const arrLabel = [];
+        const arrNode = [];
+
+        this.value.map(i => {
+          const node = findNodeById(
+            i,
+            this.data,
+            this.treeProps.id,
+            this.treeProps,
+            true
+          );
+
+          arrNode.push(node);
+          arrLabel.push(node[this.treeProps.label]);
+        });
+
+        this.selectValue = arrLabel;
+        this.optionValue = arrNode;
       } else {
-        this.selfValue = this.value;
+        const arrLabel = findNodeById(
+          this.value,
+          this.data,
+          this.treeProps.id,
+          this.treeProps,
+          true
+        )[this.treeProps.label];
+
+        this.selectValue = arrLabel;
+
+        this.optionValue = [this.value];
       }
     },
 
-    // multiple
-    onCheckChange(data, checked, indeterminate, res) {
-      const arrLabel = [];
+    // select change
+    onSelectChange(v) {
+      let arr = [];
 
+      for (let i = 0; i < this.optionValue.length; i++) {
+        for (let j = 0; j < v.length; j++) {
+          if (v[j] === this.optionValue[i][this.treeProps.label]) {
+            arr.push(this.optionValue[i]);
+          }
+        }
+      }
+
+      let newV = [];
+      arr.map(i => newV.push(i[this.treeProps.id]));
+      this.$emit("input", newV);
+    },
+
+    // multiple
+    onCheckChange() {
+      let res = this.$refs.wTree.$children[0].getCheckedNodes(true, false);
+
+      let arrLabel = [];
+      let arr = [];
       res.forEach(item => {
-        arrLabel.push(item.label);
+        arrLabel.push(item[this.treeProps.label]);
+        arr.push(item);
       });
 
-      this.selfLabel = arrLabel;
+      this.optionValue = arr;
+      this.selectValue = arrLabel;
+
+      let newV = [];
+      arr.map(i => newV.push(i[this.treeProps.id]));
+      this.$emit("input", newV);
     },
 
     // single
     onNodeClick(data, node, arr) {
-      this.selfLabel = data.label;
+      if (this.multiple) {
+        return;
+      }
+
+      this.optionValue = data[this.treeProps.id];
+      this.selectValue = data[this.treeProps.label];
+      this.$emit("input", data[this.treeProps.id]);
+
+      this.$refs.treeSelect.blur();
     },
 
     // clear
     onClear() {
       this.$emit("input", "");
-    },
-
-    onRemoveTag(v) {
-      console.log(v);
-      console.log(this.selfValue);
-      
     }
   },
 
   created() {},
 
   mounted() {
-    this.feedBack();
+    this.feedback();
   },
 
   beforeCreate() {},

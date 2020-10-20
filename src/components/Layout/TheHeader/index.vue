@@ -54,6 +54,12 @@
 
         <el-col :span="1.5">
           <div class="header_right-item_con">
+            <w-skin class="header-right-item"></w-skin>
+          </div>
+        </el-col>
+
+        <el-col :span="1.5">
+          <div class="header_right-item_con">
             <w-avatar
               class="header-right-item"
               url="https://iot-avatar.oss-cn-hangzhou.aliyuncs.com/Avaritia.jpg"
@@ -75,6 +81,7 @@ import wGithub from "@/components/UI/Others/Github";
 import wThemePicker from "@/components/UI/Others/ThemePicker";
 import wAvatar from "@/components/UI/Others/Avatar";
 import wLock from "@/components/UI/Others/Lock";
+import wSkin from "@/components/UI/Others/Skin";
 
 export default {
   name: "TheHeader",
@@ -88,7 +95,8 @@ export default {
     wGithub,
     wThemePicker,
     wAvatar,
-    wLock
+    wLock,
+    wSkin
   },
 
   mixins: [],

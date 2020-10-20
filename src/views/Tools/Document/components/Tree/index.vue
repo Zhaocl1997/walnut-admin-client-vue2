@@ -1,10 +1,10 @@
 <template>
   <div class="center-item">
     <p>w-tree 当前绑定值：{{ tree1 }}</p>
-    <w-tree v-model="tree1" :data="data"></w-tree>
+    <w-tree v-model="tree1" :data="data" :props="props"></w-tree>
 
     <p>w-tree 当前绑定值：{{ tree2 }}</p>
-    <w-tree v-model="tree2" :data="data" multiple></w-tree>
+    <w-tree v-model="tree2" :data="data" multiple :props="props"></w-tree>
   </div>
 </template>
 
@@ -31,88 +31,98 @@ export default {
     return {
       data: [
         {
-          id: 1,
-          label: "一级 1",
-          children: [
+          _id: 1,
+          _label: "一级 1",
+          _children: [
             {
-              id: 4,
-              label: "二级 1-1",
-              children: [
+              _id: 4,
+              _label: "二级 1-1",
+              _children: [
                 {
-                  id: 9,
-                  label: "三级 1-1-1"
+                  _id: 9,
+                  _label: "三级 1-1-1"
                 },
                 {
-                  id: 10,
-                  label: "三级 1-1-2"
+                  _id: 10,
+                  _label: "三级 1-1-2"
                 }
               ]
             },
             {
-              id: 11,
-              label: "二级 1-2",
-              children: [
+              _id: 11,
+              _label: "二级 1-2",
+              _children: [
                 {
-                  id: 12,
-                  label: "三级 1-2-1"
+                  _id: 12,
+                  _label: "三级 1-2-1"
                 },
                 {
-                  id: 13,
-                  label: "三级 1-2-2"
+                  _id: 13,
+                  _label: "三级 1-2-2",
+                  _disabled: true
                 }
               ]
             }
           ]
         },
         {
-          id: 2,
-          label: "一级 2",
-          children: [
+          _id: 2,
+          _label: "一级 2",
+          _children: [
             {
-              id: 5,
-              label: "二级 2-1",
-              children: [
+              _id: 5,
+              _label: "二级 2-1",
+              _children: [
                 {
-                  id: 14,
-                  label: "三级 2-1-1"
+                  _id: 14,
+                  _label: "三级 2-1-1"
                 },
                 {
-                  id: 15,
-                  label: "三级 2-1-2"
+                  _id: 15,
+                  _label: "三级 2-1-2"
                 }
               ]
             },
             {
-              id: 6,
-              label: "二级 2-2",
-              children: [
+              _id: 6,
+              _label: "二级 2-2",
+              _children: [
                 {
-                  id: 16,
-                  label: "三级 2-2-1"
+                  _id: 16,
+                  _label: "三级 2-2-1",
+                  _disabled: true
                 },
                 {
-                  id: 17,
-                  label: "三级 2-2-2"
+                  _id: 17,
+                  _label: "三级 2-2-2"
                 }
               ]
             }
           ]
         },
         {
-          id: 3,
-          label: "一级 3",
-          children: [
+          _id: 3,
+          _label: "一级 3",
+          _children: [
             {
-              id: 7,
-              label: "二级 3-1"
+              _id: 7,
+              _label: "二级 3-1",
+              disabled: true
             },
             {
-              id: 8,
-              label: "二级 3-2"
+              _id: 8,
+              _label: "二级 3-2"
             }
           ]
         }
       ],
+
+      props: {
+        id: "_id",
+        label: "_label",
+        children: "_children",
+        disabled: "_disabled"
+      },
 
       tree1: 14,
       tree2: [9, 17],

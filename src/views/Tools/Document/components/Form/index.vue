@@ -86,11 +86,9 @@ export default {
           span: 16
         },
         {
-          wType: "Input",
+          wType: "Slot",
           prop: "formPass",
-          label: "密码表单项",
-          type: "password",
-          slot: true
+          label: "密码表单项"
         },
         {
           wType: "Input",
@@ -176,7 +174,7 @@ export default {
           wType: "Checkbox",
           prop: "formCheckbox",
           label: "勾选框表单项",
-          text: "记住密码"
+          labelText: "记住密码"
         }
       ],
       form: {}

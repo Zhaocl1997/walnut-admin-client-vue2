@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <el-tooltip effect="dark" content="FullScreen" placement="bottom">
-      <w-icon :icon="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" @click="onClick" />
-    </el-tooltip>
+  <div class="screenfull-container">
+    <w-icon :icon="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" @click="onClick" />
   </div>
 </template>
 
@@ -38,6 +36,18 @@ export default {
   props: {},
 
   methods: {
+    init() {
+      if (screenfull.isEnabled) {
+        screenfull.on("change", this.change);
+      }
+    },
+
+    destroy() {
+      if (screenfull.isEnabled) {
+        screenfull.off("change", this.change);
+      }
+    },
+
     onClick() {
       if (!screenfull.isEnabled) {
         this.$message.warning("您的浏览器不支持全屏");
@@ -45,18 +55,9 @@ export default {
       }
       screenfull.toggle();
     },
+
     change() {
       this.isFullscreen = screenfull.isFullscreen;
-    },
-    init() {
-      if (screenfull.isEnabled) {
-        screenfull.on("change", this.change);
-      }
-    },
-    destroy() {
-      if (screenfull.isEnabled) {
-        screenfull.off("change", this.change);
-      }
     }
   },
 

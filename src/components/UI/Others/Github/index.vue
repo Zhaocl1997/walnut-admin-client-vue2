@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <el-tooltip effect="dark" content="Author" placement="bottom">
-      <a :href="url" target="_Blank">
-        <w-icon icon="github" style="color:black;"></w-icon>
-      </a>
-    </el-tooltip>
+  <div class="github-container">
+    <a :href="url" target="_Blank">
+      <w-icon icon="github" style="color:black;"></w-icon>
+    </a>
   </div>
 </template>
 

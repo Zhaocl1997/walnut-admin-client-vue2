@@ -93,18 +93,18 @@
             ></w-radio>
 
             <!-- icon-select -->
-            <w-icon-select
-              v-if="showItem(item, FORM_TYPE.ICON_SELECT)"
+            <w-select-icon
+              v-if="showItem(item, FORM_TYPE.SELECT_ICON)"
               v-model="value[item.prop]"
               v-bind="item"
-            ></w-icon-select>
+            ></w-select-icon>
 
             <!-- tree-select -->
-            <w-tree-select
-              v-if="showItem(item, FORM_TYPE.TREE_SELECT)"
+            <w-select-tree
+              v-if="showItem(item, FORM_TYPE.SELECT_TREE)"
               v-model="value[item.prop]"
               v-bind="item"
-            ></w-tree-select>
+            ></w-select-tree>
 
             <!-- named slot -->
             <slot v-if="showItem(item, FORM_TYPE.SLOT)" :name="item.prop"></slot>
@@ -186,8 +186,9 @@ import wTag from "../Tag";
 import wCheckbox from "../Checkbox";
 import wTree from "../Tree";
 import wRadio from "../Radio";
-import wIconSelect from "../../Others/IconSelect";
-import wTreeSelect from "../SelectTree/index2";
+import wSelectTree from "../SelectTree";
+
+import wSelectIcon from "../../Others/SelectIcon";
 
 import mockData from "@/mock";
 import { FORM_TYPE } from "@/utils/constant";
@@ -206,8 +207,8 @@ export default {
     wCheckbox,
     wTree,
     wRadio,
-    wIconSelect,
-    wTreeSelect
+    wSelectIcon,
+    wSelectTree
   },
 
   mixins: [],

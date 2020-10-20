@@ -53,8 +53,8 @@
         <dialog-area></dialog-area>
       </el-tab-pane>
 
-      <el-tab-pane label="wIconSelect" name="wIconSelect">
-        <icon-select-area></icon-select-area>
+      <el-tab-pane label="wSelectIcon" name="wSelectIcon">
+        <select-icon-area></select-icon-area>
       </el-tab-pane>
 
       <!-- <el-tab-pane label="wHeaderItem" name="wHeaderItem">
@@ -92,7 +92,7 @@ import SwitchArea from "./components/Switch";
 import TagArea from "./components/Tag";
 import TreeArea from "./components/Tree";
 import SelectTreeArea from "./components/SelectTree";
-import IconSelectArea from "./components/IconSelect";
+import SelectIconArea from "./components/SelectIcon";
 import TableArea from "./components/Table";
 import RadioArea from "./components/Radio";
 
@@ -120,7 +120,7 @@ export default {
     TagArea,
     TreeArea,
     SelectTreeArea,
-    IconSelectArea,
+    SelectIconArea,
     TableArea,
     RadioArea,
 

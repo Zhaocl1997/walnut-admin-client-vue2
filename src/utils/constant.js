@@ -40,8 +40,8 @@ export const FORM_TYPE = {
 
     DIVIDER: 'Divider',
     UPLOAD: 'Upload',
-    ICON_SELECT: 'IconSelect',
-    TREE_SELECT: 'TreeSelect',
+    SELECT_ICON: 'SelectIcon',
+    SELECT_TREE: 'SelectTree',
 }
 
 export const INPUT_TYPE = {

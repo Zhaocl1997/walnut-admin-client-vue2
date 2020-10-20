@@ -1,17 +1,17 @@
 <template>
   <div class="center-item">
     <p>w-icon-select 当前绑定值：{{ iconSelect }}</p>
-    <w-icon-select v-model="iconSelect"></w-icon-select>
+    <w-select-icon v-model="iconSelect"></w-select-icon>
   </div>
 </template>
 
 <script>
-import wIconSelect from "@/components/UI/Others/IconSelect";
+import wSelectIcon from "@/components/UI/Others/SelectIcon";
 
 export default {
   name: "",
 
-  components: { wIconSelect },
+  components: { wSelectIcon },
 
   mixins: [],
 

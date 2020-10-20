@@ -1,18 +1,18 @@
 <template>
   <div class="center-item">
     <p>w-select-tree 当前绑定值：{{ selectTree1 }}</p>
-    <w-select-tree v-model="selectTree1" :data="data"></w-select-tree>
+    <w-select-tree v-model="selectTree1" :data="data" :props="props"></w-select-tree>
 
     <p>w-select-tree 当前绑定值：{{ selectTree2 }}</p>
-    <w-select-tree v-model="selectTree2" :data="data" multiple></w-select-tree>
+    <w-select-tree v-model="selectTree2" :data="data" multiple :props="props"></w-select-tree>
 
     <p>w-select-tree 当前绑定值：{{ selectTree3 }}</p>
-    <w-select-tree v-model="selectTree3" :data="menuOptions" multiple :treeProps="treeProps"></w-select-tree>
+    <w-select-tree v-model="selectTree3" :data="menuOptions" multiple :props="menuProps"></w-select-tree>
   </div>
 </template>
 
 <script>
-import wSelectTree from "@/components/UI/Base/SelectTree/index2";
+import wSelectTree from "@/components/UI/Base/SelectTree/index";
 import { menuOptions } from "@/api/system/menu";
 
 export default {
@@ -35,33 +35,33 @@ export default {
     return {
       data: [
         {
-          id: 1,
+          _id: 1,
           label: "一级 1",
           children: [
             {
-              id: 4,
+              _id: 4,
               label: "二级 1-1",
               children: [
                 {
-                  id: 9,
+                  _id: 9,
                   label: "三级 1-1-1"
                 },
                 {
-                  id: 10,
+                  _id: 10,
                   label: "三级 1-1-2"
                 }
               ]
             },
             {
-              id: 11,
+              _id: 11,
               label: "二级 1-2",
               children: [
                 {
-                  id: 12,
+                  _id: 12,
                   label: "三级 1-2-1"
                 },
                 {
-                  id: 13,
+                  _id: 13,
                   label: "三级 1-2-2"
                 }
               ]
@@ -69,33 +69,33 @@ export default {
           ]
         },
         {
-          id: 2,
+          _id: 2,
           label: "一级 2",
           children: [
             {
-              id: 5,
+              _id: 5,
               label: "二级 2-1",
               children: [
                 {
-                  id: 14,
+                  _id: 14,
                   label: "三级 2-1-1"
                 },
                 {
-                  id: 15,
+                  _id: 15,
                   label: "三级 2-1-2"
                 }
               ]
             },
             {
-              id: 6,
+              _id: 6,
               label: "二级 2-2",
               children: [
                 {
-                  id: 16,
+                  _id: 16,
                   label: "三级 2-2-1"
                 },
                 {
-                  id: 17,
+                  _id: 17,
                   label: "三级 2-2-2"
                 }
               ]
@@ -103,23 +103,27 @@ export default {
           ]
         },
         {
-          id: 3,
+          _id: 3,
           label: "一级 3",
           children: [
             {
-              id: 7,
+              _id: 7,
               label: "二级 3-1"
             },
             {
-              id: 8,
+              _id: 8,
               label: "二级 3-2"
             }
           ]
         }
       ],
 
+      props: {
+        id: "_id"
+      },
+
       menuOptions: [],
-      treeProps: {
+      menuProps: {
         id: "_id",
         label: "title",
         children: "subs"

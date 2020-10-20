@@ -78,12 +78,12 @@
         :autosize="autosize"
         :readonly="readonly"
       >
-        <!-- 前置 -->
+        <!-- prepend -->
         <template slot="prepend">
           <slot name="prepend"></slot>
         </template>
 
-        <!-- 后置 -->
+        <!-- append -->
         <template slot="append">
           <slot name="append"></slot>
         </template>
@@ -93,6 +93,9 @@
 </template>
 
 <script>
+import BlockMixins from "@/mixins/Block";
+import ValueMixins from "@/mixins/Value";
+
 import {
   isEmpty,
   clearIllegalChars,
@@ -100,8 +103,6 @@ import {
   checkStrong,
   commonUsed
 } from "@/utils";
-import BlockMixins from "@/mixins/Block";
-import ValueMixins from "@/mixins/Value";
 import { EMAIL_OPTIONS } from "@/utils/constant";
 
 export default {

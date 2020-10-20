@@ -231,7 +231,7 @@ export default {
           span: 12
         },
         {
-          wType: "IconSelect",
+          wType: "SelectIcon",
           prop: "icon",
           label: "菜单图标",
           span: 12,

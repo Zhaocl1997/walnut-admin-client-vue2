@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <el-tooltip effect="dark" content="Lock" placement="bottom">
-      <w-icon icon="lock" @click="onLock"></w-icon>
-    </el-tooltip>
+  <div class="lock-container">
+    <w-icon icon="lock" @click="onLock"></w-icon>
   </div>
 </template>
 

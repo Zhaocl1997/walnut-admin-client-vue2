@@ -1,5 +1,5 @@
 <template>
-  <editor v-model="selfValue" :init="init" :api-key="tinyMCEAPIKEY" />
+  <editor v-model="selfValue" :init="init" :disabled="disabled" :api-key="tinyMCEAPIKEY" />
 </template>
 
 <script>
@@ -102,7 +102,9 @@ export default {
 
   watch: {},
 
-  props: {},
+  props: {
+    disabled: Boolean
+  },
 
   methods: {},
 

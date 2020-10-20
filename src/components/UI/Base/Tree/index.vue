@@ -19,7 +19,7 @@
     :draggable="draggable"
     :allowDrag="allowDrag"
     :allowDrop="allowDrop"
-    :props="props"
+    :props="treeProps"
     :lazy="lazy"
     :highlightCurrent="highlightCurrent"
     :load="load"
@@ -29,10 +29,19 @@
     :iconClass="iconClass"
     @node-click="onNodeClick"
     @check-change="onCheckChange"
-  ></el-tree>
+    :style="style"
+  >
+    <div v-if="$slots.treeNode">
+      <template slot-scope="{node, data}">
+        <slot name="treeNode" :node="node" :data="data" />
+      </template>
+    </div>
+  </el-tree>
 </template>
 
 <script>
+import BlockMixins from "@/mixins/Block";
+
 export default {
   name: "wTree",
 
@@ -47,15 +56,33 @@ export default {
 
   components: {},
 
-  mixins: [],
+  mixins: [BlockMixins()],
 
   data() {
     return {
-      defaultExpandedKeys: []
+      defaultExpandedKeys: [],
+
+      defaultProps: {
+        id: "id",
+        label: "label",
+        children: "children",
+        disabled: "disabled"
+      }
     };
   },
 
-  computed: {},
+  computed: {
+    treeProps() {
+      return {
+        ...this.defaultProps,
+        ...this.props
+      };
+    },
+
+    nodeKey() {
+      return this.treeProps.id;
+    }
+  },
 
   watch: {
     value() {
@@ -66,15 +93,21 @@ export default {
   props: {
     // origin
     data: Array,
+
     emptyText: String,
 
     renderAfterExpand: { type: Boolean, default: true },
-    nodeKey: { type: String, default: "id" },
+
+    // nodeKey: { type: String, default: "id" },
+
     checkStrictly: Boolean,
+
     defaultExpandAll: Boolean,
+
     expandOnClickNode: { type: Boolean, default: false },
 
     checkOnClickNode: Boolean,
+
     checkDescendants: {
       type: Boolean,
       default: false
@@ -86,9 +119,13 @@ export default {
     },
 
     defaultCheckedKeys: Array,
+
     // defaultExpandedKeys: Array,
+
     currentNodeKey: [String, Number],
+
     renderContent: Function,
+
     showCheckbox: {
       type: Boolean,
       default: false
@@ -101,24 +138,22 @@ export default {
 
     allowDrag: Function,
     allowDrop: Function,
-    props: {
-      type: Object,
-      default: function() {
-        return {
-          children: "children",
-          label: "label",
-          disabled: "disabled"
-        };
-      }
-    },
+
+    props: Object,
+
     lazy: {
       type: Boolean,
       default: false
     },
+
     highlightCurrent: { type: Boolean, default: true },
+
     load: Function,
+
     filterNodeMethod: Function,
+
     accordion: Boolean,
+
     indent: {
       type: Number,
       default: 18
@@ -132,6 +167,7 @@ export default {
   },
 
   methods: {
+    // feedback
     feedBack() {
       if (!this.value) {
         if (this.multiple) {

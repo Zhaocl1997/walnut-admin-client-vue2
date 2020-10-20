@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <el-tooltip effect="dark" content="Size" placement="bottom">
-      <!-- <el-dropdown trigger="click" @command="onSetSize"> -->
+  <div class="size-select-container">
+    <el-dropdown trigger="click" @command="onSetSize">
+      <div style="font-size:24px;">
+        <w-icon icon="size" />
+      </div>
 
-      <w-icon icon="size" />
-
-      <!-- <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           v-for="item of sizeOptions"
           :key="item.value"
@@ -13,12 +13,13 @@
           :command="item.value"
         >{{ item.label }}</el-dropdown-item>
       </el-dropdown-menu>
-      </el-dropdown>-->
-    </el-tooltip>
+    </el-dropdown>
   </div>
 </template>
 
 <script>
+import ls from "@/utils/localStorage";
+
 export default {
   name: "wSizeSelect",
 
@@ -48,7 +49,7 @@ export default {
 
   computed: {
     size() {
-      return localStorage.getItem("size");
+      return ls.get("size") || "small";
     }
   },
 
@@ -60,6 +61,7 @@ export default {
     onSetSize(size) {
       this.$store.dispatch("app/setSize", size);
       this.$message.success("尺寸更换成功");
+      this.$router.go(0);
 
       // this.refreshView();
     },

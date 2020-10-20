@@ -1,10 +1,10 @@
 <template>
   <div>
     <p>w-checkbox 当前绑定值：{{ checkboxInfo }}</p>
-    <w-checkbox v-model="checkboxInfo" label="normal"></w-checkbox>
+    <w-checkbox v-model="checkboxInfo" label-text="normal"></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo2 }}</p>
-    <w-checkbox v-model="checkboxInfo2" label="disabled" disabled></w-checkbox>
+    <w-checkbox v-model="checkboxInfo2" label-text="disabled" disabled></w-checkbox>
 
     <p>w-checkbox 当前绑定值：{{ checkboxInfo3 }}</p>
     <w-checkbox v-model="checkboxInfo3" :options="options" multiple :max="1"></w-checkbox>
