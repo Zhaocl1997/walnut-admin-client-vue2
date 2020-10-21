@@ -9,6 +9,11 @@ export function menuOptions(data) {
     return axios.post(url, data)
 }
 
+export function getUserMenu(data) {
+    const url = '/api/v1/menu/getUserMenu'
+    return axios.post(url, data)
+}
+
 const menuBaseAPI = new BaseAPI('menu')
 
 export const menuIndex = menuBaseAPI.index()

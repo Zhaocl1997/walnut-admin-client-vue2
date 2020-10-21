@@ -20,7 +20,7 @@
         :multiple="multiple"
         :accordion="accordion"
         @node-click="onNodeClick"
-        @check-change="onCheckChange"
+        @check="onCheckChange"
       ></w-tree>
     </el-option>
   </el-select>

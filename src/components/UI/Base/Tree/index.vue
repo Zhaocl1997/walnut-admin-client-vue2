@@ -15,7 +15,7 @@
     :defaultExpandedKeys="defaultExpandedKeys"
     :currentNodeKey="currentNodeKey"
     :renderContent="renderContent"
-    :showCheckbox="showCheckbox || multiple"
+    :showCheckbox="multiple"
     :draggable="draggable"
     :allowDrag="allowDrag"
     :allowDrop="allowDrop"
@@ -28,7 +28,7 @@
     :indent="indent"
     :iconClass="iconClass"
     @node-click="onNodeClick"
-    @check-change="onCheckChange"
+    @check="onCheckChange"
     :style="style"
   >
     <div v-if="$slots.treeNode">
@@ -126,10 +126,10 @@ export default {
 
     renderContent: Function,
 
-    showCheckbox: {
-      type: Boolean,
-      default: false
-    },
+    // showCheckbox: {
+    //   type: Boolean,
+    //   default: false
+    // },
 
     draggable: {
       type: Boolean,
@@ -189,7 +189,8 @@ export default {
         this.defaultExpandedKeys = this.value;
 
         this.$nextTick(() => {
-          this.$refs.tree.setCheckedKeys(this.value);
+          // bug
+          this.$refs.tree.setCheckedKeys(ttt);
         });
       } else {
         this.defaultExpandedKeys = [this.value];
@@ -211,19 +212,26 @@ export default {
     },
 
     // multiple
-    onCheckChange(data, checked, indeterminate) {
+    onCheckChange(
+      data,
+      { checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys }
+    ) {
       if (!this.multiple) {
         return;
       }
 
-      const res = this.$refs.tree.getCheckedNodes(true, true);
+      // 1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
+      const res = this.$refs.tree.getCheckedNodes(false, false);
 
       let arr = [];
       res.map(i => {
         arr.push(i[this.nodeKey]);
       });
+
+      arr = arr.concat(halfCheckedKeys);
+
       this.$emit("input", arr);
-      this.$emit("check-change", data, checked, indeterminate, res);
+      this.$emit("check", data, status);
     },
 
     // expand

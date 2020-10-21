@@ -17,12 +17,11 @@ const service = axios.create({
     // withCredentials: true
 })
 
+const token = getToken()
+
 // 请求拦截器
 service.interceptors.request.use(config => {
-    if (config.type === 'form') {
-        config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    }
-    config.headers['Authorization'] = 'Bearer ' + getToken()
+    config.headers['Authorization'] = 'Bearer ' + token
     return config
 }, error => {
     return Promise.reject(error)
@@ -61,6 +60,9 @@ service.interceptors.response.use(res => {
             break;
 
         case 401:
+            break;
+
+        case 403:
             break;
 
         case 404:

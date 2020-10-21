@@ -14,9 +14,8 @@ const ls = (function () {
     // get
     function get(key) {
         const value = localStorage.getItem(key)
-        if (value === null) {
-            return
-        } else if (typeof value === 'string') {
+
+        if (typeof value === 'string') {
             return value
         } else {
             return JSON.parse(value)

@@ -52,7 +52,6 @@
           <div style="border:1px solid lightgrey;">
             <w-tree
               ref="wTree"
-              node-key="_id"
               multiple
               v-model="dialogFormData.menu"
               :data="this.menuOptions"
@@ -138,6 +137,7 @@ export default {
       dialogFormRules: {},
 
       props: {
+        id: "_id",
         label: "title",
         children: "children"
       },

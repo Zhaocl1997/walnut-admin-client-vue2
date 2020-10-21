@@ -185,12 +185,12 @@ export default {
     dialogFormModel() {
       return [
         {
-          wType: "TreeSelect",
+          wType: "SelectTree",
           prop: "parentId",
           label: "上级菜单",
           data: this.menuOptions,
           placeholder: "请选择上级菜单",
-          treeProps: {
+          props: {
             id: "_id",
             label: "title",
             children: "children"

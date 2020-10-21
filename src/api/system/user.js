@@ -9,6 +9,11 @@ export function signin(data) {
     return axios.post(url, data)
 }
 
+export function getUserInfo(data) {
+    const url = '/api/v1/user/getUserInfo'
+    return axios.post(url, data)
+}
+
 const userBaseAPI = new BaseAPI('user')
 
 export const userIndex = userBaseAPI.index()

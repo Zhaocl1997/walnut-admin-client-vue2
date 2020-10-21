@@ -7,6 +7,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import './router/guard'
+
 import './assets/icons' // icon
 import './assets/styles/main.scss' // style
 
