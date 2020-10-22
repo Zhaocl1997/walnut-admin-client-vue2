@@ -23,9 +23,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import TheLogo from "../TheLogo";
 import sidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/abstracts/_variables.scss";
+
 import routes from "@/utils/routes";
 
 export default {
@@ -37,11 +40,13 @@ export default {
 
   data() {
     return {
-      routes: routes
+      // routes: routes
     };
   },
 
   computed: {
+    ...mapGetters(["routes"]),
+
     isCollapse() {
       return this.$store.state.settings.sidebarCollapsed;
     },
@@ -59,7 +64,11 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      console.log(this.routes);
+    }, 500);
+  },
 
   beforeCreate() {},
 

@@ -13,18 +13,55 @@ import { getUserMenu } from '@/api/system/menu'
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 
+const rootId = '5f8c3a3dfd35c823ac00ef1e'
+
+const loadView = view => {
+    return resolve => require([`@/views/${view}`], resolve)
+}
+
+const genRouters = menus => {
+
+    const gen = (data, pid) => {
+        const ret = []
+        let temp = []
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].parentId == pid) {
+                let obj = data[i];
+
+                temp = gen(data, data[i]._id);
+
+                if (temp.length > 0) {
+                    obj.children = temp;
+                }
+
+                if (obj.component) {
+                    obj.component = loadView(obj.component)
+                }
+
+                ret.push(obj);
+            }
+        }
+
+        return ret
+    }
+
+    return gen(menus, rootId)
+}
+
 router.beforeEach((to, from, next) => {
     NProgress.start()
 
     if (getToken()) {
-        getUserInfo().then(res => {
-            console.log(res);
+        // store.dispatch('GenerateRoutes')
+        // getUserInfo().then(userInfo => {
 
-            getUserMenu().then(result => {
-                console.log(result);
+        //     store.dispatch('GenerateRoutes').then(accessRoutes => {
 
-            })
-        })
+        //         // router.addRoutes(accessRoutes)
+        //         next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+        //     })
+        // })
         // // 判断当前用户是否已拉取完user_info信息
         // store.dispatch('GetInfo').then(res => {
         //     // 拉取user_info
@@ -53,8 +90,9 @@ router.beforeEach((to, from, next) => {
         //     NProgress.done()
         // }
     }
+
+    NProgress.done()
     next()
-    // NProgress.done()
 })
 
 router.afterEach(() => {

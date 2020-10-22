@@ -239,7 +239,15 @@ export default {
         },
         {
           wType: "Input",
-          prop: "location",
+          prop: "name",
+          label: "路由名称",
+          placeholder: "请输入路由名称",
+          span: 12,
+          show: this.dialogFormData.type === "menu"
+        },
+        {
+          wType: "Input",
+          prop: "path",
           label: "路由地址",
           placeholder: "请输入路由地址",
           span: 12,
@@ -247,7 +255,7 @@ export default {
         },
         {
           wType: "Input",
-          prop: "path",
+          prop: "component",
           label: "组件路径",
           placeholder: "请输入组件路径",
           span: 12,

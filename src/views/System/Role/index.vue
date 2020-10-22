@@ -115,6 +115,8 @@ export default {
 
   data() {
     return {
+      rootId: "5f8c3a3dfd35c823ac00ef1e",
+
       queryFormData: {
         pageNum: 1,
         pageSize: 10
@@ -274,7 +276,7 @@ export default {
       this.getTableData();
 
       menuOptions().then(res => {
-        const data = arrToTree(res.data, "5f8c3a3dfd35c823ac00ef1e", false, {
+        const data = arrToTree(res.data, this.rootId, false, {
           id: "_id",
           parentId: "parentId",
           children: "children"
@@ -325,12 +327,14 @@ export default {
       this.$refs.roleForm.$children[0].validate(valid => {
         if (valid) {
           if (this.dialogFormData._id) {
+            this.dialogFormData.menu.push(this.rootId);
             roleUpdate(this.dialogFormData).then(res => {
               this.$message.success("编辑成功");
               this.onDialogCancel();
               this.getTableData();
             });
           } else {
+            this.dialogFormData.menu.push(this.rootId);
             roleCreate(this.dialogFormData).then(res => {
               this.$message.success("添加成功");
               this.onDialogCancel();
@@ -370,6 +374,7 @@ export default {
   created() {},
 
   mounted() {
+    alert(123)
     this.init();
   },
 

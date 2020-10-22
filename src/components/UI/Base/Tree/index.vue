@@ -167,6 +167,10 @@ export default {
   },
 
   methods: {
+    arr_diffA(a, b) {
+      return a.filter(x => !new Set(b).has(x));
+    },
+
     // feedback
     feedBack() {
       if (!this.value) {
@@ -188,9 +192,12 @@ export default {
       if (this.multiple) {
         this.defaultExpandedKeys = this.value;
 
+        const levelOneNodeIdArr = this.data.map(i => i[this.nodeKey]);
+        const val = this.arr_diffA(this.value, levelOneNodeIdArr);
+
         this.$nextTick(() => {
           // bug
-          this.$refs.tree.setCheckedKeys(ttt);
+          this.$refs.tree.setCheckedKeys(val);
         });
       } else {
         this.defaultExpandedKeys = [this.value];

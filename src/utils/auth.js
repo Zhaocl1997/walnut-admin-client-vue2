@@ -12,6 +12,6 @@ export function setToken(token) {
     ls.set(config.TOKEN_KEY, token)
 }
 
-export function reMoveToken() {
+export function removeToken() {
     ls.remove(config.TOKEN_KEY)
 }

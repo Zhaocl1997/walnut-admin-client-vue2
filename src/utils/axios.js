@@ -2,7 +2,7 @@
 'use strict'
 
 import axios from 'axios'
-import { getToken } from './auth'
+import { getToken, removeToken } from './auth'
 import config from './config'
 import { Notification } from 'element-ui'
 import router from '../router'
@@ -17,11 +17,9 @@ const service = axios.create({
     // withCredentials: true
 })
 
-const token = getToken()
-
 // 请求拦截器
 service.interceptors.request.use(config => {
-    config.headers['Authorization'] = 'Bearer ' + token
+    config.headers['Authorization'] = 'Bearer ' + getToken()
     return config
 }, error => {
     return Promise.reject(error)
@@ -29,6 +27,7 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
+
     switch (res.status) {
         case 200:
             switch (res.data.code) {
@@ -37,7 +36,8 @@ service.interceptors.response.use(res => {
                     return res.data.data
 
                 case '888888':
-                    // unauthenticated
+                    // 未认证
+                    removeToken()
                     router.push('/signin')
                     Notification.error({
                         title: res.data.message
@@ -104,6 +104,8 @@ service.interceptors.response.use(res => {
     // }
 }, error => {
     console.log(error)
+    console.log(321123);
+
     // Message({
     //     message: error.message,
     //     type: 'error',

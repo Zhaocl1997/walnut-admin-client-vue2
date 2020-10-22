@@ -25,7 +25,7 @@ Vue.use(VueRouter)
  * }
  */
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'Home',
@@ -39,17 +39,17 @@ const routes = [
   //   // which is lazy-loaded when the route is visited.
   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   // }
-  {
-    path: '/redirect',
-    // component: Layout,
-    // hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import(/* webpackChunkName: "signup" */ '../views/Redirect/index.vue')
-      }
-    ]
-  },
+  // {
+  //   path: '/redirect',
+  //   // component: Layout,
+  //   // hidden: true,
+  //   children: [
+  //     {
+  //       path: '/redirect/:path*',
+  //       component: () => import(/* webpackChunkName: "signup" */ '../views/Redirect/index.vue')
+  //     }
+  //   ]
+  // },
   {
     path: '/signin',
     name: 'signin',
@@ -66,37 +66,37 @@ const routes = [
     component: () => import(/* webpackChunkName: "index" */ '../layout/index.vue')
   },
   {
-    path: '/',
+    path: '',
     name: 'Layout',
     component: () => import(/* webpackChunkName: "Layout" */ '../layout/index.vue'),
     children: [
-      {
-        path: '/components',
-        name: 'document',
-        component: () => import(/* webpackChunkName: "document" */ '../views/Tools/Document/index.vue')
-      },
-      {
-        path: '/system',
-        name: 'system',
-        component: () => import(/* webpackChunkName: "system" */ '../views/System'),
-        children: [
-          {
-            path: 'user',
-            name: 'user',
-            component: () => import(/* webpackChunkName: "user" */ '../views/System/User')
-          },
-          {
-            path: 'role',
-            name: 'role',
-            component: () => import(/* webpackChunkName: "role" */ '../views/System/Role')
-          },
-          {
-            path: 'menu',
-            name: 'menu',
-            component: () => import(/* webpackChunkName: "menu" */ '../views/System/Menu')
-          }
-        ]
-      }
+      // {
+      //   path: '/components',
+      //   name: 'document',
+      //   component: () => import(/* webpackChunkName: "document" */ '../views/Tools/Document/index.vue')
+      // },
+      // {
+      //   path: '/system',
+      //   name: 'system',
+      //   component: () => import(/* webpackChunkName: "system" */ '../views/System'),
+      //   children: [
+      //     {
+      //       path: 'user',
+      //       name: 'user',
+      //       component: () => import(/* webpackChunkName: "user" */ '../views/System/User')
+      //     },
+      //     {
+      //       path: 'role',
+      //       name: 'role',
+      //       component: () => import(/* webpackChunkName: "role" */ '../views/System/Role')
+      //     },
+      //     {
+      //       path: 'menu',
+      //       name: 'menu',
+      //       component: () => import(/* webpackChunkName: "menu" */ '../views/System/Menu')
+      //     }
+      //   ]
+      // }
     ]
   }
 ]

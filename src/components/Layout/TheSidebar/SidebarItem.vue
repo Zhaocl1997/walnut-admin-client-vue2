@@ -89,9 +89,9 @@ export default {
         }
       });
 
-      // When there is only one child router, the child router is displayed by default
+      // When there is only one child router, the child router is not displayed by default
       if (showingChildren.length === 1) {
-        return true;
+        return false;
       }
 
       // Show parent if there are no child router to display

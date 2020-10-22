@@ -47,13 +47,13 @@ const user = {
     Signin({ commit }, data) {
       return new Promise((resolve, reject) => {
         signin(data)
-          .then(res => {            
+          .then(res => {                        
             setToken(res.token)
             commit(STORE_TYPES.SET_TOKEN, res.token)
             router.push("/index")
             resolve()
-          }).catch(e => {
-            reject(e)
+          }).catch(err => {
+            reject(err)
           })
       })
     },

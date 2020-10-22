@@ -7,7 +7,7 @@ import app from './modules/app'
 // import dict from './modules/dict'
 import user from './modules/user'
 // import tagsView from './modules/tagsView'
-// import permission from './modules/permission'
+import routes from './modules/routes'
 import settings from './modules/settings'
 import getters from './getters'
 
@@ -19,7 +19,7 @@ const store = new Vuex.Store({
     // dict,
     user,
     // tagsView,
-    // permission,
+    routes,
     settings
   },
   getters
