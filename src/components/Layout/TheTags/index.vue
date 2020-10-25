@@ -69,9 +69,11 @@ export default {
   },
 
   watch: {
-    $route() {
-      this.addTags();
-      this.moveToCurrentTag();
+    $route(newV) {
+      // console.log(newV);
+
+      // this.addTags();
+      // this.moveToCurrentTag();
     },
     visible(value) {
       if (value) {

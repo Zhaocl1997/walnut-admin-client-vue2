@@ -31,7 +31,6 @@ import TheFooter from "@/components/Layout/TheFooter";
 import TheSettings from "@/components/UI/Others/Settings";
 
 import { debounce } from "@/utils";
-import { getToken } from "@/utils/auth";
 
 import ResizeMixin from "../mixins/Resize";
 
@@ -179,10 +178,6 @@ export default {
       this.onScroll = debounce(this.onScroll, 50);
 
       window.addEventListener("scroll", this.onScroll, true);
-
-      if (getToken()) {
-        this.$store.dispatch("GenerateRoutes");
-      }
     },
 
     onScroll(e) {

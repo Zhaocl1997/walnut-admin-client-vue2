@@ -102,6 +102,7 @@ export default {
 
       return false;
     },
+
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath;

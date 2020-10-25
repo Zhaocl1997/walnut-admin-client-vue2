@@ -3,9 +3,11 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
+import Home from '@/views/Home'
+import Layout from '@/layout/index'
 
 Vue.use(VueRouter)
+
 
 /**
  * Note: 路由配置项
@@ -61,42 +63,20 @@ export const routes = [
     component: () => import(/* webpackChunkName: "signup" */ '../views/Auth/Signup.vue')
   },
   {
-    path: '/index',
-    name: 'index',
-    component: () => import(/* webpackChunkName: "index" */ '../layout/index.vue')
+    path: '/404',
+    name: '404',
+    component: () => import(/* webpackChunkName: "404" */ '../views/Error/404.vue')
   },
   {
     path: '',
-    name: 'Layout',
-    component: () => import(/* webpackChunkName: "Layout" */ '../layout/index.vue'),
+    name: 'layout',
+    component: Layout,
     children: [
-      // {
-      //   path: '/components',
-      //   name: 'document',
-      //   component: () => import(/* webpackChunkName: "document" */ '../views/Tools/Document/index.vue')
-      // },
-      // {
-      //   path: '/system',
-      //   name: 'system',
-      //   component: () => import(/* webpackChunkName: "system" */ '../views/System'),
-      //   children: [
-      //     {
-      //       path: 'user',
-      //       name: 'user',
-      //       component: () => import(/* webpackChunkName: "user" */ '../views/System/User')
-      //     },
-      //     {
-      //       path: 'role',
-      //       name: 'role',
-      //       component: () => import(/* webpackChunkName: "role" */ '../views/System/Role')
-      //     },
-      //     {
-      //       path: 'menu',
-      //       name: 'menu',
-      //       component: () => import(/* webpackChunkName: "menu" */ '../views/System/Menu')
-      //     }
-      //   ]
-      // }
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import(/* webpackChunkName: "index" */ '../views/Console/index.vue'),
+      }
     ]
   }
 ]

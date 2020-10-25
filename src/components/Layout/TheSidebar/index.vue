@@ -64,11 +64,7 @@ export default {
 
   created() {},
 
-  mounted() {
-    setTimeout(() => {
-      console.log(this.routes);
-    }, 500);
-  },
+  mounted() {},
 
   beforeCreate() {},
 

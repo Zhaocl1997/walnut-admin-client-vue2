@@ -7,6 +7,7 @@
     :multiple="multiple"
     :disabled="disabled"
     :clearable="clearable"
+    :placeholder="placeholder"
     :collapse-tags="collapse"
     @change="onSelectChange"
     @clear="onClear"
@@ -88,6 +89,7 @@ export default {
     clearable: Boolean,
     collapse: Boolean,
     accordion: Boolean,
+    placeholder: String,
 
     // custom
     value: [String, Number, Array],

@@ -1,10 +1,21 @@
 <template>
-  <router-view :key="$route.fullPath"></router-view>
+  <div>
+    <h1>console</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "wMain",
+  name: "",
+
+  inject: [],
+
+  provide() {},
+
+  model: {
+    event: "",
+    prop: ""
+  },
 
   components: {},
 
@@ -42,5 +53,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 </style>

@@ -42,6 +42,10 @@ $--font-path: "~element-ui/lib/theme-chalk/fonts";
   display: table-cell !important;
 }
 
+.el-divider {
+  margin: 6px 0 !important;
+}
+
 @import "~element-ui/packages/theme-chalk/src/index";
 
 // the :export directive is the magic sauce for webpack

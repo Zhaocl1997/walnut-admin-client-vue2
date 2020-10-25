@@ -45,26 +45,52 @@ export const treeToArr = (
 }
 
 
+const dynamicKeys = key => {
+    // 分割去空
+    const arr = key.split(".").filter(s => s && s.trim())
+
+    // 第一次执行时，定义一个数组专门用来存储所有的参数
+    const _args = Array.prototype.slice.call(arguments)
+
+    // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+    const _adder = function () {
+        _args.push(...arguments)
+        return _adder
+    }
+
+    // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+    _adder.toString = () => arr.reduce((a, b) => [a][b])
+
+    return _adder
+}
+
 /**
  * 递归树
  * 两种返回值 1、带根节点 2、不带根节点
  * @param {Array} data 要构造的数组
  * @param {String | Number} rootId 根节点ID
  * @param {Boolean} needRoot 返回结果是否需要根节点，默认false
- * @param {Object} prop id、parentId和children字段key，默认值如下
+ * @param {Object} prop id、parentId、children和order字段key，默认值如下
+ * @param {Function} retFormat 返回结果的格式化函数，参数就是item单一项
  * @return {Object | Array}
  */
 export const arrToTree = (
     data,
     rootId,
     needRoot = false,
-    prop = {
+    prop = defaultProps,
+    retFormat = item => item
+) => {
+    const defaultProps = {
         id: 'id',
         parentId: 'parentId',
-        children: 'children'
+        children: 'children',
+        order: 'order'
     }
-) => {
-    const root = data.find(i => i[prop.id] == rootId)
+    const mergedProps = { ...defaultProps, ...prop }
+
+    const root = data.find(i => i[mergedProps.id].toString() == rootId.toString())
+    const setOrder = val => val.sort((a, b) => a[dynamicKeys(`${[mergedProps.order]}`)] - b[dynamicKeys(`${[mergedProps.order]}`)])
 
     if (!root) {
         throw new Error('Root not found')
@@ -72,26 +98,23 @@ export const arrToTree = (
 
     const toTree = (data, pid) => {
         const ret = []
-        let temp = []
 
-        for (let i = 0; i < data.length; i++) {
-            if (data[i][prop.parentId] == pid) {
-                let obj = data[i];
+        data.forEach(item => {
+            if (item[mergedProps.parentId].toString() == pid.toString()) {
+                const temp = toTree(data, item[mergedProps.id]);
 
-                temp = toTree(data, data[i][prop.id]);
-
-                if (temp.length > 0) {
-                    obj[prop.children] = temp;
+                if (temp && temp.length > 0) {
+                    item[mergedProps.children] = setOrder(temp)
                 }
 
-                ret.push(obj);
+                ret.push(retFormat(item));
             }
-        }
+        })
 
-        return ret
+        return setOrder(ret)
     }
 
-    root[prop.children] = toTree(data, rootId)
+    root[mergedProps.children] = toTree(data, rootId)
 
     return needRoot ? root : toTree(data, rootId)
 }

@@ -374,7 +374,6 @@ export default {
   created() {},
 
   mounted() {
-    alert(123)
     this.init();
   },
 

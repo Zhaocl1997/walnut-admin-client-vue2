@@ -13,47 +13,29 @@ import { getUserMenu } from '@/api/system/menu'
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 
-const rootId = '5f8c3a3dfd35c823ac00ef1e'
-
-const loadView = view => {
-    return resolve => require([`@/views/${view}`], resolve)
-}
-
-const genRouters = menus => {
-
-    const gen = (data, pid) => {
-        const ret = []
-        let temp = []
-
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].parentId == pid) {
-                let obj = data[i];
-
-                temp = gen(data, data[i]._id);
-
-                if (temp.length > 0) {
-                    obj.children = temp;
-                }
-
-                if (obj.component) {
-                    obj.component = loadView(obj.component)
-                }
-
-                ret.push(obj);
-            }
-        }
-
-        return ret
-    }
-
-    return gen(menus, rootId)
-}
+const whiteList = ['/signin', '/signup']
 
 router.beforeEach((to, from, next) => {
     NProgress.start()
 
     if (getToken()) {
-        // store.dispatch('GenerateRoutes')
+        if (whiteList.indexOf(to.path) !== -1) {
+            next('/index')
+        }
+
+        if (store.getters.routes.length === 0) {
+            store.dispatch('GenerateRoutes').then(() => {
+                // hack方法 确保addRoutes已完成
+                next({ ...to, replace: true })
+            })
+        } else {
+            next()
+        }
+
+        // store.dispatch('GenerateRoutes').then(res => {
+        //     router.addRoutes(res)
+        //     next({ ...to, replace: true })
+        // })
         // getUserInfo().then(userInfo => {
 
         //     store.dispatch('GenerateRoutes').then(accessRoutes => {
@@ -89,10 +71,8 @@ router.beforeEach((to, from, next) => {
         //     next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
         //     NProgress.done()
         // }
+        next()
     }
-
-    NProgress.done()
-    next()
 })
 
 router.afterEach(() => {

@@ -152,6 +152,11 @@ export default {
           slot: true
         },
         {
+          label: "显示顺序",
+          prop: "order",
+          width: "80px"
+        },
+        {
           label: "组件路径",
           prop: "path",
           width: "100px"
@@ -185,6 +190,10 @@ export default {
     dialogFormModel() {
       return [
         {
+          wType: "Divider",
+          title: "基本信息"
+        },
+        {
           wType: "SelectTree",
           prop: "parentId",
           label: "上级菜单",
@@ -215,6 +224,40 @@ export default {
             }
           ]
         },
+
+        {
+          wType: "Divider",
+          title: "路由信息"
+        },
+        {
+          wType: "Input",
+          prop: "path",
+          label: "路由地址",
+          placeholder: "请输入路由地址",
+          span: 12,
+          disabled: this.menuType
+        },
+        {
+          wType: "Input",
+          prop: "name",
+          label: "路由名称",
+          placeholder: "请输入路由名称",
+          span: 12,
+          disabled: this.dialogFormData.type === "menu"
+        },
+        {
+          wType: "Input",
+          prop: "component",
+          label: "组件路径",
+          placeholder: "请输入组件路径",
+          span: 12,
+          disabled: this.dialogFormData.type === "menu"
+        },
+
+        {
+          wType: "Divider",
+          title: "元信息"
+        },
         {
           wType: "Input",
           prop: "title",
@@ -223,43 +266,19 @@ export default {
           span: 12
         },
         {
+          wType: "SelectIcon",
+          prop: "icon",
+          label: "菜单图标",
+          span: 12,
+          disabled: this.menuType
+        },
+        {
           wType: "Input",
           prop: "order",
           label: "显示排序",
           placeholder: "请输入显示排序",
           type: "number",
           span: 12
-        },
-        {
-          wType: "SelectIcon",
-          prop: "icon",
-          label: "菜单图标",
-          span: 12,
-          show: this.menuType
-        },
-        {
-          wType: "Input",
-          prop: "name",
-          label: "路由名称",
-          placeholder: "请输入路由名称",
-          span: 12,
-          show: this.dialogFormData.type === "menu"
-        },
-        {
-          wType: "Input",
-          prop: "path",
-          label: "路由地址",
-          placeholder: "请输入路由地址",
-          span: 12,
-          show: this.menuType
-        },
-        {
-          wType: "Input",
-          prop: "component",
-          label: "组件路径",
-          placeholder: "请输入组件路径",
-          span: 12,
-          show: this.dialogFormData.type === "menu"
         },
         {
           wType: "Radio",
@@ -276,11 +295,11 @@ export default {
             }
           ],
           span: 12,
-          show: this.menuType
+          disabled: this.menuType
         },
         {
           wType: "Radio",
-          prop: "show",
+          prop: "disabled",
           label: "显示状态",
           options: [
             {
@@ -293,7 +312,7 @@ export default {
             }
           ],
           span: 12,
-          show: this.menuType
+          disabled: this.menuType
         },
         {
           wType: "Radio",
@@ -310,7 +329,7 @@ export default {
             }
           ],
           span: 12,
-          show: this.menuType
+          disabled: this.menuType
         },
         {
           wType: "Radio",
@@ -327,7 +346,7 @@ export default {
             }
           ],
           span: 12,
-          show: this.dialogFormData.type === "menu"
+          disabled: this.dialogFormData.type === "menu"
         }
       ];
     },

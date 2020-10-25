@@ -8,7 +8,6 @@ import { routes as constantRoutes } from '@/router'
 
 import { getUserInfo } from '@/api/system/user'
 import { getUserMenu } from '@/api/system/menu'
-import Layout from '@/layout/index'
 
 const routes = {
   state: {
@@ -21,18 +20,19 @@ const routes = {
   },
   actions: {
     GenerateRoutes({ commit }) {
-      console.log(123);
-
       return new Promise(resolve => {
         getUserMenu().then(({ data }) => {
-          const accessedRoutes = genRouters(data)
+          const accessedRoutes = filterAsyncRouter(data)
 
+          // push 到layout children下
           accessedRoutes.map(i => {
             constantRoutes[4].children.push(i)
           })
 
-          // constantRoutes.push({ path: '*', redirect: '/404', hidden: true })
+          // 404
+          constantRoutes.push({ path: '*', redirect: '/404', hidden: true })
 
+          // 重写路由
           router.options.routes = constantRoutes;
           router.matcher = new VueRouter({ mode: "history" }).matcher;
           router.addRoutes(constantRoutes);
@@ -45,62 +45,23 @@ const routes = {
   }
 }
 
-const rootId = '5f8c3a3dfd35c823ac00ef1e'
-
+// 路由懒加载
 const loadView = view => {
   return resolve => require([`@/views/${view}.vue`], resolve)
 }
 
-const genRouters = menus => {
-
-  const gen = (data, pid) => {
-    const ret = []
-    let temp = []
-
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].parentId == pid) {
-        let obj = data[i];
-
-        temp = gen(data, data[i]._id);
-
-        if (temp.length > 0) {
-          obj.children = temp;
-        }
-        console.log(obj.component);
-
-        if (obj.component) {
-          ret.push({
-            path: obj.path,
-            name: obj.name,
-            component: loadView(obj.component),
-            children: obj.children,
-            meta: {
-              title: obj.title,
-              icon: obj.icon,
-              // hidden: obj.show
-            }
-          });
-        } else {
-          ret.push({
-            path: obj.path,
-            name: obj.name,
-            children: obj.children,
-            meta: {
-              title: obj.title,
-              icon: obj.icon,
-              // hidden: obj.show
-            }
-          });
-        }
-
-
-      }
+// 遍历后台传来的路由字符串，转换为组件对象
+const filterAsyncRouter = asyncRouterMap => {
+  return asyncRouterMap.filter(route => {
+    if (route.component) {
+      route.component = loadView(route.component)
     }
 
-    return ret
-  }
-
-  return gen(menus, rootId)
+    if (route.children != null && route.children && route.children.length) {
+      route.children = filterAsyncRouter(route.children)
+    }
+    return true
+  })
 }
 
 export default routes

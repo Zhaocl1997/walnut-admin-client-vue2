@@ -239,7 +239,7 @@ export default {
           label: "角色",
           placeholder: "请选择角色",
           options: this.roleOptions,
-          optionLabel: "describe",
+          optionLabel: "name",
           optionValue: "_id"
         }
       ];

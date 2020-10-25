@@ -25,7 +25,7 @@
       >
         <template v-if="calcShow(item)">
           <!-- divider -->
-          <el-divider v-if="showItem(item, FORM_TYPE.DIVIDER)">{{ item.title }}</el-divider>
+          <el-divider v-if="showItem(item, FORM_TYPE.DIVIDER)" v-bind="item">{{ item.title }}</el-divider>
 
           <!-- form-item -->
           <el-form-item
