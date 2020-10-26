@@ -96,13 +96,12 @@
 import BlockMixins from "@/mixins/Block";
 import ValueMixins from "@/mixins/Value";
 
+import { commonUsed } from "@/utils";
 import {
   isEmpty,
   clearIllegalChars,
-  clearUnexpectedChars,
-  checkStrong,
-  commonUsed
-} from "@/utils";
+  clearUnexpectedChars
+} from "easy-fns/lib/utils";
 import { EMAIL_OPTIONS } from "@/utils/constant";
 
 export default {

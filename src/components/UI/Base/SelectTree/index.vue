@@ -33,7 +33,7 @@ import BlockMixins from "@/mixins/Block";
 
 import wTree from "../Tree";
 
-import { findNodeById } from "@/utils/tree";
+import { findNodeById } from "easy-fns/lib/Tree";
 
 export default {
   name: "wSelectTree",

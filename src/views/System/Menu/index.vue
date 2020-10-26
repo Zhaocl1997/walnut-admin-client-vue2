@@ -86,8 +86,7 @@ import {
   menuDelete
 } from "@/api/system/menu";
 
-import { format } from "@/utils/time";
-import { arrToTree } from "@/utils/tree";
+import { format } from "easy-fns/lib/Time";
 
 export default {
   name: "User",
@@ -365,13 +364,7 @@ export default {
       this.getTableData();
 
       menuOptions().then(res => {
-        const data = arrToTree(res.data, "5f8c3a3dfd35c823ac00ef1e", true, {
-          id: "_id",
-          parentId: "parentId",
-          children: "children"
-        });
-
-        this.menuOptions = [data];
+        this.menuOptions = [res.data];
       });
     },
 
@@ -400,13 +393,7 @@ export default {
       this.loading = true;
       const res = await menuIndex();
 
-      const data = arrToTree(res.data, "5f8c3a3dfd35c823ac00ef1e", false, {
-        id: "_id",
-        parentId: "parentId",
-        children: "children"
-      });
-
-      this.tableData = data;
+      this.tableData = res.data;
       this.total = res.total - 1;
       this.loading = false;
     },

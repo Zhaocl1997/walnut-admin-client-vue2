@@ -7,7 +7,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import './router/guard'
+import './router/guard' // route guard
 
 import './assets/icons' // icon
 import './assets/styles/main.scss' // style
@@ -28,10 +28,9 @@ Vue.use(directive)
 import wIcon from '@/components/UI/Base/Icons'
 Vue.component('w-icon', wIcon)
 
-import log from './utils/logs'
-import copy from './utils/clipboard'
+import log from 'easy-fns/lib/Log'
+import copy from 'easy-fns/lib/Copy'
 import { checkBox, openLoading } from '@/components/UI/Base/Message'
-
 
 Vue.prototype.$log = log
 Vue.prototype.$copy = copy

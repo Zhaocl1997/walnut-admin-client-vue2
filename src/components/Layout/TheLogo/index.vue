@@ -11,7 +11,7 @@
 
 <script>
 import logo from "@/assets/logo.png";
-import { title } from "@/utils/setting";
+import { title } from "@/settings";
 
 export default {
   name: "wSidebarLogo",

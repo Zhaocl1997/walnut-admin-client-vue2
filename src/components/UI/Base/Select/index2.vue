@@ -51,7 +51,7 @@
 import Sortable from "sortablejs";
 import BlockMixins from "@/mixins/Block";
 import ValueMixins from "@/mixins/Value";
-import { isEmpty, isArray, randomId } from "@/utils";
+import { isEmpty, isArray, randomId } from "easy-fns/lib/utils";
 
 export default {
   name: "wSelect",

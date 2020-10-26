@@ -126,7 +126,7 @@ export default {
       menuProps: {
         id: "_id",
         label: "title",
-        children: "subs"
+        children: "children"
       },
 
       selectTree1: 7,
@@ -149,7 +149,7 @@ export default {
 
   mounted() {
     menuOptions().then(res => {
-      this.menuOptions = res.data;
+      this.menuOptions = [res.data];
     });
   },
 

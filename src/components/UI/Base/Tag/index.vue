@@ -43,7 +43,7 @@ import Sortable from "sortablejs";
 
 import wButton from "../Button";
 import wInput from "../Input";
-import { isEmpty } from "@/utils";
+import { isEmpty } from "easy-fns/lib/utils";
 
 export default {
   name: "wTag",

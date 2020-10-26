@@ -30,7 +30,7 @@ import TheMain from "@/components/Layout/TheMain";
 import TheFooter from "@/components/Layout/TheFooter";
 import TheSettings from "@/components/UI/Others/Settings";
 
-import { debounce } from "@/utils";
+import throttle from "easy-fns/lib/Throttle";
 
 import ResizeMixin from "../mixins/Resize";
 
@@ -175,7 +175,7 @@ export default {
       this.$log.capsule("title4", "capsule4", "danger");
       this.$log.capsule("title5", "capsule5", "info");
 
-      this.onScroll = debounce(this.onScroll, 50);
+      this.onScroll = throttle(this.onScroll, 50);
 
       window.addEventListener("scroll", this.onScroll, true);
     },

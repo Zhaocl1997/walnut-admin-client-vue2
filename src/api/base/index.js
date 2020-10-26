@@ -2,7 +2,7 @@
 'use strict'
 
 import axios from '@/utils/axios'
-import settings from '@/utils/setting'
+import settings from '@/settings'
 
 export default class BaseAPI {
     constructor(model) {

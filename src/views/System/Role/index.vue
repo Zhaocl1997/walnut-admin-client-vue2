@@ -45,7 +45,7 @@
           <w-checkbox
             v-model="menuTreeSetting"
             multiple
-            :options="options"
+            :options="checkboxOptions"
             @change="onCheckBoxChange"
           ></w-checkbox>
 
@@ -54,8 +54,8 @@
               ref="wTree"
               multiple
               v-model="dialogFormData.menu"
-              :data="this.menuOptions"
-              :props="props"
+              :data="this.treeOptions"
+              :props="treeProps"
               :check-strictly="treeCheck"
             ></w-tree>
           </div>
@@ -85,8 +85,7 @@ import {
 } from "@/api/system/role";
 
 import { menuOptions } from "@/api/system/menu";
-import { arrToTree } from "@/utils/tree";
-import { format } from "@/utils/time";
+import { arrToTree, format } from "easy-fns/lib/Time";
 
 export default {
   name: "Role",
@@ -115,7 +114,15 @@ export default {
 
   data() {
     return {
-      rootId: "5f8c3a3dfd35c823ac00ef1e",
+      rootId: "",
+      treeOptions: [],
+      treeProps: {
+        id: "_id",
+        label: "title",
+        children: "children"
+      },
+
+      menuTreeSetting: [],
 
       queryFormData: {
         pageNum: 1,
@@ -127,8 +134,6 @@ export default {
       loading: false,
       selected: [],
 
-      menuOptions: [],
-
       dialogVisible: false,
       dialogTitle: "",
       dialogFormData: {
@@ -138,14 +143,7 @@ export default {
       },
       dialogFormRules: {},
 
-      props: {
-        id: "_id",
-        label: "title",
-        children: "children"
-      },
-
-      menuTreeSetting: [],
-      options: [
+      checkboxOptions: [
         {
           value: "0",
           label: "展开/折叠"
@@ -194,7 +192,7 @@ export default {
           label: "角色权限",
           prop: "menu",
           width: "100px",
-          formatter: row => row.menu.length + "项权限"
+          formatter: row => row.menu.length - 1 + "项权限"
         },
         {
           label: "创建时间",
@@ -276,13 +274,8 @@ export default {
       this.getTableData();
 
       menuOptions().then(res => {
-        const data = arrToTree(res.data, this.rootId, false, {
-          id: "_id",
-          parentId: "parentId",
-          children: "children"
-        });
-
-        this.menuOptions = data;
+        this.treeOptions = res.data.children;
+        this.rootId = res.data._id;
       });
     },
 

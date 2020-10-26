@@ -26,7 +26,6 @@
 
 <script>
 import TheSettingsContent from "./content";
-import { debounce } from "@/utils";
 
 export default {
   name: "TheSettings",
@@ -66,12 +65,15 @@ export default {
     onOpenPanel() {
       this.drawerVisible = true;
     },
+
     onMouseEnter() {
       this.showDraggable = true;
     },
+
     onMouseLeave() {
       this.showDraggable = false;
     },
+
     init() {
       const el = document.querySelector(".draggable-container");
 
@@ -130,8 +132,6 @@ export default {
 
   mounted() {
     this.init();
-
-    this.onMouseLeave = debounce(this.onMouseLeave);
   },
 
   beforeCreate() {},

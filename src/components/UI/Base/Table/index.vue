@@ -188,7 +188,7 @@ import wScreenfull from "../../Others/Screenfull";
 import wPagination from "../Pagination";
 import wHeaderColumnItem from "./components/item";
 
-import { deepClone } from "@/utils";
+import { deepClone } from "easy-fns/lib/utils";
 
 export default {
   name: "wTable",

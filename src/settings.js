@@ -2,89 +2,51 @@
 "use strict"
 
 module.exports = {
+    /**
+     * 右上title
+     */
+    title: 'walnut-admin',
+
+    /**
+     * API版本
+     */
+    APIVersion: 'v1',
+
+    /**
+     * header 设置
+     */
     header: {
         render: true,
         fixed: false,
         height: "50px"
     },
 
+    /**
+     * sidebar 设置
+     */
     sidebar: {
         render: true,
         collapsed: false,
         width: "200px"
     },
 
+    /**
+     * tags 设置
+     */
     tags: {
         render: true,
         fixed: false,
         height: "30px"
     },
 
+    /**
+     * footer 设置
+     */
     footer: {
         render: true,
         fixed: false,
         height: "20px"
     },
-
-    /**
-     * header render
-     */
-    headerRender: true,
-
-    /**
-     * header fixed
-     */
-    headerFixed: false,
-
-    /**
-     * header height
-     */
-    headerHeight: "50px",
-
-
-    /**
-     * tags height
-     */
-    tagsHeight: "30px",
-
-    /**
-     * footer height
-     */
-    footerHeight: "20px",
-
-    /**
-     * sidebar width
-     */
-    sidebarWidth: "200px",
-
-
-
-    /**
-     * footer fixed
-     */
-    footerFixed: false,
-
-    /**
-     * logo render
-     */
-    logoRender: true,
-
-    /**
-     * sidebar render
-     */
-    sidebarRender: true,
-
-
-
-    /**
-     * tags render
-     */
-    tagsRender: true,
-
-    /**
-     * footer render
-     */
-    footerRender: true,
 
     /**
      * layout z-index

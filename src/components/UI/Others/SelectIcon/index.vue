@@ -49,7 +49,7 @@ import wInput from "../../Base/Input";
 import { icons } from "./icons";
 import BlockMixins from "@/mixins/Block";
 import ValueMixins from "@/mixins/Value";
-import { deepClone } from "@/utils";
+import { deepClone } from "easy-fns/lib/utils";
 
 export default {
   name: "wIconSelect",

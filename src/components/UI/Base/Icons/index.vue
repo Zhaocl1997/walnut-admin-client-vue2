@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { isExternal } from "@/utils/validate";
+import { isExternal } from "easy-fns/lib/Regex";
 
 export default {
   name: "wIcon",

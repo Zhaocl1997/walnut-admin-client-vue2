@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { isEmpty } from "@/utils";
+import { isEmpty } from "easy-fns/lib/utils";
 
 export default {
   name: "wRadio",

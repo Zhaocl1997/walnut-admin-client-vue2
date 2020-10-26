@@ -2,8 +2,8 @@
 'use strict'
 
 import Mock from 'mockjs'
-import { randomId } from '../utils'
-import { treeToArr, arrToTree, findNodeById } from '../utils/tree'
+import { randomId } from 'easy-fns/lib/utils'
+import { treeToArr, arrToTree, findNodeById } from 'easy-fns/lib/Tree'
 import { FORM_TYPE, EMAIL_OPTIONS, INPUT_TYPE, DATE_TYPE, TIME_TYPE, PHONE_PREFIX } from '../utils/constant'
 
 const Random = Mock.Random
