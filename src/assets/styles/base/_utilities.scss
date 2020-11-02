@@ -1,9 +1,43 @@
+/* display */
 .u-block {
   display: block;
 }
+
+.u-inline {
+  display: inline;
+}
+
+.u-inline-block {
+  display: inline-block;
+}
+
+/* float */
+.u-float-left {
+  float: left;
+}
+
+.u-float-right {
+  float: right;
+}
+
+/* cursor */
 .u-pointer {
   cursor: pointer;
 }
+
+.u-move {
+  cursor: move;
+}
+
+/* position */
+.u-relative {
+  position: relative;
+}
+
+.u-absolute {
+  position: absolute;
+}
+
 .u-one-line {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -24,6 +58,7 @@
 .u-pl5 {
   padding-left: 5px;
 }
+
 /* padding 8px */
 .u-pt8 {
   padding-top: 8px;
@@ -37,6 +72,7 @@
 .u-pl8 {
   padding-left: 8px;
 }
+
 /* padding 10px */
 .u-pt10 {
   padding-top: 10px;
@@ -50,6 +86,7 @@
 .u-pl10 {
   padding-left: 10px;
 }
+
 /* margin 5px */
 .u-mt5 {
   margin-top: 5px;
@@ -63,6 +100,7 @@
 .u-ml5 {
   margin-left: 5px;
 }
+
 /* margin 8px */
 .u-mt8 {
   margin-top: 8px;
@@ -76,6 +114,7 @@
 .u-ml8 {
   margin-left: 8px;
 }
+
 /* margin 10px */
 .u-mt10 {
   margin-top: 10px;

@@ -13,7 +13,7 @@
   transform: translate(-50%, -50%);
 }
 
-@mixin scrollbarStyle {
+@mixin scrollbar {
   &::-webkit-scrollbar {
     width: 5px;
     height: 5px;

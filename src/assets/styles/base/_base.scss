@@ -31,7 +31,7 @@ html {
   overflow-y: auto;
   overflow-x: hidden;
 
-  @include scrollbarStyle;
+  @include scrollbar;
 }
 
 :root body {
