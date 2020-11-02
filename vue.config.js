@@ -25,6 +25,8 @@ const additionalData = Object.keys(scssVariables)
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = 80 // dev port
 
+const name = 'walnut-ui'
+
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
     /**
@@ -54,7 +56,7 @@ module.exports = {
     configureWebpack: {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.
-        name: 'walnut-ui',
+        name: name,
         resolve: {
             alias: {
                 '@': resolve('src')

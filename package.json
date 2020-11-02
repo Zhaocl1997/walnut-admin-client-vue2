@@ -12,7 +12,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.0.0",
-    "easy-fns": "^1.1.11",
+    "easy-fns": "^1.1.13",
     "element-ui": "^2.13.2",
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.7.1",
