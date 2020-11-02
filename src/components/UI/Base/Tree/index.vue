@@ -1,6 +1,6 @@
 <template>
   <el-tree
-    ref="tree"
+    ref="wTree"
     :data="data"
     :emptyText="emptyText"
     :renderAfterExpand="renderAfterExpand"
@@ -29,7 +29,6 @@
     :iconClass="iconClass"
     @node-click="onNodeClick"
     @check="onCheckChange"
-    :style="style"
   >
     <div v-if="$slots.treeNode">
       <template slot-scope="{node, data}">
@@ -40,8 +39,6 @@
 </template>
 
 <script>
-import BlockMixins from "@/mixins/Block";
-
 export default {
   name: "wTree",
 
@@ -56,7 +53,7 @@ export default {
 
   components: {},
 
-  mixins: [BlockMixins()],
+  mixins: [],
 
   data() {
     return {
@@ -163,7 +160,9 @@ export default {
 
     // custom
     value: [String, Number, Array],
-    multiple: Boolean
+    multiple: Boolean,
+    leafOnly: Boolean,
+    includeHalfChecked: Boolean
   },
 
   methods: {
@@ -178,11 +177,11 @@ export default {
           this.defaultExpandedKeys = [];
 
           this.$nextTick(() => {
-            this.$refs.tree.setCheckedKeys(this.value);
+            this.$refs.wTree.setCheckedKeys(this.value);
           });
         } else {
           this.$nextTick(() => {
-            this.$refs.tree.setCurrentKey(this.value);
+            this.$refs.wTree.setCurrentKey(this.value);
           });
         }
 
@@ -196,14 +195,13 @@ export default {
         const val = this.arr_diffA(this.value, levelOneNodeIdArr);
 
         this.$nextTick(() => {
-          // bug
-          this.$refs.tree.setCheckedKeys(val);
+          this.$refs.wTree.setCheckedKeys(val);
         });
       } else {
         this.defaultExpandedKeys = [this.value];
 
         this.$nextTick(() => {
-          this.$refs.tree.setCurrentKey(this.value);
+          this.$refs.wTree.setCurrentKey(this.value);
         });
       }
     },
@@ -228,22 +226,28 @@ export default {
       }
 
       // 1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
-      const res = this.$refs.tree.getCheckedNodes(false, false);
+      const res = this.$refs.wTree.getCheckedNodes(
+        this.leafOnly,
+        this.includeHalfChecked
+      );
 
       let arr = [];
       res.map(i => {
         arr.push(i[this.nodeKey]);
       });
 
-      arr = arr.concat(halfCheckedKeys);
-
       this.$emit("input", arr);
-      this.$emit("check", data, status);
+      this.$emit("check", data, {
+        checkedNodes,
+        checkedKeys,
+        halfCheckedNodes,
+        halfCheckedKeys
+      });
     },
 
     // expand
     expandAll(val) {
-      let nodes = this.$refs.tree.store.nodesMap;
+      let nodes = this.$refs.wTree.store.nodesMap;
       for (let i in nodes) {
         nodes[i].expanded = val;
       }
@@ -252,9 +256,9 @@ export default {
     // check
     checkAll(val) {
       if (val) {
-        this.$refs.tree.setCheckedNodes(this.data);
+        this.$refs.wTree.setCheckedNodes(this.data);
       } else {
-        this.$refs.tree.setCheckedKeys([]);
+        this.$refs.wTree.setCheckedKeys([]);
       }
     }
   },
