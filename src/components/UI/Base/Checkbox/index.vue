@@ -1,6 +1,14 @@
 <template>
   <div>
-    <el-checkbox-group v-if="multiple" v-model="selfValue" :min="min" :max="max" v-on="$listeners">
+    <!-- multiple -->
+    <el-checkbox-group
+      v-if="multiple"
+      v-model="checkedValue"
+      @change="onMultipleChange"
+      :min="min"
+      :max="max"
+      v-on="$listeners"
+    >
       <template v-if="button">
         <el-checkbox-button
           v-for="item in options"
@@ -21,11 +29,12 @@
       </template>
     </el-checkbox-group>
 
+    <!-- single -->
     <el-checkbox
       v-on="$listeners"
       @change="onChange"
       v-else
-      v-model="normalValue"
+      v-model="selfValue"
       :disabled="disabled"
     >{{ labelText }}</el-checkbox>
   </div>
@@ -33,6 +42,7 @@
 
 <script>
 import ValueMixins from "@/mixins/Value";
+import { isEmpty } from "easy-fns/lib/utils";
 
 export default {
   name: "wCheckbox",
@@ -52,20 +62,23 @@ export default {
 
   data() {
     return {
-      normalValue: false
+      checkedValue: []
     };
   },
 
-  computed: {},
+  computed: {
+    isForamattable() {
+      return (
+        this.multiple && !isEmpty(this.valueFormat) && !isEmpty(this.selfValue)
+      );
+    }
+  },
 
   watch: {},
 
   props: {
     // origin
-    value: {
-      type: [Boolean, Array],
-      default: () => []
-    },
+    value: [Boolean, String, Array],
     disabled: Boolean,
     min: Number,
     max: Number,
@@ -76,18 +89,60 @@ export default {
     options: Array,
     button: Boolean,
     multiple: Boolean,
-    labelText: String
+    labelText: String,
+
+    valueFormat: String,
+    valueType: { type: String, default: "number" }
   },
 
   methods: {
+    feedBack() {
+      if (this.isForamattable) {
+        this.checkedValue = this.onValueType(
+          this.selfValue.split(this.valueFormat)
+        );
+      } else {
+        this.checkedValue = this.selfValue;
+      }
+    },
+
     onChange(v) {
       this.$emit("input", v);
+    },
+
+    onMultipleChange(v) {
+      if (this.isForamattable) {
+        this.selfValue = v.join(this.valueFormat);
+      }
+    },
+
+    /* value 值判断 */
+    onValueType(v) {
+      if (this.multiple) {
+        if (this.valueType === "number") {
+          return v.map(Number);
+        }
+
+        if (this.valueType === "string") {
+          return v.map(String);
+        }
+      } else {
+        if (this.valueType === "number") {
+          return Number(v);
+        }
+
+        if (this.valueType === "string") {
+          return String(v);
+        }
+      }
     }
   },
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    this.feedBack();
+  },
 
   beforeCreate() {},
 
