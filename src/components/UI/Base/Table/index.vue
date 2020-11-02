@@ -1,7 +1,7 @@
 <template>
   <div class="w-table">
-    <!-- 右边table设置区域 -->
-    <div class="u-mb8" style="float:right;" v-if="showSettings">
+    <!-- table设置 -->
+    <div class="u-mb8 u-float-right" v-if="showSettings">
       <!-- 刷新 -->
       <el-tooltip effect="dark" content="刷新" placement="top">
         <w-icon icon="sync" class="table-settings__icon" @click="listFunc"></w-icon>
@@ -10,18 +10,16 @@
       <!-- 列 -->
       <el-tooltip content="列设置" placement="top">
         <el-popover placement="bottom" trigger="click" popper-class="table-settings__popover">
-          <!-- 左侧固定 -->
+          <w-icon slot="reference" icon="setting" class="table-settings__icon"></w-icon>
+
           <template v-if="hasFixedLeft">
-            <span class="table-header__info">固定在左侧</span>
-
-            <w-header-column-item :header.sync="header" type="left"></w-header-column-item>
-
-            <el-divider></el-divider>
+            <w-table-settings-item :header.sync="leftHeader" type="left">
+              <i class="el-icon-info"></i>固定在左侧
+            </w-table-settings-item>
           </template>
 
-          <!-- 正常项 -->
-          <span class="table-header__info">
-            不固定
+          <w-table-settings-item :header.sync="commonHeader" type="common">
+            <i class="el-icon-info"></i>不固定
             <el-checkbox
               style="margin-right:5px;"
               :indeterminate="isIndeterminate"
@@ -30,27 +28,20 @@
             >全选</el-checkbox>
 
             <w-button size="mini" type="text" @click="onReset">重置</w-button>
-          </span>
+          </w-table-settings-item>
 
-          <w-header-column-item :header.sync="header" type="common"></w-header-column-item>
-
-          <!-- 右侧固定 -->
           <template v-if="hasFixedRight">
-            <el-divider></el-divider>
-
-            <span class="table-header__info">固定在右侧</span>
-
-            <w-header-column-item :header.sync="header" type="right"></w-header-column-item>
+            <w-table-settings-item :header.sync="rightHeader" type="right">
+              <i class="el-icon-info"></i>固定在右侧
+            </w-table-settings-item>
           </template>
-
-          <w-icon slot="reference" icon="setting" class="table-settings__icon"></w-icon>
         </el-popover>
       </el-tooltip>
 
       <!-- 全屏 -->
-      <!-- <el-tooltip effect="dark" content="全屏" placement="top"> -->
-      <w-screenfull class="table-settings__icon" />
-      <!-- </el-tooltip> -->
+      <el-tooltip effect="dark" content="全屏" placement="top">
+        <w-screenfull class="table-settings__icon" />
+      </el-tooltip>
 
       <!-- 密度 -->
       <el-tooltip effect="dark" content="密度" placement="top">
@@ -155,7 +146,11 @@
             <!-- 自定义列 -->
             <slot v-if="item.slot" :row="scope.row" :index="scope.$index" :name="item.prop"></slot>
             <!-- format列 -->
-            <span v-else-if="item.formatter">{{ item.formatter(scope.row, scope.column) }}</span>
+            <span v-else-if="item.formatter">
+              {{
+              item.formatter(scope.row, scope.column)
+              }}
+            </span>
             <!-- 正常列 -->
             <span v-else>{{ scope.row[item.prop] }}</span>
           </template>
@@ -165,7 +160,7 @@
 
     <!-- 分页 -->
     <w-pagination
-      style="float:right"
+      class="u-float-right"
       v-if="page"
       :total="total"
       :page.sync="myPageNum"
@@ -181,9 +176,9 @@ import Sortable from "sortablejs";
 import wButton from "../Button";
 import wScreenfull from "../../Others/Screenfull";
 import wPagination from "../Pagination";
-import wHeaderColumnItem from "./components/item";
+import wTableSettingsItem from "./components/item";
 
-import { deepClone } from "easy-fns/lib/utils";
+import { deepClone, curryConcat } from "easy-fns/lib/utils";
 
 export default {
   name: "wTable",
@@ -201,7 +196,7 @@ export default {
     wButton,
     wScreenfull,
     wPagination,
-    wHeaderColumnItem
+    wTableSettingsItem
   },
 
   mixins: [],
@@ -210,9 +205,6 @@ export default {
     return {
       // 渲染的表头
       header: [],
-
-      // fixed 带来的偏差
-      deviation: 0,
 
       // 列高
       rowHeight: {},
@@ -250,11 +242,44 @@ export default {
     },
 
     hasFixedLeft() {
-      return !!this.header.find(i => i.fixed && i.fixed === "left");
+      return !!this.leftHeader.length;
     },
 
     hasFixedRight() {
-      return !!this.header.find(i => i.fixed && i.fixed === "right");
+      return !!this.rightHeader.length;
+    },
+
+    leftHeader: {
+      get() {
+        return this.header.filter(i => i.fixed === "left");
+      },
+      set(newV) {
+        this.header = curryConcat(newV)(this.commonHeader)(
+          this.rightHeader
+        ).toString();
+      }
+    },
+
+    commonHeader: {
+      get() {
+        return this.header.filter(i => !i.fixed);
+      },
+      set(newV) {
+        this.header = curryConcat(this.leftHeader)(newV)(
+          this.rightHeader
+        ).toString();
+      }
+    },
+
+    rightHeader: {
+      get() {
+        return this.header.filter(i => i.fixed === "right");
+      },
+      set(newV) {
+        this.header = curryConcat(this.leftHeader)(this.commonHeader)(
+          newV
+        ).toString();
+      }
     }
   },
 
@@ -389,8 +414,8 @@ export default {
       this.tableHeader.map(i => {
         temp.push({
           ...i,
-          visible: i.visible === false ? false : true, // 是否显示列的标识
-          showFixedIcon: false // hover固定列显示
+          visible: i.visible === false ? false : true, // checkbox
+          showFixedIcon: false // hover
         });
       });
 
@@ -399,15 +424,6 @@ export default {
       this.cachedHeader = Object.freeze(deepClone(temp));
 
       this.$emit("update:tableHeader", this.header);
-
-      // fixed left +1
-      // fixed right no change
-      for (let i = 0; i < this.header.length; i++) {
-        const e = this.header[i];
-        if (e.fixed && e.fixed === "left") {
-          this.deviation += 1;
-        }
-      }
     },
 
     // 全选/全不选
@@ -435,37 +451,6 @@ export default {
       }
     },
 
-    // 行拖拽
-    rowDrop() {
-      const target = document.querySelector(".el-table__body-wrapper tbody");
-
-      Sortable.create(target, {
-        animation: 180,
-        delay: 0,
-        onEnd: e => {
-          const currRow = this.tableData.splice(e.oldIndex, 1)[0];
-          this.tableData.splice(e.newIndex, 0, currRow);
-        }
-      });
-    },
-
-    // 列拖拽
-    columnDrop() {
-      const target = document.querySelector(".el-table__header-wrapper tr");
-
-      Sortable.create(target, {
-        animation: 180,
-        delay: 0,
-        onEnd: e => {
-          const oldItem = this.header[e.oldIndex - this.deviation];
-          this.header.splice(e.oldIndex - this.deviation, 1);
-          this.header.splice(e.newIndex - this.deviation, 0, oldItem);
-
-          this.$emit("update:tableHeader", this.header);
-        }
-      });
-    },
-
     // 密度
     onDensity(v) {
       switch (v) {
@@ -488,7 +473,7 @@ export default {
 
     // 重置
     onReset() {
-      this.header = deepClone(this.cachedHeader);
+      this.header = this.cachedHeader;
     }
   },
 
@@ -496,14 +481,6 @@ export default {
 
   mounted() {
     this.init();
-
-    if (this.rowSort) {
-      this.rowDrop();
-    }
-
-    if (this.colSort) {
-      this.columnDrop();
-    }
   },
 
   beforeCreate() {},
@@ -522,14 +499,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.w-table {
-  .table-settings__icon {
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    vertical-align: baseline;
-  }
+<style lang="scss" scoped>
+.table-settings__icon {
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  vertical-align: baseline;
 }
 
 .table-settings__popover {
@@ -537,46 +512,6 @@ export default {
 
   &.el-popover--plain {
     padding: 0;
-  }
-
-  .el-divider--horizontal {
-    margin: 5px 0;
-  }
-
-  .table-header__info {
-    margin-left: 25px;
-    color: grey;
-    font-size: 0.9rem;
-    line-height: 30px;
-  }
-
-  .table-header__main {
-    font-size: 16px;
-    list-style: none;
-    margin: 0;
-
-    max-height: 200px;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      /*滚动条整体样式*/
-      width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
-      height: 1px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      /*滚动条里面小方块*/
-      border-radius: 10px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      background: #535353;
-    }
-
-    &::-webkit-scrollbar-track {
-      /*滚动条里面轨道*/
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      background: #ededed;
-    }
   }
 }
 </style>

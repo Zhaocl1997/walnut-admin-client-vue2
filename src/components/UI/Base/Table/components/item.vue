@@ -1,55 +1,63 @@
 <template>
-  <div :class="className" style="position:relative;">
-    <ul>
-      <li
-        v-for="(item, index) in groupHeader"
-        :key="index.toString() + item.prop"
-        @click.stop.prevent="onClick($event, item, index)"
-      >
-        <div
-          class="column-item u-pointer"
-          @mouseover.self="onMouseOver($event, item)"
-          @mouseleave.self="onMouseLeave($event, item)"
-          :id="item.prop"
+  <div>
+    <span class="table-settings__title">
+      <slot />
+    </span>
+
+    <div :class="className + ' u-relative'">
+      <ul>
+        <li
+          v-for="(item, index) in header"
+          :key="index.toString() + item.prop"
+          @click.stop.prevent="onClick($event, item, index)"
         >
-          <div style="cursor:move;float:left;margin-top:3px;">
-            <w-icon icon="draggable"></w-icon>
+          <div
+            :id="item.prop"
+            class="u-pointer column-item"
+            @mouseover="onMouseOver($event, item, index)"
+            @mouseleave="onMouseLeave($event, item, index)"
+          >
+            <div class="u-move u-float-left" style="margin-top:3px;">
+              <w-icon icon="draggable"></w-icon>
+            </div>
+
+            <div class="u-one-line u-inline-block" style="max-width:100px;">
+              <el-checkbox v-model="item.visible" :disabled="item.disabled">
+                <span :title="item.label">{{ item.label }}</span>
+              </el-checkbox>
+            </div>
+
+            <div class="u-float-right" style="margin-top:4px;" v-show="item.showFixedIcon">
+              <el-tooltip content="不固定">
+                <w-icon
+                  v-if="type !== TABLE_COL_TYPE.COMMON"
+                  icon="vertical-align-middl"
+                  @click.stop="onSetCommon($event, item, index)"
+                ></w-icon>
+              </el-tooltip>
+
+              <el-tooltip content="固定在列首">
+                <w-icon
+                  v-if="type !== TABLE_COL_TYPE.LEFT"
+                  icon="vertical-align-top"
+                  @click.stop="onSetStart($event, item, index)"
+                ></w-icon>
+              </el-tooltip>
+
+              <el-tooltip content="固定在列尾">
+                <w-icon
+                  v-if="type !== TABLE_COL_TYPE.RIGHT"
+                  icon="vertical-align-botto"
+                  @click.stop="onSetEnd($event, item, index)"
+                ></w-icon>
+              </el-tooltip>
+            </div>
           </div>
+        </li>
+      </ul>
+    </div>
 
-          <div class="u-one-line" style="max-width:100px;display:inline-block;">
-            <el-checkbox v-model="item.visible" :disabled="item.disabled">
-              <span :title="item.label">{{ item.label }}</span>
-            </el-checkbox>
-          </div>
-
-          <div style="float:right;margin-top:4px;" v-show="item.showFixedIcon">
-            <el-tooltip content="不固定" placement="top">
-              <w-icon
-                v-if="type !== TABLE_COL_TYPE.COMMON"
-                icon="vertical-align-middl"
-                @click.stop="onSetCommon($event, item)"
-              ></w-icon>
-            </el-tooltip>
-
-            <el-tooltip content="固定在列首" placement="top">
-              <w-icon
-                v-if="type !== TABLE_COL_TYPE.LEFT"
-                icon="vertical-align-top"
-                @click.stop="onSetStart($event, item)"
-              ></w-icon>
-            </el-tooltip>
-
-            <el-tooltip content="固定在列尾" plalcement="top">
-              <w-icon
-                v-if="type !== TABLE_COL_TYPE.RIGHT"
-                icon="vertical-align-botto"
-                @click.stop="onSetEnd($event, item)"
-              ></w-icon>
-            </el-tooltip>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <el-divider></el-divider>
   </div>
 </template>
 
@@ -58,7 +66,7 @@ import Sortable from "sortablejs";
 import { TABLE_COL_TYPE } from "@/utils/constant";
 
 export default {
-  name: "wTableColumnItem",
+  name: "wTableSettingsItem",
 
   inject: [],
 
@@ -82,17 +90,6 @@ export default {
   computed: {
     className() {
       return `table-header__main-${this.type}`;
-    },
-
-    groupHeader() {
-      if (
-        this.type === TABLE_COL_TYPE.LEFT ||
-        this.type === TABLE_COL_TYPE.RIGHT
-      ) {
-        return this.header.filter(i => i.fixed == this.type);
-      } else {
-        return this.header.filter(i => !i.fixed);
-      }
     }
   },
 
@@ -104,37 +101,16 @@ export default {
   },
 
   methods: {
-    calcDeviation() {
-      let ret = 0;
-
-      switch (this.type) {
-        case TABLE_COL_TYPE.LEFT:
-          ret = 0;
-          break;
-
-        case TABLE_COL_TYPE.COMMON:
-          this.header.map(i => {
-            if (i.fixed && i.fixed === TABLE_COL_TYPE.LEFT) {
-              ret += 1;
-            }
-          });
-          break;
-
-        case TABLE_COL_TYPE.RIGHT:
-          this.header.map(i => {
-            if (i.fixed !== TABLE_COL_TYPE.RIGHT) {
-              ret += 1;
-            }
-          });
-          break;
-
-        default:
-          break;
-      }
-
-      return ret;
+    // stateless
+    onMouseOver(evt, item, index) {
+      this.header[index].showFixedIcon = true;
     },
 
+    onMouseLeave(evt, item, index) {
+      this.header[index].showFixedIcon = false;
+    },
+
+    // stateful
     onSetDrag() {
       const target = document.querySelector(`.${this.className} ul`);
 
@@ -142,76 +118,33 @@ export default {
         animation: 180,
         delay: 0,
         onEnd: e => {
-          const d = this.calcDeviation();
-
-          const oldItem = this.header[e.oldIndex + d];
-          console.log(oldItem.label);
-
-          this.header.splice(e.oldIndex + d, 1);
-          this.header.splice(e.newIndex + d, 0, oldItem);
+          const oldItem = this.header[e.oldIndex];
+          this.header.splice(e.oldIndex, 1);
+          this.header.splice(e.newIndex, 0, oldItem);
 
           this.$emit("update:header", this.header);
         }
       });
     },
 
-    findItemIndex(item) {
-      return this.header.findIndex(i => i.prop === item.prop);
+    onClick(evt, item, index) {
+      this.header[index].visible = !this.header[index].visible;
+      this.$emit("update:header", this.header);
     },
 
-    onClick(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        visible: !this.header[index].visible
-      });
+    onSetStart(evt, item, index) {
+      this.header[index].fixed = TABLE_COL_TYPE.LEFT;
+      this.$emit("update:header", this.header);
     },
 
-    onMouseOver(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        showFixedIcon: true
-      });
+    onSetEnd(evt, item, index) {
+      this.header[index].fixed = TABLE_COL_TYPE.RIGHT;
+      this.$emit("update:header", this.header);
     },
 
-    onMouseLeave(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        showFixedIcon: false
-      });
-    },
-
-    onSetStart(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        fixed: TABLE_COL_TYPE.LEFT
-      });
-    },
-
-    onSetEnd(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        fixed: TABLE_COL_TYPE.RIGHT
-      });
-    },
-
-    onSetCommon(evt, item) {
-      const index = this.findItemIndex(item);
-
+    onSetCommon(evt, item, index) {
       delete this.header[index].fixed;
-
-      this.$set(this.header, index, {
-        ...this.header[index]
-      });
+      this.$emit("update:header", this.header);
     }
   },
 
@@ -240,33 +173,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/styles/main.scss";
+
+.table-settings__title {
+  margin-left: 15px;
+  padding-right: 5px;
+  color: grey;
+  font-size: 0.9rem;
+  line-height: 30px;
+}
+
 .column-item:hover {
   background: rgba(240, 248, 255, 0.8);
 }
 
 .table-header__main-common {
+  @include scrollbar;
+
   font-size: 16px;
   list-style: none;
   margin: 0;
 
   max-height: 200px;
   overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-    height: 1px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: #535353;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    background: #ededed;
-  }
 }
 </style>

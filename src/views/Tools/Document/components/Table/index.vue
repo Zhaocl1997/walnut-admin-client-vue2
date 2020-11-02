@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import wTable from "@/components/UI/Base/Table/index2";
+import wTable from "@/components/UI/Base/Table/index";
 import getDataList from "@/mock/table";
 
 export default {
@@ -40,14 +40,12 @@ export default {
         {
           label: "姓名",
           prop: "name",
-          width: "100px",
-          fixed: "left"
+          width: "100px"
         },
         {
           label: "性别",
           prop: "sex",
-          width: "50px",
-          fixed: "left"
+          width: "50px"
         },
         {
           label: "年龄",
@@ -98,7 +96,12 @@ export default {
 
   computed: {},
 
-  watch: {},
+  watch: {
+    tableHeader(newV) {
+      console.log("[new table header]");
+      console.table(newV);
+    }
+  },
 
   props: {},
 
@@ -106,8 +109,6 @@ export default {
     init() {
       this.loading = true;
       const result = getDataList(this.queryFormData);
-      console.log(result);
-
       this.tableData = result.data;
       this.total = result.total;
       this.loading = false;
