@@ -102,7 +102,7 @@ import {
   clearIllegalChars,
   clearUnexpectedChars
 } from "easy-fns/lib/utils";
-import { EMAIL_OPTIONS } from "@/utils/constant";
+import { EMAIL_SUFFIX } from "easy-fns/lib/constant";
 
 export default {
   name: "wInput",
@@ -192,7 +192,7 @@ export default {
 
       if (this.type === "email" && !this.onFetchSuggestions) {
         return (queryString, callback) => {
-          const arr = EMAIL_OPTIONS;
+          const arr = EMAIL_SUFFIX;
 
           arr.forEach(item => {
             if (queryString.indexOf(item.value) !== -1) {

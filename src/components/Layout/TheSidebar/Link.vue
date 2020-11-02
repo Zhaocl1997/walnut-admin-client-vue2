@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { isExternal } from "easy-fns/lib/Regex";
+import { isExternal } from "easy-fns/lib/regex";
 
 export default {
   name: "wLink",

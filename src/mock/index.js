@@ -3,8 +3,9 @@
 
 import Mock from 'mockjs'
 import { randomId } from 'easy-fns/lib/utils'
-import { treeToArr, arrToTree, findNodeById } from 'easy-fns/lib/Tree'
-import { FORM_TYPE, EMAIL_OPTIONS, INPUT_TYPE, DATE_TYPE, TIME_TYPE, PHONE_PREFIX } from '../utils/constant'
+import { EMAIL_SUFFIX, PHONE_PREFIX } from 'easy-fns/lib/constant'
+import { treeToArr, arrToTree, findNodeById } from 'easy-fns/lib/tree'
+import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from '../utils/constant'
 
 const Random = Mock.Random
 
@@ -49,7 +50,7 @@ const mockData = options => {
                         break;
 
                     case INPUT_TYPE.EMAIL:
-                        result[e.prop] = Random.email(Random.pick(EMAIL_OPTIONS).value.split("@")[1]).substr(2)
+                        result[e.prop] = Random.email(Random.pick(EMAIL_SUFFIX).value.split("@")[1]).substr(2)
                         break;
 
                     case INPUT_TYPE.ID:

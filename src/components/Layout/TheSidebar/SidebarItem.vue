@@ -39,7 +39,7 @@
 
 <script>
 import path from "path";
-import { isExternal } from "easy-fns/lib/Regex";
+import { isExternal } from "easy-fns/lib/regex";
 import Item from "./Item";
 import AppLink from "./Link";
 import FixiOSBug from "./FixiOSBug";

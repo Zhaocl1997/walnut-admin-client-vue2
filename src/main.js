@@ -28,8 +28,8 @@ Vue.use(directive)
 import wIcon from '@/components/UI/Base/Icons'
 Vue.component('w-icon', wIcon)
 
-import log from 'easy-fns/lib/Log'
-import copy from 'easy-fns/lib/Copy'
+import log from 'easy-fns/lib/log'
+import copy from 'easy-fns/lib/copy'
 import { checkBox, openLoading } from '@/components/UI/Base/Message'
 
 Vue.prototype.$log = log

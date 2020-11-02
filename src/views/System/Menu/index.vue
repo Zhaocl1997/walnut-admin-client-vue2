@@ -86,7 +86,7 @@ import {
   menuDelete
 } from "@/api/system/menu";
 
-import { format } from "easy-fns/lib/Time";
+import { format } from "easy-fns/lib/time";
 
 export default {
   name: "User",

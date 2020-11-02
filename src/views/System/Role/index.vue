@@ -57,6 +57,7 @@
               :data="this.treeOptions"
               :props="treeProps"
               :check-strictly="treeCheck"
+              includeHalfChecked
             ></w-tree>
           </div>
         </template>
@@ -85,7 +86,7 @@ import {
 } from "@/api/system/role";
 
 import { menuOptions } from "@/api/system/menu";
-import { arrToTree, format } from "easy-fns/lib/Time";
+import { format } from "easy-fns/lib/time";
 
 export default {
   name: "Role",
