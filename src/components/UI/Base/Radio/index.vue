@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-model="v" :size="size" :disabled="disabled">
+  <el-radio-group v-model="selfValue" :size="size" :disabled="disabled">
     <div v-if="!button">
       <el-radio
         v-for="item in options"
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import ValueMixins from "@/mixins/Value";
 import { isEmpty } from "easy-fns/lib/utils";
 
 export default {
@@ -37,22 +38,13 @@ export default {
 
   components: {},
 
-  mixins: [],
+  mixins: [ValueMixins],
 
   data() {
     return {};
   },
 
-  computed: {
-    v: {
-      get() {
-        return this.value;
-      },
-      set(newV) {
-        this.$emit("input", newV);
-      }
-    }
-  },
+  computed: {},
 
   watch: {},
 
