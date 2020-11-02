@@ -2,15 +2,15 @@
   <div :class="className" style="position:relative;">
     <ul>
       <li
-        v-for="(item, index) in groupHeader"
+        v-for="(item, index) in header"
         :key="index.toString() + item.prop"
         @click.stop.prevent="onClick($event, item, index)"
       >
         <div
-          class="column-item u-pointer"
-          @mouseover.self="onMouseOver($event, item)"
-          @mouseleave.self="onMouseLeave($event, item)"
           :id="item.prop"
+          class="column-item u-pointer"
+          @mouseover.self="onMouseOver($event, item, index)"
+          @mouseleave.self="onMouseLeave($event, item, index)"
         >
           <div style="cursor:move;float:left;margin-top:3px;">
             <w-icon icon="draggable"></w-icon>
@@ -27,7 +27,7 @@
               <w-icon
                 v-if="type !== TABLE_COL_TYPE.COMMON"
                 icon="vertical-align-middl"
-                @click.stop="onSetCommon($event, item)"
+                @click.stop="onSetCommon($event, item, index)"
               ></w-icon>
             </el-tooltip>
 
@@ -35,7 +35,7 @@
               <w-icon
                 v-if="type !== TABLE_COL_TYPE.LEFT"
                 icon="vertical-align-top"
-                @click.stop="onSetStart($event, item)"
+                @click.stop="onSetStart($event, item, index)"
               ></w-icon>
             </el-tooltip>
 
@@ -43,7 +43,7 @@
               <w-icon
                 v-if="type !== TABLE_COL_TYPE.RIGHT"
                 icon="vertical-align-botto"
-                @click.stop="onSetEnd($event, item)"
+                @click.stop="onSetEnd($event, item, index)"
               ></w-icon>
             </el-tooltip>
           </div>
@@ -82,17 +82,6 @@ export default {
   computed: {
     className() {
       return `table-header__main-${this.type}`;
-    },
-
-    groupHeader() {
-      if (
-        this.type === TABLE_COL_TYPE.LEFT ||
-        this.type === TABLE_COL_TYPE.RIGHT
-      ) {
-        return this.header.filter(i => i.fixed == this.type);
-      } else {
-        return this.header.filter(i => !i.fixed);
-      }
     }
   },
 
@@ -104,37 +93,6 @@ export default {
   },
 
   methods: {
-    calcDeviation() {
-      let ret = 0;
-
-      switch (this.type) {
-        case TABLE_COL_TYPE.LEFT:
-          ret = 0;
-          break;
-
-        case TABLE_COL_TYPE.COMMON:
-          this.header.map(i => {
-            if (i.fixed && i.fixed === TABLE_COL_TYPE.LEFT) {
-              ret += 1;
-            }
-          });
-          break;
-
-        case TABLE_COL_TYPE.RIGHT:
-          this.header.map(i => {
-            if (i.fixed !== TABLE_COL_TYPE.RIGHT) {
-              ret += 1;
-            }
-          });
-          break;
-
-        default:
-          break;
-      }
-
-      return ret;
-    },
-
     onSetDrag() {
       const target = document.querySelector(`.${this.className} ul`);
 
@@ -142,76 +100,41 @@ export default {
         animation: 180,
         delay: 0,
         onEnd: e => {
-          const d = this.calcDeviation();
-
-          const oldItem = this.header[e.oldIndex + d];
-          console.log(oldItem.label);
-
-          this.header.splice(e.oldIndex + d, 1);
-          this.header.splice(e.newIndex + d, 0, oldItem);
-
-          this.$emit("update:header", this.header);
+          const oldItem = this.header[e.oldIndex];
+          this.header.splice(e.oldIndex, 1);
+          this.header.splice(e.newIndex, 0, oldItem);
         }
       });
     },
 
-    findItemIndex(item) {
-      return this.header.findIndex(i => i.prop === item.prop);
+    onClick(evt, item, index) {
+      this.header[index].visible = !this.header[index].visible;
+      this.$emit("update:header", this.header);
     },
 
-    onClick(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        visible: !this.header[index].visible
-      });
+    onMouseOver(evt, item, index) {
+      this.header[index].showFixedIcon = true;
+      this.$emit("update:header", this.header);
     },
 
-    onMouseOver(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        showFixedIcon: true
-      });
+    onMouseLeave(evt, item, index) {
+      this.header[index].showFixedIcon = false;
+      this.$emit("update:header", this.header);
     },
 
-    onMouseLeave(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        showFixedIcon: false
-      });
+    onSetStart(evt, item, index) {
+      this.header[index].fixed = TABLE_COL_TYPE.LEFT;
+      this.$emit("update:header", this.header);
     },
 
-    onSetStart(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        fixed: TABLE_COL_TYPE.LEFT
-      });
+    onSetEnd(evt, item, index) {
+      this.header[index].fixed = TABLE_COL_TYPE.RIGHT;
+      this.$emit("update:header", this.header);
     },
 
-    onSetEnd(evt, item, i) {
-      const index = this.findItemIndex(item);
-
-      this.$set(this.header, index, {
-        ...this.header[index],
-        fixed: TABLE_COL_TYPE.RIGHT
-      });
-    },
-
-    onSetCommon(evt, item) {
-      const index = this.findItemIndex(item);
-
+    onSetCommon(evt, item, index) {
       delete this.header[index].fixed;
-
-      this.$set(this.header, index, {
-        ...this.header[index]
-      });
+      this.$emit("update:header", this.header);
     }
   },
 

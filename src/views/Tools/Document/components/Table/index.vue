@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import wTable from "@/components/UI/Base/Table";
+import wTable from "@/components/UI/Base/Table/index2";
 import getDataList from "@/mock/table";
 
 export default {
@@ -40,12 +40,14 @@ export default {
         {
           label: "姓名",
           prop: "name",
-          width: "100px"
+          width: "100px",
+          fixed: "left"
         },
         {
           label: "性别",
           prop: "sex",
-          width: "50px"
+          width: "50px",
+          fixed: "left"
         },
         {
           label: "年龄",
@@ -53,7 +55,7 @@ export default {
           width: "100px"
         },
         {
-          label: "出生年月",
+          label: "出生年月啊实打实大苏打啊实打实打算",
           prop: "birth",
           width: "100px"
         },

@@ -14,7 +14,7 @@
           <template v-if="hasFixedLeft">
             <span class="table-header__info">固定在左侧</span>
 
-            <w-header-column-item :header.sync="header" type="left"></w-header-column-item>
+            <w-header-column-item :header.sync="leftHeader" type="left"></w-header-column-item>
 
             <el-divider></el-divider>
           </template>
@@ -32,7 +32,7 @@
             <w-button size="mini" type="text" @click="onReset">重置</w-button>
           </span>
 
-          <w-header-column-item :header.sync="header" type="common"></w-header-column-item>
+          <w-header-column-item :header.sync="commonHeader" type="common"></w-header-column-item>
 
           <!-- 右侧固定 -->
           <template v-if="hasFixedRight">
@@ -40,7 +40,7 @@
 
             <span class="table-header__info">固定在右侧</span>
 
-            <w-header-column-item :header.sync="header" type="right"></w-header-column-item>
+            <w-header-column-item :header.sync="rightHeader" type="right"></w-header-column-item>
           </template>
 
           <w-icon slot="reference" icon="setting" class="table-settings__icon"></w-icon>
@@ -181,7 +181,7 @@ import Sortable from "sortablejs";
 import wButton from "../Button";
 import wScreenfull from "../../Others/Screenfull";
 import wPagination from "../Pagination";
-import wHeaderColumnItem from "./components/item";
+import wHeaderColumnItem from "./components/item2";
 
 import { deepClone } from "easy-fns/lib/utils";
 
@@ -250,11 +250,38 @@ export default {
     },
 
     hasFixedLeft() {
-      return !!this.header.find(i => i.fixed && i.fixed === "left");
+      return !!this.leftHeader.length;
     },
 
     hasFixedRight() {
-      return !!this.header.find(i => i.fixed && i.fixed === "right");
+      return !!this.rightHeader.length;
+    },
+
+    leftHeader: {
+      get() {
+        return this.header.filter(i => i.fixed === "left");
+      },
+      set(newV) {
+        this.header = newV.concat([...this.commonHeader, ...this.rightHeader]);
+      }
+    },
+
+    commonHeader: {
+      get() {
+        return this.header.filter(i => !i.fixed);
+      },
+      set(newV) {
+        this.header = newV.concat([...this.leftHeader, ...this.rightHeader]);
+      }
+    },
+
+    rightHeader: {
+      get() {
+        return this.header.filter(i => i.fixed === "right");
+      },
+      set(newV) {
+        this.header = newV.concat([...this.commonHeader, ...this.leftHeader]);
+      }
     }
   },
 

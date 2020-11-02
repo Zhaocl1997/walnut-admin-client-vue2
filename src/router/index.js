@@ -76,7 +76,12 @@ export const routes = [
         path: 'index',
         name: 'index',
         component: () => import(/* webpackChunkName: "index" */ '../views/Console/index.vue'),
-      }
+      },
+      {
+        path: '/components',
+        name: 'components',
+        component: () => import(/* webpackChunkName: "components" */ '../views/Tools/Document/index.vue')
+      },
     ]
   }
 ]
