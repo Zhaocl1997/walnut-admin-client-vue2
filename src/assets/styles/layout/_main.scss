@@ -1,4 +1,7 @@
 #app {
+  height: 100%;
+  width: 100%;
+
   #app-wrapper {
     @include clearfix;
     position: relative;
@@ -10,7 +13,7 @@
 
       #main-wrapper {
         position: relative;
-        background-color: lightgrey;
+        background-color: #f1f1f6;
         padding: 1rem;
         transition: all 0.3s;
       }
@@ -18,11 +21,15 @@
   }
 }
 
-.fixed-header {
+.header-fixed {
   z-index: $--layout-z-index;
   position: fixed;
   top: 0;
   right: 0;
+
+  & + #content-wrapper {
+    margin-top: $--layout-header-height;
+  }
 }
 
 .fixed-footer {

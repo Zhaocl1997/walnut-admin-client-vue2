@@ -7,6 +7,7 @@
   width: 100vw;
   z-index: 1888;
   background: $custom;
+  height: $--layout-header-height;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 
   /*   .hamburger-container {
