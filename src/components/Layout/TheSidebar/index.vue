@@ -40,12 +40,12 @@ export default {
 
   data() {
     return {
-      // routes: routes
+      routes: routes
     };
   },
 
   computed: {
-    ...mapGetters(["routes"]),
+    // ...mapGetters(["routes"]),
 
     isCollapse() {
       return this.$store.state.settings.sidebarCollapsed;

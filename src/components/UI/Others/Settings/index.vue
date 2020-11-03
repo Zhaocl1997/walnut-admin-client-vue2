@@ -10,21 +10,20 @@
       </div>
     </div>
 
-    <el-drawer
+    <w-drawer
       append-to-body
-      :title="title"
+      :show-close="false"
+      title="System Settings"
       :visible.sync="drawerVisible"
-      :direction="direction"
-      :show-close="showClose"
-      :withHeader="withHeader"
       size="20%"
     >
       <TheSettingsContent></TheSettingsContent>
-    </el-drawer>
+    </w-drawer>
   </div>
 </template>
 
 <script>
+import wDrawer from "../../Base/Drawer";
 import TheSettingsContent from "./content";
 
 export default {
@@ -39,7 +38,7 @@ export default {
     prop: ""
   },
 
-  components: { TheSettingsContent },
+  components: { wDrawer, TheSettingsContent },
 
   mixins: [],
 
@@ -54,12 +53,7 @@ export default {
 
   watch: {},
 
-  props: {
-    title: String,
-    direction: String,
-    showClose: Boolean,
-    withHeader: Boolean
-  },
+  props: {},
 
   methods: {
     onOpenPanel() {

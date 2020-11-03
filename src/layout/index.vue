@@ -1,9 +1,10 @@
 <template>
   <div id="app-wrapper">
-    <TheHeader :style="headerStyle" :class="{'fixed-header': headerFixed}"></TheHeader>
+    <!-- layout -->
+    <TheHeader v-show="headerRender" :class="{'header-fixed': headerFixed}"></TheHeader>
 
-    <div id="content-wrapper" :style="contentWrapperStyle">
-      <TheSidebar :style="sidebarStyle"></TheSidebar>
+    <div id="content-wrapper">
+      <TheSidebar v-show="sidebarRender"></TheSidebar>
 
       <div :style="contentStyle">
         <TheTags :style="tagsStyle"></TheTags>
@@ -16,7 +17,11 @@
       </div>
     </div>
 
+    <!-- settings -->
     <TheSettings></TheSettings>
+
+    <!-- backToTop -->
+    <el-backtop target="#app-wrapper"></el-backtop>
   </div>
 </template>
 
@@ -79,26 +84,16 @@ export default {
       footerHeight: state => state.settings.footerHeight
     }),
 
-    /* header-style */
-    headerStyle() {
-      return {
-        height: this.headerHeight,
-        display: this.headerRender ? "inherit" : "none"
-      };
-    },
-
     /* sidebar-style */
-    sidebarStyle() {
-      return {
-        width: this.sidebarCollapsed ? "63px" : this.sidebarWidth,
-        display: this.sidebarRender ? "inherit" : "none",
-        marginTop: this.sidebarMarinTop
-          ? this.headerRender
-            ? this.headerHeight
-            : "0"
-          : "0"
-      };
-    },
+    // sidebarStyle() {
+    //   return {
+    //     marginTop: this.sidebarMarinTop
+    //       ? this.headerRender
+    //         ? this.headerHeight
+    //         : "0"
+    //       : "0"
+    //   };
+    // },
 
     /* tags-style */
     tagsStyle() {
@@ -110,6 +105,8 @@ export default {
 
     /* main-style */
     mainStyle() {
+      console.log(this.onMainHeight());
+
       return {
         "min-height": this.onMainHeight(),
         marginBottom: this.footerFixed ? this.footerHeight : "0px"
@@ -145,12 +142,6 @@ export default {
             : this.sidebarWidth
           : "0px",
         transition: "all 0.3s"
-      };
-    },
-
-    contentWrapperStyle() {
-      return {
-        marginTop: this.headerFixed ? this.headerHeight : "0px"
       };
     }
   },

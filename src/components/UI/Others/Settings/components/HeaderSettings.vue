@@ -8,31 +8,19 @@
 
     <div class="drawer-item">
       <span>Render</span>
-      <el-switch v-model="headerRender" class="drawer-switch" />
+      <el-switch v-model="headerRender" class="u-float-right" />
     </div>
 
     <div class="drawer-item">
       <span>Fixed</span>
-      <el-switch v-model="headerFixed" :disabled="!headerRender" class="drawer-switch" />
-    </div>
-
-    <div class="drawer-item">
-      <span>Height</span>
-
-      <el-slider
-        style="width:80%;margin:auto;"
-        v-model="headerHeight"
-        :show-tooltip="false"
-        :min="50"
-        :max="120"
-        :step="10"
-        :marks="headerMarks"
-      ></el-slider>
+      <el-switch v-model="headerFixed" class="u-float-right" />
     </div>
   </el-collapse-item>
 </template>
 
 <script>
+import { toggleClass, removeClass } from "easy-fns/lib/dom";
+
 export default {
   name: "",
 
@@ -51,56 +39,49 @@ export default {
 
   data() {
     return {
-      headerMarks: {
-        50: "50px",
-        70: "70px",
-        90: "90px",
-        110: "110px",
-        130: "130px"
-      }
+      headerId: "header-container",
+      headerFixedClass: "header-fixed",
+      dispatchSettings: "settings/changeSettings"
     };
   },
 
   computed: {
+    /* render */
     headerRender: {
       get() {
         return this.$store.state.settings.headerRender;
       },
       set(val) {
         if (!val) {
-          this.$store.dispatch("settings/changeSettings", {
+          this.$store.dispatch(this.dispatchSettings, {
             key: "headerFixed",
             value: val
           });
         }
 
-        this.$store.dispatch("settings/changeSettings", {
+        this.$store.dispatch(this.dispatchSettings, {
           key: "headerRender",
           value: val
         });
       }
     },
 
+    /* fixed */
     headerFixed: {
       get() {
         return this.$store.state.settings.headerFixed;
       },
       set(val) {
-        this.$store.dispatch("settings/changeSettings", {
+        if (val) {
+          this.$store.dispatch(this.dispatchSettings, {
+            key: "headerRender",
+            value: val
+          });
+        }
+
+        this.$store.dispatch(this.dispatchSettings, {
           key: "headerFixed",
           value: val
-        });
-      }
-    },
-
-    headerHeight: {
-      get() {
-        return parseInt(this.$store.state.settings.headerHeight);
-      },
-      set(val) {
-        this.$store.dispatch("settings/changeSettings", {
-          key: "headerHeight",
-          value: val + "px"
         });
       }
     }

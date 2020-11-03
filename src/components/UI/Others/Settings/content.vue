@@ -1,8 +1,6 @@
 <template>
   <div class="drawer-container">
     <div>
-      <h3 class="drawer-title">Settings</h3>
-
       <el-divider>
         <div class="drawer-item">
           <h4>Layout</h4>
@@ -18,6 +16,27 @@
 
         <TheFooterSettings />
       </el-collapse>
+
+      <el-divider>
+        <div class="drawer-item">
+          <h4>Visiual</h4>
+        </div>
+      </el-divider>
+
+      <div class="drawer-item">
+        <span>Weak color</span>
+        <el-switch v-model="weakColor" class="u-float-right" />
+      </div>
+
+      <div class="drawer-item">
+        <span>Grey color</span>
+        <el-switch v-model="greyColor" class="u-float-right" />
+      </div>
+
+      <div class="drawer-item">
+        <span>Dark theme</span>
+        <el-switch v-model="darkTheme" class="u-float-right" />
+      </div>
     </div>
   </div>
 </template>
@@ -27,6 +46,8 @@ import TheHeaderSettings from "./components/HeaderSettings";
 import TheSidebarSettings from "./components/SidebarSettings";
 import TheTagsSettings from "./components/TagsSettings";
 import TheFooterSettings from "./components/FooterSettings";
+
+import { toggleClass } from "easy-fns/lib/dom";
 
 export default {
   name: "wSettingsContent",
@@ -55,7 +76,48 @@ export default {
     };
   },
 
-  computed: {},
+  computed: {
+    weakColor: {
+      get() {
+        return this.$store.state.settings.weakColor;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "weakColor",
+          value: val
+        });
+
+        toggleClass(document.body, "color-weak", val);
+      }
+    },
+
+    greyColor: {
+      get() {
+        return this.$store.state.settings.greyColor;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "greyColor",
+          value: val
+        });
+
+        toggleClass(document.body, "color-grey", val);
+      }
+    },
+
+    darkTheme: {
+      get() {
+        return this.$store.state.settings.darkTheme;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSettings", {
+          key: "darkTheme",
+          value: val
+        });
+        toggleClass(document.body, "theme-dark", val);
+      }
+    }
+  },
 
   watch: {},
 
@@ -90,21 +152,10 @@ export default {
   line-height: 1.5;
   word-wrap: break-word;
 
-  .drawer-title {
-    margin-bottom: 12px;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    line-height: 22px;
-  }
-
   .drawer-item {
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
     padding: 12px 0;
-  }
-
-  .drawer-switch {
-    float: right;
   }
 }
 </style>

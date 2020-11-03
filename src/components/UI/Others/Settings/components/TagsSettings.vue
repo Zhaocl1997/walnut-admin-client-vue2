@@ -8,13 +8,13 @@
 
     <div class="drawer-item">
       <span>Render</span>
-      <el-switch v-model="tagsRender" class="drawer-switch" />
+      <el-switch v-model="tagsRender" class="u-float-right" />
     </div>
 
     <!-- <div class="drawer-item">
       <span>Fixed</span>
-      <el-switch v-model="tagsFixed" class="drawer-switch" />
-    </div>-->
+      <el-switch v-model="tagsFixed" class="u-float-right" />
+    </div> -->
 
     <div class="drawer-item">
       <span>Height</span>

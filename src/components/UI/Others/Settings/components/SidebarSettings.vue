@@ -8,12 +8,12 @@
 
     <div class="drawer-item">
       <span>Render</span>
-      <el-switch v-model="sidebarRender" class="drawer-switch" />
+      <el-switch v-model="sidebarRender" class="u-float-right" />
     </div>
 
     <div class="drawer-item">
       <span>Collapse</span>
-      <el-switch v-model="sidebarCollapsed" class="drawer-switch" />
+      <el-switch v-model="sidebarCollapsed" class="u-float-right" />
     </div>
 
     <div class="drawer-item">

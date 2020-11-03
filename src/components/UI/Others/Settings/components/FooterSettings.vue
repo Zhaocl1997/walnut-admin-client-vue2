@@ -8,12 +8,12 @@
 
     <div class="drawer-item">
       <span>Render</span>
-      <el-switch v-model="footerRender" class="drawer-switch" />
+      <el-switch v-model="footerRender" class="u-float-right" />
     </div>
 
     <div class="drawer-item">
       <span>Fixed</span>
-      <el-switch v-model="footerFixed" :disabled="!footerRender" class="drawer-switch" />
+      <el-switch v-model="footerFixed" :disabled="!footerRender" class="u-float-right" />
     </div>
 
     <div class="drawer-item">
@@ -60,6 +60,7 @@ export default {
   },
 
   computed: {
+    /* render */
     footerRender: {
       get() {
         return this.$store.state.settings.footerRender;
@@ -79,6 +80,7 @@ export default {
       }
     },
 
+    /* fixed */
     footerFixed: {
       get() {
         return this.$store.state.settings.footerFixed;
@@ -91,6 +93,7 @@ export default {
       }
     },
 
+    /* height */
     footerHeight: {
       get() {
         return parseInt(this.$store.state.settings.footerHeight);

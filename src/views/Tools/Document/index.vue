@@ -74,6 +74,10 @@
       <el-tab-pane label="wRadio" name="wRadio">
         <radio-area></radio-area>
       </el-tab-pane>
+
+      <el-tab-pane label="wTest" name="wTest">
+        <h1 v-for="i in 100" :key="i">标题{{ i }}</h1>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>

@@ -1,9 +1,5 @@
 <template>
   <el-drawer v-bind="$props" v-on="$listeners">
-    <div class="w-drawer__header" slot="title">
-      <slot name="header" />
-    </div>
-
     <slot />
 
     <div class="w-drawer__footer">
@@ -75,11 +71,16 @@ export default {
   margin-bottom: 60px;
 }
 
+::v-deep .el-drawer__header {
+  margin-bottom: 0;
+}
+
 .w-drawer__header {
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+
   border-bottom: 1px solid #e8e8e8;
   padding-left: 20px;
   text-align: left;

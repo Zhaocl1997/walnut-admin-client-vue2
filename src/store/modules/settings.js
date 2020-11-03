@@ -9,7 +9,10 @@ const {
   header,
   sidebar,
   tags,
-  footer
+  footer,
+  weakColor,
+  greyColor,
+  darkTheme
 } = defaultSettings
 
 const state = {
@@ -29,7 +32,11 @@ const state = {
   footerFixed: footer.fixed,
   footerHeight: footer.height,
 
-  sidebarCollapse: false
+  sidebarCollapse: false,
+
+  weakColor,
+  greyColor,
+  darkTheme
 }
 
 const mutations = {

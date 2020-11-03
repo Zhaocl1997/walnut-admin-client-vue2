@@ -53,4 +53,20 @@ module.exports = {
      */
     zIndex: 1001,
 
+
+    /**
+     * color weak
+     */
+    weakColor: false,
+
+    /**
+     * color grey
+     */
+    greyColor: false,
+
+    /**
+     * theme dark
+     */
+    darkTheme: false,
+
 }
