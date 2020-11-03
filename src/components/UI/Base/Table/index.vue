@@ -146,11 +146,7 @@
             <!-- 自定义列 -->
             <slot v-if="item.slot" :row="scope.row" :index="scope.$index" :name="item.prop"></slot>
             <!-- format列 -->
-            <span v-else-if="item.formatter">
-              {{
-              item.formatter(scope.row, scope.column)
-              }}
-            </span>
+            <span v-else-if="item.formatter">{{ item.formatter(scope.row, scope.column) }}</span>
             <!-- 正常列 -->
             <span v-else>{{ scope.row[item.prop] }}</span>
           </template>
@@ -179,6 +175,7 @@ import wPagination from "../Pagination";
 import wTableSettingsItem from "./components/item";
 
 import { deepClone, curryConcat } from "easy-fns/lib/utils";
+import { TABLE_COL_TYPE } from "@/utils/constant";
 
 export default {
   name: "wTable",
@@ -203,6 +200,8 @@ export default {
 
   data() {
     return {
+      TABLE_COL_TYPE: TABLE_COL_TYPE,
+
       // 渲染的表头
       header: [],
 
@@ -251,7 +250,7 @@ export default {
 
     leftHeader: {
       get() {
-        return this.header.filter(i => i.fixed === "left");
+        return this.header.filter(i => i.fixed === TABLE_COL_TYPE.LEFT);
       },
       set(newV) {
         this.header = curryConcat(newV)(this.commonHeader)(
@@ -273,7 +272,7 @@ export default {
 
     rightHeader: {
       get() {
-        return this.header.filter(i => i.fixed === "right");
+        return this.header.filter(i => i.fixed === TABLE_COL_TYPE.RIGHT);
       },
       set(newV) {
         this.header = curryConcat(this.leftHeader)(this.commonHeader)(
@@ -473,7 +472,7 @@ export default {
 
     // 重置
     onReset() {
-      this.header = this.cachedHeader;
+      this.header = deepClone(this.cachedHeader);
     }
   },
 
