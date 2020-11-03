@@ -12,11 +12,20 @@ function camel2Line(str, type = "_") {
     return str.replace(/([A-Z])/g, `${type}$1`).toLowerCase();
 }
 
+const px = {
+    headerHeight: scssVariables.header.height,
+    tagsHeight: scssVariables.tags.height,
+    footerHeight: scssVariables.footer.height,
+    sidebarWidth: scssVariables.sidebar.width,
+    zIndex: scssVariables.zIndex
+}
+
 // css additionalData
-const additionalData = Object.keys(scssVariables)
-    .map(k => `\$--layout-${camel2Line(k, '-')}: ${scssVariables[k]};`)
+const additionalData = Object.keys(px)
+    .map(k => `\$--layout-${camel2Line(k, '-')}: ${px[k]};`)
     .join('\n')
 
+console.log(additionalData);
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
