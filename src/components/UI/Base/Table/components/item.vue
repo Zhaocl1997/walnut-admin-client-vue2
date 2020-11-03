@@ -133,12 +133,18 @@ export default {
     },
 
     onSetStart(evt, item, index) {
-      this.header[index].fixed = TABLE_COL_TYPE.LEFT;
+      this.$set(this.header, index, {
+        ...this.header[index],
+        fixed: TABLE_COL_TYPE.LEFT
+      });
       this.$emit("update:header", this.header);
     },
 
     onSetEnd(evt, item, index) {
-      this.header[index].fixed = TABLE_COL_TYPE.RIGHT;
+      this.$set(this.header, index, {
+        ...this.header[index],
+        fixed: TABLE_COL_TYPE.RIGHT
+      });
       this.$emit("update:header", this.header);
     },
 
@@ -175,6 +181,10 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/styles/main.scss";
 
+.el-divider--horizontal {
+  margin: 5px 0;
+}
+
 .table-settings__title {
   margin-left: 15px;
   padding-right: 5px;
@@ -187,7 +197,9 @@ export default {
   background: rgba(240, 248, 255, 0.8);
 }
 
-.table-header__main-common {
+.table-header__main-common,
+.table-header__main-left,
+.table-header__main-right {
   @include scrollbar;
 
   font-size: 16px;
