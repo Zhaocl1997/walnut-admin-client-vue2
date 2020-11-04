@@ -18,7 +18,7 @@
       <w-input
         ref="saveTagInput"
         class="input-new-tag"
-        size="small"
+        size="mini"
         v-if="inputVisible"
         v-model="inputValue"
         :width="inputWidth"
@@ -28,8 +28,7 @@
 
       <w-button
         v-else
-        size="small"
-        circle
+        size="mini"
         class="button-new-tag"
         icon="el-icon-circle-plus-outline"
         @click="onShowInput"
@@ -139,7 +138,6 @@ export default {
     onClose(tag) {
       if (this.isSplit) {
         this.selfValue.splice(this.selfValue.indexOf(tag), 1);
-        // this.tagArr.splice(this.tagArr.indexOf(tag), 1);
       } else {
         this.tagArr.splice(this.tagArr.indexOf(tag), 1);
         const temp = this.selfValue.split(this.valueFormat);
@@ -159,7 +157,7 @@ export default {
     onInputConfirm() {
       let inputValue = this.inputValue;
 
-      if (this.selfValue && this.selfValue.includes(inputValue)) {
+      if (this.selfValue && inputValue && this.selfValue.includes(inputValue)) {
         this.$message.info("请不要添加重复信息");
         return;
       }
@@ -237,21 +235,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wTag {
-  ::v-deep {
-    .sortable-ghost {
-      opacity: 0.8;
-      color: #fff !important;
-      background: #42b983 !important;
-    }
-
-    .el-tag {
-      cursor: pointer;
-    }
-  }
-}
 .el-tag + .el-tag {
   margin-left: 10px;
+  cursor: pointer;
 }
 .button-new-tag {
   margin-left: 10px;
@@ -262,6 +248,7 @@ export default {
 }
 .input-new-tag {
   margin-left: 10px;
+  margin-top: 5px;
   vertical-align: bottom;
 }
 </style>
