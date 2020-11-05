@@ -40,7 +40,7 @@
 
       <!-- 全屏 -->
       <el-tooltip effect="dark" content="全屏" placement="top">
-        <w-screenfull class="table-settings__icon" />
+        <w-screenfull target=".w-table" class="table-settings__icon" />
       </el-tooltip>
 
       <!-- 密度 -->
@@ -499,6 +499,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.w-table {
+  background-color: #ffffff;
+
+  &:not(:root):fullscreen {
+    padding: 20px;
+  }
+}
 .table-settings__icon {
   display: inline-block;
   font-size: 16px;

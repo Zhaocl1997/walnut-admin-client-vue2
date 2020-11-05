@@ -1,6 +1,10 @@
 <template>
   <div class="screenfull-container">
-    <w-icon :icon="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" @click="onClick" />
+    <w-icon
+      :icon="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"
+      @click="onClick"
+      class="u-pointer"
+    />
   </div>
 </template>
 
@@ -33,7 +37,12 @@ export default {
 
   watch: {},
 
-  props: {},
+  props: {
+    target: {
+      type: String,
+      default: "#app"
+    }
+  },
 
   methods: {
     init() {
@@ -53,7 +62,9 @@ export default {
         this.$message.warning("您的浏览器不支持全屏");
         return false;
       }
-      screenfull.toggle();
+
+      const ele = document.querySelector(this.target);
+      screenfull.toggle(ele);
     },
 
     change() {
