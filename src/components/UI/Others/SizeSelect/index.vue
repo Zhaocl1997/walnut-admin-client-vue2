@@ -1,7 +1,7 @@
 <template>
   <div class="size-select-container">
     <el-dropdown trigger="click" @command="onSetSize">
-      <div style="font-size:24px;">
+      <div style="font-size:24px;" class="u-pointer">
         <w-icon icon="size" />
       </div>
 

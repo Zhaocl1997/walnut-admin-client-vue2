@@ -1,6 +1,6 @@
 <template>
   <div class="lock-container">
-    <w-icon icon="lock" @click="onLock"></w-icon>
+    <w-icon icon="lock" @click="onLock" style="font-size:24px;" class="u-pointer"></w-icon>
   </div>
 </template>
 

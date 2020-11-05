@@ -1,7 +1,7 @@
 <template>
   <div class="github-container">
     <a :href="url" target="_Blank">
-      <w-icon icon="github" style="color:black;"></w-icon>
+      <w-icon icon="github" style="color:black;font-size:24px;"></w-icon>
     </a>
   </div>
 </template>

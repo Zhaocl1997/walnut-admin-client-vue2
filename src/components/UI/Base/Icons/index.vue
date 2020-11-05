@@ -5,6 +5,7 @@
     class="w-icon w-icon-external"
     v-on="$listeners"
   ></div>
+
   <svg v-else :id="iconName" :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />
   </svg>
@@ -41,11 +42,7 @@ export default {
       return `#icon-${this.icon}`;
     },
     svgClass() {
-      if (this.customClass) {
-        return "w-icon " + this.customClass;
-      } else {
-        return "w-icon";
-      }
+      return this.customClass ? "w-icon " + this.customClass : "w-icon";
     },
     styleExternalIcon() {
       return {
@@ -59,7 +56,6 @@ export default {
 
   props: {
     icon: { type: String, required: true },
-    size: String,
     customClass: { type: String, default: "" }
   },
 

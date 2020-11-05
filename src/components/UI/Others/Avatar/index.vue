@@ -6,7 +6,7 @@
       :key="url"
       fit="cover"
       :size="24"
-      class="avatar"
+      class="u-pointer"
       @click="onClick"
     ></el-avatar>
   </div>

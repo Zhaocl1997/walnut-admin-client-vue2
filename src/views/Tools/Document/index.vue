@@ -57,15 +57,14 @@
         <select-icon-area></select-icon-area>
       </el-tab-pane>
 
-      <!-- <el-tab-pane label="wHeaderItem" name="wHeaderItem">
-          <w-size-select></w-size-select>
-          <w-theme-picker></w-theme-picker>
-          <w-screen-full></w-screen-full>
-          <w-github></w-github>
-          <w-avatar url="https://iot-avatar.oss-cn-hangzhou.aliyuncs.com/Avaritia.jpg"></w-avatar>
-          <w-right-panel></w-right-panel>
-          <w-lock></w-lock>
-      </el-tab-pane>-->
+      <el-tab-pane label="wItem" name="wItem">
+        <w-size-select></w-size-select>
+        <w-theme-picker></w-theme-picker>
+        <w-screen-full></w-screen-full>
+        <w-github></w-github>
+        <w-avatar url="https://iot-avatar.oss-cn-hangzhou.aliyuncs.com/Avaritia.jpg"></w-avatar>
+        <w-lock></w-lock>
+      </el-tab-pane>
 
       <el-tab-pane label="wTable" name="wTable">
         <table-area></table-area>
