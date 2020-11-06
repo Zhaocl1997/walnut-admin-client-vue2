@@ -3,6 +3,9 @@
     <p>w-switch 当前绑定值：{{ switch1 }}</p>
     <w-switch v-model="switch1"></w-switch>
 
+    <p>w-switch 当前绑定值：{{ switch4 }}</p>
+    <w-switch disabled v-model="switch4" @change="onChange"></w-switch>
+
     <p>w-switch 当前绑定值：{{ switch2 }}</p>
     <w-switch v-model="switch2" active-text="按月付费" inactive-text="按年付费"></w-switch>
 
@@ -51,7 +54,11 @@ export default {
 
   props: {},
 
-  methods: {},
+  methods: {
+    onChange(v) {
+      //  console.log(v);
+    }
+  },
 
   created() {},
 
