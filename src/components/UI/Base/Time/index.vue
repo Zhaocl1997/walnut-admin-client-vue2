@@ -83,7 +83,7 @@ export default {
     editable: Boolean,
     clearable: { type: Boolean, default: true },
     size: String,
-    type: String,
+    type: { type: String, default: "picker" },
     placeholder: { type: String, default: "请选择时间" },
     align: String,
     pickerOptions: Object,
