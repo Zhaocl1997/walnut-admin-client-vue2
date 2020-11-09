@@ -77,23 +77,15 @@ export default {
         this.$emit("input", val);
       }
     },
-    isSplit() {
-      return isEmpty(this.valueFormat);
+
+    isFormattable() {
+      return !isEmpty(this.valueFormat);
     }
   },
 
   watch: {
     value(newV, oldV) {
-      if (!isEmpty(newV)) {
-        this.selfValue = newV;
-
-        if (this.isSplit) {
-          this.tagArr = newV;
-        } else {
-          const temp = newV.split(",");
-          this.tagArr = temp;
-        }
-      } else {
+      if (isEmpty(newV)) {
         this.tagArr = [];
       }
     }
@@ -117,17 +109,24 @@ export default {
   },
 
   methods: {
+    init() {
+      this.feedBack();
+      if (this.draggable) {
+        this.onSetSort();
+      }
+    },
+
     feedBack() {
       if (isEmpty(this.selfValue)) {
         return;
       }
 
-      if (this.isSplit) {
+      if (this.isFormattable) {
+        this.tagArr = this.selfValue.split(this.valueFormat);
+      } else {
         this.selfValue.map(i => {
           this.tagArr.push(i);
         });
-      } else {
-        this.tagArr = this.selfValue.split(this.valueFormat);
       }
     },
 
@@ -136,13 +135,15 @@ export default {
     },
 
     onClose(tag) {
-      if (this.isSplit) {
-        this.selfValue.splice(this.selfValue.indexOf(tag), 1);
-      } else {
+      if (this.isFormattable) {
         this.tagArr.splice(this.tagArr.indexOf(tag), 1);
         const temp = this.selfValue.split(this.valueFormat);
         temp.splice(temp.indexOf(tag), 1);
         this.selfValue = temp.join(this.valueFormat);
+      } else {
+        this.selfValue.splice(this.selfValue.indexOf(tag), 1);
+        const index = this.tagArr.findIndex(i => i === tag);
+        this.tagArr.splice(index, 1);
       }
     },
 
@@ -157,27 +158,32 @@ export default {
     onInputConfirm() {
       let inputValue = this.inputValue;
 
-      if (this.selfValue && inputValue && this.selfValue.includes(inputValue)) {
+      if (!inputValue) {
+        return;
+      }
+
+      if (this.tagArr.includes(inputValue)) {
         this.$message.info("请不要添加重复信息");
         return;
       }
 
-      if (inputValue) {
-        inputValue = String(inputValue);
-        this.tagArr.push(inputValue);
+      inputValue = String(inputValue);
+      this.tagArr.push(inputValue);
 
-        if (this.isSplit) {
-          if (!this.selfValue.includes(inputValue)) {
-            this.selfValue.push(inputValue);
-          }
+      if (this.isFormattable) {
+        if (isEmpty(this.selfValue)) {
+          this.selfValue = inputValue;
         } else {
-          if (isEmpty(this.selfValue)) {
-            this.selfValue = inputValue;
-          } else {
-            this.selfValue += this.valueFormat + inputValue;
-          }
+          this.selfValue += this.valueFormat + inputValue;
+        }
+      } else {
+        if (isEmpty(this.selfValue)) {
+          this.selfValue = [inputValue];
+        } else {
+          this.selfValue.push(inputValue);
         }
       }
+
       this.inputVisible = false;
       this.inputValue = "";
     },
@@ -193,16 +199,16 @@ export default {
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
         },
         onEnd: evt => {
-          if (this.isSplit) {
-            const targetRow = this.selfValue.splice(evt.oldIndex, 1)[0];
-            this.selfValue.splice(evt.newIndex, 0, targetRow);
-            this.$emit("input", this.selfValue);
-          } else {
+          if (this.isFormattable) {
             const temp = this.selfValue.split(this.valueFormat);
             const targetRow = temp.splice(evt.oldIndex, 1)[0];
             temp.splice(evt.newIndex, 0, targetRow);
             const newValue = temp.join(this.valueFormat);
             this.$emit("input", newValue);
+          } else {
+            const targetRow = this.selfValue.splice(evt.oldIndex, 1)[0];
+            this.selfValue.splice(evt.newIndex, 0, targetRow);
+            this.$emit("input", this.selfValue);
           }
         }
       });
@@ -212,10 +218,7 @@ export default {
   created() {},
 
   mounted() {
-    this.feedBack();
-    if (this.draggable) {
-      this.onSetSort();
-    }
+    this.init();
   },
 
   beforeCreate() {},
@@ -235,20 +238,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-tag + .el-tag {
-  margin-left: 10px;
-  cursor: pointer;
-}
-.button-new-tag {
-  margin-left: 10px;
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.input-new-tag {
-  margin-left: 10px;
-  margin-top: 5px;
-  vertical-align: bottom;
+.wTag {
+  .el-tag + .el-tag {
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    margin-left: 10px;
+    margin-top: 5px;
+    vertical-align: bottom;
+  }
 }
 </style>
