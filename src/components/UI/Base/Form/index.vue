@@ -180,7 +180,7 @@ import wButton from "../Button";
 import wInput from "../Input";
 import wDate from "../Date";
 import wTime from "../Time";
-import wSelect from "../Select";
+import wSelect from "../Select/index2";
 import wSwitch from "../Switch";
 import wTag from "../Tag";
 import wCheckbox from "../Checkbox";

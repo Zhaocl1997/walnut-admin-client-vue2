@@ -10,7 +10,7 @@
     :valueKey="valueKey"
     :size="size"
     :clearable="clearable"
-    :collapseTags="collapseTags"
+    :collapseTags="collapse"
     :multipleLimit="multipleLimit"
     :placeholder="placeholder"
     :filterable="filterable"
@@ -41,7 +41,7 @@
       :key="item[optionValue]"
       :label="item[optionLabel]"
       :value="valueKey ? item :item[optionValue]"
-      :disabled="item[optionValue] == selfId"
+      :disabled="item.disabled || item[optionValue] == selfId"
     ></el-option>
   </el-select>
   <!-- </el-tooltip> -->
@@ -104,7 +104,7 @@ export default {
 
     // 是否可拖拽
     isDraggable() {
-      return this.multiple && this.draggable && !this.collapseTags;
+      return this.multiple && this.draggable && !this.collapse;
     },
 
     // 是否符合远程搜索条件
@@ -184,7 +184,7 @@ export default {
     valueKey: String,
     size: String,
     clearable: Boolean,
-    collapseTags: Boolean,
+    collapse: Boolean,
     multipleLimit: Number,
     placeholder: String,
     filterable: Boolean,
