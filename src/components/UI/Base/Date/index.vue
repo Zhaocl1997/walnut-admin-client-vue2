@@ -16,6 +16,7 @@
     :picker-options="pickerOptions"
     range-separator="-"
     :default-value="defaultValue"
+    :default-time="defaultTime"
     :value-format="valueFormat"
     @change="onChange"
     @blur="onBlur"
@@ -62,6 +63,7 @@ export default {
     align: String,
     pickerOptions: Object,
     defaultValue: Date,
+    defaultTime: [String, Array],
     valueFormat: String
   },
 
