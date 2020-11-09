@@ -1,36 +1,13 @@
 <template>
   <div class="center-item">
     <p>w-select 多选数组：{{ select1 }}</p>
-    <w-select
-      v-model="select1"
-      :options="options"
-      optionLabel="name"
-      optionValue="id"
-      draggable
-      multiple
-    ></w-select>
+    <w-select v-model="select1" :options="options" draggable multiple></w-select>
 
     <p>w-select 多选字符串：{{ select2 }}</p>
-    <w-select
-      v-model="select2"
-      :options="options"
-      optionLabel="name"
-      optionValue="id"
-      draggable
-      multiple
-      value-format=","
-    ></w-select>
+    <w-select v-model="select2" :options="options" draggable multiple value-format=","></w-select>
 
     <p>w-select 多选对象：{{ select3 }}</p>
-    <w-select
-      v-model="select3"
-      :options="options"
-      optionLabel="name"
-      optionValue="id"
-      draggable
-      multiple
-      value-key="id"
-    ></w-select>
+    <w-select v-model="select3" :options="options" draggable multiple value-key="value"></w-select>
   </div>
 </template>
 
@@ -48,50 +25,50 @@ export default {
     return {
       options: [
         {
-          id: 1,
-          name: "jack"
+          value: 1,
+          label: "jack"
         },
         {
-          id: 2,
-          name: "tom"
+          value: 2,
+          label: "tom"
         },
         {
-          id: 3,
-          name: "rose"
+          value: 3,
+          label: "rose"
         },
         {
-          id: 4,
-          name: "lucy"
+          value: 4,
+          label: "lucy"
         },
         {
-          id: 5,
-          name: "jimmy"
+          value: 5,
+          label: "jimmy"
         },
         {
-          id: 6,
-          name: "chunk"
+          value: 6,
+          label: "chunk"
         },
         {
-          id: 7,
-          name: "kim"
+          value: 7,
+          label: "kim"
         },
         {
-          id: 8,
-          name: "gustvo"
+          value: 8,
+          label: "gustvo"
         },
         {
-          id: 9,
-          name: "ermenchant"
+          value: 9,
+          label: "ermenchant"
         }
       ],
 
       select1: [2, 6, 4],
       select2: "5,7,4",
       select3: [
-        { id: 6, name: "chunk" },
-        { id: 3, name: "rose" },
-        { id: 4, name: "lucy" },
-        { id: 2, name: "tom" }
+        { value: 6, label: "chunk" },
+        { value: 3, label: "rose" },
+        { value: 4, label: "lucy" },
+        { value: 2, label: "tom" }
       ]
     };
   },
