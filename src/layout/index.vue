@@ -105,8 +105,6 @@ export default {
 
     /* main-style */
     mainStyle() {
-      console.log(this.onMainHeight());
-
       return {
         "min-height": this.onMainHeight(),
         marginBottom: this.footerFixed ? this.footerHeight : "0px"

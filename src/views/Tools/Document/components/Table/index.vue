@@ -97,10 +97,7 @@ export default {
   computed: {},
 
   watch: {
-    tableHeader(newV) {
-      console.log("[new table header]");
-      console.table(newV);
-    }
+    tableHeader(newV) {}
   },
 
   props: {},

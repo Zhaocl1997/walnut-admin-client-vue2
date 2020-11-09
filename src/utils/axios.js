@@ -103,9 +103,6 @@ service.interceptors.response.use(res => {
     //     }
     // }
 }, error => {
-    console.log(error)
-    console.log(321123);
-
     // Message({
     //     message: error.message,
     //     type: 'error',
