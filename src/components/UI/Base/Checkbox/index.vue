@@ -12,20 +12,20 @@
       <template v-if="button">
         <el-checkbox-button
           v-for="item in options"
-          :key="item.value"
-          :label="item.value"
+          :key="item[optionValue]"
+          :label="item[optionValue]"
           :disabled="item.disabled"
-        >{{ item.label }}</el-checkbox-button>
+        >{{ item[optionLabel] }}</el-checkbox-button>
       </template>
 
       <template v-else>
         <el-checkbox
           v-for="item in options"
-          :key="item.value"
-          :label="item.value"
+          :key="item[optionValue]"
+          :label="item[optionValue]"
           :disabled="item.disabled"
           :border="border"
-        >{{ item.label }}</el-checkbox>
+        >{{ item[optionLabel] }}</el-checkbox>
       </template>
     </el-checkbox-group>
 
@@ -68,9 +68,7 @@ export default {
 
   computed: {
     isForamattable() {
-      return (
-        this.multiple && !isEmpty(this.valueFormat) && !isEmpty(this.selfValue)
-      );
+      return this.multiple && !isEmpty(this.valueFormat);
     }
   },
 
@@ -87,6 +85,8 @@ export default {
 
     // custom
     options: Array,
+    optionValue: { type: String, default: "value" },
+    optionLabel: { type: String, default: "label" },
     button: Boolean,
     multiple: Boolean,
     labelText: String,
@@ -97,12 +97,14 @@ export default {
 
   methods: {
     feedBack() {
-      if (this.isForamattable) {
-        this.checkedValue = this.onValueType(
-          this.selfValue.split(this.valueFormat)
-        );
-      } else {
-        this.checkedValue = this.selfValue;
+      if (!isEmpty(this.selfValue)) {
+        if (this.isForamattable) {
+          this.checkedValue = this.onValueType(
+            this.selfValue.split(this.valueFormat)
+          );
+        } else {
+          this.checkedValue = this.selfValue;
+        }
       }
     },
 
