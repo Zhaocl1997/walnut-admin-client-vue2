@@ -19,26 +19,9 @@
       default-fold
       popTitle="walnut-admin"
     >
-      <div slot="formNumber">
+      <div slot="formInputNumber">
         <p style="color:red;font-size:10px">数字表单项</p>
       </div>
-
-      <w-input
-        slot="formPass"
-        v-model="form.formPass"
-        type="password"
-        placeholder="密码输入框"
-        clearable
-        show-pass-icon
-      >
-        <w-button
-          slot="append"
-          icon="el-icon-question"
-          popover
-          popover-title="提示"
-          popover-content="密码中必须包含大小写字母、数字、特殊字符"
-        ></w-button>
-      </w-input>
 
       <w-button slot="formButton" @click="onCustomButton">自定义按钮1</w-button>
     </w-form>
@@ -143,77 +126,141 @@ export default {
   computed: {
     formModel() {
       return [
+        // ==================================
+        // ==============Input============
+        // ==================================
+        {
+          wType: "Divider",
+          title: "Input",
+          span: 24,
+          contentPosition: "left"
+        },
         {
           wType: "Input",
-          prop: "formNumber",
-          label: "", // 数字表单项
+          prop: "formInputBase",
+          label: "输入框-基本",
+          placeholder: "输入框-基本",
+          tooltip: true,
+          clearable: true
+        },
+        {
+          wType: "Input",
+          prop: "formInputTextarea",
+          label: "输入框-文本域",
+          placeholder: "输入框默认禁止输入了['<', '>', '|', '=']这几个特殊符号",
+          type: "textarea",
+          span: 16,
+          rows: 5,
+          showLimit: true,
+          maxlength: 50
+        },
+
+        // ======================================
+        // ==============Input Number============
+        // ======================================
+        {
+          wType: "Divider",
+          title: "Input Number",
+          span: 24,
+          contentPosition: "left"
+        },
+        {
+          wType: "Input",
+          prop: "formInputNumber",
+          label: "",
+          labelSlot: true,
           type: "number",
           step: 5,
           max: 30,
           min: 5,
-          precision: 2,
-          placeholder: "数字输入框",
-          labelSlot: true
+          precision: 4,
+          span: 12,
+          placeholder: "输入框-数字"
+        },
+
+        // ======================================
+        // ==============Input Type============
+        // ======================================
+        {
+          wType: "Divider",
+          title: "Input Type",
+          span: 24,
+          contentPosition: "left"
         },
         {
           wType: "Input",
-          prop: "formTextarea",
-          label: "文本域表单项",
-          type: "textarea",
-          rows: 3,
-          showLimit: true,
-          maxlength: 50,
-          placeholder: "普通文本域",
-          span: 16
-        },
-        {
-          wType: "Slot",
-          prop: "formPass",
-          label: "密码表单项"
+          prop: "formInputPassword",
+          label: "输入框-密码",
+          placeholder: "输入框-密码",
+          type: "password",
+          clearable: true,
+          showPassIcon: true
         },
         {
           wType: "Input",
-          prop: "formPhone",
-          label: "手机号表单项",
-          placeholder: "手机号",
+          prop: "formInputPhone",
+          label: "输入框-手机号",
+          placeholder: "输入框-手机号",
+          clearable: true,
           type: "phone"
         },
         {
           wType: "Input",
-          prop: "formEmail",
-          label: "邮箱表单项",
-          placeholder: "邮箱",
+          prop: "formInputEmail",
+          label: "输入框-邮箱",
+          placeholder: "输入框-邮箱",
+          clearable: true,
           type: "email"
         },
         {
           wType: "Input",
-          prop: "formId",
-          label: "身份证表单项",
-          placeholder: "身份证",
+          prop: "formInputId",
+          label: "输入框-身份证号",
+          placeholder: "输入框-身份证号",
+          clearable: true,
           type: "id"
         },
         {
-          wType: "Select",
-          prop: "formSelect",
-          label: "下拉框表单项",
-          options: [
-            {
-              id: 1,
-              name: "jack"
-            },
-            {
-              id: 2,
-              name: "tom"
-            },
-            {
-              id: 3,
-              name: "rose"
-            }
-          ],
-          optionLabel: "name",
-          optionValue: "id",
-          multiple: false,
-          draggable: true
+          wType: "Input",
+          prop: "formInputIP",
+          label: "输入框-IP地址",
+          placeholder: "输入框-IP地址",
+          clearable: true,
+          type: "ip"
+        },
+        {
+          wType: "Input",
+          prop: "formInputMacAddress",
+          label: "输入框-mac地址",
+          placeholder: "输入框-mac地址",
+          clearable: true,
+          type: "macAddress"
+        },
+
+        // ======================================
+        // ==============Input Single Type============
+        // ======================================
+        {
+          wType: "Divider",
+          title: "Input Single Type",
+          span: 24,
+          contentPosition: "left"
+        },
+        {
+          wType: "Input",
+          prop: "formInputLetter",
+          label: "输入框-字母",
+          placeholder: "输入框-字母",
+          clearable: true,
+          type: "letter"
+        },
+        {
+          wType: "Input",
+          prop: "formInputChinese",
+          label: "输入框-汉字",
+          placeholder: "输入框-汉字",
+          clearable: true,
+          type: "chinese"
         },
 
         // ==================================
