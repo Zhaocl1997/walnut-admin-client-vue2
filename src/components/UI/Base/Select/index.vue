@@ -160,6 +160,7 @@ export default {
     // 处理value,适用于同一个页面反复赋值
     value(newV, oldV) {
       if (!isEmpty(newV) && newV != oldV) {
+        this.selectedValue = newV;
         if (!isArray(newV)) {
           this.getData(newV);
         } else {
@@ -167,6 +168,7 @@ export default {
             this.getData(i);
           });
         }
+        this.init();
       }
     },
 

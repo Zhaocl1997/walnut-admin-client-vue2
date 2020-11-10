@@ -3,6 +3,7 @@
 
 import Mock from 'mockjs'
 import { randomId } from 'easy-fns/lib/utils'
+import { getRandomInt } from 'easy-fns/lib/math'
 import { EMAIL_SUFFIX, PHONE_PREFIX } from 'easy-fns/lib/constant'
 import { treeToArr, arrToTree, findNodeById } from 'easy-fns/lib/tree'
 import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from '../utils/constant'
@@ -18,6 +19,18 @@ Random.extend({
         return this.pick(phonePrefixs) + Mock.mock(/\d{8}/)
     }
 })
+
+function getRandomArrayElements(arr, count) {
+    var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+    while (i-- > min) {
+        index = Math.floor((i + 1) * Math.random());
+        temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
+    }
+    return shuffled.slice(min);
+}
+
 
 const mockData = options => {
     const result = {}
@@ -99,11 +112,22 @@ const mockData = options => {
             case FORM_TYPE.SELECT:
                 if (e.options) {
                     const temp = []
-                    for (const iterator of e.options) {
-                        temp.push(iterator[e.optionValue])
+                    for (const iterator of e.options.filter(i => !i.disabled)) {
+                        temp.push(iterator[e.optionValue || 'value'])
                     }
 
-                    result[e.prop] = Random.pick(temp)
+                    if (!e.multiple) {
+                        result[e.prop] = Random.pick(temp)
+                    } else {
+                        const count = getRandomInt(0, temp.length)
+                        const ret = getRandomArrayElements(temp, count > 5 ? count / 2 : count)
+                        if (!e.valueFormat) {
+                            result[e.prop] = ret
+                        } else {
+                            result[e.prop] = ret.join(e.valueFormat)
+                        }
+                    }
+
                 } else {
                     // no options passed in 
                     console.log('no options passed in');
