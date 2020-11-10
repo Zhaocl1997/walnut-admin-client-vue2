@@ -15,7 +15,8 @@
     <el-option :value="optionValue" style="height:200px;overflow-y:auto;">
       <w-tree
         ref="wTree"
-        v-model="selfValue"
+        leaf-only
+        v-model="treeValue"
         :data="data"
         :props="treeProps"
         :multiple="multiple"
@@ -28,12 +29,11 @@
 </template>
 
 <script>
-import ValueMixins from "@/mixins/Value";
-import BlockMixins from "@/mixins/Block";
-
-import wTree from "../Tree";
-
 import { findNodeById } from "easy-fns/lib/tree";
+import { isEmpty } from "easy-fns/lib/utils";
+
+import BlockMixins from "@/mixins/Block";
+import wTree from "../Tree";
 
 export default {
   name: "wSelectTree",
@@ -49,12 +49,14 @@ export default {
 
   components: { wTree },
 
-  mixins: [ValueMixins, BlockMixins()],
+  mixins: [BlockMixins()],
 
   data() {
     return {
-      selectValue: "",
-      optionValue: [],
+      selectValue: "", // tag array
+      optionValue: [], // node array, for select change use
+
+      treeValue: undefined,
 
       defaultProps: {
         id: "id",
@@ -75,7 +77,7 @@ export default {
   },
 
   watch: {
-    value() {
+    value(newV) {
       this.feedback();
     }
   },
@@ -86,9 +88,9 @@ export default {
     size: String,
     multiple: Boolean,
     disabled: Boolean,
-    clearable: Boolean,
+    clearable: { type: Boolean, default: true },
     collapse: Boolean,
-    accordion: Boolean,
+    accordion: { type: Boolean, default: true },
     placeholder: String,
 
     // custom
@@ -106,11 +108,12 @@ export default {
       if (!this.value) {
         this.selectValue = "";
         this.optionValue = [];
+        return;
       }
 
       if (this.multiple) {
-        const arrLabel = [];
-        const arrNode = [];
+        const tagArray = [];
+        const nodeArray = [];
 
         this.value.map(i => {
           const node = findNodeById(
@@ -121,24 +124,25 @@ export default {
             true
           );
 
-          arrNode.push(node);
-          arrLabel.push(node[this.treeProps.label]);
+          nodeArray.push(node);
+          tagArray.push(node[this.treeProps.label]);
         });
 
-        this.selectValue = arrLabel;
-        this.optionValue = arrNode;
+        this.selectValue = tagArray;
+        this.optionValue = nodeArray;
+        this.treeValue = this.value;
       } else {
-        const arrLabel = findNodeById(
+        const node = findNodeById(
           this.value,
           this.data,
           this.treeProps.id,
           this.treeProps,
           true
-        )[this.treeProps.label];
+        );
 
-        this.selectValue = arrLabel;
-
-        this.optionValue = [this.value];
+        this.selectValue = node[this.treeProps.label];
+        this.optionValue = [node];
+        this.treeValue = this.value;
       }
     },
 
@@ -156,26 +160,28 @@ export default {
 
       let newV = [];
       arr.map(i => newV.push(i[this.treeProps.id]));
+
+      this.treeValue = newV;
+
       this.$emit("input", newV);
     },
 
     // multiple
     onCheckChange() {
+      if (!this.multiple) {
+        return;
+      }
+
       let res = this.$refs.wTree.$children[0].getCheckedNodes(true, false);
 
-      let arrLabel = [];
-      let arr = [];
+      let tagArray = [];
       res.forEach(item => {
-        arrLabel.push(item[this.treeProps.label]);
-        arr.push(item);
+        tagArray.push(item[this.treeProps.label]);
       });
 
-      this.optionValue = arr;
-      this.selectValue = arrLabel;
+      this.selectValue = tagArray;
 
-      let newV = [];
-      arr.map(i => newV.push(i[this.treeProps.id]));
-      this.$emit("input", newV);
+      this.$emit("input", this.treeValue);
     },
 
     // single
@@ -184,15 +190,16 @@ export default {
         return;
       }
 
-      this.optionValue = data[this.treeProps.id];
       this.selectValue = data[this.treeProps.label];
-      this.$emit("input", data[this.treeProps.id]);
+
+      this.$emit("input", this.treeValue);
 
       this.$refs.treeSelect.blur();
     },
 
     // clear
     onClear() {
+      this.$refs.wTree.expandAll(false);
       this.$emit("input", "");
     }
   },
@@ -200,7 +207,9 @@ export default {
   created() {},
 
   mounted() {
-    this.feedback();
+    setTimeout(() => {
+      this.feedback();
+    }, 500);
   },
 
   beforeCreate() {},
@@ -233,13 +242,11 @@ export default {
 .el-select-dropdown__item::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #535353;
 }
 
 .el-select-dropdown__item::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #ededed;
 }
