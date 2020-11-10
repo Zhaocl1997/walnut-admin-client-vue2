@@ -177,11 +177,11 @@ export default {
           this.defaultExpandedKeys = [];
 
           this.$nextTick(() => {
-            this.$refs.wTree.setCheckedKeys(this.value);
+            this.$refs.wTree.setCheckedKeys([]);
           });
         } else {
           this.$nextTick(() => {
-            this.$refs.wTree.setCurrentKey(this.value);
+            this.$refs.wTree.setCurrentKey(null);
           });
         }
 
@@ -266,7 +266,9 @@ export default {
   created() {},
 
   mounted() {
-    this.feedBack();
+    setTimeout(() => {
+      this.feedBack();
+    }, 500);
   },
 
   beforeCreate() {},
