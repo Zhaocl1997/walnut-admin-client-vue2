@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import wSelect from "@/components/UI/Base/Select/index2";
+import wSelect from "@/components/UI/Base/Select";
 
 export default {
   name: "",

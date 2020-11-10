@@ -8,12 +8,6 @@ export const TABLE_COL_TYPE = {
     RIGHT: 'right'
 }
 
-export const REGEX = {
-    EMAIL: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-    PHONE: /^1[3456789]\d{9}$/,
-    ID: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-}
-
 export const THEME_TYPE = {
     PRIMARY: 'primary',
     SUCCESS: 'success',
@@ -67,21 +61,6 @@ export const TIME_TYPE = {
     PICKER: 'picker'
 }
 
-export const PHONE_PREFIX = ['138', '157', '186']
-
-export const EMAIL_OPTIONS = [
-    { value: "@chinaunicom.com" },
-    { value: "@qq.com" },
-    { value: "@163.com" },
-    { value: "@gmail.com" },
-    { value: "@126.com" },
-    { value: "@yahoo.com.cn" },
-    { value: "@vip.qq.com " },
-    { value: "@foxmail.com" },
-    { value: "@sina.com" },
-    { value: "@sohu.com" },
-    { value: "@sogou.com" }
-]
 
 export const STORE_TYPES = {
     SET_TOKEN: 'SET_TOKEN',
