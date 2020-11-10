@@ -96,13 +96,37 @@
 import BlockMixins from "@/mixins/Block";
 import ValueMixins from "@/mixins/Value";
 
-import { commonUsed } from "@/utils";
 import {
   isEmpty,
   clearIllegalChars,
   clearUnexpectedChars
 } from "easy-fns/lib/utils";
 import { EMAIL_SUFFIX } from "easy-fns/lib/constant";
+import { regex } from "easy-fns/lib/regex";
+
+/* 输入框类型 */
+const commonUsed = [
+  {
+    id: regex.id,
+    info: "身份证号"
+  },
+  {
+    phone: regex.phone,
+    info: "手机号"
+  },
+  {
+    email: regex.email,
+    info: "邮箱地址"
+  },
+  {
+    ip: regex.ip4,
+    info: "IP地址"
+  },
+  {
+    macAddress: regex.macAddress,
+    info: "mac地址"
+  }
+];
 
 export default {
   name: "wInput",
@@ -231,10 +255,6 @@ export default {
 
     /* 清空事件 */
     onClear() {
-      this.one = false;
-      this.two = false;
-      this.three = false;
-      this.title = "强度：无";
       this.$emit("clear");
     },
 
@@ -264,6 +284,7 @@ export default {
           }
         }
       }, 200);
+
       this.$emit("blur");
     },
 
