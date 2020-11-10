@@ -4,13 +4,13 @@
   <el-select
     ref="wSelect"
     class="drag-select"
-    v-model="selectedValue"
+    v-model="selfValue"
     :multiple="multiple"
     :disabled="disabled"
     :valueKey="valueKey"
     :size="size"
     :clearable="clearable"
-    :collapseTags="collapse"
+    :collapseTags="collapseTags"
     :multipleLimit="multipleLimit"
     :placeholder="placeholder"
     :filterable="filterable"
@@ -40,8 +40,8 @@
       v-for="item in selfOptions"
       :key="item[optionValue]"
       :label="item[optionLabel]"
-      :value="valueKey ? item :item[optionValue]"
-      :disabled="item.disabled || item[optionValue] == selfId"
+      :value="item[optionValue]"
+      :disabled="item[optionValue] == selfId"
     ></el-option>
   </el-select>
   <!-- </el-tooltip> -->
@@ -61,16 +61,15 @@ export default {
 
   mixins: [BlockMixins()],
 
-  model: {
-    event: "change",
-    prop: "value"
-  },
+  // model: {
+  //   event: "change",
+  //   prop: "value"
+  // },
 
   data() {
     return {
-      count: 0, // 下拉框到头计数用
-      selfId: randomId(16), // 下拉框的唯一ID,用于 遮罩层定位和尽头信息ID
-      selectedValue: "", // 绑定值
+      // 下拉框到头计数用
+      count: 0,
 
       // options和loading
       selfOptions: this.options,
@@ -95,24 +94,27 @@ export default {
       }
     },
 
-    // 是否符合valueFormat条件
-    isForamattable() {
-      return (
-        this.multiple && !isEmpty(this.valueFormat) && isEmpty(this.valueKey)
-      );
+    // 下拉框的唯一ID,用于 遮罩层定位和尽头信息ID
+    selfId() {
+      return randomId(16);
+    },
+
+    // 是否符合split条件
+    isSplit() {
+      return this.multiple && isEmpty(this.valueFormat);
     },
 
     // 是否可拖拽
     isDraggable() {
-      return this.multiple && this.draggable && !this.collapse;
+      return this.draggable && !this.collapseTags && this.multiple;
     },
 
-    // 是否符合远程搜索条件
+    // 判断是否符合远程搜索条件
     isRemoteable() {
       return (
-        isEmpty(this.optionLabel) &&
-        isEmpty(this.optionValue) &&
-        isEmpty(this.initFunc) &&
+        isEmpty(this.optionLabel) ||
+        isEmpty(this.optionValue) ||
+        isEmpty(this.initFunc) ||
         isEmpty(this.getFunc)
       );
     },
@@ -184,7 +186,7 @@ export default {
     valueKey: String,
     size: String,
     clearable: Boolean,
-    collapse: Boolean,
+    collapseTags: Boolean,
     multipleLimit: Number,
     placeholder: String,
     filterable: Boolean,
@@ -206,7 +208,6 @@ export default {
     pageNum: { type: String, default: "1" },
     pageSize: { type: String, default: "10" },
     valueFormat: String,
-    valueType: { type: String, default: "number" },
 
     tooltip: { type: Boolean, default: false },
     draggable: { type: Boolean, default: false },
@@ -228,15 +229,7 @@ export default {
         this.onDraggable();
       }
 
-      if (this.isForamattable) {
-        this.selectedValue = this.onValueType(
-          this.value.split(this.valueFormat)
-        );
-      } else {
-        this.selectedValue = this.value;
-      }
-
-      if (!this.isRemoteable) {
+      if (this.isRemoteable) {
         return;
       }
 
@@ -276,7 +269,7 @@ export default {
 
     /* 通过id获取数据 */
     async getData(v) {
-      if (!this.isRemoteable) {
+      if (this.isRemoteable) {
         return;
       }
 
@@ -311,7 +304,7 @@ export default {
     /** 处理远程搜索 */
     selfRemoteMethod(query) {
       // 如果不符合远程搜索的条件,直接推出函数
-      if (!this.isRemoteable) {
+      if (this.isRemoteable) {
         return;
       }
 
@@ -337,7 +330,7 @@ export default {
     /** 加载更多 */
     loadmore() {
       // 如果不符合远程搜索的条件,直接推出函数
-      if (!this.isRemoteable) {
+      if (this.isRemoteable) {
         return;
       }
 
@@ -411,11 +404,7 @@ export default {
 
     /* change */
     onChange(v) {
-      if (this.isForamattable) {
-        this.$emit("change", v.join(this.valueFormat));
-      } else {
-        this.$emit("change", v);
-      }
+      this.$emit("change", v);
     },
 
     /* visible change */
@@ -473,37 +462,12 @@ export default {
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
         },
         onEnd: evt => {
-          const target = this.selectedValue.splice(evt.oldIndex, 1)[0];
-          this.selectedValue.splice(evt.newIndex, 0, target);
+          const targetRow = this.selfValue.splice(evt.oldIndex, 1)[0];
+          this.selfValue.splice(evt.newIndex, 0, targetRow);
 
-          if (this.isForamattable) {
-            this.$emit("change", this.selectedValue.join(this.valueFormat));
-          } else {
-            this.$emit("change", this.selectedValue);
-          }
+          this.$emit("input", this.selfValue);
         }
       });
-    },
-
-    /* value 值判断 */
-    onValueType(v) {
-      if (this.multiple) {
-        if (this.valueType === "number") {
-          return v.map(Number);
-        }
-
-        if (this.valueType === "string") {
-          return v.map(String);
-        }
-      } else {
-        if (this.valueType === "number") {
-          return Number(v);
-        }
-
-        if (this.valueType === "string") {
-          return String(v);
-        }
-      }
     }
   },
 
