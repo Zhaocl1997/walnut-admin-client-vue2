@@ -85,9 +85,8 @@ export default {
 
   watch: {
     value(newV, oldV) {
-      if (isEmpty(newV)) {
-        this.tagArr = [];
-      }
+      this.tagArr = [];
+      this.feedBack();
     }
   },
 

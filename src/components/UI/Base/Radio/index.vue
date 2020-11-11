@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ValueMixins from "@/mixins/Value";
+import ValueMixins from "../utils/mixins/value";
 import { isEmpty } from "easy-fns/lib/utils";
 
 export default {

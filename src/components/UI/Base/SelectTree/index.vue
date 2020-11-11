@@ -32,7 +32,7 @@
 import { findNodeById } from "easy-fns/lib/tree";
 import { isEmpty } from "easy-fns/lib/utils";
 
-import BlockMixins from "@/mixins/Block";
+import BlockMixins from "../utils/mixins/block";
 import wTree from "../Tree";
 
 export default {

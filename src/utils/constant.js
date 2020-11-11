@@ -1,13 +1,6 @@
 
 'use strict'
 
-
-export const TABLE_COL_TYPE = {
-    LEFT: 'left',
-    COMMON: 'common',
-    RIGHT: 'right'
-}
-
 export const THEME_TYPE = {
     PRIMARY: 'primary',
     SUCCESS: 'success',
@@ -15,52 +8,6 @@ export const THEME_TYPE = {
     DANGER: 'danger',
     INFO: 'info'
 }
-
-export const FORM_TYPE = {
-    SLOT: 'Slot',
-    INPUT: "Input",
-    DATE: "Date",
-    TIME: "Time",
-
-    TREE: "Tree",
-    SELECTTREE: 'SelectTree',
-    SELECT: "Select",
-
-    TAG: "Tag",
-    RADIO: "Radio",
-    SWITCH: "Switch",
-    CHECKBOX: "Checkbox",
-
-    DIVIDER: 'Divider',
-    UPLOAD: 'Upload',
-    SELECT_ICON: 'SelectIcon',
-    SELECT_TREE: 'SelectTree',
-}
-
-export const INPUT_TYPE = {
-    NUMBER: 'number',
-    TEXTAREA: 'textarea',
-    PASSWORD: 'password',
-    PHONE: 'phone',
-    EMAIL: 'email',
-    ID: 'id'
-}
-
-export const DATE_TYPE = {
-    DATE: 'date',
-    DATETIME: 'datetime',
-    DATERANGE: 'daterange',
-    DATETIMERANGE: 'datetimerange',
-    WEEK: 'week',
-    MONTH: 'month',
-    YEAR: 'year'
-}
-
-export const TIME_TYPE = {
-    SELECT: 'select',
-    PICKER: 'picker'
-}
-
 
 export const STORE_TYPES = {
     SET_TOKEN: 'SET_TOKEN',

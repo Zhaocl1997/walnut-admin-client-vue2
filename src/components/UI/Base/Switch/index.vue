@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BlockMixins from "@/mixins/Block";
+import BlockMixins from "../utils/mixins/block";
 import { Switch } from "element-ui";
 
 export default {

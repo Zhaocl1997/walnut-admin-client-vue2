@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ValueMixins from "@/mixins/Value";
+import ValueMixins from "../utils/mixins/value";
 import { isEmpty } from "easy-fns/lib/utils";
 
 export default {
@@ -72,7 +72,11 @@ export default {
     }
   },
 
-  watch: {},
+  watch: {
+    value() {
+      this.feedBack();
+    }
+  },
 
   props: {
     // origin
@@ -97,7 +101,7 @@ export default {
 
   methods: {
     feedBack() {
-      if (!isEmpty(this.selfValue)) {
+      if (!isEmpty(this.selfValue)) {        
         if (this.isForamattable) {
           this.checkedValue = this.onValueType(
             this.selfValue.split(this.valueFormat)

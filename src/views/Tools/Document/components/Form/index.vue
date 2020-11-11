@@ -20,7 +20,7 @@
       popTitle="walnut-admin"
     >
       <div slot="formInputNumber">
-        <p style="color:red;font-size:10px">数字表单项</p>
+        <p style="color:red;font-size:10px">数字</p>
       </div>
 
       <w-button slot="formButton" @click="onCustomButton">自定义按钮1</w-button>
@@ -138,16 +138,16 @@ export default {
         {
           wType: "Input",
           prop: "formInputBase",
-          label: "输入框-基本",
-          placeholder: "输入框-基本",
+          label: "基本",
+          placeholder: "基本",
           tooltip: true,
           clearable: true
         },
         {
           wType: "Input",
           prop: "formInputTextarea",
-          label: "输入框-文本域",
-          placeholder: "输入框默认禁止输入了['<', '>', '|', '=']这几个特殊符号",
+          label: "文本域",
+          placeholder: "默认禁止输入了['<', '>', '|', '=']这几个特殊符号",
           type: "textarea",
           span: 16,
           rows: 5,
@@ -175,7 +175,7 @@ export default {
           min: 5,
           precision: 4,
           span: 12,
-          placeholder: "输入框-数字"
+          placeholder: "数字"
         },
 
         // ======================================
@@ -190,8 +190,8 @@ export default {
         {
           wType: "Input",
           prop: "formInputPassword",
-          label: "输入框-密码",
-          placeholder: "输入框-密码",
+          label: "密码",
+          placeholder: "密码",
           type: "password",
           clearable: true,
           showPassIcon: true
@@ -199,40 +199,40 @@ export default {
         {
           wType: "Input",
           prop: "formInputPhone",
-          label: "输入框-手机号",
-          placeholder: "输入框-手机号",
+          label: "手机号",
+          placeholder: "手机号",
           clearable: true,
           type: "phone"
         },
         {
           wType: "Input",
           prop: "formInputEmail",
-          label: "输入框-邮箱",
-          placeholder: "输入框-邮箱",
+          label: "邮箱",
+          placeholder: "邮箱",
           clearable: true,
           type: "email"
         },
         {
           wType: "Input",
           prop: "formInputId",
-          label: "输入框-身份证号",
-          placeholder: "输入框-身份证号",
+          label: "身份证号",
+          placeholder: "身份证号",
           clearable: true,
           type: "id"
         },
         {
           wType: "Input",
           prop: "formInputIP",
-          label: "输入框-IP地址",
-          placeholder: "输入框-IP地址",
+          label: "IP地址",
+          placeholder: "IP地址",
           clearable: true,
           type: "ip"
         },
         {
           wType: "Input",
           prop: "formInputMacAddress",
-          label: "输入框-mac地址",
-          placeholder: "输入框-mac地址",
+          label: "mac地址",
+          placeholder: "mac地址",
           clearable: true,
           type: "macAddress"
         },
@@ -249,16 +249,16 @@ export default {
         {
           wType: "Input",
           prop: "formInputLetter",
-          label: "输入框-字母",
-          placeholder: "输入框-字母",
+          label: "字母",
+          placeholder: "字母",
           clearable: true,
           type: "letter"
         },
         {
           wType: "Input",
           prop: "formInputChinese",
-          label: "输入框-汉字",
-          placeholder: "输入框-汉字",
+          label: "汉字",
+          placeholder: "汉字",
           clearable: true,
           type: "chinese"
         },
@@ -275,14 +275,22 @@ export default {
         {
           wType: "Select",
           prop: "formSelectBase",
-          label: "下拉框-基本",
+          label: "基本",
           options: this.selectOptions,
           clearable: true
         },
         {
           wType: "Select",
+          prop: "formSelectObject",
+          label: "单选-绑定对象",
+          options: this.selectOptions,
+          clearable: true,
+          valueKey: "value"
+        },
+        {
+          wType: "Select",
           prop: "formSelectMultipleArray",
-          label: "下拉框-多选-数组",
+          label: "多选-数组",
           options: this.selectOptions,
           clearable: true,
           multiple: true
@@ -290,7 +298,7 @@ export default {
         {
           wType: "Select",
           prop: "formSelectMultipleString",
-          label: "下拉框-多选-字符串",
+          label: "多选-字符串",
           options: this.selectOptions,
           clearable: true,
           multiple: true,
@@ -299,7 +307,7 @@ export default {
         {
           wType: "Select",
           prop: "formSelectMultipleCollapse",
-          label: "下拉框-多选-坍塌",
+          label: "多选-坍塌",
           options: this.selectOptions,
           clearable: true,
           multiple: true,
@@ -308,7 +316,7 @@ export default {
         {
           wType: "Select",
           prop: "formSelectMultipleDraggable",
-          label: "下拉框-多选-可拖拽",
+          label: "多选-可拖拽",
           options: this.selectOptions,
           clearable: true,
           multiple: true,
@@ -317,7 +325,7 @@ export default {
         {
           wType: "Select",
           prop: "formSelectMultipleObject",
-          label: "下拉框-多选-绑定对象",
+          label: "多选-绑定对象",
           options: this.selectOptions,
           clearable: true,
           multiple: true,
@@ -336,20 +344,20 @@ export default {
         {
           wType: "Date",
           prop: "formDateTimeBase",
-          label: "日期时间-基本",
+          label: "基本",
           type: "datetime"
         },
         {
           wType: "Date",
           prop: "formDateTimeDefaultTime",
-          label: "日期时间-带默认时间",
+          label: "带默认时间",
           type: "datetime",
           defaultTime: "12:00:00"
         },
         {
           wType: "Date",
           prop: "formDateTimeRange",
-          label: "日期时间-区间",
+          label: "区间",
           type: "datetimerange",
           defaultTime: ["08:00:00", "12:00:00"]
         },
@@ -366,51 +374,51 @@ export default {
         {
           wType: "Date",
           prop: "formDateBase",
-          label: "日期-基本"
+          label: "基本"
         },
         {
           wType: "Date",
           prop: "formDatePickerOptions",
-          label: "日期-带选项",
+          label: "带选项",
           pickerOptions: this.pickerOptions
         },
         {
           wType: "Date",
           prop: "formDateWeek",
-          label: "日期-周",
+          label: "周",
           type: "week",
           format: "yyyy 第 WW 周"
         },
         {
           wType: "Date",
           prop: "formDateMonth",
-          label: "日期-月",
+          label: "月",
           type: "month",
           format: "yyyy 年 M 月"
         },
         {
           wType: "Date",
           prop: "formDateYear",
-          label: "日期-年",
+          label: "年",
           type: "year",
           format: "yyyy 年"
         },
         {
           wType: "Date",
           prop: "formDateMultiple",
-          label: "日期-多个时间",
+          label: "多个时间",
           type: "dates"
         },
         {
           wType: "Date",
           prop: "formDateBaseRange",
-          label: "日期-基本区间",
+          label: "基本区间",
           type: "daterange"
         },
         {
           wType: "Date",
           prop: "formDateMonthRange",
-          label: "日期-月份区间",
+          label: "月份区间",
           type: "monthrange"
         },
 
@@ -426,18 +434,18 @@ export default {
         {
           wType: "Time",
           prop: "formTimePicker",
-          label: "时间-picker"
+          label: "picker"
         },
         {
           wType: "Time",
           prop: "formTimeSelect",
-          label: "时间-select",
+          label: "select",
           type: "select"
         },
         {
           wType: "Time",
           prop: "formTimeSelectRange",
-          label: "时间-区间",
+          label: "区间",
           isRange: true,
           arrowControl: true
         },
@@ -454,13 +462,13 @@ export default {
         {
           wType: "Switch",
           prop: "formSwitchBase",
-          label: "开关-基本",
+          label: "基本",
           span: 12
         },
         {
           wType: "Switch",
           prop: "formSwitchText",
-          label: "开关-显示文字",
+          label: "显示文字",
           activeText: "按月付费",
           inactiveText: "按年付费",
           span: 12
@@ -468,7 +476,7 @@ export default {
         {
           wType: "Switch",
           prop: "formSwitchValue",
-          label: "开关-自定义值",
+          label: "自定义值",
           activeValue: 0,
           inactiveValue: 100,
           span: 12
@@ -476,7 +484,7 @@ export default {
         {
           wType: "Switch",
           prop: "formSwitchColor",
-          label: "开关-自定义颜色",
+          label: "自定义颜色",
           activeColor: "#13ce66",
           inactiveColor: "#ff4949",
           span: 12
@@ -494,13 +502,13 @@ export default {
         {
           wType: "Tag",
           prop: "formTagBase",
-          label: "标签-基本",
+          label: "基本",
           span: 12
         },
         {
           wType: "Tag",
           prop: "formTagChangeable",
-          label: "标签-可增删",
+          label: "可增删",
           closable: true,
           addable: true,
           span: 12,
@@ -509,7 +517,7 @@ export default {
         {
           wType: "Tag",
           prop: "formTagDraggable",
-          label: "标签-可拖拽",
+          label: "可拖拽",
           closable: true,
           addable: true,
           draggable: true,
@@ -519,7 +527,7 @@ export default {
         {
           wType: "Tag",
           prop: "formTagString",
-          label: "标签-字符串",
+          label: "字符串",
           valueFormat: ",",
           closable: true,
           addable: true,
@@ -540,7 +548,7 @@ export default {
         {
           wType: "Radio",
           prop: "formRadioBase",
-          label: "单选-基本",
+          label: "基本",
           options: [
             {
               value: true,
@@ -555,7 +563,7 @@ export default {
         {
           wType: "Radio",
           prop: "formRadioMultiple",
-          label: "单选-多选项",
+          label: "多选项",
           span: 16,
           options: [
             {
@@ -589,13 +597,13 @@ export default {
         {
           wType: "Checkbox",
           prop: "formCheckboxBase",
-          label: "多选-基本",
+          label: "基本",
           labelText: "记住密码"
         },
         {
           wType: "Checkbox",
           prop: "formCheckboxMultipleArray",
-          label: "多选-数组",
+          label: "数组",
           multiple: true,
           options: [
             {
@@ -619,7 +627,7 @@ export default {
         {
           wType: "Checkbox",
           prop: "formCheckboxMultipleString",
-          label: "多选-字符串",
+          label: "字符串",
           multiple: true,
           valueFormat: ",",
           options: [

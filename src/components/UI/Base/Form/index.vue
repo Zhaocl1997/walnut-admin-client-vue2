@@ -189,8 +189,8 @@ import wRadio from "../Radio";
 import wSelectTree from "../SelectTree";
 import wSelectIcon from "../../Others/SelectIcon";
 
-import mockData from "@/mock";
-import { FORM_TYPE } from "@/utils/constant";
+import mockData from "../utils/mock";
+import { FORM_TYPE } from "../utils/constant";
 
 export default {
   name: "wForm",

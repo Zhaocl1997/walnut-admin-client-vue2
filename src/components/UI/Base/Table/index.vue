@@ -175,7 +175,7 @@ import wPagination from "../Pagination";
 import wTableSettingsItem from "./components/item";
 
 import { deepClone, curryConcat } from "easy-fns/lib/utils";
-import { TABLE_COL_TYPE } from "@/utils/constant";
+import { TABLE_COL_TYPE } from "../utils/constant";
 
 export default {
   name: "wTable",

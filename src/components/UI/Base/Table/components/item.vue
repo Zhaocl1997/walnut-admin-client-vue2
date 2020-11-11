@@ -63,7 +63,7 @@
 
 <script>
 import Sortable from "sortablejs";
-import { TABLE_COL_TYPE } from "@/utils/constant";
+import { TABLE_COL_TYPE } from "../../utils/constant";
 
 export default {
   name: "wTableSettingsItem",

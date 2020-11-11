@@ -49,7 +49,7 @@
 
 <script>
 import Sortable from "sortablejs";
-import BlockMixins from "@/mixins/Block";
+import BlockMixins from "../utils/mixins/block";
 import { isEmpty, randomId } from "easy-fns/lib/utils";
 import { isArray } from "easy-fns/lib/type";
 
@@ -182,7 +182,7 @@ export default {
 
   props: {
     // origin
-    value: [String, Number, Array, Boolean],
+    value: [String, Number, Array, Boolean, Object],
     multiple: Boolean,
     disabled: Boolean,
     valueKey: String,
