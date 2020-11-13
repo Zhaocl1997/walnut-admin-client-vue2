@@ -28,26 +28,31 @@
         <slot name="popover"></slot>
       </div>
 
-      <el-button
-        v-bind="$props"
-        :loading="selfLoading"
-        :disabled="computedDisabled"
-        @click="onClick"
-        :style="style"
-        slot="reference"
-      >
-        <span v-if="$slots.default">
-          <slot v-if="!buttonText"></slot>
-          <span v-else>{{ buttonText }}</span>
-        </span>
-      </el-button>
+      <div class="u-ml10 u-inline" slot="reference">
+        <el-button
+          v-bind="$props"
+          :loading="selfLoading"
+          :disabled="computedDisabled"
+          @click="onClick"
+          :style="style"
+        >
+          <span v-if="$slots.default">
+            <slot v-if="!buttonText"></slot>
+            <span v-else>{{ buttonText }}</span>
+          </span>
+        </el-button>
+      </div>
     </el-popover>
   </el-tooltip>
 </template>
 
 <script>
+import { Button } from "element-ui";
+
 export default {
   name: "wButton",
+
+  inheritattrs: false,
 
   components: {},
 
@@ -91,16 +96,7 @@ export default {
   watch: {},
 
   props: {
-    // origin
-    type: String,
-    size: String,
-    icon: String,
-    nativeType: String,
-    disabled: Boolean,
-    plain: Boolean,
-    autofocus: Boolean,
-    round: Boolean,
-    circle: Boolean,
+    ...Button.props,
 
     // custom
     delay: { type: String, default: "0" },
@@ -109,13 +105,13 @@ export default {
     block: Boolean,
     width: String,
 
-    tooltip: { type: Boolean, default: false },
+    tooltip: Boolean,
     tooltipEffect: { type: String, default: "dark" },
     tooltipContent: { type: String, default: "tooltipContent" },
     tooltipDelay: { type: String, default: "100" },
     tooltipPlacement: { type: String, default: "top-start" },
 
-    popover: { type: Boolean, default: false },
+    popover: Boolean,
     popoverWidth: { type: String, default: "200" },
     popoverTitle: { type: String, default: "popoverTitle" },
     popoverContent: { type: String, default: "popoverContent" },
@@ -123,7 +119,7 @@ export default {
     popoverTrigger: { type: String, default: "hover" },
     popperClass: String,
 
-    popConfirm: { type: Boolean, default: false }
+    popConfirm: Boolean
   },
 
   methods: {

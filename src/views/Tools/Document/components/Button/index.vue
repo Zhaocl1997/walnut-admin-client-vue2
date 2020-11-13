@@ -3,15 +3,20 @@
     <p>w-button 当前绑定值：{{ buttonInfo }}</p>
 
     <div class="u-mb8">
-      <w-button @click="onClick" delay="10" block>延迟按钮</w-button>
+      <w-button @click="onClick" block>自动适应父容器的宽度</w-button>
+    </div>
+
+    <div class="u-mb8">
+      <w-button @click="onClick" delay="10">延迟按钮</w-button>
       <w-button @click="onClick" loading="10">加载按钮</w-button>
       <w-button @click="onClick" tooltip>轻提示按钮</w-button>
       <w-button @click="onClick" popover>弹出框按钮</w-button>
+      <w-button v-print="printObj">打印按钮</w-button>
       <w-button
-        @popoverConfirm="onPrint"
+        @popoverConfirm="onClick"
         pop-confirm
-        popover-title="打印"
-        popover-content="确认要打印当前页面吗?"
+        popover-title="提醒"
+        popover-content="确认要...吗?"
       >确认框按钮</w-button>
     </div>
 
@@ -67,7 +72,14 @@ export default {
   components: { wButton },
 
   data() {
-    return { buttonInfo: 0 };
+    return {
+      buttonInfo: 0,
+
+      printObj: {
+        id: "app",
+        popTitle: "w-button"
+      }
+    };
   },
 
   computed: {},
@@ -79,9 +91,6 @@ export default {
   methods: {
     onClick() {
       this.buttonInfo += 1;
-    },
-    onPrint() {
-      this.$print({ html: document.body.innerHTML });
     }
   },
 
