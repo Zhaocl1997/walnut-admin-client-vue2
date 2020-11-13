@@ -2,7 +2,7 @@
   <el-select
     ref="wSelect"
     class="w-select"
-    v-model="selectedValue"
+    v-model="customValue"
     v-loadmore="loadmore"
     :multiple="multiple"
     :disabled="disabled"
@@ -46,7 +46,6 @@
 
 <script>
 import Sortable from "sortablejs";
-import BlockMixins from "../utils/mixins/block";
 import {
   isEmpty,
   randomId,
@@ -54,17 +53,21 @@ import {
   objectArrayUnique
 } from "easy-fns/lib/utils";
 import { isArray } from "easy-fns/lib/type";
+import { isString } from "easy-fns/lib/type";
+
+import BlockMixins from "../utils/mixins/block";
+import ValueFormatMixins from "../utils/mixins/value-format";
 
 export default {
   name: "wSelect",
 
   components: {},
 
-  mixins: [BlockMixins()],
+  mixins: [BlockMixins(), ValueFormatMixins([], "")],
 
   model: {
-    event: "change",
-    prop: "value"
+    event: "",
+    prop: ""
   },
 
   data() {
@@ -78,9 +81,7 @@ export default {
         [this.optionLabel]: "",
         pageNum: this.pageNum,
         pageSize: this.pageSize
-      },
-
-      selectedValue: undefined
+      }
     };
   },
 
@@ -106,10 +107,7 @@ export default {
 
     isForamattable() {
       return (
-        this.multiple &&
-        !isEmpty(this.selectedValue) &&
-        !isEmpty(this.valueFormat) &&
-        isEmpty(this.valueKey)
+        this.multiple && !isEmpty(this.valueFormat) && isEmpty(this.valueKey)
       );
     },
 
@@ -123,21 +121,21 @@ export default {
   },
 
   watch: {
-    value(newV, oldV) {
-      this.onFormatValue();
-    }
+    value() {
+      this.onInitCustomValue();
+    },
 
-    // options(newV, oldV) {
-    //   if (!isEmpty(newV) && newV != oldV) {
-    //     this.selfOptions = newV;
-    //   }
-    // }
+    options(newV, oldV) {
+      if (!isEmpty(newV) && newV != oldV) {
+        this.selfOptions = newV;
+      }
+    }
   },
 
   props: {
     // origin
-    value: [String, Number, Array, Boolean, Object],
-    multiple: Boolean,
+    value: [Array, String, Number, Boolean, Object],
+    // multiple: Boolean,
     disabled: Boolean,
     valueKey: String,
     size: String,
@@ -166,15 +164,8 @@ export default {
     pageNum: { type: Number, default: 1 },
     pageSize: { type: Number, default: 10 },
 
-    valueFormat: String,
-    valueType: { type: String, default: "string" },
-
     tooltip: Boolean,
     draggable: Boolean,
-
-    options: { type: Array, default: () => [] },
-    optionLabel: { type: String, default: "label" },
-    optionValue: { type: String, default: "value" },
 
     initFunc: Function,
     getFunc: Function,
@@ -187,11 +178,13 @@ export default {
 
   methods: {
     init() {
-      this.onDraggable();
-
-      this.onFormatValue();
+      this.onInitCustomValue();
 
       this.onGetRemoteOptions();
+
+      setTimeout(() => {
+        this.onDraggable();
+      }, 1000);
     },
 
     async onGetRemoteOptions(needFeedback = true, needResetQuery = false) {
@@ -215,14 +208,14 @@ export default {
     },
 
     async feedBack() {
-      if (isEmpty(this.selectedValue)) {
+      if (isEmpty(this.customValue)) {
         return;
       }
 
-      if (!isArray(this.selectedValue)) {
-        await this.getData(this.selectedValue);
+      if (!isArray(this.customValue)) {
+        await this.getData(this.customValue);
       } else {
-        const promises = await this.selectedValue.map(
+        const promises = await this.customValue.map(
           async i => await this.getData(i)
         );
         await Promise.all(promises);
@@ -248,7 +241,7 @@ export default {
     },
 
     async onRemoteSearch(query) {
-      if (!isEmpty(query)) {
+      if (!isEmpty(query) && this.filterable) {
         this.queryParams[this.optionLabel] = query;
         this.onGetRemoteOptions(false, false);
       }
@@ -344,10 +337,10 @@ export default {
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
         },
         onEnd: evt => {
-          const target = this.selectedValue.splice(evt.oldIndex, 1)[0];
-          this.selectedValue.splice(evt.newIndex, 0, target);
+          const target = this.customValue.splice(evt.oldIndex, 1)[0];
+          this.customValue.splice(evt.newIndex, 0, target);
 
-          this.onValueChange(this.selectedValue);
+          this.onValueChange(this.customValue);
         }
       });
     },
@@ -364,52 +357,6 @@ export default {
       return this[resType].includes(".")
         ? res[this[resType].split(".")[0]][this[resType].split(".")[1]]
         : res[this[resType]];
-    },
-
-    onFormatValue() {
-      if (this.isForamattable) {
-        this.selectedValue = this.onValueType(
-          this.value.split(this.valueFormat)
-        );
-      } else {
-        this.selectedValue = this.value;
-      }
-
-      if (isEmpty(this.value)) {
-        if (this.multiple) {
-          this.selectedValue = [];
-        } else {
-          this.selectedValue = "";
-        }
-      }
-    },
-
-    onValueChange(value) {
-      if (this.isForamattable) {
-        this.$emit("change", value.join(this.valueFormat));
-      } else {
-        this.$emit("change", value);
-      }
-    },
-
-    onValueType(value) {
-      if (this.multiple) {
-        if (this.valueType === "number") {
-          return value.map(Number);
-        }
-
-        if (this.valueType === "string") {
-          return value.map(String);
-        }
-      } else {
-        if (this.valueType === "number") {
-          return Number(value);
-        }
-
-        if (this.valueType === "string") {
-          return String(value);
-        }
-      }
     }
   },
 
