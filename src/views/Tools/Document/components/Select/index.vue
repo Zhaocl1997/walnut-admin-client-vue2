@@ -25,50 +25,50 @@ export default {
     return {
       options: [
         {
-          value: 1,
+          value: "1",
           label: "jack"
         },
         {
-          value: 2,
+          value: "2",
           label: "tom"
         },
         {
-          value: 3,
+          value: "3",
           label: "rose"
         },
         {
-          value: 4,
+          value: "4",
           label: "lucy"
         },
         {
-          value: 5,
+          value: "5",
           label: "jimmy"
         },
         {
-          value: 6,
+          value: "6",
           label: "chunk"
         },
         {
-          value: 7,
+          value: "7",
           label: "kim"
         },
         {
-          value: 8,
+          value: "8",
           label: "gustvo"
         },
         {
-          value: 9,
+          value: "9",
           label: "ermenchant"
         }
       ],
 
-      select1: [2, 6, 4],
+      select1: ["2", "6", "4"],
       select2: "5,7,4",
       select3: [
-        { value: 6, label: "chunk" },
-        { value: 3, label: "rose" },
-        { value: 4, label: "lucy" },
-        { value: 2, label: "tom" }
+        { value: "6", label: "chunk" },
+        { value: "3", label: "rose" },
+        { value: "4", label: "lucy" },
+        { value: "2", label: "tom" }
       ]
     };
   },
