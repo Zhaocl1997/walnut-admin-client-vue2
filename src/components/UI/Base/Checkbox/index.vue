@@ -3,10 +3,9 @@
     <!-- multiple -->
     <el-checkbox-group
       v-if="multiple"
-      v-model="checkedValue"
-      @change="onMultipleChange"
-      :min="min"
-      :max="max"
+      v-model="customValue"
+      @change="onChange"
+      v-bind="$props"
       v-on="$listeners"
     >
       <template v-if="button">
@@ -15,6 +14,8 @@
           :key="item[optionValue]"
           :label="item[optionValue]"
           :disabled="item.disabled"
+          v-bind="$props"
+          v-on="$listeners"
         >{{ item[optionLabel] }}</el-checkbox-button>
       </template>
 
@@ -24,28 +25,33 @@
           :key="item[optionValue]"
           :label="item[optionValue]"
           :disabled="item.disabled"
-          :border="border"
+          v-bind="$props"
+          v-on="$listeners"
         >{{ item[optionLabel] }}</el-checkbox>
       </template>
     </el-checkbox-group>
 
     <!-- single -->
     <el-checkbox
-      v-on="$listeners"
-      @change="onChange"
       v-else
-      v-model="selfValue"
-      :disabled="disabled"
+      @change="onChange"
+      v-model="customValue"
+      v-bind="$props"
+      v-on="$listeners"
     >{{ labelText }}</el-checkbox>
   </div>
 </template>
 
 <script>
-import ValueMixins from "../utils/mixins/value";
+import { Checkbox, CheckboxButton, CheckboxGroup } from "element-ui";
 import { isEmpty } from "easy-fns/lib/utils";
+
+import ValueFormatMixins from "../utils/mixins/value-format";
 
 export default {
   name: "wCheckbox",
+
+  inheritattrs: false,
 
   inject: [],
 
@@ -58,12 +64,10 @@ export default {
 
   components: {},
 
-  mixins: [ValueMixins],
+  mixins: [ValueFormatMixins([], false)],
 
   data() {
-    return {
-      checkedValue: []
-    };
+    return {};
   },
 
   computed: {
@@ -74,80 +78,34 @@ export default {
 
   watch: {
     value() {
-      this.feedBack();
+      this.onInitCustomValue();
     }
   },
 
   props: {
-    // origin
-    value: [Boolean, String, Array],
-    disabled: Boolean,
-    min: Number,
-    max: Number,
-    size: String,
-    border: Boolean,
+    ...Checkbox.props,
+    ...CheckboxButton.props,
+    ...CheckboxGroup.props,
 
     // custom
-    options: Array,
-    optionValue: { type: String, default: "value" },
-    optionLabel: { type: String, default: "label" },
     button: Boolean,
-    multiple: Boolean,
-    labelText: String,
-
-    valueFormat: String,
-    valueType: { type: String, default: "number" }
+    labelText: String
   },
 
   methods: {
-    feedBack() {
-      if (!isEmpty(this.selfValue)) {        
-        if (this.isForamattable) {
-          this.checkedValue = this.onValueType(
-            this.selfValue.split(this.valueFormat)
-          );
-        } else {
-          this.checkedValue = this.selfValue;
-        }
-      }
+    init() {
+      this.onInitCustomValue();
     },
 
     onChange(v) {
-      this.$emit("input", v);
-    },
-
-    onMultipleChange(v) {
-      if (this.isForamattable) {
-        this.selfValue = v.join(this.valueFormat);
-      }
-    },
-
-    /* value 值判断 */
-    onValueType(v) {
-      if (this.multiple) {
-        if (this.valueType === "number") {
-          return v.map(Number);
-        }
-
-        if (this.valueType === "string") {
-          return v.map(String);
-        }
-      } else {
-        if (this.valueType === "number") {
-          return Number(v);
-        }
-
-        if (this.valueType === "string") {
-          return String(v);
-        }
-      }
+      this.onValueChange(v);
     }
   },
 
   created() {},
 
   mounted() {
-    this.feedBack();
+    this.init();
   },
 
   beforeCreate() {},

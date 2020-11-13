@@ -57,32 +57,32 @@ export default {
     return {
       checkboxInfo: false,
       checkboxInfo2: true,
-      checkboxInfo3: [2, 4],
+      checkboxInfo3: ["2", "4"],
       checkboxInfo4: "1,3",
-      checkboxInfo5: [1, 2],
+      checkboxInfo5: ["1", "2"],
       checkboxInfo6: "3,4",
-      checkboxInfo7: [1, 2],
+      checkboxInfo7: ["1", "2"],
       checkboxInfo8: "3,4",
 
       options: [
         {
-          value: 1,
+          value: "1",
           label: "A"
         },
         {
-          value: 2,
+          value: "2",
           label: "B"
         },
         {
-          value: 3,
+          value: "3",
           label: "C"
         },
         {
-          value: 4,
+          value: "4",
           label: "D"
         },
         {
-          value: 5,
+          value: "5",
           label: "E",
           disabled: true
         }
