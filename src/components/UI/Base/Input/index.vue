@@ -93,8 +93,8 @@
 </template>
 
 <script>
-import BlockMixins from "@/mixins/Block";
-import ValueMixins from "@/mixins/Value";
+import BlockMixins from "../utils/mixins/block";
+import ValueMixins from "../utils/mixins/value";
 
 import {
   isEmpty,
