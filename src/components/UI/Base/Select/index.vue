@@ -252,6 +252,12 @@ export default {
         return;
       }
 
+      if (
+        this.selfOptions.find(i => i[this.optionValue] == this.selfPopperClass)
+      ) {
+        return;
+      }
+
       const l = this.openLoading(`.${this.selfPopperClass}`);
 
       this.queryParams.pageNum += 1;
@@ -295,7 +301,7 @@ export default {
     },
 
     onVisibleChange(visible) {
-      if (!visible) {
+      if (!visible && !this.valueKey) {
         this.onGetRemoteOptions(true, true);
       }
       this.$emit("visible-change", visible);
