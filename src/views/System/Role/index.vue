@@ -86,7 +86,7 @@ import {
 } from "@/api/system/role";
 
 import { menuOptions } from "@/api/system/menu";
-import { format } from "easy-fns/lib/time";
+import { formatTime } from "easy-fns/lib/time";
 
 export default {
   name: "Role",
@@ -262,7 +262,7 @@ export default {
     },
 
     format() {
-      return format;
+      return formatTime;
     }
   },
 

@@ -47,7 +47,7 @@ import TheSidebarSettings from "./components/SidebarSettings";
 import TheTagsSettings from "./components/TagsSettings";
 import TheFooterSettings from "./components/FooterSettings";
 
-import { toggleClass } from "easy-fns/lib/dom";
+import { toggleClass } from "easy-fns/lib/browser/dom";
 
 export default {
   name: "wSettingsContent",

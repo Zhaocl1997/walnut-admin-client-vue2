@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { toggleClass, removeClass } from "easy-fns/lib/dom";
-
 export default {
   name: "",
 

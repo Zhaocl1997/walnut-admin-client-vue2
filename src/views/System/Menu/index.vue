@@ -86,7 +86,7 @@ import {
   menuDelete
 } from "@/api/system/menu";
 
-import { format } from "easy-fns/lib/time";
+import { formatTime } from "easy-fns/lib/time";
 
 export default {
   name: "User",
@@ -351,7 +351,7 @@ export default {
     },
 
     format() {
-      return format;
+      return formatTime;
     }
   },
 

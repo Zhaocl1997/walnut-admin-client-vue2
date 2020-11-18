@@ -2,43 +2,30 @@
 'use strict'
 
 import Mock from 'mockjs'
-import { randomId } from 'easy-fns/lib/utils'
-import { getRandomInt } from 'easy-fns/lib/math'
-import { EMAIL_SUFFIX, PHONE_PREFIX } from 'easy-fns/lib/constant'
+
+import { genPassword, genEmail, genPhone, genMAC } from 'easy-fns/lib/generator'
 import { treeToArr, arrToTree, findNodeById } from 'easy-fns/lib/tree'
-import { format } from 'easy-fns/lib/time'
+import { formatTime } from 'easy-fns/lib/time'
+import { getRandomElements } from 'easy-fns/lib/array'
+
 import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from './constant'
 
 const Random = Mock.Random
 
 Random.extend({
     password: function () {
-        return randomId(10)
+        return genPassword(10)
     },
     phone: function () {
-        const phonePrefixs = PHONE_PREFIX
-        return this.pick(phonePrefixs) + Mock.mock(/\d{8}/)
+        return genPhone()
+    },
+    email: function () {
+        return genEmail()
+    },
+    mac: function () {
+        return genMAC()
     }
 })
-
-function getRandomArrayElements(arr, count) {
-    var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
-    while (i-- > min) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
-    return shuffled.slice(min);
-}
-
-
-function genMAC() {
-    return "XX:XX:XX:XX:XX:XX".replace(/X/g, function () {
-        return "0123456789ABCDEF".charAt(Math.floor(Math.random() * 16))
-    });
-}
-
 
 const mockData = options => {
     const result = {}
@@ -71,7 +58,7 @@ const mockData = options => {
                         break;
 
                     case INPUT_TYPE.EMAIL:
-                        result[e.prop] = Random.email(Random.pick(EMAIL_SUFFIX).value.split("@")[1]).substr(2)
+                        result[e.prop] = Mock.mock('@email')
                         break;
 
                     case INPUT_TYPE.ID:
@@ -83,7 +70,7 @@ const mockData = options => {
                         break;
 
                     case INPUT_TYPE.MACADDRESS:
-                        result[e.prop] = genMAC()
+                        result[e.prop] = Mock.mock('@mac')
                         break;
 
                     case INPUT_TYPE.LETTER:
@@ -112,7 +99,7 @@ const mockData = options => {
                         if (!e.defaultTime) {
                             result[e.prop] = Random.datetime()
                         } else {
-                            result[e.prop] = format(Random.date(), 'YYYY-MM-DD') + " " + e.defaultTime
+                            result[e.prop] = formatTime(Random.date(), 'YYYY-MM-DD') + " " + e.defaultTime
                         }
                         break;
 
@@ -123,9 +110,9 @@ const mockData = options => {
                     case DATE_TYPE.DATES:
                         result[e.prop] =
                             [
-                                format(Random.date(), 'YYYY-MM-DD'),
-                                format(Random.date(), 'YYYY-MM-DD'),
-                                format(Random.date(), 'YYYY-MM-DD')
+                                formatTime(Random.date(), 'YYYY-MM-DD'),
+                                formatTime(Random.date(), 'YYYY-MM-DD'),
+                                formatTime(Random.date(), 'YYYY-MM-DD')
                             ].sort((a, b) => a.localeCompare(b, 'zh-CN'))
                         break;
 
@@ -138,8 +125,8 @@ const mockData = options => {
 
                     case DATE_TYPE.MONTHRANGE:
                         result[e.prop] = [
-                            format(Random.date(), 'YYYY-MM-DD'),
-                            format(Random.date(), 'YYYY-MM-DD'),
+                            formatTime(Random.date(), 'YYYY-MM-DD'),
+                            formatTime(Random.date(), 'YYYY-MM-DD'),
                         ].sort((a, b) => a.localeCompare(b, 'zh-CN'))
                         break;
 
@@ -157,17 +144,17 @@ const mockData = options => {
                         break;
 
                     // case TIME_TYPE.PICKER:
-                    //     result[e.prop] = format(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
+                    //     result[e.prop] = formatTime(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
                     //     break;
 
                     default:
                         if (!e.isRange) {
-                            result[e.prop] = format(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
+                            result[e.prop] = formatTime(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
                         } else {
                             result[e.prop] =
                                 [
-                                    format(Date.now(), 'YYYY-MM-DD') + " " + Random.time(),
-                                    format(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
+                                    formatTime(Date.now(), 'YYYY-MM-DD') + " " + Random.time(),
+                                    formatTime(Date.now(), 'YYYY-MM-DD') + " " + Random.time()
                                 ].sort((a, b) => a.localeCompare(b, 'zh-CN'))
                         }
                         break;
@@ -189,16 +176,14 @@ const mockData = options => {
                         }
                     } else {
                         if (!e.valueKey) {
-                            const count = getRandomInt(1, temp.length)
-                            const ret = getRandomArrayElements(temp, count > 5 ? count / 2 : count)
+                            const ret = getRandomElements(temp)
                             if (!e.valueFormat) {
                                 result[e.prop] = ret
                             } else {
                                 result[e.prop] = ret.join(e.valueFormat)
                             }
                         } else {
-                            const count = getRandomInt(1, e.options.length)
-                            const ret = getRandomArrayElements(e.options, count > 5 ? count / 2 : count)
+                            const ret = getRandomElements(e.options)
                             result[e.prop] = ret
                         }
                     }
@@ -235,9 +220,7 @@ const mockData = options => {
                         temp.push(iterator[e.optionValue || 'value'])
                     }
 
-                    const count = getRandomInt(1, temp.length)
-                    const ret = getRandomArrayElements(temp, count > 5 ? count / 2 : count)
-
+                    const ret = getRandomElements(temp)
                     if (!e.valueFormat) {
                         result[e.prop] = ret
                     } else {

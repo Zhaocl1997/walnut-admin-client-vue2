@@ -96,11 +96,8 @@
 import BlockMixins from "../utils/mixins/block";
 import ValueMixins from "../utils/mixins/value";
 
-import {
-  isEmpty,
-  clearIllegalChars,
-  clearUnexpectedChars
-} from "easy-fns/lib/utils";
+import { isEmpty } from "easy-fns/lib/utils";
+import { clearIllegalChars, clearUnexpectedChars } from "easy-fns/lib/string";
 import { EMAIL_SUFFIX } from "easy-fns/lib/constant";
 
 import { INPUT_CUSTOM_TYPE } from "../utils/constant";

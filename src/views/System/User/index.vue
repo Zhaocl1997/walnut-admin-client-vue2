@@ -82,7 +82,7 @@ import {
 
 import { roleIndex } from "@/api/system/role";
 
-import { format } from "easy-fns/lib/time";
+import { formatTime } from "easy-fns/lib/time";
 
 export default {
   name: "User",
@@ -246,7 +246,7 @@ export default {
     },
 
     format() {
-      return format;
+      return formatTime;
     }
   },
 

@@ -174,7 +174,8 @@ import wScreenfull from "../../Others/Screenfull";
 import wPagination from "../Pagination";
 import wTableSettingsItem from "./components/item";
 
-import { deepClone, curryConcat } from "easy-fns/lib/utils";
+import { deepClone } from "easy-fns/lib/utils";
+import { curryConcat } from "easy-fns/lib/array";
 import { TABLE_COL_TYPE } from "../utils/constant";
 
 export default {

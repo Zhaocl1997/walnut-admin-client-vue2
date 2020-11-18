@@ -46,14 +46,11 @@
 
 <script>
 import Sortable from "sortablejs";
-import {
-  isEmpty,
-  randomId,
-  deepClone,
-  objectArrayUnique
-} from "easy-fns/lib/utils";
+
+import { isEmpty } from "easy-fns/lib/utils";
+import { objectArrayUnique } from "easy-fns/lib/array";
 import { isArray } from "easy-fns/lib/type";
-import { isString } from "easy-fns/lib/type";
+import { genString } from "easy-fns/lib/generator";
 
 import BlockMixins from "../utils/mixins/block";
 import ValueFormatMixins from "../utils/mixins/value-format";
@@ -87,7 +84,7 @@ export default {
 
   computed: {
     selfId() {
-      return randomId(16);
+      return genString(16);
     },
 
     selfPopperClass() {

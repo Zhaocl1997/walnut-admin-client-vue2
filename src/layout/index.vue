@@ -35,7 +35,7 @@ import TheMain from "@/components/Layout/TheMain";
 import TheFooter from "@/components/Layout/TheFooter";
 import TheSettings from "@/components/UI/Others/Settings";
 
-import throttle from "easy-fns/lib/throttle";
+import { throttle } from "easy-fns/lib/throttle";
 
 import ResizeMixin from "../mixins/Resize";
 
