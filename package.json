@@ -5,14 +5,14 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "eslint --ext .js,.vue src -f table"
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.2",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.0.0",
-    "easy-fns": "^1.1.16",
+    "easy-fns": "^1.1.18",
     "element-ui": "^2.13.2",
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.7.1",
