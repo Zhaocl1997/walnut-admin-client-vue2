@@ -6,9 +6,11 @@
     </div>
 
     <w-form
+      ref="documentForm"
       :model="formModel"
       v-model="form"
       :gutter="gutter"
+      :rules="formRules"
       :span="8"
       label-width="120px"
       mock
@@ -17,13 +19,14 @@
       print
       fold
       default-fold
-      popTitle="walnut-admin"
     >
       <div slot="formInputNumber">
         <p style="color:red;font-size:10px">数字</p>
       </div>
 
-      <w-button slot="formButton" @click="onCustomButton">自定义按钮1</w-button>
+      <w-button slot="formButton" @click="onValidate">表单校验</w-button>
+      <w-button slot="formButton" @click="onResetFields">重置表单</w-button>
+      <w-button slot="formButton" @click="onClearValidate">清空校验</w-button>
     </w-form>
   </div>
 </template>
@@ -43,6 +46,12 @@ export default {
   data() {
     return {
       gutter: 0,
+
+      formRules: {
+        formInputBase: [
+          { required: true, trigger: "blur", message: "不能为空" }
+        ]
+      },
 
       form: {
         formTagBase: ["标签1", "标签2", "标签3"]
@@ -152,7 +161,8 @@ export default {
           span: 16,
           rows: 5,
           showLimit: true,
-          maxlength: 50
+          maxlength: 50,
+          rules: [{ required: true, trigger: "blur", message: "不能为空" }]
         },
 
         // ======================================
@@ -277,12 +287,13 @@ export default {
           prop: "formSelectBase",
           label: "基本",
           options: this.selectOptions,
-          clearable: true
+          clearable: true,
+          change: this.onSelectChange
         },
         {
           wType: "Select",
           prop: "formSelectObject",
-          label: "单选-绑定对象",
+          label: "单选-对象",
           options: this.selectOptions,
           clearable: true,
           valueKey: "value"
@@ -325,7 +336,7 @@ export default {
         {
           wType: "Select",
           prop: "formSelectMultipleObject",
-          label: "多选-绑定对象",
+          label: "多选-对象",
           options: this.selectOptions,
           clearable: true,
           multiple: true,
@@ -658,8 +669,22 @@ export default {
   props: {},
 
   methods: {
-    onCustomButton() {
-      this.$message.success("自定义按钮");
+    onValidate() {
+      this.$refs.documentForm.validate(valid => {
+        this.$message.info(`表单校验结果：${valid}`);
+      });
+    },
+
+    onResetFields() {
+      this.$refs.documentForm.resetFields();
+    },
+
+    onClearValidate() {
+      this.$refs.documentForm.clearValidate();
+    },
+
+    onSelectChange(v) {
+      this.$message.info(`select变化：${v}`);
     }
   },
 
