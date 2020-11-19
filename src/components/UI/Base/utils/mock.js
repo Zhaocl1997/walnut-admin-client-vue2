@@ -252,7 +252,6 @@ const mockData = options => {
                 break;
 
             default:
-                result[e.prop] = Random.string()
                 break;
         }
     }
