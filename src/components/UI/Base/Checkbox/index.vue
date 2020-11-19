@@ -99,6 +99,7 @@ export default {
 
     onChange(v) {
       this.onValueChange(v);
+      this.$emit("change", v);
     }
   },
 
