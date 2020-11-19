@@ -148,7 +148,7 @@ export default {
     loading: Boolean,
     loadingText: { type: String, default: "正在加载世界..." },
     noMatchText: { type: String, default: "这个世界并没有您想要的东西..." },
-    noDataText: { type: String, default: "一片虚无..." },
+    noDataText: { type: String, default: "这个世界一片虚无..." },
     popperClass: String,
     reserveKeyword: Boolean,
     defaultFirstOption: Boolean,
@@ -295,6 +295,7 @@ export default {
 
     onChange(v) {
       this.onValueChange(v);
+      this.$emit("change", v);
     },
 
     onVisibleChange(visible) {
@@ -302,6 +303,7 @@ export default {
         this.onGetRemoteOptions(true, true);
       }
       this.$emit("visible-change", visible);
+      this.count = 0;
     },
 
     onRemoveTag(v) {
