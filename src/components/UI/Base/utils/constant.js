@@ -29,13 +29,11 @@ export const INPUT_CUSTOM_TYPE = [
 
 // form type
 export const FORM_TYPE = {
-    SLOT: 'Slot',
     INPUT: "Input",
     DATE: "Date",
     TIME: "Time",
 
     TREE: "Tree",
-    SELECTTREE: 'SelectTree',
     SELECT: "Select",
 
     TAG: "Tag",
