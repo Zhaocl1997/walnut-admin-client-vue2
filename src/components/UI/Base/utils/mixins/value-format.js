@@ -32,19 +32,15 @@ export default function (defaultMultipleValue = [], defaultSingleValue = "") {
                         this.customValue = defaultSingleValue;
                     }
                 } else {
-                    this.onValueFormat()
-                }
-            },
-
-            onValueFormat() {
-                if (this.isForamattable) {
-                    if (isString(this.value)) {
-                        this.customValue = this.onValueType(
-                            this.value.split(this.valueFormat)
-                        );
+                    if (this.isForamattable) {
+                        if (isString(this.value)) {
+                            this.customValue = this.onValueType(
+                                this.value.split(this.valueFormat)
+                            );
+                        }
+                    } else {
+                        this.customValue = this.value;
                     }
-                } else {
-                    this.customValue = this.value;
                 }
             },
 
