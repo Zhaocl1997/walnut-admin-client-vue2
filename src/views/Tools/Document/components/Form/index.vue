@@ -14,6 +14,7 @@
       :span="8"
       label-width="120px"
       mock
+      scoped-mock
       query
       reset
       print
@@ -212,7 +213,8 @@ export default {
           label: "手机号",
           placeholder: "手机号",
           clearable: true,
-          type: "phone"
+          type: "phone",
+          mock: true
         },
         {
           wType: "Input",

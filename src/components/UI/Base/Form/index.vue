@@ -146,6 +146,16 @@
         <i class="el-icon-edit"></i>
       </w-button>
 
+      <w-button
+        v-if="scopedMock"
+        type="success"
+        @click="onScopedMock"
+        tooltip
+        tooltipContent="局部模拟"
+      >
+        <i class="el-icon-edit"></i>
+      </w-button>
+
       <w-button v-if="query" type="primary" @click="onQuery" tooltip tooltipContent="查询">
         <i class="el-icon-search"></i>
       </w-button>
@@ -222,6 +232,7 @@ export default {
     showAction() {
       return (
         this.mock ||
+        this.scopedMock ||
         this.query ||
         this.reset ||
         this.print ||
@@ -266,6 +277,7 @@ export default {
     model: { type: Array, required: true },
 
     mock: Boolean,
+    scopedMock: Boolean,
     query: Boolean,
     reset: Boolean,
     print: Boolean,
@@ -290,6 +302,11 @@ export default {
 
     onMock() {
       const result = mockData(this.formModel);
+      this.$emit("input", result);
+    },
+
+    onScopedMock() {
+      const result = mockData(this.formModel.filter(i => i.mock));
       this.$emit("input", result);
     },
 
