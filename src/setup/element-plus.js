@@ -29,6 +29,12 @@ import {
     ElTimePicker,
     ElTimeSelect,
     ElDatePicker,
+
+    ElDialog,
+    ElPagination,
+
+    ElTable,
+    ElTableColumn
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -62,7 +68,13 @@ const components = [
 
     ElTimePicker,
     ElTimeSelect,
-    ElDatePicker
+    ElDatePicker,
+
+    ElDialog,
+    ElPagination,
+
+    ElTable,
+    ElTableColumn
 ]
 
 export function setupElementPlus(app) {

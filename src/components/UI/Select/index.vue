@@ -24,7 +24,9 @@ export default defineComponent({
 
     options: { type: Array, default: () => [] },
     optionValue: { type: String, default: "value" },
-    optionLabel: { type: String, default: "label" }
+    optionLabel: { type: String, default: "label" },
+
+    valueKey: String
   },
 
   setup(props, { attrs }) {

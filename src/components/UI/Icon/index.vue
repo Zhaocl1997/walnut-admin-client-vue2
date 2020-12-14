@@ -3,15 +3,14 @@
 </template>
 
 <script lang='ts'>
-import { Icon, InlineIcon, addCollection } from "@iconify/vue";
-import homeIcon from "@iconify-icons/mdi-light/home";
-
+import { Icon } from "@iconify/vue";
 import { defineComponent, reactive } from "vue";
+import { iconsLists } from "./icons";
 
 export default defineComponent({
   name: "wIcon",
 
-  components: { Icon, InlineIcon },
+  components: { Icon },
 
   props: {
     ...Icon.props,
@@ -20,10 +19,7 @@ export default defineComponent({
   },
 
   setup(props, { attrs }) {
-    const icons = reactive({
-      home: homeIcon
-    });
-
+    const icons = reactive(iconsLists);
     return { icons };
   }
 });

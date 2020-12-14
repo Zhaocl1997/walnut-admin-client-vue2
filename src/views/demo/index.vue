@@ -32,6 +32,22 @@
       <el-tab-pane label="Date" name="Date">
         <date-demo></date-demo>
       </el-tab-pane>
+
+      <el-tab-pane label="Tag" name="Tag">
+        <tag-demo></tag-demo>
+      </el-tab-pane>
+
+      <!-- <el-tab-pane label="Dialog" name="Dialog">
+        <dialog-demo></dialog-demo>
+      </el-tab-pane>-->
+
+      <el-tab-pane label="Pagination" name="Pagination">
+        <pagination-demo></pagination-demo>
+      </el-tab-pane>
+
+      <el-tab-pane label="Table" name="Table">
+        <table-demo></table-demo>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -41,10 +57,14 @@ import IconDemo from "./Icon.vue";
 import ButtonDemo from "./Button.vue";
 import CheckboxDemo from "./Checkbox.vue";
 import DateDemo from "./Date.vue";
+import DialogDemo from "./Dialog.vue";
 import InputDemo from "./Input.vue";
 import InputNumberDemo from "./InputNumber.vue";
+import PaginationDemo from "./Pagination.vue";
 import RadioDemo from "./Radio.vue";
 import SelectDemo from "./Select.vue";
+import TableDemo from "./Table.vue";
+import TagDemo from "./Tag.vue";
 import { ref, reactive, defineComponent } from "vue";
 
 export default defineComponent({
@@ -55,10 +75,14 @@ export default defineComponent({
     ButtonDemo,
     CheckboxDemo,
     DateDemo,
+    DialogDemo,
     InputDemo,
     InputNumberDemo,
+    PaginationDemo,
     RadioDemo,
-    SelectDemo
+    SelectDemo,
+    TableDemo,
+    TagDemo
   },
 
   setup() {
