@@ -1,5 +1,51 @@
 <template>
+  <!-- settings -->
+  <w-table-settings :listFunc="listFunc"></w-table-settings>
+
+  <!-- main -->
   <el-table v-bind="getBindValue">
+    <!-- select -->
+    <el-table-column
+      v-if="hasSelect"
+      type="selection"
+      width="50"
+      align="center"
+      fixed="left"
+      key="select"
+      :selectable="selectable"
+      :reserveSelection="reserveSelection"
+    ></el-table-column>
+
+    <!-- index -->
+    <el-table-column
+      v-if="hasIndex"
+      label="序号"
+      type="index"
+      width="50"
+      align="center"
+      fixed="left"
+      key="index"
+    >
+      <template #default="scope">
+        <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
+      </template>
+    </el-table-column>
+
+    <!-- expand -->
+    <el-table-column
+      v-if="hasExpand"
+      type="expand"
+      width="50"
+      align="center"
+      fixed="left"
+      key="expand"
+    >
+      <template #default="props">
+        <slot name="expand" :expand="props"></slot>
+      </template>
+    </el-table-column>
+
+    <!-- base -->
     <template v-for="(item, index) in columns" :key="index.toString() + item.prop">
       <el-table-column
         :label="item.label"
@@ -29,12 +75,14 @@
     </template>
   </el-table>
 
-  <w-pagination class="u-float-right" :total="total"></w-pagination>
+  <w-pagination class="u-float-right" :total="+total" @change="onPageChange"></w-pagination>
 </template>
 
 <script lang='ts'>
 import { ElTable } from "element-plus";
 import { ref, reactive, computed, defineComponent } from "vue";
+
+import wTableSettings from "./settings/index.vue";
 import wPagination from "../Pagination/index.vue";
 
 export default defineComponent({
@@ -47,18 +95,37 @@ export default defineComponent({
 
     columns: Array,
 
-    total: [String, Number]
+    hasSelect: Boolean,
+    hasIndex: Boolean,
+    hasExpand: Boolean,
+
+    selectable: Function,
+    reserveSelection: Boolean,
+
+    total: Number,
+    pageNum: Number,
+    pageSize: Number,
+
+    listFunc: Function
   },
 
-  components: { wPagination },
+  components: { wTableSettings, wPagination },
 
-  setup(props, { attrs }) {
+  setup(props, { attrs, emit }) {
     const getBindValue = computed(() => {
       return { ...attrs, ...props };
     });
 
+    const onPageChange = value => {
+      emit("update:pageNum", value.pageNum);
+      emit("update:pageSize", value.pageSize);
+
+      props.listFunc();
+    };
+
     return {
-      getBindValue
+      getBindValue,
+      onPageChange
     };
   }
 });
