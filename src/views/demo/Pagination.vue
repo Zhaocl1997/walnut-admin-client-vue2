@@ -1,10 +1,10 @@
 <template>
   <el-card>
     <template #header>
-      <span>基本，当前绑定值：【{{ }}】</span>
+      <span>基本，页码绑定值：【{{ pageNum }}】，数量绑定值：【{{ pageSize }}】</span>
     </template>
 
-    <w-pagination :total="500"></w-pagination>
+    <w-pagination :total="100" v-model:currentPage="pageNum" v-model:pageSize="pageSize"></w-pagination>
   </el-card>
 
   <br />
@@ -19,7 +19,15 @@ export default defineComponent({
 
   components: { wPagination },
 
-  setup(props, { attrs }) {}
+  setup(props, { attrs }) {
+    const pageNum = ref(1);
+    const pageSize = ref(10);
+
+    return {
+      pageNum,
+      pageSize
+    };
+  }
 });
 </script>
 

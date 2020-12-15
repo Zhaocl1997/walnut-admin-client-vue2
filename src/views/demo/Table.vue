@@ -11,30 +11,44 @@
 
   <el-card>
     <template #header>
-      <span>斑马纹，当前绑定值：【{{ }}】</span>
-    </template>
-
-    <w-table :data="data" :columns="columns" stripe></w-table>
-  </el-card>
-
-  <br />
-
-  <el-card>
-    <template #header>
-      <span>边框，当前绑定值：【{{ }}】</span>
-    </template>
-
-    <w-table :data="data" :columns="columns" border></w-table>
-  </el-card>
-
-  <br />
-
-  <el-card>
-    <template #header>
       <span>综合，当前绑定值：【{{ }}】</span>
     </template>
 
-    <w-table :data="userData" :columns="userColumns" :total="userTotal"></w-table>
+    <w-table
+      :data="tableData"
+      :columns="tableColumns"
+      :total="total"
+      :listFunc="getDataList"
+      has-index
+      has-select
+      has-expand
+      v-model:pageSize="queryFormData.pageSize"
+      v-model:pageNum="queryFormData.pageNum"
+    >
+      <template #expand="{ expand }">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <el-form-item label="用户姓名">
+            <span>{{ expand.row.name }}</span>
+          </el-form-item>
+
+          <el-form-item label="年龄">
+            <span>{{ expand.row.age }}</span>
+          </el-form-item>
+
+          <el-form-item label="性别">
+            <span>{{ expand.row.sex }}</span>
+          </el-form-item>
+
+          <el-form-item label="城市">
+            <span>{{ expand.row.city }}</span>
+          </el-form-item>
+
+          <el-form-item label="描述">
+            <span>{{ expand.row.description }}</span>
+          </el-form-item>
+        </el-form>
+      </template>
+    </w-table>
   </el-card>
 
   <br />
@@ -52,6 +66,11 @@ export default defineComponent({
   components: { wTable },
 
   setup() {
+    const queryFormData = reactive({
+      pageNum: 1,
+      pageSize: 10
+    });
+
     const data = [
       {
         date: "2016-05-02",
@@ -90,10 +109,10 @@ export default defineComponent({
       }
     ];
 
-    const userData = ref([]);
-    const userTotal = ref(0);
+    const tableData = ref([]);
+    const total = ref(0);
 
-    const userColumns = [
+    const tableColumns = [
       {
         label: "姓名",
         prop: "name",
@@ -107,12 +126,8 @@ export default defineComponent({
       {
         label: "年龄",
         prop: "age",
-        width: "100px"
-      },
-      {
-        label: "出生年月",
-        prop: "birth",
-        width: "100px"
+        width: "100px",
+        formatter: ({ age }) => `${age}岁`
       },
       {
         label: "省份",
@@ -138,27 +153,52 @@ export default defineComponent({
         label: "状态",
         prop: "status",
         width: "100px"
+      },
+      {
+        label: "创建日期",
+        prop: "createAt",
+        width: "100px"
       }
     ];
 
+    const getDataList = () => {
+      const result = listUser(queryFormData);
+      tableData.value = result.data;
+      total.value = result.total;
+    };
+
     onMounted(() => {
-      const result = listUser({ pageNum: 1, pageSize: 10 });
-      userData.value = result.data;
-      userTotal.value = result.total;
+      getDataList();
     });
 
     return {
       data,
       columns,
 
-      userData,
-      userTotal,
+      tableData,
+      tableColumns,
+      total,
 
-      userColumns
+      getDataList,
+      queryFormData
     };
   }
 });
 </script>
 
 <style lang='scss' scoped>
+.demo-table-expand:deep() {
+  font-size: 0;
+
+  label {
+    width: 90px;
+    color: #99a9bf;
+  }
+
+  .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+}
 </style>

@@ -9,7 +9,7 @@
 
   <br />
 
-  <w-dialog v-model="dialogVisible1"></w-dialog>
+  <w-dialog v-model="dialogVisible1" fullscreen></w-dialog>
 </template>
 
 <script lang='ts'>

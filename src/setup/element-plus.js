@@ -34,7 +34,13 @@ import {
     ElPagination,
 
     ElTable,
-    ElTableColumn
+    ElTableColumn,
+
+    ElForm,
+    ElFormItem,
+
+    ElDivider,
+    ElTooltip
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -74,7 +80,13 @@ const components = [
     ElPagination,
 
     ElTable,
-    ElTableColumn
+    ElTableColumn,
+
+    ElForm,
+    ElFormItem,
+
+    ElDivider,
+    ElTooltip
 ]
 
 export function setupElementPlus(app) {

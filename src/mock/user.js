@@ -12,19 +12,20 @@ for (let i = 0; i < total; i++) {
         'name': Random.cname(),
         'age': Random.integer(20, 50),
         'sex': Random.pick(['男', '女']),
-        'birth': Random.date(),
         'status': Random.boolean(),
-        'describe': Random.csentence(),
+        'description': Random.csentence(),
         'country': Random.county(),
         'province': Random.province(),
         'city': Random.city(),
-        'site': Random.url()
+        'site': Random.url(),
+        'createAt': Random.date(),
     }
 
     tableData.push(template)
 }
 
 export const listUser = (query) => {
+
     const num = query.pageNum || 1
     const size = query.pageSize || 10
     const total = tableData.length

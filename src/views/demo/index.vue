@@ -48,6 +48,10 @@
       <el-tab-pane label="Table" name="Table">
         <table-demo></table-demo>
       </el-tab-pane>
+
+      <el-tab-pane label="Storage" name="Storage">
+        <storage-demo></storage-demo>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -63,6 +67,7 @@ import InputNumberDemo from "./InputNumber.vue";
 import PaginationDemo from "./Pagination.vue";
 import RadioDemo from "./Radio.vue";
 import SelectDemo from "./Select.vue";
+import StorageDemo from "./Storage.vue";
 import TableDemo from "./Table.vue";
 import TagDemo from "./Tag.vue";
 import { ref, reactive, defineComponent } from "vue";
@@ -81,6 +86,7 @@ export default defineComponent({
     PaginationDemo,
     RadioDemo,
     SelectDemo,
+    StorageDemo,
     TableDemo,
     TagDemo
   },

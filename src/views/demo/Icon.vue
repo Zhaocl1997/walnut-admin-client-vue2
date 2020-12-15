@@ -59,17 +59,26 @@
   </el-card>
 
   <br />
+
+  <el-card class="custom-sf">
+    <template #header>
+      <span>全屏 / 指定元素全屏 / 指定元素窗口内全屏</span>
+    </template>
+
+    <w-screen-full></w-screen-full>
+
+    <w-screen-full target=".custom-sf"></w-screen-full>
+  </el-card>
 </template>
 
 <script lang='ts'>
+import wScreenFull from "/@/components/Others/Screenfull/index.vue";
 import { ref, reactive, computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "IconDemo",
 
-  props: {},
-
-  components: {},
+  components: { wScreenFull },
 
   setup(props, { attrs }) {}
 });
