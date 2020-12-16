@@ -1,7 +1,7 @@
 <template>
   <w-icon
-    class="u-pointer"
-    width="24px"
+    pointer
+    :width="width"
     :icon="isFullscreen ? 'fullscreenExit' : 'fullscreen'"
     @click="onClick"
   ></w-icon>
@@ -18,6 +18,11 @@ export default defineComponent({
     target: {
       type: String,
       default: "#app"
+    },
+
+    width: {
+      type: String,
+      default: "24px"
     }
   },
 

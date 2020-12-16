@@ -1,5 +1,5 @@
 <template>
-  <Icon :icon="icons[icon]" />
+  <Icon :icon="icons[icon]" :class="{'u-pointer': pointer}" />
 </template>
 
 <script lang='ts'>
@@ -15,7 +15,9 @@ export default defineComponent({
   props: {
     ...Icon.props,
 
-    icon: String
+    icon: String,
+
+    pointer: Boolean
   },
 
   setup(props, { attrs }) {

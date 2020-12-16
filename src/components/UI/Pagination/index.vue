@@ -13,6 +13,8 @@
 import { ElPagination } from "element-plus";
 import { ref, reactive, computed, defineComponent, nextTick } from "vue";
 
+import scrollTo from "./scroll-to";
+
 export default defineComponent({
   name: "wPagination",
 
@@ -22,6 +24,7 @@ export default defineComponent({
     ...ElPagination.props,
 
     background: { type: Boolean, default: true },
+    autoScroll: { type: Boolean, default: true },
 
     layout: {
       type: String,
@@ -37,12 +40,20 @@ export default defineComponent({
       emit("change", { pageNum: n.value, pageSize: val });
       emit("update:pageSize", val);
       s.value = val;
+
+      if (props.autoScroll) {
+        scrollTo(0, 800);
+      }
     };
 
     const onCurrentChange = val => {
       emit("change", { pageNum: val, pageSize: s.value });
       emit("update:currentPage", val);
       n.value = val;
+
+      if (props.autoScroll) {
+        scrollTo(0, 800);
+      }
     };
 
     const getBindValue = computed(() => {
