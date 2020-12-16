@@ -1,6 +1,6 @@
 <template>
   <el-tooltip effect="dark" content="刷新" placement="top">
-    <w-icon class="u-pointer" icon="refresh" width="20" @click="listFunc"></w-icon>
+    <w-icon pointer icon="refresh" width="20" @click="listFunc"></w-icon>
   </el-tooltip>
 </template>
 

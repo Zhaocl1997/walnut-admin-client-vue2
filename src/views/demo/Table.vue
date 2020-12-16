@@ -1,22 +1,16 @@
 <template>
   <el-card>
     <template #header>
-      <span>基本，当前绑定值：【{{ }}】</span>
-    </template>
-
-    <w-table :data="data" :columns="columns"></w-table>
-  </el-card>
-
-  <br />
-
-  <el-card>
-    <template #header>
-      <span>综合，当前绑定值：【{{ }}】</span>
+      <span>综合</span>
+      <div>header绑定值</div>
+      <div>
+        <w-JSON :content="tableHeader"></w-JSON>
+      </div>
     </template>
 
     <w-table
       :data="tableData"
-      :columns="tableColumns"
+      v-model:headers="tableHeader"
       :total="total"
       :listFunc="getDataList"
       has-index
@@ -56,6 +50,7 @@
 
 <script lang='ts'>
 import wTable from "/@/components/UI/Table/index.vue";
+import wJSON from "/@/components/Others/JSON/index.vue";
 import { ref, reactive, computed, defineComponent, onMounted } from "vue";
 
 import { listUser } from "/@/mock/user.js";
@@ -63,7 +58,7 @@ import { listUser } from "/@/mock/user.js";
 export default defineComponent({
   name: "TableDemo",
 
-  components: { wTable },
+  components: { wTable, wJSON },
 
   setup() {
     const queryFormData = reactive({
@@ -71,48 +66,10 @@ export default defineComponent({
       pageSize: 10
     });
 
-    const data = [
-      {
-        date: "2016-05-02",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-04",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1517 弄"
-      },
-      {
-        date: "2016-05-01",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1519 弄"
-      },
-      {
-        date: "2016-05-03",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1516 弄"
-      }
-    ];
-
-    const columns = [
-      {
-        label: "日期",
-        prop: "date"
-      },
-      {
-        label: "姓名",
-        prop: "name"
-      },
-      {
-        label: "地址",
-        prop: "address"
-      }
-    ];
-
     const tableData = ref([]);
     const total = ref(0);
 
-    const tableColumns = [
+    const tableHeader = [
       {
         label: "姓名",
         prop: "name",
@@ -172,11 +129,8 @@ export default defineComponent({
     });
 
     return {
-      data,
-      columns,
-
       tableData,
-      tableColumns,
+      tableHeader,
       total,
 
       getDataList,
