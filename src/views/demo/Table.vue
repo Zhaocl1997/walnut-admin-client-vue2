@@ -2,22 +2,22 @@
   <el-card>
     <template #header>
       <span>综合</span>
-      <div>header绑定值</div>
+      <div>pageSize 绑定值：【{{ pageSize }}】</div>
+      <div>pageNum 绑定值：【{{ pageNum }}】</div>
+      <div>header 绑定值</div>
       <div>
-        <w-JSON :content="tableHeader"></w-JSON>
+        <w-JSON v-model="tableHeader"></w-JSON>
       </div>
     </template>
 
     <w-table
       :data="tableData"
-      v-model:headers="tableHeader"
       :total="total"
       :listFunc="getDataList"
       has-index
-      has-select
-      has-expand
-      v-model:pageSize="queryFormData.pageSize"
-      v-model:pageNum="queryFormData.pageNum"
+      v-model:headers="tableHeader"
+      v-model:pageSize="pageSize"
+      v-model:pageNum="pageNum"
     >
       <template #expand="{ expand }">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -51,7 +51,15 @@
 <script lang='ts'>
 import wTable from "/@/components/UI/Table/index.vue";
 import wJSON from "/@/components/Others/JSON/index.vue";
-import { ref, reactive, computed, defineComponent, onMounted } from "vue";
+import {
+  ref,
+  reactive,
+  computed,
+  defineComponent,
+  onMounted,
+  toRef,
+  toRefs
+} from "vue";
 
 import { listUser } from "/@/mock/user.js";
 
@@ -66,10 +74,12 @@ export default defineComponent({
       pageSize: 10
     });
 
-    const tableData = ref([]);
-    const total = ref(0);
+    const table = reactive({
+      total: 0,
+      tableData: []
+    });
 
-    const tableHeader = [
+    const tableHeader = reactive([
       {
         label: "姓名",
         prop: "name",
@@ -116,12 +126,12 @@ export default defineComponent({
         prop: "createAt",
         width: "100px"
       }
-    ];
+    ]);
 
     const getDataList = () => {
       const result = listUser(queryFormData);
-      tableData.value = result.data;
-      total.value = result.total;
+      table.tableData = result.data;
+      table.total = result.total;
     };
 
     onMounted(() => {
@@ -129,12 +139,12 @@ export default defineComponent({
     });
 
     return {
-      tableData,
-      tableHeader,
-      total,
-
       getDataList,
-      queryFormData
+
+      ...toRefs(queryFormData),
+      ...toRefs(table),
+
+      tableHeader
     };
   }
 });

@@ -1,19 +1,36 @@
 <template>
-  <pre class="json-pre"></pre>
+  <pre class="json-pre" :style="{ height: height }"></pre>
 </template>
 
 <script lang='ts'>
-import { reactive, defineComponent, onMounted } from "vue";
+import { reactive, defineComponent, watch } from "vue";
 
 export default defineComponent({
   name: "wJSON",
 
   props: {
-    content: [Object, Array]
+    modelValue: [Object, Array],
+
+    height: {
+      type: String,
+      default: "200px"
+    }
   },
+
+  emits: ["update:modelValue"],
 
   setup(props, { attrs }) {
     let perttierJSON = reactive({});
+
+    watch(
+      () => props.modelValue,
+      value => {
+        init();
+      },
+      {
+        deep: true
+      }
+    );
 
     const onSyntaxHighlight = json => {
       if (typeof json != "string") {
@@ -46,13 +63,10 @@ export default defineComponent({
     };
 
     const init = () => {
-      perttierJSON = onSyntaxHighlight(props.content);
-      document.querySelector(".json-pre").innerHTML = perttierJSON;
+      const target = document.querySelector(".json-pre");
+      perttierJSON = onSyntaxHighlight(props.modelValue);
+      target.innerHTML = perttierJSON;
     };
-
-    onMounted(() => {
-      init();
-    });
 
     return {};
   }
@@ -60,10 +74,15 @@ export default defineComponent({
 </script>
 
 <style lang='scss' scoped>
+@import "../../../assets/style/index.scss";
+
 .json-pre:deep() {
+  @include scrollBar;
+
   outline: 1px solid #ccc;
   padding: 5px;
   margin: 5px;
+  overflow-y: auto;
 
   .string {
     color: green !important;

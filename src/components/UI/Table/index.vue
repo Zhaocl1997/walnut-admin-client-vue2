@@ -55,7 +55,6 @@
           :min-width="item.width ? item.width : '100px'"
           :fixed="item.fixed"
           :formatter="item.formatter"
-          :row-key="item.id"
           :column-key="item.id"
           :align="item.align ? item.align : 'center'"
           :show-overflow-tooltip="item.tooltip ? item.tooltip : true"

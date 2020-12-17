@@ -35,8 +35,8 @@ export default defineComponent({
   emits: ["update:modelValue"],
 
   setup(props, { attrs, emit }) {
-    let g = []
-    
+    let g = reactive([]);
+
     watch(
       () => props.modelValue,
       val => (g = val),
