@@ -1,38 +1,40 @@
 <template>
   <div class="u-mb8 u-float-right">
-    <w-refresh :listFunc="listFunc"></w-refresh>
+    <w-table-settings-refresh :listFunc="listFunc"></w-table-settings-refresh>
 
-    <w-setting v-model:setting="g"></w-setting>
+    <w-table-settings-rows v-model:rows="g"></w-table-settings-rows>
 
-    <el-tooltip effect="dark" content="全屏" placement="top">
-      <w-screen-full width="20px" target=".w-table"></w-screen-full>
-    </el-tooltip>
+    <w-table-settings-screen-full></w-table-settings-screen-full>
+
+    <w-table-settings-density @density="onDensity"></w-table-settings-density>
   </div>
 </template>
 
 <script lang='ts'>
-import { ref, reactive, computed, defineComponent, watch, toRaw } from "vue";
+import { reactive, defineComponent, watch } from "vue";
 
-import wRefresh from "./refresh.vue";
-import wSetting from "./setting.vue";
-import wScreenFull from "../../../Others/Screenfull/index.vue";
+import wTableSettingsRefresh from "./tableSettingsRefresh.vue";
+import wTableSettingsRows from "./tableSettingsRows.vue";
+import wTableSettingsScreenFull from "./tableSettingsScreenFull.vue";
+import wTableSettingsDensity from "./tableSettingsDensity.vue";
 
 export default defineComponent({
   name: "wTableSettings",
 
   props: {
-    ...wRefresh.props,
+    listFunc: Function,
 
     modelValue: Array
   },
 
   components: {
-    wRefresh,
-    wSetting,
-    wScreenFull
+    wTableSettingsRefresh,
+    wTableSettingsRows,
+    wTableSettingsScreenFull,
+    wTableSettingsDensity
   },
 
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "density"],
 
   setup(props, { attrs, emit }) {
     let g = reactive([]);
@@ -57,8 +59,14 @@ export default defineComponent({
       }
     );
 
+    const onDensity = v => {
+      emit("density", v);
+    };
+
     return {
-      g
+      g,
+
+      onDensity
     };
   }
 });

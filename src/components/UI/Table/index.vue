@@ -1,7 +1,12 @@
 <template>
   <div class="w-table">
     <!-- settings -->
-    <w-table-settings v-model="operatedHeader" :listFunc="listFunc"></w-table-settings>
+    <w-table-settings
+      v-show="showSettings"
+      v-model="modelHeaders"
+      :listFunc="listFunc"
+      @density="onDensityChange"
+    ></w-table-settings>
 
     <!-- main -->
     <el-table v-if="flag" v-bind="getBindValue">
@@ -47,7 +52,7 @@
       </el-table-column>
 
       <!-- base -->
-      <template v-for="(item, index) in visibleHeaders" :key="item.id">
+      <template v-for="(item, index) in visibleHeaders" :key="item.prop">
         <el-table-column
           :label="item.label"
           :prop="item.prop"
@@ -55,29 +60,35 @@
           :min-width="item.width ? item.width : '100px'"
           :fixed="item.fixed"
           :formatter="item.formatter"
-          :column-key="item.id"
+          :column-key="item.prop"
           :align="item.align ? item.align : 'center'"
           :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
           :sortable="item.sortable ? 'custom' : false"
           :sort-orders="['ascending', 'descending']"
         >
-          <template #default="scope">
+          <template v-if="item.slot" #default="props">
             <!-- custom slot -->
-            <slot v-if="item.slot" :row="scope.row" :index="scope.$index" :name="item.prop"></slot>
-
-            <!-- format -->
-            <span v-else-if="item.formatter">{{ item.formatter(scope.row, scope.column) }}</span>
-
-            <!-- normal -->
-            <span v-else>{{ scope.row[item.prop] }}</span>
+            <slot :name="item.prop" :props="props"></slot>
           </template>
         </el-table-column>
       </template>
     </el-table>
 
     <!-- page -->
-    <w-pagination class="u-float-right" :total="+total" @change="onPageChange"></w-pagination>
+    <w-pagination v-show="showPage" class="u-float-right" :total="+total" @change="onPageChange"></w-pagination>
   </div>
+
+  <br />
+
+  <!-- <el-table :data="data">
+    <div>
+      <template v-for="(item, index) in visibleHeaders" :key="item.prop">
+        <div>
+          <el-table-column v-bind="item"></el-table-column>
+        </div>
+      </template>
+    </div>
+  </el-table>-->
 </template>
 
 <script lang='ts'>
@@ -95,8 +106,6 @@ import {
 import wTableSettings from "./settings/index.vue";
 import wPagination from "../Pagination/index.vue";
 
-import { genString } from "easy-fns-ts/dist/esm";
-
 export default defineComponent({
   name: "wTable",
 
@@ -106,39 +115,59 @@ export default defineComponent({
     ...ElTable.props,
 
     /**
+     * @description single/multiple v-model value
+     */
+    modelValue: [Array, Object],
+
+    /**
      * @description table header column
      */
     headers: Array,
 
+    /**
+     * @description has select column
+     */
     hasSelect: Boolean,
     hasIndex: Boolean,
     hasExpand: Boolean,
+
+    showSettings: Boolean,
+    showPage: Boolean,
+
+    single: Boolean,
+    multiple: Boolean,
 
     selectable: Function,
     reserveSelection: Boolean,
 
     total: Number,
-    pageNum: Number,
-    pageSize: Number,
+    pageNum: { type: Number, default: 1 },
+    pageSize: { type: Number, default: 10 },
 
     listFunc: Function
   },
+
+  emits: [
+    "update:headers",
+    "update:pageNum",
+    "update:pageSize",
+    "update:modelValue"
+  ],
 
   components: { wTableSettings, wPagination },
 
   setup(props, { attrs, emit }) {
     const state = reactive({
-      operatedHeader: [],
+      modelHeaders: [],
       visibleHeaders: [],
+
+      rowStyle: {},
+
       flag: false
     });
 
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
-
     watch(
-      () => state.operatedHeader,
+      () => state.modelHeaders,
       val => {
         state.flag = false;
         state.visibleHeaders.length = 0;
@@ -156,19 +185,25 @@ export default defineComponent({
       }
     );
 
+    watch(
+      [() => props.hasSelect, () => props.hasIndex, () => props.hasExpand],
+      val => {
+        state.flag = false;
+
+        nextTick(() => {
+          state.flag = true;
+        });
+      }
+    );
+
     const init = () => {
       props.headers.map(i => {
-        state.operatedHeader.push({
+        state.modelHeaders.push({
           ...i,
-          visible: i.visible === false ? false : true, // checkbox
-          id: genString(8)
+          visible: i.visible === false ? false : true // checkbox
         });
       });
     };
-
-    onMounted(() => {
-      init();
-    });
 
     const onPageChange = value => {
       emit("update:pageNum", value.pageNum);
@@ -177,9 +212,49 @@ export default defineComponent({
       props.listFunc();
     };
 
+    const onDensityChange = command => {
+      switch (command) {
+        case "0":
+          state.rowStyle = { height: "40px" };
+          break;
+
+        case "1":
+          state.rowStyle = { height: "60px" };
+          break;
+
+        case "2":
+          state.rowStyle = { height: "80px" };
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    const onCurrentChange = val => {
+      if (props.single) {
+        emit("update:modelValue", val);
+      }
+    };
+
+    onMounted(() => {
+      init();
+    });
+
+    const getBindValue = computed(() => {
+      return {
+        ...attrs,
+        ...props,
+        rowStyle: state.rowStyle,
+        highlightCurrentRow: props.single,
+        onCurrentChange
+      };
+    });
+
     return {
       getBindValue,
       onPageChange,
+      onDensityChange,
 
       ...toRefs(state)
     };

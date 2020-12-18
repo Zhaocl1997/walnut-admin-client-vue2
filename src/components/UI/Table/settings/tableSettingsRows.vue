@@ -9,22 +9,22 @@
     </template>
 
     <!-- fixed left -->
-    <w-table-setting-group type="left" v-model:group="setting">
+    <w-table-settings-rows-group type="left" v-model:group="rows">
       <i class="el-icon-info"></i>固定在左侧
-    </w-table-setting-group>
+    </w-table-settings-rows-group>
 
     <!-- common -->
-    <w-table-setting-group type="common" v-model:group="setting">
+    <w-table-settings-rows-group type="common" v-model:group="rows">
       <i class="el-icon-info"></i>不固定
       <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="onCheckAllChange">全选</el-checkbox>
 
       <el-button size="mini" type="text" @click="onReset">重置</el-button>
-    </w-table-setting-group>
+    </w-table-settings-rows-group>
 
     <!-- right left -->
-    <w-table-setting-group type="right" v-model:group="setting">
+    <w-table-settings-rows-group type="right" v-model:group="rows">
       <i class="el-icon-info"></i>固定在右侧
-    </w-table-setting-group>
+    </w-table-settings-rows-group>
   </el-popover>
 </template>
 
@@ -41,20 +41,20 @@ import {
 } from "vue";
 import { deepClone } from "easy-fns-ts/dist/esm";
 
-import wTableSettingGroup from "./group.vue";
+import wTableSettingsRowsGroup from "./tableSettingsRowsGroup.vue";
 
 export default defineComponent({
-  name: "wTableSetting",
+  name: "wTableSettingsRows",
 
   props: {
-    setting: Array
+    rows: Array
   },
 
   components: {
-    wTableSettingGroup
+    wTableSettingsRowsGroup
   },
 
-  emits: ["update:setting"],
+  emits: ["update:rows"],
 
   setup(props, { attrs, emit }) {
     const state = reactive({
@@ -67,7 +67,7 @@ export default defineComponent({
     watch(
       () => state.selfHeaders,
       val => {
-        emit("update:setting", val);
+        emit("update:rows", val);
       },
       {
         deep: true,
@@ -77,14 +77,14 @@ export default defineComponent({
 
     // change checkAll state
     watch(
-      () => props.setting,
+      () => props.rows,
       val => {
         state.selfHeaders = val;
 
         const visibleItems = val.filter(i => i.visible);
 
         if (Array.isArray(visibleItems) && visibleItems.length !== 0) {
-          if (visibleItems.length === props.setting.length) {
+          if (visibleItems.length === props.rows.length) {
             state.isIndeterminate = false;
             state.checkAll = true;
           } else {
@@ -94,15 +94,16 @@ export default defineComponent({
         }
       },
       {
-        deep: true
+        deep: true,
+        immediate: true
       }
     );
 
     // checkAll or not
     const onCheckAllChange = val => {
-      props.setting.map((item, index) => {
-        props.setting.splice(index, 1, {
-          ...props.setting[index],
+      props.rows.map((item, index) => {
+        props.rows.splice(index, 1, {
+          ...props.rows[index],
           visible: val
         });
       });
@@ -111,13 +112,13 @@ export default defineComponent({
     // reset to init state
     const onReset = () => {
       state.cachedHeaders.map((item, index) => {
-        props.setting.splice(index, 1, item);
+        props.rows.splice(index, 1, item);
       });
     };
 
     onMounted(() => {
       nextTick(() => {
-        state.cachedHeaders = Object.freeze(deepClone(unref(props.setting)));
+        state.cachedHeaders = Object.freeze(deepClone(unref(props.rows)));
       });
     });
 

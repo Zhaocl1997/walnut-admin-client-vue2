@@ -1,6 +1,6 @@
 <template>
   <div v-if="h.length !== 0">
-    <el-divider v-if="type !== TABLE_GROUP_TYPE.LEFT || type !== TABLE_GROUP_TYPE.COMMON || h.find(i => i.fixed !== 'left')"></el-divider>
+    <el-divider v-if="type !== TABLE_GROUP_TYPE.LEFT"></el-divider>
 
     <span class="w-table__setting-group-title">
       <slot />
@@ -9,7 +9,11 @@
 
   <div :class="`${className} u-relative`">
     <ul>
-      <li v-for="(item, index) in h" :key="item.id" @click.stop.prevent="onToggleVisible(item.id)">
+      <li
+        v-for="(item, index) in h"
+        :key="item.prop"
+        @click.stop.prevent="onToggleVisible(item.prop)"
+      >
         <div :id="item.prop" class="u-pointer column-item">
           <div class="u-move u-float-left">
             <w-icon icon="drag"></w-icon>
@@ -73,7 +77,7 @@ import {
 } from "vue";
 
 export default defineComponent({
-  name: "wTableSettingGroup",
+  name: "wTableSettingsRowsGroup",
 
   props: {
     /**
@@ -118,8 +122,8 @@ export default defineComponent({
       return `w-table__setting-group-${props.type}`;
     });
 
-    const onToggleVisible = id => {
-      const index = props.group.findIndex(i => i.id === id);
+    const onToggleVisible = prop => {
+      const index = props.group.findIndex(i => i.prop === prop);
 
       props.group.splice(index, 1, {
         ...props.group[index],
@@ -128,24 +132,50 @@ export default defineComponent({
     };
 
     const onSetLeftFixed = item => {
-      const index = props.group.findIndex(i => i.id === item.id);
+      const index = props.group.findIndex(i => i.prop === item.prop);
 
       props.group.splice(index, 1);
       props.group.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT });
     };
 
     const onSetRightFixed = item => {
-      const index = props.group.findIndex(i => i.id === item.id);
+      const index = props.group.findIndex(i => i.prop === item.prop);
 
       props.group.splice(index, 1);
       props.group.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT });
     };
 
+    const omit = (obj, uselessKeys) => {
+      return Object.keys(obj).reduce(
+        (prev, key) =>
+          uselessKeys.includes(key)
+            ? { ...prev }
+            : { ...prev, [key]: obj[key] },
+        {}
+      );
+    };
+
     const onSetCommon = item => {
-      const index = props.group.findIndex(i => i.id === item.id);
+      const index = props.group.findIndex(i => i.prop === item.prop);
 
       props.group.splice(index, 1);
-      props.group.unshift({ ...item, fixed: "" });
+      props.group.unshift(omit(item, "fixed"));
+    };
+
+    const calcDeviation = () => {
+      if (props.type === TABLE_GROUP_TYPE.COMMON) {
+        return props.group.filter(i => i.fixed === TABLE_GROUP_TYPE.LEFT)
+          .length;
+      }
+
+      if (props.type === TABLE_GROUP_TYPE.LEFT) {
+        return 0;
+      }
+
+      if (props.type === TABLE_GROUP_TYPE.RIGHT) {
+        return props.group.filter(i => i.fixed !== TABLE_GROUP_TYPE.RIGHT)
+          .length;
+      }
     };
 
     const onSetDrag = () => {
@@ -156,12 +186,18 @@ export default defineComponent({
         delay: 0,
         ghostClass: "sortable-ghost",
         onEnd: e => {
-          const oldItem = props.group[e.oldIndex];
-          props.group.splice(e.oldIndex, 1);
-          props.group.splice(e.newIndex, 0, oldItem);
+          const d = calcDeviation();
+          const oldItem = props.group[e.oldIndex + d];
+
+          props.group.splice(e.oldIndex + d, 1);
+          props.group.splice(e.newIndex + d, 0, oldItem);
         }
       });
     };
+
+    onMounted(() => {
+      onSetDrag();
+    });
 
     // watch(
     //   () => props.group,
@@ -174,16 +210,15 @@ export default defineComponent({
     // );
 
     return {
-      className,
       TABLE_GROUP_TYPE,
+      className,
 
       onToggleVisible,
-
-      ...toRefs(state),
-
       onSetLeftFixed,
       onSetRightFixed,
-      onSetCommon
+      onSetCommon,
+
+      ...toRefs(state)
     };
   }
 });

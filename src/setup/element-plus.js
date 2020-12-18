@@ -41,7 +41,13 @@ import {
 
     ElDivider,
     ElTooltip,
-    ElPopover
+    ElPopover,
+
+    ElDropdown,
+    ElDropdownMenu,
+    ElDropdownItem,
+
+    ElSwitch
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -88,7 +94,13 @@ const components = [
 
     ElDivider,
     ElTooltip,
-    ElPopover
+    ElPopover,
+
+    ElDropdown,
+    ElDropdownMenu,
+    ElDropdownItem,
+
+    ElSwitch
 ]
 
 export function setupElementPlus(app) {

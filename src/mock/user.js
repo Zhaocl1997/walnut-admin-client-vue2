@@ -19,6 +19,10 @@ for (let i = 0; i < total; i++) {
         'city': Random.city(),
         'site': Random.url(),
         'createAt': Random.date(),
+        'family': {
+            'dad': Random.name(),
+            'mom': Random.name(),
+        }
     }
 
     tableData.push(template)
