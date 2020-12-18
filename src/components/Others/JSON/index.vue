@@ -34,7 +34,13 @@ export default defineComponent({
 
     const onSyntaxHighlight = json => {
       if (typeof json != "string") {
-        json = JSON.stringify(json, undefined, 2);
+        json = JSON.stringify(
+          json,
+          (key, value) => {
+            return typeof value === "function" ? value + "" : value;
+          },
+          2
+        );
       }
 
       json = json
@@ -43,10 +49,12 @@ export default defineComponent({
         .replace(/>/g, ">");
 
       return json.replace(
-        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-        function(match) {
-          var cls = "number";
-          if (/^"/.test(match)) {
+        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null|function|=>)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+        match => {
+          let cls = "number";
+          if (/function|=>/.test(match)) {
+            cls = "function";
+          } else if (/^"/.test(match)) {
             if (/:$/.test(match)) {
               cls = "key";
             } else {
@@ -57,7 +65,8 @@ export default defineComponent({
           } else if (/null/.test(match)) {
             cls = "null";
           }
-          return '<span class="' + cls + '">' + match + "</span>";
+
+          return `<span class="${cls}">${match}</span>`;
         }
       );
     };
@@ -98,6 +107,9 @@ export default defineComponent({
   }
   .key {
     color: red !important;
+  }
+  .function {
+    color: DarkTurquoise !important;
   }
 }
 </style>
