@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "easy-fns-ts": "^1.0.9",
-    "element-plus": "^1.0.1-beta.7",
+    "element-plus": "^1.0.1-beta.10",
     "mockjs": "^1.1.0",
     "screenfull": "^5.0.2",
     "sortablejs": "^1.12.0",
