@@ -1,12 +1,15 @@
 <template>
-  <pre class="json-pre" :style="{ height: height }"></pre>
+  <pre
+    class="json-pre"
+    :style="{ height: height }"
+  />
 </template>
 
 <script>
 import { reactive, defineComponent, watch } from "vue";
 
 export default defineComponent({
-  name: "wJSON",
+  name: "WJSON",
 
   props: {
     modelValue: [Object, Array],

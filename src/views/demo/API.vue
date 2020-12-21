@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
@@ -12,11 +12,11 @@ const k = {
 };
 
 export default defineComponent({
-  name: "wAPI",
-
-  props: {},
+  name: "WAPI",
 
   components: {},
+
+  props: {},
 
   setup(props, { attrs }) {
     const form = reactive({});

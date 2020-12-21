@@ -1,12 +1,17 @@
 <template>
   <div id="tab-container">
-    <el-tabs v-model="activeTabName" type="card" editable @edit="handleTabsEdit">
+    <el-tabs
+      v-model="activeTabName"
+      type="card"
+      editable
+      @edit="handleTabsEdit"
+    >
       <el-tab-pane
+        v-for="item in editableTabs"
         :key="item.name"
-        v-for="(item, index) in editableTabs"
         :label="item.title"
         :name="item.name"
-      ></el-tab-pane>
+      />
     </el-tabs>
   </div>
 </template>

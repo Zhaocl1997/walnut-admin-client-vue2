@@ -6,7 +6,9 @@
         :key="item[optionValue]"
         :label="item[optionValue]"
         :disabled="item.disabled"
-      >{{ item[optionLabel] }}</el-radio-button>
+      >
+        {{ item[optionLabel] }}
+      </el-radio-button>
     </template>
 
     <template v-else>
@@ -15,7 +17,9 @@
         :key="item[optionValue]"
         :label="item[optionValue]"
         :disabled="item.disabled"
-      >{{ item[optionLabel] }}</el-radio>
+      >
+        {{ item[optionLabel] }}
+      </el-radio>
     </template>
   </el-radio-group>
 </template>
@@ -25,7 +29,7 @@ import { ElRadioGroup } from "element-plus";
 import { ref, computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wRadio",
+  name: "WRadio",
 
   inheritAttrs: false,
 

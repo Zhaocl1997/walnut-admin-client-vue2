@@ -5,7 +5,7 @@
     @size-change="onSizeChange"
     @current-change="onCurrentChange"
   >
-    <slot></slot>
+    <slot />
   </el-pagination>
 </template>
 
@@ -16,7 +16,7 @@ import { ref, reactive, computed, defineComponent, nextTick } from "vue";
 import scrollTo from "./scroll-to";
 
 export default defineComponent({
-  name: "wPagination",
+  name: "WPagination",
 
   inheritAttrs: false,
 
@@ -31,6 +31,8 @@ export default defineComponent({
       default: "total, sizes, prev, pager, next, jumper, slot"
     }
   },
+
+  emits: ["change", "update:pageSize", "update:currentPage"],
 
   setup(props, { attrs, emit }) {
     let n = ref(1);

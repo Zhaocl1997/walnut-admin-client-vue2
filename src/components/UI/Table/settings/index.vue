@@ -1,12 +1,12 @@
 <template>
   <div class="u-mb8 u-float-right">
-    <w-table-settings-refresh :listFunc="listFunc"></w-table-settings-refresh>
+    <w-table-settings-refresh :list-func="listFunc" />
 
-    <w-table-settings-rows v-model:rows="g"></w-table-settings-rows>
+    <w-table-settings-rows v-model:rows="g" />
 
-    <w-table-settings-screen-full></w-table-settings-screen-full>
+    <w-table-settings-screen-full />
 
-    <w-table-settings-density @density="onDensity"></w-table-settings-density>
+    <w-table-settings-density @density="onDensity" />
   </div>
 </template>
 
@@ -19,19 +19,19 @@ import wTableSettingsScreenFull from "./tableSettingsScreenFull.vue";
 import wTableSettingsDensity from "./tableSettingsDensity.vue";
 
 export default defineComponent({
-  name: "wTableSettings",
-
-  props: {
-    listFunc: Function,
-
-    modelValue: Array
-  },
+  name: "WTableSettings",
 
   components: {
     wTableSettingsRefresh,
     wTableSettingsRows,
     wTableSettingsScreenFull,
     wTableSettingsDensity
+  },
+
+  props: {
+    listFunc: Function,
+
+    modelValue: Array
   },
 
   emits: ["update:modelValue", "density"],

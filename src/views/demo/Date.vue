@@ -9,17 +9,17 @@
       :disabled-hours="disabledHours"
       :disabled-minutes="disabledMinutes"
       :disabled-seconds="disabledSeconds"
-    ></w-time-picker>
+    />
     <w-time-picker
       v-model="time1"
       arrow-control
       :disabled-hours="disabledHours"
       :disabled-minutes="disabledMinutes"
       :disabled-seconds="disabledSeconds"
-    ></w-time-picker>
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -33,10 +33,10 @@
       start-placeholder="开始时间"
       end-placeholder="结束时间"
       placeholder="选择时间范围"
-    ></w-time-picker>
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -50,20 +50,20 @@
         step: '00:15',
         end: '19:30'
       }"
-    ></w-time-select>
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>date-select 基础，当前绑定值：【{{ time4 }}】</span>
     </template>
 
-    <w-date-picker v-model="time4"></w-date-picker>
+    <w-date-picker v-model="time4" />
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

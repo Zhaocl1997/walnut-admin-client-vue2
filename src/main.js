@@ -17,7 +17,7 @@ setupRouter(app)
 setupStore(app)
 setupElementPlus(app)
 
-app.component('w-icon', wIcon)
+app.component('WIcon', wIcon)
 
 app.config.isCustomElement = tag => tag.startsWith('w-')
 

@@ -4,57 +4,103 @@
       <span>local storage</span>
     </template>
 
-    <el-input v-model="setKey" placeholder="key"></el-input>
-    <el-input v-model="setValue" placeholder="value" @keyup.native.enter="onSet"></el-input>
+    <el-input
+      v-model="setKey"
+      placeholder="key"
+    />
+    <el-input
+      v-model="setValue"
+      placeholder="value"
+      @keyup.enter="onSet"
+    />
 
-    <el-button @click="onSet">set</el-button>
+    <el-button @click="onSet">
+      set
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-input v-model="getKey" placeholder="key" @keyup.native.enter="onGet"></el-input>
+    <el-input
+      v-model="getKey"
+      placeholder="key"
+      @keyup.enter="onGet"
+    />
 
     <div>{{ getValue }}</div>
 
-    <el-button @click="onGet">get</el-button>
+    <el-button @click="onGet">
+      get
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-input v-model="removeKey" placeholder="key" @keyup.native.enter="onRemove"></el-input>
-    <el-button @click="onRemove">remove</el-button>
+    <el-input
+      v-model="removeKey"
+      placeholder="key"
+      @keyup.enter="onRemove"
+    />
+    <el-button @click="onRemove">
+      remove
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-button @click="onClear">clear</el-button>
+    <el-button @click="onClear">
+      clear
+    </el-button>
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>session storage</span>
     </template>
 
-    <el-input v-model="setKey2" placeholder="key"></el-input>
-    <el-input v-model="setValue2" placeholder="value" @keyup.native.enter="onSet2"></el-input>
+    <el-input
+      v-model="setKey2"
+      placeholder="key"
+    />
+    <el-input
+      v-model="setValue2"
+      placeholder="value"
+      @keyup.enter="onSet2"
+    />
 
-    <el-button @click="onSet2">set</el-button>
+    <el-button @click="onSet2">
+      set
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-input v-model="getKey2" placeholder="key" @keyup.native.enter="onGet2"></el-input>
+    <el-input
+      v-model="getKey2"
+      placeholder="key"
+      @keyup.enter="onGet2"
+    />
 
     <div>{{ getValue2 }}</div>
 
-    <el-button @click="onGet2">get</el-button>
+    <el-button @click="onGet2">
+      get
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-input v-model="removeKey2" placeholder="key" @keyup.native.enter="onRemove2"></el-input>
-    <el-button @click="onRemove2">remove</el-button>
+    <el-input
+      v-model="removeKey2"
+      placeholder="key"
+      @keyup.enter="onRemove2"
+    />
+    <el-button @click="onRemove2">
+      remove
+    </el-button>
 
-    <el-divider></el-divider>
+    <el-divider />
 
-    <el-button @click="onClear2">clear</el-button>
+    <el-button @click="onClear2">
+      clear
+    </el-button>
   </el-card>
 </template>
 
@@ -73,11 +119,11 @@ import { ref, reactive, computed, defineComponent } from "vue";
 import { ElMessage } from "element-plus";
 
 export default defineComponent({
-  name: "wStorage",
-
-  props: {},
+  name: "WStorage",
 
   components: {},
+
+  props: {},
 
   setup(props, { attrs }) {
     const setKey = ref("");

@@ -1,18 +1,30 @@
 <template>
   <el-input v-bind="getBindValue">
-    <template v-if="$slots.prepend" #prepend>
+    <template
+      v-if="$slots.prepend"
+      #prepend
+    >
       <slot name="prepend" />
     </template>
 
-    <template v-if="$slots.append" #append>
+    <template
+      v-if="$slots.append"
+      #append
+    >
       <slot name="append" />
     </template>
 
-    <template v-if="$slots.suffix" #suffix>
+    <template
+      v-if="$slots.suffix"
+      #suffix
+    >
       <slot name="suffix" />
     </template>
 
-    <template v-if="$slots.prefix" #prefix>
+    <template
+      v-if="$slots.prefix"
+      #prefix
+    >
       <slot name="prefix" />
     </template>
   </el-input>
@@ -24,7 +36,7 @@ import { computed, defineComponent } from "vue";
 import { clearIllegalChars } from "easy-fns-ts/dist/esm";
 
 export default defineComponent({
-  name: "wInput",
+  name: "WInput",
 
   inheritAttrs: false,
 
@@ -32,6 +44,7 @@ export default defineComponent({
     ...ElInput.props,
 
     modelModifiers: {
+      type: Object,
       default: () => ({})
     },
 
@@ -40,6 +53,8 @@ export default defineComponent({
       default: () => []
     }
   },
+
+  emits:["update:modelValue"],
 
   setup(props, { attrs, emit }) {
     const onInput = value => {
@@ -50,7 +65,6 @@ export default defineComponent({
       const legalValue = clearIllegalChars(value, props.blackList);
 
       emit("update:modelValue", legalValue);
-      emit("input", legalValue);
     };
 
     const getBindValue = computed(() => {

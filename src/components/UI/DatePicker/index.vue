@@ -1,5 +1,5 @@
 <template>
-  <el-date-picker v-bind="getBindValue"></el-date-picker>
+  <el-date-picker v-bind="getBindValue" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { ElDatePicker } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wDatePicker",
+  name: "WDatePicker",
 
   props: {
     ...ElDatePicker.props

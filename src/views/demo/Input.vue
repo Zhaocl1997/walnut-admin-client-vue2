@@ -4,10 +4,14 @@
       <span>基本，当前绑定值：【{{ input1 }}】</span>
     </template>
 
-    <w-input v-model="input1" clearable @clear="onClear"></w-input>
+    <w-input
+      v-model="input1"
+      clearable
+      @clear="onClear"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -21,30 +25,38 @@
       @input="onInput"
       @blur="onBlur"
       @focus="onFocus"
-    ></w-input>
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>密码，当前绑定值：【{{ input3 }}】</span>
     </template>
 
-    <w-input v-model="input3" show-password clearable></w-input>
+    <w-input
+      v-model="input3"
+      show-password
+      clearable
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>前后置内容(prop)，当前绑定值：【{{ input4 }}】</span>
     </template>
 
-    <w-input v-model="input4" suffix-icon="el-icon-date" prefix-icon="el-icon-search"></w-input>
+    <w-input
+      v-model="input4"
+      suffix-icon="el-icon-date"
+      prefix-icon="el-icon-search"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -53,16 +65,16 @@
 
     <w-input v-model="input5">
       <template #suffix>
-        <i class="el-icon-date"></i>
+        <i class="el-icon-date" />
       </template>
 
       <template #prefix>
-        <i class="el-icon-search"></i>
+        <i class="el-icon-search" />
       </template>
     </w-input>
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -70,12 +82,16 @@
     </template>
 
     <w-input v-model="input6">
-      <template #prepend>Http://</template>
-      <template #append>.com</template>
+      <template #prepend>
+        Http://
+      </template>
+      <template #append>
+        .com
+      </template>
     </w-input>
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
@@ -89,17 +105,17 @@
       show-word-limit
       :autosize="{ minRows: 2, maxRows: 4 }"
       rows="5"
-    ></w-input>
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>自定义修饰符，当前绑定值：【{{ input8 }}】</span>
     </template>
 
-    <w-input v-model.capitalize="input8"></w-input>
+    <w-input v-model.capitalize="input8" />
   </el-card>
 </template>
 

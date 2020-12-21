@@ -1,15 +1,15 @@
 <template>
   <div id="layout">
-    <TheHeader></TheHeader>
+    <TheHeader />
 
-    <TheAside></TheAside>
+    <TheAside />
 
     <el-container style="margin-left:200px;">
-      <TheTab></TheTab>
+      <TheTab />
 
-      <TheMain></TheMain>
+      <TheMain />
 
-      <TheFooter></TheFooter>
+      <TheFooter />
     </el-container>
   </div>
 </template>

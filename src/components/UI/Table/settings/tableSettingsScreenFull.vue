@@ -1,6 +1,12 @@
 <template>
-  <el-tooltip content="全屏" placement="top">
-    <w-screen-full width="20" target=".w-table"></w-screen-full>
+  <el-tooltip
+    content="全屏"
+    placement="top"
+  >
+    <w-screen-full
+      width="20"
+      target=".w-table"
+    />
   </el-tooltip>
 </template>
 
@@ -9,7 +15,7 @@ import wScreenFull from "../../../Others/Screenfull/index.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wTableSettingsScreenFull",
+  name: "WTableSettingsScreenFull",
 
   components: { wScreenFull },
 

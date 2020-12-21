@@ -1,5 +1,5 @@
 <template>
-  <el-time-picker v-bind="getBindValue"></el-time-picker>
+  <el-time-picker v-bind="getBindValue" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { ElTimePicker } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wTimePicker",
+  name: "WTimePicker",
 
   props: {
     ...ElTimePicker.props

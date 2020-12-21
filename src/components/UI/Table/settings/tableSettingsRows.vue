@@ -1,29 +1,56 @@
 <template>
-  <el-popover placement="bottom" trigger="click" popper-class="w-table-popover">
+  <el-popover
+    placement="bottom"
+    trigger="click"
+    popper-class="w-table-popover"
+  >
     <template #reference>
       <div class="u-inline">
-        <el-tooltip effect="dark" content="列设置" placement="top">
-          <w-icon pointer icon="settings" width="20"></w-icon>
+        <el-tooltip
+          effect="dark"
+          content="列设置"
+          placement="top"
+        >
+          <w-icon
+            pointer
+            icon="settings"
+            width="20"
+          />
         </el-tooltip>
       </div>
     </template>
 
     <!-- fixed left -->
-    <w-table-settings-rows-group type="left" v-model:group="rows">
-      <i class="el-icon-info"></i>固定在左侧
+    <!-- eslint-disable-next-line -->
+    <w-table-settings-rows-group v-model:group="rows" type="left">
+      <i class="el-icon-info" />固定在左侧
     </w-table-settings-rows-group>
 
     <!-- common -->
-    <w-table-settings-rows-group type="common" v-model:group="rows">
-      <i class="el-icon-info"></i>不固定
-      <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="onCheckAllChange">全选</el-checkbox>
+    <!-- eslint-disable-next-line -->
+    <w-table-settings-rows-group v-model:group="rows" type="common">
+      <i class="el-icon-info" />不固定
+      <el-checkbox
+        v-model="checkAll"
+        :indeterminate="isIndeterminate"
+        @change="onCheckAllChange"
+      >
+        全选
+      </el-checkbox>
 
-      <el-button size="mini" type="text" @click="onReset">重置</el-button>
+      <el-button
+        size="mini"
+        type="text"
+        @click="onReset"
+      >
+        重置
+      </el-button>
     </w-table-settings-rows-group>
 
     <!-- right left -->
-    <w-table-settings-rows-group type="right" v-model:group="rows">
-      <i class="el-icon-info"></i>固定在右侧
+    <!-- eslint-disable-next-line -->
+    <w-table-settings-rows-group v-model:group="rows" type="right">
+      <i class="el-icon-info" />固定在右侧
     </w-table-settings-rows-group>
   </el-popover>
 </template>
@@ -44,14 +71,14 @@ import { deepClone } from "easy-fns-ts/dist/esm";
 import wTableSettingsRowsGroup from "./tableSettingsRowsGroup.vue";
 
 export default defineComponent({
-  name: "wTableSettingsRows",
-
-  props: {
-    rows: Array
-  },
+  name: "WTableSettingsRows",
 
   components: {
     wTableSettingsRowsGroup
+  },
+
+  props: {
+    rows: Array
   },
 
   emits: ["update:rows"],
@@ -102,6 +129,7 @@ export default defineComponent({
     // checkAll or not
     const onCheckAllChange = val => {
       props.rows.map((item, index) => {
+        // eslint-disable-next-line
         props.rows.splice(index, 1, {
           ...props.rows[index],
           visible: val
@@ -112,6 +140,7 @@ export default defineComponent({
     // reset to init state
     const onReset = () => {
       state.cachedHeaders.map((item, index) => {
+        // eslint-disable-next-line
         props.rows.splice(index, 1, item);
       });
     };

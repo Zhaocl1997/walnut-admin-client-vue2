@@ -4,30 +4,42 @@
       <span>单选-基本，当前绑定值：【{{ state.select1 }}】</span>
     </template>
 
-    <w-select v-model="state.select1" :options="options"></w-select>
+    <w-select
+      v-model="state.select1"
+      :options="options"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>多选-基本，当前绑定值：【{{ state.select2 }}】</span>
     </template>
 
-    <w-select v-model="state.select2" multiple :options="options"></w-select>
+    <w-select
+      v-model="state.select2"
+      multiple
+      :options="options"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>多选-对象，当前绑定值：【{{ state.select3 }}】</span>
     </template>
 
-    <w-select v-model="state.select3" multiple :options="options" value-key="value"></w-select>
+    <w-select
+      v-model="state.select3"
+      multiple
+      :options="options"
+      value-key="value"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <!-- <el-card>
     <template #header>

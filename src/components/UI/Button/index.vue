@@ -1,13 +1,22 @@
 <template>
   <el-button v-bind="getBindValue">
-    <i v-if="prefixIcon" :class="prefixIcon"></i>
+    <i
+      v-if="prefixIcon"
+      :class="prefixIcon"
+    />
 
-    <span v-if="$slots.default" style="margin:3px;">
+    <span
+      v-if="$slots.default"
+      style="margin:3px;"
+    >
       <span v-if="delayText">{{ delayText }}</span>
-      <slot v-else></slot>
+      <slot v-else />
     </span>
 
-    <i v-if="suffixIcon" :class="suffixIcon"></i>
+    <i
+      v-if="suffixIcon"
+      :class="suffixIcon"
+    />
   </el-button>
 </template>
 
@@ -16,7 +25,7 @@ import { ElButton } from "element-plus";
 import { ref, computed, defineComponent, unref } from "vue";
 
 export default defineComponent({
-  name: "wButton",
+  name: "WButton",
 
   inheritAttrs: false,
 
@@ -29,6 +38,8 @@ export default defineComponent({
     retryDelay: [String, Number],
     loadDelay: [String, Number]
   },
+
+  emits: ["click"],
 
   setup(props, { attrs, slots, emit }) {
     const originText = slots.default && slots.default()[0].children;

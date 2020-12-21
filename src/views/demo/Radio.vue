@@ -4,20 +4,27 @@
       <span>基本，当前绑定值：【{{ radio1 }}】</span>
     </template>
 
-    <w-radio v-model="radio1" :options="options"></w-radio>
+    <w-radio
+      v-model="radio1"
+      :options="options"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>按钮样式，当前绑定值：【{{ radio2 }}】</span>
     </template>
 
-    <w-radio v-model="radio2" :options="options" button></w-radio>
+    <w-radio
+      v-model="radio2"
+      :options="options"
+      button
+    />
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

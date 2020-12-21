@@ -4,12 +4,17 @@
       <span>基本，当前绑定值：【{{ dialogVisible1 }}】</span>
     </template>
 
-    <el-button @click="onOpenDialog">打开dialog</el-button>
+    <el-button @click="onOpenDialog">
+      打开dialog
+    </el-button>
   </el-card>
 
-  <br />
+  <br>
 
-  <w-dialog v-model="dialogVisible1" fullscreen></w-dialog>
+  <w-dialog
+    v-model="dialogVisible1"
+    fullscreen
+  />
 </template>
 
 <script>

@@ -4,10 +4,14 @@
       <span>基本，页码绑定值：【{{ pageNum }}】，数量绑定值：【{{ pageSize }}】</span>
     </template>
 
-    <w-pagination :total="100" v-model:currentPage="pageNum" v-model:pageSize="pageSize"></w-pagination>
+    <w-pagination
+      v-model:currentPage="pageNum"
+      v-model:pageSize="pageSize"
+      :total="100"
+    />
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

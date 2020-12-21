@@ -1,6 +1,15 @@
 <template>
-  <el-tooltip effect="dark" content="刷新" placement="top">
-    <w-icon pointer icon="refresh" width="20" @click="listFunc"></w-icon>
+  <el-tooltip
+    effect="dark"
+    content="刷新"
+    placement="top"
+  >
+    <w-icon
+      pointer
+      icon="refresh"
+      width="20"
+      @click="listFunc"
+    />
   </el-tooltip>
 </template>
 
@@ -8,7 +17,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wTableSettingsRefresh",
+  name: "WTableSettingsRefresh",
 
   props: {
     listFunc: Function

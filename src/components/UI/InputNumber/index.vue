@@ -1,5 +1,5 @@
 <template>
-  <el-input-number v-bind="getBindValue"></el-input-number>
+  <el-input-number v-bind="getBindValue" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { ElInputNumber } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wInputNumber",
+  name: "WInputNumber",
 
   inheritAttrs: false,
 

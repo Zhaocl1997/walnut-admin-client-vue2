@@ -4,33 +4,36 @@
     <w-table-settings
       v-show="showSettings"
       v-model="modelHeaders"
-      :listFunc="listFunc"
+      :list-func="listFunc"
       @density="onDensityChange"
-    ></w-table-settings>
+    />
 
     <!-- main -->
-    <el-table v-if="flag" v-bind="getBindValue">
+    <el-table
+      v-if="flag"
+      v-bind="getBindValue"
+    >
       <!-- select -->
       <el-table-column
         v-if="hasSelect"
+        key="select"
         type="selection"
         width="50"
         align="center"
         fixed="left"
-        key="select"
         :selectable="selectable"
-        :reserveSelection="reserveSelection"
-      ></el-table-column>
+        :reserve-selection="reserveSelection"
+      />
 
       <!-- index -->
       <el-table-column
         v-if="hasIndex"
+        key="index"
         label="序号"
         type="index"
         width="50"
         align="center"
         fixed="left"
-        key="index"
       >
         <template #default="scope">
           <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
@@ -40,19 +43,25 @@
       <!-- expand -->
       <el-table-column
         v-if="hasExpand"
+        key="expand"
         type="expand"
         width="50"
         align="center"
         fixed="left"
-        key="expand"
       >
         <template #default="props">
-          <slot name="expand" :expand="props"></slot>
+          <slot
+            name="expand"
+            :expand="props"
+          />
         </template>
       </el-table-column>
 
       <!-- base -->
-      <template v-for="(item, index) in visibleHeaders" :key="item.prop">
+      <template
+        v-for="item in visibleHeaders"
+        :key="item.prop"
+      >
         <el-table-column
           :label="item.label"
           :prop="item.prop"
@@ -66,19 +75,30 @@
           :sortable="item.sortable ? 'custom' : false"
           :sort-orders="['ascending', 'descending']"
         >
-          <template v-if="item.slot" #default="props">
+          <template
+            v-if="item.slot"
+            #default="props"
+          >
             <!-- custom slot -->
-            <slot :name="item.prop" :props="props"></slot>
+            <slot
+              :name="item.prop"
+              :props="props"
+            />
           </template>
         </el-table-column>
       </template>
     </el-table>
 
     <!-- page -->
-    <w-pagination v-show="showPage" class="u-float-right" :total="+total" @change="onPageChange"></w-pagination>
+    <w-pagination
+      v-show="showPage"
+      class="u-float-right"
+      :total="+total"
+      @change="onPageChange"
+    />
   </div>
 
-  <br />
+  <br>
 
   <!-- <el-table :data="data">
     <div>
@@ -107,7 +127,9 @@ import wTableSettings from "./settings/index.vue";
 import wPagination from "../Pagination/index.vue";
 
 export default defineComponent({
-  name: "wTable",
+  name: "WTable",
+
+  components: { wTableSettings, wPagination },
 
   inheritAttrs: false,
 
@@ -153,8 +175,6 @@ export default defineComponent({
     "update:pageSize",
     "update:modelValue"
   ],
-
-  components: { wTableSettings, wPagination },
 
   setup(props, { attrs, emit }) {
     const state = reactive({

@@ -4,40 +4,57 @@
       <span>基本，当前绑定值：【{{ tag1 }}】</span>
     </template>
 
-    <w-tag v-model="tag1" :options="options"></w-tag>
+    <w-tag
+      v-model="tag1"
+      :options="options"
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>可删，当前绑定值：【{{ tag2 }}】</span>
     </template>
 
-    <w-tag v-model="tag2" :options="options" closable></w-tag>
+    <w-tag
+      v-model="tag2"
+      :options="options"
+      closable
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>可加，当前绑定值：【{{ tag3 }}】</span>
     </template>
 
-    <w-tag v-model="tag3" :options="options" addable></w-tag>
+    <w-tag
+      v-model="tag3"
+      :options="options"
+      addable
+    />
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>简单数组，当前绑定值：【{{ tag4 }}】</span>
     </template>
 
-    <w-tag v-model="tag4" :options="options2" value-key="cityName" addable closable></w-tag>
+    <w-tag
+      v-model="tag4"
+      :options="options2"
+      value-key="cityName"
+      addable
+      closable
+    />
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

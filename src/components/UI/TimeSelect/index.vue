@@ -1,5 +1,5 @@
 <template>
-  <el-time-select v-bind="getBindValue"></el-time-select>
+  <el-time-select v-bind="getBindValue" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { ElTimeSelect } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wTimeSelect",
+  name: "WTimeSelect",
 
   props: {
     ...ElTimeSelect.props

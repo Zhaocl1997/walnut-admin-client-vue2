@@ -6,7 +6,7 @@
       :label="item[optionLabel]"
       :value="valueKey ? item :item[optionValue]"
       :disabled="item.disabled"
-    ></el-option>
+    />
   </el-select>
 </template>
 
@@ -15,7 +15,7 @@ import { ElSelect } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wSelect",
+  name: "WSelect",
 
   inheritAttrs: false,
 

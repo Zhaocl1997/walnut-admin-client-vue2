@@ -1,8 +1,19 @@
 <template>
   <el-dialog v-bind="getBindValue">
     <template #footer>
-      <el-button @click="onCancel" size="small">取 消</el-button>
-      <el-button @click="onConfirm" size="small" type="primary">确 定</el-button>
+      <el-button
+        size="small"
+        @click="onCancel"
+      >
+        取 消
+      </el-button>
+      <el-button
+        size="small"
+        type="primary"
+        @click="onConfirm"
+      >
+        确 定
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -12,13 +23,15 @@ import { ElDialog } from "element-plus";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wDialog",
+  name: "WDialog",
 
   inheritAttrs: false,
 
   props: {
     ...ElDialog.props
   },
+
+  emits: ["confirm", "cancel"],
 
   setup(props, { attrs, emit }) {
     const getBindValue = computed(() => {

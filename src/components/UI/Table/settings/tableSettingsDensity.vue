@@ -1,14 +1,41 @@
 <template>
-  <el-tooltip content="密度" placement="top" :offset="17">
+  <el-tooltip
+    content="密度"
+    placement="top"
+    :offset="17"
+  >
     <div class="u-inline">
-      <el-dropdown trigger="click" size="medium" @command="onDropdownCommand">
-        <w-icon pointer icon="vamo" width="20"></w-icon>
+      <el-dropdown
+        trigger="click"
+        size="medium"
+        @command="onDropdownCommand"
+      >
+        <w-icon
+          pointer
+          icon="vamo"
+          width="20"
+        />
 
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="0" key="0">紧凑</el-dropdown-item>
-            <el-dropdown-item command="1" key="1">中等</el-dropdown-item>
-            <el-dropdown-item command="2" key="2">宽裕</el-dropdown-item>
+            <el-dropdown-item
+              key="0"
+              command="0"
+            >
+              紧凑
+            </el-dropdown-item>
+            <el-dropdown-item
+              key="1"
+              command="1"
+            >
+              中等
+            </el-dropdown-item>
+            <el-dropdown-item
+              key="2"
+              command="2"
+            >
+              宽裕
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -20,7 +47,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wTableSettingsDensity",
+  name: "WTableSettingsDensity",
 
   emits: ["density"],
 

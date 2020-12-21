@@ -4,7 +4,7 @@
     :width="width"
     :icon="isFullscreen ? 'fullscreenExit' : 'fullscreen'"
     @click="onClick"
-  ></w-icon>
+  />
 </template>
 
 <script>
@@ -12,7 +12,7 @@ import screenfull from "screenfull";
 import { ref, defineComponent, onMounted, onUnmounted } from "vue";
 
 export default defineComponent({
-  name: "wScreenfull",
+  name: "WScreenfull",
 
   props: {
     target: {

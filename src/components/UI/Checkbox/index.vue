@@ -1,6 +1,8 @@
 <template>
   <template v-if="originText">
-    <el-checkbox v-bind="getBindValue">{{ originText }}</el-checkbox>
+    <el-checkbox v-bind="getBindValue">
+      {{ originText }}
+    </el-checkbox>
   </template>
 
   <template v-else>
@@ -10,7 +12,9 @@
         :key="item[optionValue]"
         :label="item[optionValue]"
         :disabled="item.disabled"
-      >{{ item[optionLabel] }}</el-checkbox>
+      >
+        {{ item[optionLabel] }}
+      </el-checkbox>
     </el-checkbox-group>
   </template>
 </template>
@@ -20,7 +24,7 @@ import { ElCheckboxGroup } from "element-plus";
 import { reactive, computed, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "wCheckbox",
+  name: "WCheckbox",
 
   inheritAttrs: false,
 

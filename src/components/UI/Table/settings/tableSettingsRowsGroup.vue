@@ -1,6 +1,6 @@
 <template>
   <div v-if="h.length !== 0">
-    <el-divider v-if="type !== TABLE_GROUP_TYPE.LEFT"></el-divider>
+    <el-divider v-if="type !== TABLE_GROUP_TYPE.LEFT" />
 
     <span class="w-table__setting-group-title">
       <slot />
@@ -10,49 +10,67 @@
   <div :class="`${className} u-relative`">
     <ul>
       <li
-        v-for="(item, index) in h"
+        v-for="item in h"
         :key="item.prop"
         @click.stop.prevent="onToggleVisible(item.prop)"
       >
-        <div :id="item.prop" class="u-pointer column-item">
+        <div
+          :id="item.prop"
+          class="u-pointer column-item"
+        >
           <div class="u-move u-float-left">
-            <w-icon icon="drag"></w-icon>
+            <w-icon icon="drag" />
           </div>
 
-          <div class="u-one-line u-inline-block" style="max-width:100px;">
-            <el-checkbox v-model="item.visible" :disabled="item.disabled">
+          <div
+            class="u-one-line u-inline-block"
+            style="max-width:100px;"
+          >
+            <el-checkbox
+              v-model="item.visible"
+              :disabled="item.disabled"
+            >
               <span :title="item.label">{{ item.label }}</span>
             </el-checkbox>
           </div>
 
           <div class="w-table__setting-fix u-float-right">
-            <el-tooltip content="不固定" :open-delay="200">
+            <el-tooltip
+              content="不固定"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
-                  icon="vamo"
                   v-if="type !== TABLE_GROUP_TYPE.COMMON"
+                  icon="vamo"
                   @click.stop="onSetCommon(item)"
-                ></w-icon>
+                />
               </div>
             </el-tooltip>
 
-            <el-tooltip content="固定在列首" :open-delay="200">
+            <el-tooltip
+              content="固定在列首"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
-                  icon="vato"
                   v-if="type !== TABLE_GROUP_TYPE.LEFT"
+                  icon="vato"
                   @click.stop="onSetLeftFixed(item)"
-                ></w-icon>
+                />
               </div>
             </el-tooltip>
 
-            <el-tooltip content="固定在列尾" :open-delay="200">
+            <el-tooltip
+              content="固定在列尾"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
-                  icon="vabo"
                   v-if="type !== TABLE_GROUP_TYPE.RIGHT"
+                  icon="vabo"
                   @click.stop="onSetRightFixed(item)"
-                ></w-icon>
+                />
               </div>
             </el-tooltip>
           </div>
@@ -77,7 +95,7 @@ import {
 } from "vue";
 
 export default defineComponent({
-  name: "wTableSettingsRowsGroup",
+  name: "WTableSettingsRowsGroup",
 
   props: {
     /**
@@ -125,6 +143,7 @@ export default defineComponent({
     const onToggleVisible = prop => {
       const index = props.group.findIndex(i => i.prop === prop);
 
+      // eslint-disable-next-line
       props.group.splice(index, 1, {
         ...props.group[index],
         visible: !props.group[index].visible
@@ -134,14 +153,20 @@ export default defineComponent({
     const onSetLeftFixed = item => {
       const index = props.group.findIndex(i => i.prop === item.prop);
 
+      // eslint-disable-next-line
       props.group.splice(index, 1);
+
+      // eslint-disable-next-line
       props.group.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT });
     };
 
     const onSetRightFixed = item => {
       const index = props.group.findIndex(i => i.prop === item.prop);
 
+      // eslint-disable-next-line
       props.group.splice(index, 1);
+
+      // eslint-disable-next-line
       props.group.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT });
     };
 
@@ -158,7 +183,10 @@ export default defineComponent({
     const onSetCommon = item => {
       const index = props.group.findIndex(i => i.prop === item.prop);
 
+      // eslint-disable-next-line
       props.group.splice(index, 1);
+
+      // eslint-disable-next-line
       props.group.unshift(omit(item, "fixed"));
     };
 
@@ -189,7 +217,10 @@ export default defineComponent({
           const d = calcDeviation();
           const oldItem = props.group[e.oldIndex + d];
 
+          // eslint-disable-next-line
           props.group.splice(e.oldIndex + d, 1);
+
+          // eslint-disable-next-line
           props.group.splice(e.newIndex + d, 0, oldItem);
         }
       });

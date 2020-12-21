@@ -4,19 +4,28 @@
     :key="valueKey ? item[valueKey] : item[optionValue]"
     v-bind="{...getBindValue, ...item.props}"
     @close="onCloseTag(index)"
-  >{{ valueKey ? item[valueKey] : item[optionLabel] }}</el-tag>
+  >
+    {{ valueKey ? item[valueKey] : item[optionLabel] }}
+  </el-tag>
 
   <template v-if="addable">
     <el-input
-      ref="inputElement"
-      class="input-new-tag"
       v-if="inputVisible"
+      ref="inputElement"
       v-model="inputValue"
+      class="input-new-tag"
       size="small"
-      @keyup.enter.native="onInputConfirm"
+      @keyup.enter="onInputConfirm"
       @blur="onInputConfirm"
-    ></el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="onInputShow">+</el-button>
+    />
+    <el-button
+      v-else
+      class="button-new-tag"
+      size="small"
+      @click="onInputShow"
+    >
+      +
+    </el-button>
   </template>
 </template>
 
@@ -33,7 +42,7 @@ import {
 import { deepClone } from "easy-fns-ts/dist/esm";
 
 export default defineComponent({
-  name: "wTag",
+  name: "WTag",
 
   inheritAttrs: false,
 
@@ -50,6 +59,8 @@ export default defineComponent({
 
     addable: Boolean
   },
+
+  emits:["update:modelValue"],
 
   setup(props, { attrs, emit }) {
     const state = reactive({

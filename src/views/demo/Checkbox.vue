@@ -4,20 +4,25 @@
       <span>基本，当前绑定值：【{{ checkbox1 }}】</span>
     </template>
 
-    <w-checkbox v-model="checkbox1">记住密码</w-checkbox>
+    <w-checkbox v-model="checkbox1">
+      记住密码
+    </w-checkbox>
   </el-card>
 
-  <br />
+  <br>
 
   <el-card>
     <template #header>
       <span>多选-基本，当前绑定值：【{{ checkbox2 }}】</span>
     </template>
 
-    <w-checkbox v-model="checkbox2" :options="options"></w-checkbox>
+    <w-checkbox
+      v-model="checkbox2"
+      :options="options"
+    />
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

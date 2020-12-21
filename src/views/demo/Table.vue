@@ -5,31 +5,31 @@
 
       <el-form inline>
         <el-form-item label="单选">
-          <el-switch v-model="single"></el-switch>
+          <el-switch v-model="single" />
         </el-form-item>
 
         <el-form-item label="多选">
-          <el-switch v-model="multiple"></el-switch>
+          <el-switch v-model="multiple" />
         </el-form-item>
 
         <el-form-item label="索引">
-          <el-switch v-model="hasIndex"></el-switch>
+          <el-switch v-model="hasIndex" />
         </el-form-item>
 
         <el-form-item label="多选">
-          <el-switch v-model="hasSelect"></el-switch>
+          <el-switch v-model="hasSelect" />
         </el-form-item>
 
         <el-form-item label="展开">
-          <el-switch v-model="hasExpand"></el-switch>
+          <el-switch v-model="hasExpand" />
         </el-form-item>
 
         <el-form-item label="设置">
-          <el-switch v-model="showSettings"></el-switch>
+          <el-switch v-model="showSettings" />
         </el-form-item>
 
         <el-form-item label="分页">
-          <el-switch v-model="showPage"></el-switch>
+          <el-switch v-model="showPage" />
         </el-form-item>
       </el-form>
 
@@ -38,14 +38,18 @@
       <div>pageNum 绑定值：【{{ pageNum }}】</div>
       <div>header 绑定值</div>
       <div>
-        <w-JSON v-model="tableHeader"></w-JSON>
+        <w-JSON v-model="tableHeader" />
       </div>
     </template>
 
     <w-table
+      v-model="tableValue"
+      v-model:headers="tableHeader"
+      v-model:pageSize="pageSize"
+      v-model:pageNum="pageNum"
       :data="tableData"
       :total="total"
-      :listFunc="getDataList"
+      :list-func="getDataList"
       :has-index="hasIndex"
       :has-select="hasSelect"
       :has-expand="hasExpand"
@@ -53,13 +57,13 @@
       :show-page="showPage"
       :single="single"
       :multiple="multiple"
-      v-model:headers="tableHeader"
-      v-model:pageSize="pageSize"
-      v-model:pageNum="pageNum"
-      v-model="tableValue"
     >
       <template #expand="{ expand }">
-        <el-form label-position="left" inline class="demo-table-expand">
+        <el-form
+          label-position="left"
+          inline
+          class="demo-table-expand"
+        >
           <el-form-item label="用户姓名">
             <span>{{ expand.row.name }}</span>
           </el-form-item>
@@ -83,12 +87,12 @@
       </template>
 
       <template #status="{ props }">
-        <el-switch v-model="props.row.status"></el-switch>
+        <el-switch v-model="props.row.status" />
       </template>
     </w-table>
   </el-card>
 
-  <br />
+  <br>
 </template>
 
 <script>

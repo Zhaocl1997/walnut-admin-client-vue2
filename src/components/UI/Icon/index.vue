@@ -1,5 +1,8 @@
 <template>
-  <Icon :icon="icons[icon]" :class="{'u-pointer': pointer}" />
+  <Icon
+    :icon="icons[icon]"
+    :class="{'u-pointer': pointer}"
+  />
 </template>
 
 <script>
@@ -8,7 +11,7 @@ import { defineComponent, reactive } from "vue";
 import { iconsLists } from "./icons";
 
 export default defineComponent({
-  name: "wIcon",
+  name: "WIcon",
 
   components: { Icon },
 
