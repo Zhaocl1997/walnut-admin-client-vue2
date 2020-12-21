@@ -7,7 +7,8 @@
     "update:router": "npm install vue-router@4",
     "update:vue": "npm i vue@latest",
     "build": "vite build",
-    "lint": "eslint --ext .js,.vue src -f table --fix"
+    "lint": "eslint --ext .js,.vue src -f table --fix",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "easy-fns-ts": "^1.0.9",
