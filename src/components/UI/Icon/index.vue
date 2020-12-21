@@ -2,7 +2,7 @@
   <Icon :icon="icons[icon]" :class="{'u-pointer': pointer}" />
 </template>
 
-<script lang='ts'>
+<script>
 import { Icon } from "@iconify/vue";
 import { defineComponent, reactive } from "vue";
 import { iconsLists } from "./icons";

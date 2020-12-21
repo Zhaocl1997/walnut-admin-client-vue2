@@ -2,7 +2,7 @@
   <div></div>
 </template>
 
-<script lang='ts'>
+<script>
 import { ref, reactive, computed, defineComponent } from "vue";
 
 const k = {

@@ -2,7 +2,7 @@
   <el-time-select v-bind="getBindValue"></el-time-select>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElTimeSelect } from "element-plus";
 import { computed, defineComponent } from "vue";
 

@@ -1,13 +1,13 @@
 <template>
   <el-dialog v-bind="getBindValue">
-    <template v-if="showFooter" #footer>
+    <template #footer>
       <el-button @click="onCancel" size="small">取 消</el-button>
       <el-button @click="onConfirm" size="small" type="primary">确 定</el-button>
     </template>
   </el-dialog>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElDialog } from "element-plus";
 import { computed, defineComponent } from "vue";
 
@@ -17,9 +17,7 @@ export default defineComponent({
   inheritAttrs: false,
 
   props: {
-    ...ElDialog.props,
-
-    showFooter: Boolean
+    ...ElDialog.props
   },
 
   setup(props, { attrs, emit }) {

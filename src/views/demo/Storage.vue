@@ -58,7 +58,7 @@
   </el-card>
 </template>
 
-<script lang='ts'>
+<script>
 import {
   setLocal,
   getLocal,

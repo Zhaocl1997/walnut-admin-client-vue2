@@ -91,7 +91,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wTable from "/@/components/UI/Table/index.vue";
 import wJSON from "/@/components/Others/JSON/index.vue";
 import {

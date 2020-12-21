@@ -47,7 +47,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wButton from "/@/components/UI/Button/index.vue";
 import { ref, reactive, defineComponent } from "vue";
 

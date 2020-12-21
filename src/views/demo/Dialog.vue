@@ -12,7 +12,7 @@
   <w-dialog v-model="dialogVisible1" fullscreen></w-dialog>
 </template>
 
-<script lang='ts'>
+<script>
 import wDialog from "/@/components/UI/Dialog/index.vue";
 import { ref, reactive, computed, defineComponent } from "vue";
 

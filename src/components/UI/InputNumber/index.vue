@@ -2,7 +2,7 @@
   <el-input-number v-bind="getBindValue"></el-input-number>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElInputNumber } from "element-plus";
 import { computed, defineComponent } from "vue";
 

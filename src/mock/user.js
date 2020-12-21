@@ -9,6 +9,7 @@ const total = 100
 
 for (let i = 0; i < total; i++) {
     const template = {
+        'id': Random.id(),
         'name': Random.cname(),
         'age': Random.integer(20, 50),
         'sex': Random.pick(['男', '女']),

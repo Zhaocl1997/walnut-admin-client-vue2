@@ -10,7 +10,7 @@
   </el-select>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElSelect } from "element-plus";
 import { computed, defineComponent } from "vue";
 

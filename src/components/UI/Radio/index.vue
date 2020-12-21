@@ -20,7 +20,7 @@
   </el-radio-group>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElRadioGroup } from "element-plus";
 import { ref, computed, defineComponent } from "vue";
 

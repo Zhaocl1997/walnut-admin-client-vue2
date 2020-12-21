@@ -40,7 +40,7 @@
   <br /> -->
 </template>
 
-<script lang='ts'>
+<script>
 import wSelect from "/@/components/UI/Select/index.vue";
 import { ref, reactive, defineComponent } from "vue";
 

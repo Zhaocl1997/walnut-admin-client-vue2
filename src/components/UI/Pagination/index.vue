@@ -9,7 +9,7 @@
   </el-pagination>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElPagination } from "element-plus";
 import { ref, reactive, computed, defineComponent, nextTick } from "vue";
 

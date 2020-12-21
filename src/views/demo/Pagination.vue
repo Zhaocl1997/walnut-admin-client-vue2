@@ -10,7 +10,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wPagination from "/@/components/UI/Pagination/index.vue";
 import { ref, reactive, computed, defineComponent } from "vue";
 

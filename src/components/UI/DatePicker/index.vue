@@ -2,7 +2,7 @@
   <el-date-picker v-bind="getBindValue"></el-date-picker>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElDatePicker } from "element-plus";
 import { computed, defineComponent } from "vue";
 

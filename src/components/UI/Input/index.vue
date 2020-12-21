@@ -18,7 +18,7 @@
   </el-input>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElInput } from "element-plus";
 import { computed, defineComponent } from "vue";
 import { clearIllegalChars } from "easy-fns-ts/dist/esm";

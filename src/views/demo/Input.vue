@@ -103,7 +103,7 @@
   </el-card>
 </template>
 
-<script lang='ts'>
+<script>
 import wInput from "/@/components/UI/Input/index.vue";
 import { reactive, defineComponent, toRefs } from "vue";
 

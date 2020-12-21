@@ -62,7 +62,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import Sortable from "sortablejs";
 import {
   ref,

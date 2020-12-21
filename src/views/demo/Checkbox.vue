@@ -20,7 +20,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wCheckbox from "/@/components/UI/Checkbox/index.vue";
 import { reactive, defineComponent, toRefs } from "vue";
 

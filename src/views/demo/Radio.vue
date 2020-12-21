@@ -20,7 +20,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wRadio from "/@/components/UI/Radio/index.vue";
 import { reactive, defineComponent, toRefs } from "vue";
 

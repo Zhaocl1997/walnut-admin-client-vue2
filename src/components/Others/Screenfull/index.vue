@@ -7,7 +7,7 @@
   ></w-icon>
 </template>
 
-<script lang='ts'>
+<script>
 import screenfull from "screenfull";
 import { ref, defineComponent, onMounted, onUnmounted } from "vue";
 

@@ -37,9 +37,9 @@
         <tag-demo></tag-demo>
       </el-tab-pane>
 
-      <!-- <el-tab-pane label="Dialog" name="Dialog">
+      <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo></dialog-demo>
-      </el-tab-pane>-->
+      </el-tab-pane>
 
       <el-tab-pane label="Pagination" name="Pagination">
         <pagination-demo></pagination-demo>
@@ -56,7 +56,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script  >
 import IconDemo from "./Icon.vue";
 import ButtonDemo from "./Button.vue";
 import CheckboxDemo from "./Checkbox.vue";

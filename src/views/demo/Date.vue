@@ -66,7 +66,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wTimePicker from "/@/components/UI/TimePicker/index.vue";
 import wTimeSelect from "/@/components/UI/TimeSelect/index.vue";
 import wDatePicker from "/@/components/UI/DatePicker/index.vue";

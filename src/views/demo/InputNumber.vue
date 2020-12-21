@@ -50,7 +50,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wInputNumber from "/@/components/UI/InputNumber/index.vue";
 import { toRefs, reactive, defineComponent } from "vue";
 

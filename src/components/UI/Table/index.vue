@@ -91,7 +91,7 @@
   </el-table>-->
 </template>
 
-<script lang='ts'>
+<script>
 import { ElTable } from "element-plus";
 import {
   reactive,
@@ -237,6 +237,12 @@ export default defineComponent({
       }
     };
 
+    const onSelectionChange = val => {
+      if (props.multiple) {
+        emit("update:modelValue", val);
+      }
+    };
+
     onMounted(() => {
       init();
     });
@@ -247,7 +253,8 @@ export default defineComponent({
         ...props,
         rowStyle: state.rowStyle,
         highlightCurrentRow: props.single,
-        onCurrentChange
+        onCurrentChange,
+        onSelectionChange
       };
     });
 

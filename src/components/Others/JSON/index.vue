@@ -2,7 +2,7 @@
   <pre class="json-pre" :style="{ height: height }"></pre>
 </template>
 
-<script lang='ts'>
+<script>
 import { reactive, defineComponent, watch } from "vue";
 
 export default defineComponent({

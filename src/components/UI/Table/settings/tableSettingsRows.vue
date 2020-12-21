@@ -28,7 +28,7 @@
   </el-popover>
 </template>
 
-<script lang='ts'>
+<script>
 import {
   reactive,
   defineComponent,

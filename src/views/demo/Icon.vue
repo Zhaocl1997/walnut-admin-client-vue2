@@ -71,7 +71,7 @@
   </el-card>
 </template>
 
-<script lang='ts'>
+<script>
 import wScreenFull from "/@/components/Others/Screenfull/index.vue";
 import { ref, reactive, computed, defineComponent } from "vue";
 

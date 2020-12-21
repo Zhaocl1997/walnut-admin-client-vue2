@@ -15,7 +15,7 @@
   </template>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElCheckboxGroup } from "element-plus";
 import { reactive, computed, defineComponent } from "vue";
 

@@ -40,7 +40,7 @@
   <br />
 </template>
 
-<script lang='ts'>
+<script>
 import wTag from "/@/components/UI/Tag/index.vue";
 import { toRefs, reactive, computed, defineComponent } from "vue";
 

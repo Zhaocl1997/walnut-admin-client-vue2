@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import { ref, unref, reactive, defineComponent } from "vue";
 
 export default defineComponent({

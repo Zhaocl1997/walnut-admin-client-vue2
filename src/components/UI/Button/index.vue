@@ -11,7 +11,7 @@
   </el-button>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElButton } from "element-plus";
 import { ref, computed, defineComponent, unref } from "vue";
 

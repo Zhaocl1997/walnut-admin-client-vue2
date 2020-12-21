@@ -2,7 +2,7 @@
   <el-time-picker v-bind="getBindValue"></el-time-picker>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElTimePicker } from "element-plus";
 import { computed, defineComponent } from "vue";
 

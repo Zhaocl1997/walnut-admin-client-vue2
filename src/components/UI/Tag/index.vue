@@ -20,7 +20,7 @@
   </template>
 </template>
 
-<script lang='ts'>
+<script>
 import { ElTag } from "element-plus";
 import {
   reactive,

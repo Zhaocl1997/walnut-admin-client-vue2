@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import TheAside from "./TheAside/index.vue";
 import TheFooter from "./TheFooter/index.vue";
 import TheHeader from "./TheHeader/index.vue";

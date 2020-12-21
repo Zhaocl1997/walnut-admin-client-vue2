@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import { reactive, defineComponent, watch } from "vue";
 
 import wTableSettingsRefresh from "./tableSettingsRefresh.vue";

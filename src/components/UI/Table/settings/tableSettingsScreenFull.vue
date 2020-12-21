@@ -4,7 +4,7 @@
   </el-tooltip>
 </template>
 
-<script lang='ts'>
+<script>
 import wScreenFull from "../../../Others/Screenfull/index.vue";
 import { defineComponent } from "vue";
 
