@@ -9,29 +9,40 @@
     </template>
 
     <!-- fixed left -->
-    <!-- eslint-disable-next-line -->
-    <w-table-settings-rows-group v-model:group="rows" type="left">
+    <!-- eslint-disable -->
+    <w-table-settings-rows-group
+      v-model:group="rows"
+      :type="TABLE_GROUP_TYPE.LEFT"
+    >
       <i class="el-icon-info" />固定在左侧
     </w-table-settings-rows-group>
 
     <!-- common -->
-    <!-- eslint-disable-next-line -->
-    <w-table-settings-rows-group v-model:group="rows" type="common">
-      <i class="el-icon-info" />不固定
-      <el-checkbox
-        v-model="checkAll"
-        :indeterminate="isIndeterminate"
-        @change="onCheckAllChange"
-      >
-        全选
-      </el-checkbox>
+    <!-- eslint-disable -->
+    <w-table-settings-rows-group
+      v-model:group="rows"
+      :type="TABLE_GROUP_TYPE.COMMON"
+    >
+      <el-space>
+        <i class="el-icon-info" />不固定
+        <el-checkbox
+          v-model="checkAll"
+          :indeterminate="isIndeterminate"
+          @change="onCheckAllChange"
+        >
+          全选
+        </el-checkbox>
 
-      <el-button size="mini" type="text" @click="onReset"> 重置 </el-button>
+        <el-button size="mini" type="text" @click="onReset"> 重置 </el-button>
+      </el-space>
     </w-table-settings-rows-group>
 
     <!-- right left -->
-    <!-- eslint-disable-next-line -->
-    <w-table-settings-rows-group v-model:group="rows" type="right">
+    <!-- eslint-disable -->
+    <w-table-settings-rows-group
+      v-model:group="rows"
+      :type="TABLE_GROUP_TYPE.RIGHT"
+    >
       <i class="el-icon-info" />固定在右侧
     </w-table-settings-rows-group>
   </el-popover>
@@ -51,6 +62,7 @@
   import { deepClone } from 'easy-fns-ts/dist/esm'
 
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
+  import { TABLE_GROUP_TYPE } from '../constant'
 
   export default defineComponent({
     name: 'WTableSettingsRows',
@@ -134,8 +146,11 @@
       })
 
       return {
+        TABLE_GROUP_TYPE,
+
         onCheckAllChange,
         onReset,
+
         ...toRefs(state),
       }
     },
@@ -143,15 +158,17 @@
 </script>
 
 <style lang="scss" scoped>
+  .el-divider--horizontal {
+    margin: 10px 0;
+  }
+</style>
+
+<style lang="scss">
   .w-table-popover {
-    min-width: 200px;
+    min-width: 200px !important;
 
     &.el-popover--plain {
       padding: 0;
     }
-  }
-
-  .el-divider--horizontal {
-    margin: 5px 0;
   }
 </style>

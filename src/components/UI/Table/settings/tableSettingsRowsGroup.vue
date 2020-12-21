@@ -15,17 +15,17 @@
         @click.stop.prevent="onToggleVisible(item.prop)"
       >
         <div :id="item.prop" class="u-pointer column-item">
-          <div class="u-move u-float-left">
+          <div class="u-move u-float-left w-table__setting-icon">
             <w-icon icon="drag" />
           </div>
 
-          <div class="u-one-line u-inline-block" style="max-width: 100px">
+          <div class="u-one-line u-inline-block" style="max-width: 110px">
             <el-checkbox v-model="item.visible" :disabled="item.disabled">
               <span :title="item.label">{{ item.label }}</span>
             </el-checkbox>
           </div>
 
-          <div class="w-table__setting-fix u-float-right">
+          <div class="w-table__setting-fix w-table__setting-icon u-float-right">
             <el-tooltip content="不固定" :open-delay="200">
               <div class="u-inline">
                 <w-icon
@@ -76,6 +76,8 @@
     nextTick,
   } from 'vue'
 
+  import { TABLE_GROUP_TYPE } from '../constant'
+
   export default defineComponent({
     name: 'WTableSettingsRowsGroup',
 
@@ -94,12 +96,6 @@
     emits: ['update:group'],
 
     setup(props, { attrs, emit }) {
-      const TABLE_GROUP_TYPE = {
-        LEFT: 'left',
-        COMMON: 'common',
-        RIGHT: 'right',
-      }
-
       const state = reactive({
         h: [],
       })
@@ -242,15 +238,14 @@
 
   .w-table__setting-group-title {
     color: grey;
-
-    span {
-      padding-right: 2px;
-      letter-spacing: 0;
-    }
   }
 
   .w-table__setting-fix {
     display: none;
+  }
+
+  .w-table__setting-icon {
+    margin-top: 3px;
   }
 
   .column-item:hover {

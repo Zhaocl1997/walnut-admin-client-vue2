@@ -1,36 +1,38 @@
 <template>
   <el-card>
     <template #header>
-      <span>综合</span>
+      <span>集成表格</span>
 
       <el-form inline>
-        <el-form-item label="单选">
-          <el-switch v-model="single" />
-        </el-form-item>
+        <el-space>
+          <el-form-item label="单选">
+            <el-switch v-model="single" />
+          </el-form-item>
 
-        <el-form-item label="多选">
-          <el-switch v-model="multiple" />
-        </el-form-item>
+          <el-form-item label="多选">
+            <el-switch v-model="multiple" />
+          </el-form-item>
 
-        <el-form-item label="索引">
-          <el-switch v-model="hasIndex" />
-        </el-form-item>
+          <el-form-item label="索引">
+            <el-switch v-model="hasIndex" />
+          </el-form-item>
 
-        <el-form-item label="多选">
-          <el-switch v-model="hasSelect" />
-        </el-form-item>
+          <el-form-item label="多选">
+            <el-switch v-model="hasSelect" />
+          </el-form-item>
 
-        <el-form-item label="展开">
-          <el-switch v-model="hasExpand" />
-        </el-form-item>
+          <el-form-item label="展开">
+            <el-switch v-model="hasExpand" />
+          </el-form-item>
 
-        <el-form-item label="设置">
-          <el-switch v-model="showSettings" />
-        </el-form-item>
+          <el-form-item label="设置">
+            <el-switch v-model="showSettings" />
+          </el-form-item>
 
-        <el-form-item label="分页">
-          <el-switch v-model="showPage" />
-        </el-form-item>
+          <el-form-item label="分页">
+            <el-switch v-model="showPage" />
+          </el-form-item>
+        </el-space>
       </el-form>
 
       <div>单选/多选 绑定值：【{{ tableValue }}】</div>

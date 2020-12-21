@@ -97,7 +97,6 @@
 </template>
 
 <script>
-  import { ElTable } from 'element-plus'
   import {
     reactive,
     computed,
@@ -110,6 +109,7 @@
 
   import wTableSettings from './settings/index.vue'
   import wPagination from '../Pagination/index.vue'
+  import { wTableProps } from './props'
 
   export default defineComponent({
     name: 'WTable',
@@ -118,41 +118,7 @@
 
     inheritAttrs: false,
 
-    props: {
-      ...ElTable.props,
-
-      /**
-       * @description single/multiple v-model value
-       */
-      modelValue: [Array, Object],
-
-      /**
-       * @description table header column
-       */
-      headers: Array,
-
-      /**
-       * @description has select column
-       */
-      hasSelect: Boolean,
-      hasIndex: Boolean,
-      hasExpand: Boolean,
-
-      showSettings: Boolean,
-      showPage: Boolean,
-
-      single: Boolean,
-      multiple: Boolean,
-
-      selectable: Function,
-      reserveSelection: Boolean,
-
-      total: Number,
-      pageNum: { type: Number, default: 1 },
-      pageSize: { type: Number, default: 10 },
-
-      listFunc: Function,
-    },
+    props: wTableProps,
 
     emits: [
       'update:headers',
