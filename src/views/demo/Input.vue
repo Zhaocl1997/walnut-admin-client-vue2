@@ -4,14 +4,10 @@
       <span>基本，当前绑定值：【{{ input1 }}】</span>
     </template>
 
-    <w-input
-      v-model="input1"
-      clearable
-      @clear="onClear"
-    />
+    <w-input v-model="input1" clearable @clear="onClear" />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -20,7 +16,7 @@
 
     <w-input
       v-model="input2"
-      :black-list="['<','>']"
+      :black-list="['<', '>']"
       @change="onChange"
       @input="onInput"
       @blur="onBlur"
@@ -28,21 +24,17 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
       <span>密码，当前绑定值：【{{ input3 }}】</span>
     </template>
 
-    <w-input
-      v-model="input3"
-      show-password
-      clearable
-    />
+    <w-input v-model="input3" show-password clearable />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -56,7 +48,7 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -74,7 +66,7 @@
     </w-input>
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -82,16 +74,12 @@
     </template>
 
     <w-input v-model="input6">
-      <template #prepend>
-        Http://
-      </template>
-      <template #append>
-        .com
-      </template>
+      <template #prepend> Http:// </template>
+      <template #append> .com </template>
     </w-input>
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -108,7 +96,7 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -120,58 +108,57 @@
 </template>
 
 <script>
-import wInput from "/@/components/UI/Input/index.vue";
-import { reactive, defineComponent, toRefs } from "vue";
+  import wInput from '/@/components/UI/Input/index.vue'
+  import { reactive, defineComponent, toRefs } from 'vue'
 
-export default defineComponent({
-  name: "InputDemo",
+  export default defineComponent({
+    name: 'InputDemo',
 
-  components: { wInput },
+    components: { wInput },
 
-  setup() {
-    const state = reactive({
-      input1: "",
-      input2: "",
-      input3: "",
-      input4: "",
-      input5: "",
-      input6: "",
-      input7: "",
-      input8: ""
-    });
+    setup() {
+      const state = reactive({
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        input5: '',
+        input6: '',
+        input7: '',
+        input8: '',
+      })
 
-    const onChange = value => {
-      console.log("[w-input change]", value);
-    };
+      const onChange = (value) => {
+        console.log('[w-input change]', value)
+      }
 
-    const onInput = value => {
-      console.log("[w-input input]", value);
-    };
+      const onInput = (value) => {
+        console.log('[w-input input]', value)
+      }
 
-    const onBlur = event => {
-      console.log("[w-input blur]", event);
-    };
+      const onBlur = (event) => {
+        console.log('[w-input blur]', event)
+      }
 
-    const onFocus = event => {
-      console.log("[w-input focus]", event);
-    };
+      const onFocus = (event) => {
+        console.log('[w-input focus]', event)
+      }
 
-    const onClear = () => {
-      console.log("[w-input clear]");
-    };
+      const onClear = () => {
+        console.log('[w-input clear]')
+      }
 
-    return {
-      ...toRefs(state),
+      return {
+        ...toRefs(state),
 
-      onChange,
-      onInput,
-      onBlur,
-      onFocus,
-      onClear
-    };
-  }
-});
+        onChange,
+        onInput,
+        onBlur,
+        onFocus,
+        onClear,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

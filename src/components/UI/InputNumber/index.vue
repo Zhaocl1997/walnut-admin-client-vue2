@@ -3,29 +3,28 @@
 </template>
 
 <script>
-import { ElInputNumber } from "element-plus";
-import { computed, defineComponent } from "vue";
+  import { ElInputNumber } from 'element-plus'
+  import { computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WInputNumber",
+  export default defineComponent({
+    name: 'WInputNumber',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElInputNumber.props
-  },
+    props: {
+      ...ElInputNumber.props,
+    },
 
-  setup(props, { attrs, emit }) {
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+    setup(props, { attrs, emit }) {
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-    return {
-      getBindValue
-    };
-  }
-});
+      return {
+        getBindValue,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

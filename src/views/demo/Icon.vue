@@ -6,59 +6,29 @@
 
     <w-icon icon="home" />
 
-    <br>
+    <br />
 
-    <w-icon
-      icon="home"
-      width="40"
-    />
-    <w-icon
-      icon="home"
-      height="80"
-    />
+    <w-icon icon="home" width="40" />
+    <w-icon icon="home" height="80" />
 
-    <br>
+    <br />
 
-    <w-icon
-      icon="home"
-      horizontal-flip
-    />
-    <w-icon
-      icon="home"
-      vertical-flip
-    />
+    <w-icon icon="home" horizontal-flip />
+    <w-icon icon="home" vertical-flip />
 
-    <br>
+    <br />
 
-    <w-icon
-      icon="home"
-      rotate="1"
-    />
-    <w-icon
-      icon="home"
-      rotate="2"
-    />
-    <w-icon
-      icon="home"
-      rotate="3"
-    />
+    <w-icon icon="home" rotate="1" />
+    <w-icon icon="home" rotate="2" />
+    <w-icon icon="home" rotate="3" />
 
-    <br>
+    <br />
 
-    <w-icon
-      icon="home"
-      color="red"
-    />
-    <w-icon
-      icon="home"
-      color="green"
-    />
-    <w-icon
-      icon="home"
-      color="blue"
-    />
+    <w-icon icon="home" color="red" />
+    <w-icon icon="home" color="green" />
+    <w-icon icon="home" color="blue" />
 
-    <br>
+    <br />
 
     <w-icon
       icon="home"
@@ -82,7 +52,7 @@
       class="iconify"
     />
 
-    <br>
+    <br />
 
     <w-icon
       icon="home"
@@ -106,7 +76,7 @@
       class="iconify"
     />
 
-    <br>
+    <br />
 
     <w-icon
       icon="home"
@@ -130,7 +100,7 @@
       class="iconify"
     />
 
-    <br>
+    <br />
 
     <w-icon
       icon="home"
@@ -154,7 +124,7 @@
       class="iconify"
     />
 
-    <br>
+    <br />
 
     <w-icon
       icon="home"
@@ -172,7 +142,7 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card class="custom-sf">
     <template #header>
@@ -186,20 +156,20 @@
 </template>
 
 <script>
-import wScreenFull from "/@/components/Others/Screenfull/index.vue";
-import { ref, reactive, computed, defineComponent } from "vue";
+  import wScreenFull from '/@/components/Others/Screenfull/index.vue'
+  import { ref, reactive, computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "IconDemo",
+  export default defineComponent({
+    name: 'IconDemo',
 
-  components: { wScreenFull },
+    components: { wScreenFull },
 
-  setup(props, { attrs }) {}
-});
+    setup(props, { attrs }) {},
+  })
 </script>
 
-<style lang='scss' scoped>
-.iconify {
-  box-shadow: 0 0 0 1px #e88;
-}
+<style lang="scss" scoped>
+  .iconify {
+    box-shadow: 0 0 0 1px #e88;
+  }
 </style>

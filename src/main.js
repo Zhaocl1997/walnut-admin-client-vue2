@@ -12,13 +12,12 @@ import wIcon from './components/UI/Icon/index.vue'
 
 const app = createApp(App)
 
-
 setupRouter(app)
 setupStore(app)
 setupElementPlus(app)
 
 app.component('WIcon', wIcon)
 
-app.config.isCustomElement = tag => tag.startsWith('w-')
+app.config.isCustomElement = (tag) => tag.startsWith('w-')
 
 app.mount('#app')

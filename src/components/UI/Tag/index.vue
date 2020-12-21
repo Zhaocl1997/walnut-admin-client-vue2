@@ -2,7 +2,7 @@
   <el-tag
     v-for="(item, index) in wOptions"
     :key="valueKey ? item[valueKey] : item[optionValue]"
-    v-bind="{...getBindValue, ...item.props}"
+    v-bind="{ ...getBindValue, ...item.props }"
     @close="onCloseTag(index)"
   >
     {{ valueKey ? item[valueKey] : item[optionLabel] }}
@@ -18,132 +18,127 @@
       @keyup.enter="onInputConfirm"
       @blur="onInputConfirm"
     />
-    <el-button
-      v-else
-      class="button-new-tag"
-      size="small"
-      @click="onInputShow"
-    >
+    <el-button v-else class="button-new-tag" size="small" @click="onInputShow">
       +
     </el-button>
   </template>
 </template>
 
 <script>
-import { ElTag } from "element-plus";
-import {
-  reactive,
-  computed,
-  defineComponent,
-  toRefs,
-  nextTick,
-  watch
-} from "vue";
-import { deepClone } from "easy-fns-ts/dist/esm";
+  import { ElTag } from 'element-plus'
+  import {
+    reactive,
+    computed,
+    defineComponent,
+    toRefs,
+    nextTick,
+    watch,
+  } from 'vue'
+  import { deepClone } from 'easy-fns-ts/dist/esm'
 
-export default defineComponent({
-  name: "WTag",
+  export default defineComponent({
+    name: 'WTag',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElTag.props,
+    props: {
+      ...ElTag.props,
 
-    modelValue: [String, Number, Array],
+      modelValue: [String, Number, Array],
 
-    options: { type: Array, default: () => [] },
-    optionValue: { type: String, default: "value" },
-    optionLabel: { type: String, default: "label" },
+      options: { type: Array, default: () => [] },
+      optionValue: { type: String, default: 'value' },
+      optionLabel: { type: String, default: 'label' },
 
-    valueKey: String,
+      valueKey: String,
 
-    addable: Boolean
-  },
+      addable: Boolean,
+    },
 
-  emits:["update:modelValue"],
+    emits: ['update:modelValue'],
 
-  setup(props, { attrs, emit }) {
-    const state = reactive({
-      wOptions: deepClone(props.options),
-      inputVisible: false,
-      inputValue: "",
-      inputElement: null
-    });
+    setup(props, { attrs, emit }) {
+      const state = reactive({
+        wOptions: deepClone(props.options),
+        inputVisible: false,
+        inputValue: '',
+        inputElement: null,
+      })
 
-    const onCloseTag = index => {
-      state.wOptions.splice(index, 1);
-    };
-
-    const onInputConfirm = () => {
-      if (state.inputValue) {
-        state.wOptions.push(
-          props.valueKey
-            ? {
-                [props.valueKey]: state.inputValue
-              }
-            : {
-                [props.optionValue]: state.inputValue,
-                [props.optionLabel]: state.inputValue
-              }
-        );
+      const onCloseTag = (index) => {
+        state.wOptions.splice(index, 1)
       }
 
-      state.inputVisible = false;
-      state.inputValue = "";
-    };
+      const onInputConfirm = () => {
+        if (state.inputValue) {
+          state.wOptions.push(
+            props.valueKey
+              ? {
+                  [props.valueKey]: state.inputValue,
+                }
+              : {
+                  [props.optionValue]: state.inputValue,
+                  [props.optionLabel]: state.inputValue,
+                }
+          )
+        }
 
-    const onInputShow = () => {
-      state.inputVisible = true;
-      nextTick(() => {
-        state.inputElement.focus();
-      });
-    };
-
-    watch(
-      () => state.wOptions,
-      newV => {
-        const values = newV.map(i =>
-          props.valueKey ? i[props.valueKey] : i[props.optionValue]
-        );
-        emit("update:modelValue", values);
-      },
-      {
-        immediate: true,
-        deep: true
+        state.inputVisible = false
+        state.inputValue = ''
       }
-    );
 
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+      const onInputShow = () => {
+        state.inputVisible = true
+        nextTick(() => {
+          state.inputElement.focus()
+        })
+      }
 
-    return {
-      getBindValue,
+      watch(
+        () => state.wOptions,
+        (newV) => {
+          const values = newV.map((i) =>
+            props.valueKey ? i[props.valueKey] : i[props.optionValue]
+          )
+          emit('update:modelValue', values)
+        },
+        {
+          immediate: true,
+          deep: true,
+        }
+      )
 
-      onCloseTag,
-      onInputConfirm,
-      onInputShow,
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-      ...toRefs(state)
-    };
-  }
-});
+      return {
+        getBindValue,
+
+        onCloseTag,
+        onInputConfirm,
+        onInputShow,
+
+        ...toRefs(state),
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-.el-tag + .el-tag {
-  margin-left: 10px;
-}
-.button-new-tag {
-  margin-left: 10px;
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.input-new-tag {
-  width: 90px;
-  margin-left: 10px;
-  vertical-align: bottom;
-}
+<style lang="scss" scoped>
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
 </style>

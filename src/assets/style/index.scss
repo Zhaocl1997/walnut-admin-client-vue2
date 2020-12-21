@@ -1,8 +1,5 @@
+@import './base/base';
+@import './base/normalize';
+@import './base/utilities';
 
-
-@import "./base/base";
-@import "./base/normalize";
-@import "./base/utilities";
-
-
-@import "./mixins/index.scss";
+@import './mixins/index.scss';

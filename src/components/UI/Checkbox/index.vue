@@ -20,36 +20,35 @@
 </template>
 
 <script>
-import { ElCheckboxGroup } from "element-plus";
-import { reactive, computed, defineComponent } from "vue";
+  import { ElCheckboxGroup } from 'element-plus'
+  import { reactive, computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WCheckbox",
+  export default defineComponent({
+    name: 'WCheckbox',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElCheckboxGroup.props,
+    props: {
+      ...ElCheckboxGroup.props,
 
-    options: { type: Array, default: () => [] },
-    optionValue: { type: String, default: "value" },
-    optionLabel: { type: String, default: "label" }
-  },
+      options: { type: Array, default: () => [] },
+      optionValue: { type: String, default: 'value' },
+      optionLabel: { type: String, default: 'label' },
+    },
 
-  setup(props, { attrs, slots }) {
-    const originText = slots.default && slots.default()[0].children;
+    setup(props, { attrs, slots }) {
+      const originText = slots.default && slots.default()[0].children
 
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-    return {
-      getBindValue,
-      originText
-    };
-  }
-});
+      return {
+        getBindValue,
+        originText,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

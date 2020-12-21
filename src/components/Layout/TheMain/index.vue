@@ -5,32 +5,32 @@
 </template>
 
 <script>
-import { ref, reactive, defineComponent } from "vue";
+  import { ref, reactive, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "TheMain",
+  export default defineComponent({
+    name: 'TheMain',
 
-  components: {},
+    components: {},
 
-  setup() {}
-});
+    setup() {},
+  })
 </script>
 
-<style lang='scss' scoped>
-#main-container {
-  height: auto;
-  width: 80%;
+<style lang="scss" scoped>
+  #main-container {
+    height: auto;
+    width: 80%;
 
-  margin-top: 40px;
-  position: absolute;
-  flex: 1 1 auto;
-  min-height: 0;
+    margin-top: 40px;
+    position: absolute;
+    flex: 1 1 auto;
+    min-height: 0;
 
-  background-color: #e9eef3;
+    background-color: #e9eef3;
 
-  &.fixed {
-    width: 1200px;
-    margin: 0 auto;
+    &.fixed {
+      width: 1200px;
+      margin: 0 auto;
+    }
   }
-}
 </style>

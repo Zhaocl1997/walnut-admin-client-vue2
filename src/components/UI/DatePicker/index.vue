@@ -3,27 +3,26 @@
 </template>
 
 <script>
-import { ElDatePicker } from "element-plus";
-import { computed, defineComponent } from "vue";
+  import { ElDatePicker } from 'element-plus'
+  import { computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WDatePicker",
+  export default defineComponent({
+    name: 'WDatePicker',
 
-  props: {
-    ...ElDatePicker.props
-  },
+    props: {
+      ...ElDatePicker.props,
+    },
 
-  setup(props, { attrs }) {
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+    setup(props, { attrs }) {
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-    return {
-      getBindValue
-    };
-  }
-});
+      return {
+        getBindValue,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,41 +1,14 @@
 <template>
-  <el-tooltip
-    content="密度"
-    placement="top"
-    :offset="17"
-  >
+  <el-tooltip content="密度" placement="top" :offset="17">
     <div class="u-inline">
-      <el-dropdown
-        trigger="click"
-        size="medium"
-        @command="onDropdownCommand"
-      >
-        <w-icon
-          pointer
-          icon="vamo"
-          width="20"
-        />
+      <el-dropdown trigger="click" size="medium" @command="onDropdownCommand">
+        <w-icon pointer icon="vamo" width="20" />
 
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item
-              key="0"
-              command="0"
-            >
-              紧凑
-            </el-dropdown-item>
-            <el-dropdown-item
-              key="1"
-              command="1"
-            >
-              中等
-            </el-dropdown-item>
-            <el-dropdown-item
-              key="2"
-              command="2"
-            >
-              宽裕
-            </el-dropdown-item>
+            <el-dropdown-item key="0" command="0"> 紧凑 </el-dropdown-item>
+            <el-dropdown-item key="1" command="1"> 中等 </el-dropdown-item>
+            <el-dropdown-item key="2" command="2"> 宽裕 </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -44,24 +17,23 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+  import { defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WTableSettingsDensity",
+  export default defineComponent({
+    name: 'WTableSettingsDensity',
 
-  emits: ["density"],
+    emits: ['density'],
 
-  setup(props, { attrs, emit }) {
-    const onDropdownCommand = command => {
-      emit("density", command);
-    };
+    setup(props, { attrs, emit }) {
+      const onDropdownCommand = (command) => {
+        emit('density', command)
+      }
 
-    return {
-      onDropdownCommand
-    };
-  }
-});
+      return {
+        onDropdownCommand,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

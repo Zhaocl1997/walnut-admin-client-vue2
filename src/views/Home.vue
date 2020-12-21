@@ -11,16 +11,15 @@
 </template>
 
 <script>
-import { ref, reactive, defineComponent } from 'vue'
+  import { ref, reactive, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: 'Home',
+  export default defineComponent({
+    name: 'Home',
 
-  components: {},
+    components: {},
 
-  setup() {}
-});
+    setup() {},
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

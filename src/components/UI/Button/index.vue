@@ -1,106 +1,96 @@
 <template>
   <el-button v-bind="getBindValue">
-    <i
-      v-if="prefixIcon"
-      :class="prefixIcon"
-    />
+    <i v-if="prefixIcon" :class="prefixIcon" />
 
-    <span
-      v-if="$slots.default"
-      style="margin:3px;"
-    >
+    <span v-if="$slots.default" style="margin: 3px">
       <span v-if="delayText">{{ delayText }}</span>
       <slot v-else />
     </span>
 
-    <i
-      v-if="suffixIcon"
-      :class="suffixIcon"
-    />
+    <i v-if="suffixIcon" :class="suffixIcon" />
   </el-button>
 </template>
 
 <script>
-import { ElButton } from "element-plus";
-import { ref, computed, defineComponent, unref } from "vue";
+  import { ElButton } from 'element-plus'
+  import { ref, computed, defineComponent, unref } from 'vue'
 
-export default defineComponent({
-  name: "WButton",
+  export default defineComponent({
+    name: 'WButton',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElButton.props,
+    props: {
+      ...ElButton.props,
 
-    prefixIcon: String,
-    suffixIcon: String,
+      prefixIcon: String,
+      suffixIcon: String,
 
-    retryDelay: [String, Number],
-    loadDelay: [String, Number]
-  },
+      retryDelay: [String, Number],
+      loadDelay: [String, Number],
+    },
 
-  emits: ["click"],
+    emits: ['click'],
 
-  setup(props, { attrs, slots, emit }) {
-    const originText = slots.default && slots.default()[0].children;
+    setup(props, { attrs, slots, emit }) {
+      const originText = slots.default && slots.default()[0].children
 
-    let delayText = ref("");
+      let delayText = ref('')
 
-    let loadDelay = unref(props.loadDelay);
-    let retryDelay = unref(props.retryDelay);
+      let loadDelay = unref(props.loadDelay)
+      let retryDelay = unref(props.retryDelay)
 
-    let selfDisabled = ref(false);
-    let selfLoading = ref(false);
+      let selfDisabled = ref(false)
+      let selfLoading = ref(false)
 
-    const onClick = event => {
-      if (retryDelay) {
-        selfDisabled.value = true;
+      const onClick = (event) => {
+        if (retryDelay) {
+          selfDisabled.value = true
 
-        let intervalId = setInterval(() => {
-          delayText.value = `(${retryDelay}秒)后重试`;
-          --retryDelay;
+          let intervalId = setInterval(() => {
+            delayText.value = `(${retryDelay}秒)后重试`
+            --retryDelay
 
-          if (+retryDelay < 0) {
-            retryDelay = props.retryDelay;
-            delayText.value = originText;
-            selfDisabled.value = false;
+            if (+retryDelay < 0) {
+              retryDelay = props.retryDelay
+              delayText.value = originText
+              selfDisabled.value = false
 
-            clearInterval(intervalId);
-          }
-        }, 1000);
+              clearInterval(intervalId)
+            }
+          }, 1000)
+        }
+
+        if (loadDelay) {
+          selfLoading.value = true
+
+          setTimeout(() => {
+            selfLoading.value = false
+          }, +loadDelay * 1000)
+        }
+
+        emit('click', event)
       }
 
-      if (loadDelay) {
-        selfLoading.value = true;
+      const getDisabled = computed(() => selfDisabled.value || props.disabled)
+      const getLoading = computed(() => selfLoading.value || props.loading)
 
-        setTimeout(() => {
-          selfLoading.value = false;
-        }, +loadDelay * 1000);
-      }
+      const getBindValue = computed(() => {
+        return {
+          ...attrs,
+          ...props,
+          onClick,
+          disabled: getDisabled.value,
+          loading: getLoading.value,
+        }
+      })
 
-      emit("click", event);
-    };
-
-    const getDisabled = computed(() => selfDisabled.value || props.disabled);
-    const getLoading = computed(() => selfLoading.value || props.loading);
-
-    const getBindValue = computed(() => {
       return {
-        ...attrs,
-        ...props,
-        onClick,
-        disabled: getDisabled.value,
-        loading: getLoading.value
-      };
-    });
-
-    return {
-      getBindValue,
-      delayText
-    };
-  }
-});
+        getBindValue,
+        delayText,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

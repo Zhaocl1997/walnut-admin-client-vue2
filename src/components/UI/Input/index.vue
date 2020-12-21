@@ -1,82 +1,69 @@
 <template>
   <el-input v-bind="getBindValue">
-    <template
-      v-if="$slots.prepend"
-      #prepend
-    >
+    <template v-if="$slots.prepend" #prepend>
       <slot name="prepend" />
     </template>
 
-    <template
-      v-if="$slots.append"
-      #append
-    >
+    <template v-if="$slots.append" #append>
       <slot name="append" />
     </template>
 
-    <template
-      v-if="$slots.suffix"
-      #suffix
-    >
+    <template v-if="$slots.suffix" #suffix>
       <slot name="suffix" />
     </template>
 
-    <template
-      v-if="$slots.prefix"
-      #prefix
-    >
+    <template v-if="$slots.prefix" #prefix>
       <slot name="prefix" />
     </template>
   </el-input>
 </template>
 
 <script>
-import { ElInput } from "element-plus";
-import { computed, defineComponent } from "vue";
-import { clearIllegalChars } from "easy-fns-ts/dist/esm";
+  import { ElInput } from 'element-plus'
+  import { computed, defineComponent } from 'vue'
+  import { clearIllegalChars } from 'easy-fns-ts/dist/esm'
 
-export default defineComponent({
-  name: "WInput",
+  export default defineComponent({
+    name: 'WInput',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElInput.props,
+    props: {
+      ...ElInput.props,
 
-    modelModifiers: {
-      type: Object,
-      default: () => ({})
+      modelModifiers: {
+        type: Object,
+        default: () => ({}),
+      },
+
+      blackList: {
+        type: Array,
+        default: () => [],
+      },
     },
 
-    blackList: {
-      type: Array,
-      default: () => []
-    }
-  },
+    emits: ['update:modelValue'],
 
-  emits:["update:modelValue"],
+    setup(props, { attrs, emit }) {
+      const onInput = (value) => {
+        if (props.modelModifiers.capitalize) {
+          value = value.charAt(0).toUpperCase() + value.slice(1)
+        }
 
-  setup(props, { attrs, emit }) {
-    const onInput = value => {
-      if (props.modelModifiers.capitalize) {
-        value = value.charAt(0).toUpperCase() + value.slice(1);
+        const legalValue = clearIllegalChars(value, props.blackList)
+
+        emit('update:modelValue', legalValue)
       }
 
-      const legalValue = clearIllegalChars(value, props.blackList);
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props, onInput }
+      })
 
-      emit("update:modelValue", legalValue);
-    };
-
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props, onInput };
-    });
-
-    return {
-      getBindValue
-    };
-  }
-});
+      return {
+        getBindValue,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

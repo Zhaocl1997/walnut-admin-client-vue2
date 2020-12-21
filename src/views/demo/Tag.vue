@@ -4,41 +4,30 @@
       <span>基本，当前绑定值：【{{ tag1 }}】</span>
     </template>
 
-    <w-tag
-      v-model="tag1"
-      :options="options"
-    />
+    <w-tag v-model="tag1" :options="options" />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
       <span>可删，当前绑定值：【{{ tag2 }}】</span>
     </template>
 
-    <w-tag
-      v-model="tag2"
-      :options="options"
-      closable
-    />
+    <w-tag v-model="tag2" :options="options" closable />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
       <span>可加，当前绑定值：【{{ tag3 }}】</span>
     </template>
 
-    <w-tag
-      v-model="tag3"
-      :options="options"
-      addable
-    />
+    <w-tag v-model="tag3" :options="options" addable />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -54,96 +43,95 @@
     />
   </el-card>
 
-  <br>
+  <br />
 </template>
 
 <script>
-import wTag from "/@/components/UI/Tag/index.vue";
-import { toRefs, reactive, computed, defineComponent } from "vue";
+  import wTag from '/@/components/UI/Tag/index.vue'
+  import { toRefs, reactive, computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "TagDemo",
+  export default defineComponent({
+    name: 'TagDemo',
 
-  components: { wTag },
+    components: { wTag },
 
-  setup() {
-    const state = reactive({
-      tag1: "",
-      tag2: "",
-      tag3: "",
-      tag4: "",
-      tag5: "",
-      tag6: "",
-      tag7: "",
-      tag8: ""
-    });
+    setup() {
+      const state = reactive({
+        tag1: '',
+        tag2: '',
+        tag3: '',
+        tag4: '',
+        tag5: '',
+        tag6: '',
+        tag7: '',
+        tag8: '',
+      })
 
-    const options = [
-      {
-        value: "1",
-        label: "北京",
-        props: {
-          type: "success"
-        }
-      },
-      {
-        value: "2",
-        label: "上海",
-        props: {
-          type: "info"
-        }
-      },
-      {
-        value: "3",
-        label: "广州",
-        props: {
-          type: "warning"
-        }
-      },
-      {
-        value: "4",
-        label: "深圳",
-        props: {
-          type: "danger"
-        }
+      const options = [
+        {
+          value: '1',
+          label: '北京',
+          props: {
+            type: 'success',
+          },
+        },
+        {
+          value: '2',
+          label: '上海',
+          props: {
+            type: 'info',
+          },
+        },
+        {
+          value: '3',
+          label: '广州',
+          props: {
+            type: 'warning',
+          },
+        },
+        {
+          value: '4',
+          label: '深圳',
+          props: {
+            type: 'danger',
+          },
+        },
+      ]
+
+      const options2 = [
+        {
+          cityName: '北京',
+          props: {
+            type: 'success',
+          },
+        },
+        {
+          cityName: '上海',
+          props: {
+            type: 'info',
+          },
+        },
+        {
+          cityName: '广州',
+          props: {
+            type: 'warning',
+          },
+        },
+        {
+          cityName: '深圳',
+          props: {
+            type: 'danger',
+          },
+        },
+      ]
+
+      return {
+        ...toRefs(state),
+        options,
+        options2,
       }
-    ];
-
-    const options2 = [
-      {
-        cityName: "北京",
-        props: {
-          type: "success"
-        }
-      },
-      {
-        cityName: "上海",
-        props: {
-          type: "info"
-        }
-      },
-      {
-        cityName: "广州",
-        props: {
-          type: "warning"
-        }
-      },
-      {
-        cityName: "深圳",
-        props: {
-          type: "danger"
-        }
-      }
-    ];
-
-    return {
-      ...toRefs(state),
-      options,
-      options2
-    };
-  }
-});
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -9,10 +9,7 @@
     />
 
     <!-- main -->
-    <el-table
-      v-if="flag"
-      v-bind="getBindValue"
-    >
+    <el-table v-if="flag" v-bind="getBindValue">
       <!-- select -->
       <el-table-column
         v-if="hasSelect"
@@ -50,18 +47,12 @@
         fixed="left"
       >
         <template #default="props">
-          <slot
-            name="expand"
-            :expand="props"
-          />
+          <slot name="expand" :expand="props" />
         </template>
       </el-table-column>
 
       <!-- base -->
-      <template
-        v-for="item in visibleHeaders"
-        :key="item.prop"
-      >
+      <template v-for="item in visibleHeaders" :key="item.prop">
         <el-table-column
           :label="item.label"
           :prop="item.prop"
@@ -75,15 +66,9 @@
           :sortable="item.sortable ? 'custom' : false"
           :sort-orders="['ascending', 'descending']"
         >
-          <template
-            v-if="item.slot"
-            #default="props"
-          >
+          <template v-if="item.slot" #default="props">
             <!-- custom slot -->
-            <slot
-              :name="item.prop"
-              :props="props"
-            />
+            <slot :name="item.prop" :props="props" />
           </template>
         </el-table-column>
       </template>
@@ -98,7 +83,7 @@
     />
   </div>
 
-  <br>
+  <br />
 
   <!-- <el-table :data="data">
     <div>
@@ -112,190 +97,190 @@
 </template>
 
 <script>
-import { ElTable } from "element-plus";
-import {
-  reactive,
-  computed,
-  defineComponent,
-  onMounted,
-  watch,
-  toRefs,
-  nextTick
-} from "vue";
+  import { ElTable } from 'element-plus'
+  import {
+    reactive,
+    computed,
+    defineComponent,
+    onMounted,
+    watch,
+    toRefs,
+    nextTick,
+  } from 'vue'
 
-import wTableSettings from "./settings/index.vue";
-import wPagination from "../Pagination/index.vue";
+  import wTableSettings from './settings/index.vue'
+  import wPagination from '../Pagination/index.vue'
 
-export default defineComponent({
-  name: "WTable",
+  export default defineComponent({
+    name: 'WTable',
 
-  components: { wTableSettings, wPagination },
+    components: { wTableSettings, wPagination },
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElTable.props,
+    props: {
+      ...ElTable.props,
 
-    /**
-     * @description single/multiple v-model value
-     */
-    modelValue: [Array, Object],
+      /**
+       * @description single/multiple v-model value
+       */
+      modelValue: [Array, Object],
 
-    /**
-     * @description table header column
-     */
-    headers: Array,
+      /**
+       * @description table header column
+       */
+      headers: Array,
 
-    /**
-     * @description has select column
-     */
-    hasSelect: Boolean,
-    hasIndex: Boolean,
-    hasExpand: Boolean,
+      /**
+       * @description has select column
+       */
+      hasSelect: Boolean,
+      hasIndex: Boolean,
+      hasExpand: Boolean,
 
-    showSettings: Boolean,
-    showPage: Boolean,
+      showSettings: Boolean,
+      showPage: Boolean,
 
-    single: Boolean,
-    multiple: Boolean,
+      single: Boolean,
+      multiple: Boolean,
 
-    selectable: Function,
-    reserveSelection: Boolean,
+      selectable: Function,
+      reserveSelection: Boolean,
 
-    total: Number,
-    pageNum: { type: Number, default: 1 },
-    pageSize: { type: Number, default: 10 },
+      total: Number,
+      pageNum: { type: Number, default: 1 },
+      pageSize: { type: Number, default: 10 },
 
-    listFunc: Function
-  },
+      listFunc: Function,
+    },
 
-  emits: [
-    "update:headers",
-    "update:pageNum",
-    "update:pageSize",
-    "update:modelValue"
-  ],
+    emits: [
+      'update:headers',
+      'update:pageNum',
+      'update:pageSize',
+      'update:modelValue',
+    ],
 
-  setup(props, { attrs, emit }) {
-    const state = reactive({
-      modelHeaders: [],
-      visibleHeaders: [],
+    setup(props, { attrs, emit }) {
+      const state = reactive({
+        modelHeaders: [],
+        visibleHeaders: [],
 
-      rowStyle: {},
+        rowStyle: {},
 
-      flag: false
-    });
+        flag: false,
+      })
 
-    watch(
-      () => state.modelHeaders,
-      val => {
-        state.flag = false;
-        state.visibleHeaders.length = 0;
+      watch(
+        () => state.modelHeaders,
+        (val) => {
+          state.flag = false
+          state.visibleHeaders.length = 0
 
-        nextTick(() => {
-          state.visibleHeaders = val.filter(i => i.visible === true);
-          state.flag = true;
-        });
+          nextTick(() => {
+            state.visibleHeaders = val.filter((i) => i.visible === true)
+            state.flag = true
+          })
 
-        emit("update:headers", val);
-      },
-      {
-        immediate: true,
-        deep: true
+          emit('update:headers', val)
+        },
+        {
+          immediate: true,
+          deep: true,
+        }
+      )
+
+      watch(
+        [() => props.hasSelect, () => props.hasIndex, () => props.hasExpand],
+        (val) => {
+          state.flag = false
+
+          nextTick(() => {
+            state.flag = true
+          })
+        }
+      )
+
+      const init = () => {
+        props.headers.map((i) => {
+          state.modelHeaders.push({
+            ...i,
+            visible: i.visible === false ? false : true, // checkbox
+          })
+        })
       }
-    );
 
-    watch(
-      [() => props.hasSelect, () => props.hasIndex, () => props.hasExpand],
-      val => {
-        state.flag = false;
+      const onPageChange = (value) => {
+        emit('update:pageNum', value.pageNum)
+        emit('update:pageSize', value.pageSize)
 
-        nextTick(() => {
-          state.flag = true;
-        });
+        props.listFunc()
       }
-    );
 
-    const init = () => {
-      props.headers.map(i => {
-        state.modelHeaders.push({
-          ...i,
-          visible: i.visible === false ? false : true // checkbox
-        });
-      });
-    };
+      const onDensityChange = (command) => {
+        switch (command) {
+          case '0':
+            state.rowStyle = { height: '40px' }
+            break
 
-    const onPageChange = value => {
-      emit("update:pageNum", value.pageNum);
-      emit("update:pageSize", value.pageSize);
+          case '1':
+            state.rowStyle = { height: '60px' }
+            break
 
-      props.listFunc();
-    };
+          case '2':
+            state.rowStyle = { height: '80px' }
+            break
 
-    const onDensityChange = command => {
-      switch (command) {
-        case "0":
-          state.rowStyle = { height: "40px" };
-          break;
-
-        case "1":
-          state.rowStyle = { height: "60px" };
-          break;
-
-        case "2":
-          state.rowStyle = { height: "80px" };
-          break;
-
-        default:
-          break;
+          default:
+            break
+        }
       }
-    };
 
-    const onCurrentChange = val => {
-      if (props.single) {
-        emit("update:modelValue", val);
+      const onCurrentChange = (val) => {
+        if (props.single) {
+          emit('update:modelValue', val)
+        }
       }
-    };
 
-    const onSelectionChange = val => {
-      if (props.multiple) {
-        emit("update:modelValue", val);
+      const onSelectionChange = (val) => {
+        if (props.multiple) {
+          emit('update:modelValue', val)
+        }
       }
-    };
 
-    onMounted(() => {
-      init();
-    });
+      onMounted(() => {
+        init()
+      })
 
-    const getBindValue = computed(() => {
+      const getBindValue = computed(() => {
+        return {
+          ...attrs,
+          ...props,
+          rowStyle: state.rowStyle,
+          highlightCurrentRow: props.single,
+          onCurrentChange,
+          onSelectionChange,
+        }
+      })
+
       return {
-        ...attrs,
-        ...props,
-        rowStyle: state.rowStyle,
-        highlightCurrentRow: props.single,
-        onCurrentChange,
-        onSelectionChange
-      };
-    });
+        getBindValue,
+        onPageChange,
+        onDensityChange,
 
-    return {
-      getBindValue,
-      onPageChange,
-      onDensityChange,
-
-      ...toRefs(state)
-    };
-  }
-});
+        ...toRefs(state),
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-.w-table {
-  background-color: #ffffff;
-  margin: 10px;
+<style lang="scss" scoped>
+  .w-table {
+    background-color: #ffffff;
+    margin: 10px;
 
-  &:not(:root):fullscreen {
-    padding: 20px;
+    &:not(:root):fullscreen {
+      padding: 20px;
+    }
   }
-}
 </style>

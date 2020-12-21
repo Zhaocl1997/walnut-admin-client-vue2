@@ -1,20 +1,20 @@
 body {
-    font-family: "BlinkMacSystemFont,segoe ui,Microsoft YaHei,Arial,sans-serif,Helvetica Neue,Helvetica,Pingfang SC,Hiragino Sans GB,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji";
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1.428571429; // 20/14
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-align: left; // Fallback for where `start` is not supported
-    text-align: start;
-    text-decoration: none;
-    text-size-adjust: 100%;
-    text-shadow: none;
-    text-transform: none;
-    word-break: normal;
-    word-wrap: normal;
-    white-space: normal;
-    line-break: auto;
+  font-family: 'BlinkMacSystemFont,segoe ui,Microsoft YaHei,Arial,sans-serif,Helvetica Neue,Helvetica,Pingfang SC,Hiragino Sans GB,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.428571429; // 20/14
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left; // Fallback for where `start` is not supported
+  text-align: start;
+  text-decoration: none;
+  text-size-adjust: 100%;
+  text-shadow: none;
+  text-transform: none;
+  word-break: normal;
+  word-wrap: normal;
+  white-space: normal;
+  line-break: auto;
 }
 
 h1,
@@ -23,55 +23,55 @@ h3,
 h4,
 h5,
 h6 {
-    margin-top: 0;
-    margin-bottom: 0.5em;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.85);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
 }
 
 ul,
 ol {
-    list-style: none;
+  list-style: none;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 img {
-    vertical-align: top;
-    border: 0;
+  vertical-align: top;
+  border: 0;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 a:focus,
 a:active {
-    outline: none;
+  outline: none;
 }
 
 a {
-    text-decoration: none;
-    cursor: pointer;
-    // remove the gray background on active links in IE 10.
-    background-color: transparent;
-    outline: none;
-    transition: color 0.3s;
-    // remove gaps in links underline in iOS 8+ and Safari 8+.
-    -webkit-text-decoration-skip: objects;
+  text-decoration: none;
+  cursor: pointer;
+  // remove the gray background on active links in IE 10.
+  background-color: transparent;
+  outline: none;
+  transition: color 0.3s;
+  // remove gaps in links underline in iOS 8+ and Safari 8+.
+  -webkit-text-decoration-skip: objects;
 }
 
 i,
 em {
-    font-style: normal;
+  font-style: normal;
 }
 
 button,
 div:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 img,

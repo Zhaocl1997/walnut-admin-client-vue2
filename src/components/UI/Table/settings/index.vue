@@ -11,66 +11,65 @@
 </template>
 
 <script>
-import { reactive, defineComponent, watch } from "vue";
+  import { reactive, defineComponent, watch } from 'vue'
 
-import wTableSettingsRefresh from "./tableSettingsRefresh.vue";
-import wTableSettingsRows from "./tableSettingsRows.vue";
-import wTableSettingsScreenFull from "./tableSettingsScreenFull.vue";
-import wTableSettingsDensity from "./tableSettingsDensity.vue";
+  import wTableSettingsRefresh from './tableSettingsRefresh.vue'
+  import wTableSettingsRows from './tableSettingsRows.vue'
+  import wTableSettingsScreenFull from './tableSettingsScreenFull.vue'
+  import wTableSettingsDensity from './tableSettingsDensity.vue'
 
-export default defineComponent({
-  name: "WTableSettings",
+  export default defineComponent({
+    name: 'WTableSettings',
 
-  components: {
-    wTableSettingsRefresh,
-    wTableSettingsRows,
-    wTableSettingsScreenFull,
-    wTableSettingsDensity
-  },
+    components: {
+      wTableSettingsRefresh,
+      wTableSettingsRows,
+      wTableSettingsScreenFull,
+      wTableSettingsDensity,
+    },
 
-  props: {
-    listFunc: Function,
+    props: {
+      listFunc: Function,
 
-    modelValue: Array
-  },
+      modelValue: Array,
+    },
 
-  emits: ["update:modelValue", "density"],
+    emits: ['update:modelValue', 'density'],
 
-  setup(props, { attrs, emit }) {
-    let g = reactive([]);
+    setup(props, { attrs, emit }) {
+      let g = reactive([])
 
-    watch(
-      () => props.modelValue,
-      val => (g = val),
-      {
-        immediate: true,
-        deep: true
+      watch(
+        () => props.modelValue,
+        (val) => (g = val),
+        {
+          immediate: true,
+          deep: true,
+        }
+      )
+
+      watch(
+        () => g,
+        (val) => {
+          emit('update:modelValue', val)
+        },
+        {
+          immediate: true,
+          deep: true,
+        }
+      )
+
+      const onDensity = (v) => {
+        emit('density', v)
       }
-    );
 
-    watch(
-      () => g,
-      val => {
-        emit("update:modelValue", val);
-      },
-      {
-        immediate: true,
-        deep: true
+      return {
+        g,
+
+        onDensity,
       }
-    );
-
-    const onDensity = v => {
-      emit("density", v);
-    };
-
-    return {
-      g,
-
-      onDensity
-    };
-  }
-});
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

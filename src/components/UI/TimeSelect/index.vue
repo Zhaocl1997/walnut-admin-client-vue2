@@ -3,27 +3,26 @@
 </template>
 
 <script>
-import { ElTimeSelect } from "element-plus";
-import { computed, defineComponent } from "vue";
+  import { ElTimeSelect } from 'element-plus'
+  import { computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WTimeSelect",
+  export default defineComponent({
+    name: 'WTimeSelect',
 
-  props: {
-    ...ElTimeSelect.props
-  },
+    props: {
+      ...ElTimeSelect.props,
+    },
 
-  setup(props, { attrs }) {
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+    setup(props, { attrs }) {
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-    return {
-      getBindValue
-    };
-  }
-});
+      return {
+        getBindValue,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

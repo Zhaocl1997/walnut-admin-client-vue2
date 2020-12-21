@@ -5,33 +5,33 @@
 </template>
 
 <script>
-import { ref, reactive, defineComponent } from "vue";
+  import { ref, reactive, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "TheHeader",
+  export default defineComponent({
+    name: 'TheHeader',
 
-  components: {},
+    components: {},
 
-  setup() {}
-});
+    setup() {},
+  })
 </script>
 
-<style lang='scss' scoped>
-#header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+<style lang="scss" scoped>
+  #header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  height: 50px;
-  line-height: 50px;
-  background-color: #b3c0d1;
+    height: 50px;
+    line-height: 50px;
+    background-color: #b3c0d1;
 
-  &.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
+    &.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+    }
   }
-}
 </style>

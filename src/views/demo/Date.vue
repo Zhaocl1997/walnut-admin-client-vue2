@@ -19,7 +19,7 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -36,7 +36,7 @@
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -48,12 +48,12 @@
       :picker-options="{
         start: '09:30',
         step: '00:15',
-        end: '19:30'
+        end: '19:30',
       }"
     />
   </el-card>
 
-  <br>
+  <br />
 
   <el-card>
     <template #header>
@@ -63,75 +63,74 @@
     <w-date-picker v-model="time4" />
   </el-card>
 
-  <br>
+  <br />
 </template>
 
 <script>
-import wTimePicker from "/@/components/UI/TimePicker/index.vue";
-import wTimeSelect from "/@/components/UI/TimeSelect/index.vue";
-import wDatePicker from "/@/components/UI/DatePicker/index.vue";
-import { ref, reactive, computed, defineComponent, toRefs } from "vue";
+  import wTimePicker from '/@/components/UI/TimePicker/index.vue'
+  import wTimeSelect from '/@/components/UI/TimeSelect/index.vue'
+  import wDatePicker from '/@/components/UI/DatePicker/index.vue'
+  import { ref, reactive, computed, defineComponent, toRefs } from 'vue'
 
-export default defineComponent({
-  name: "DateDemo",
+  export default defineComponent({
+    name: 'DateDemo',
 
-  components: {
-    wTimePicker,
-    wTimeSelect,
-    wDatePicker
-  },
+    components: {
+      wTimePicker,
+      wTimeSelect,
+      wDatePicker,
+    },
 
-  setup(props, { attrs }) {
-    const state = reactive({
-      time1: "",
-      time2: "",
-      time3: "",
-      time4: "",
-      time5: "",
-      time6: "",
-      time7: "",
-      time8: ""
-    });
+    setup(props, { attrs }) {
+      const state = reactive({
+        time1: '',
+        time2: '',
+        time3: '',
+        time4: '',
+        time5: '',
+        time6: '',
+        time7: '',
+        time8: '',
+      })
 
-    const makeRange = (start, end) => {
-      const result = [];
-      for (let i = start; i <= end; i++) {
-        result.push(i);
+      const makeRange = (start, end) => {
+        const result = []
+        for (let i = start; i <= end; i++) {
+          result.push(i)
+        }
+        return result
       }
-      return result;
-    };
 
-    // 禁用 除了17点18点以外的小时
-    const disabledHours = () => {
-      return makeRange(0, 16).concat(makeRange(19, 23));
-    };
-
-    // 17点 禁用前半小时 18点 禁用后半小时
-    const disabledMinutes = hour => {
-      if (hour === 17) {
-        return makeRange(0, 29);
+      // 禁用 除了17点18点以外的小时
+      const disabledHours = () => {
+        return makeRange(0, 16).concat(makeRange(19, 23))
       }
-      if (hour === 18) {
-        return makeRange(31, 59);
-      }
-    };
 
-    // 禁用18点30分前30秒
-    const disabledSeconds = (hour, minute) => {
-      if (hour === 18 && minute === 30) {
-        return makeRange(1, 30);
+      // 17点 禁用前半小时 18点 禁用后半小时
+      const disabledMinutes = (hour) => {
+        if (hour === 17) {
+          return makeRange(0, 29)
+        }
+        if (hour === 18) {
+          return makeRange(31, 59)
+        }
       }
-    };
 
-    return {
-      ...toRefs(state),
-      disabledHours,
-      disabledMinutes,
-      disabledSeconds
-    };
-  }
-});
+      // 禁用18点30分前30秒
+      const disabledSeconds = (hour, minute) => {
+        if (hour === 18 && minute === 30) {
+          return makeRange(1, 30)
+        }
+      }
+
+      return {
+        ...toRefs(state),
+        disabledHours,
+        disabledMinutes,
+        disabledSeconds,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

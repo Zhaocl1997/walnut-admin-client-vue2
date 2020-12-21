@@ -25,35 +25,34 @@
 </template>
 
 <script>
-import { ElRadioGroup } from "element-plus";
-import { ref, computed, defineComponent } from "vue";
+  import { ElRadioGroup } from 'element-plus'
+  import { ref, computed, defineComponent } from 'vue'
 
-export default defineComponent({
-  name: "WRadio",
+  export default defineComponent({
+    name: 'WRadio',
 
-  inheritAttrs: false,
+    inheritAttrs: false,
 
-  props: {
-    ...ElRadioGroup.props,
+    props: {
+      ...ElRadioGroup.props,
 
-    options: { type: Array, default: () => [] },
-    optionValue: { type: String, default: "value" },
-    optionLabel: { type: String, default: "label" },
+      options: { type: Array, default: () => [] },
+      optionValue: { type: String, default: 'value' },
+      optionLabel: { type: String, default: 'label' },
 
-    button: Boolean
-  },
+      button: Boolean,
+    },
 
-  setup(props, { attrs }) {
-    const getBindValue = computed(() => {
-      return { ...attrs, ...props };
-    });
+    setup(props, { attrs }) {
+      const getBindValue = computed(() => {
+        return { ...attrs, ...props }
+      })
 
-    return {
-      getBindValue
-    };
-  }
-});
+      return {
+        getBindValue,
+      }
+    },
+  })
 </script>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>
