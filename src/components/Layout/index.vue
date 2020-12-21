@@ -1,5 +1,5 @@
 <template>
-  <div id="layout">
+  <div id="w-layout">
     <TheHeader />
 
     <TheAside />
@@ -12,6 +12,8 @@
       <TheFooter />
     </el-container>
   </div>
+
+  <el-backtop target="#w-layout"></el-backtop>
 </template>
 
 <script>
@@ -41,11 +43,13 @@
 </script>
 
 <style lang="scss" scoped>
-  #layout {
+  #w-layout {
+    position: relative;
     display: flex;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     background: whitesmoke;
     flex-direction: column;
+    overflow-x: hidden;
   }
 </style>
