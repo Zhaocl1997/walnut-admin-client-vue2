@@ -49,6 +49,10 @@
         <table-demo />
       </el-tab-pane>
 
+      <el-tab-pane label="Form" name="Form">
+        <form-demo />
+      </el-tab-pane>
+
       <el-tab-pane label="Storage" name="Storage">
         <storage-demo />
       </el-tab-pane>
@@ -62,6 +66,7 @@
   import CheckboxDemo from './Checkbox.vue'
   import DateDemo from './Date.vue'
   import DialogDemo from './Dialog.vue'
+  import FormDemo from './Form.vue'
   import InputDemo from './Input.vue'
   import InputNumberDemo from './InputNumber.vue'
   import PaginationDemo from './Pagination.vue'
@@ -81,6 +86,7 @@
       CheckboxDemo,
       DateDemo,
       DialogDemo,
+      FormDemo,
       InputDemo,
       InputNumberDemo,
       PaginationDemo,

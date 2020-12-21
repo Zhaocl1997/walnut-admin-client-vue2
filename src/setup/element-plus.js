@@ -37,6 +37,10 @@ import {
   ElDropdownMenu,
   ElDropdownItem,
   ElSwitch,
+  ElSpace,
+  ElBacktop,
+  ElRow,
+  ElCol,
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -84,6 +88,10 @@ const components = [
   ElDivider,
   ElTooltip,
   ElPopover,
+  ElSpace,
+  ElBacktop,
+  ElRow,
+  ElCol,
 
   ElDropdown,
   ElDropdownMenu,
