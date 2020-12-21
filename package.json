@@ -6,7 +6,8 @@
     "update:easy": "npm i easy-fns-ts@latest",
     "update:router": "npm install vue-router@4",
     "update:vue": "npm i vue@latest",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "eslint --ext .js,.vue src -f table --fix"
   },
   "dependencies": {
     "easy-fns-ts": "^1.0.9",
@@ -26,6 +27,8 @@
     "babel-plugin-component": "^1.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "eslint": "^7.16.0",
+    "eslint-plugin-vue": "^7.3.0",
     "sass": "^1.29.0",
     "vite": "^1.0.0-rc.13"
   }
