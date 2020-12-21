@@ -18,6 +18,11 @@ const routes = [
     component: () => import('../components/Layout/index.vue'),
     children: [
       {
+        path: 'index',
+        name: 'Index',
+        component: () => import('../views/Home.vue'),
+      },
+      {
         path: 'demo',
         name: 'Demo',
         component: () => import('../views/demo/index.vue'),

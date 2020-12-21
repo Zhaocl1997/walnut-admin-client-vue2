@@ -1,11 +1,11 @@
 <template>
   <el-dialog v-bind="getBindValue">
-    <template #footer>
+    <!-- <template #footer>
       <el-button size="small" @click="onCancel"> 取 消 </el-button>
       <el-button size="small" type="primary" @click="onConfirm">
         确 定
       </el-button>
-    </template>
+    </template> -->
   </el-dialog>
 </template>
 

@@ -42,7 +42,7 @@
       },
     },
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'change', 'clear'],
 
     setup(props, { attrs, emit }) {
       const onInput = (value) => {
@@ -55,8 +55,14 @@
         emit('update:modelValue', legalValue)
       }
 
+      const onClear = () => {
+        emit('update:modelValue', '')
+        emit('change', '')
+        emit('clear')
+      }
+
       const getBindValue = computed(() => {
-        return { ...attrs, ...props, onInput }
+        return { ...attrs, ...props, onInput, onClear }
       })
 
       return {
