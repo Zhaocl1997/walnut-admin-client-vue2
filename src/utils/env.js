@@ -30,3 +30,4 @@ export const loadEnv = () => {
   const f = filterObj(ret, 'VITE_')
   return f
 }
+
