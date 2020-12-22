@@ -14,14 +14,7 @@
       <span>黑名单，当前绑定值：【{{ input2 }}】</span>
     </template>
 
-    <w-input
-      v-model="input2"
-      :black-list="['<', '>']"
-      @change="onChange"
-      @input="onInput"
-      @blur="onBlur"
-      @focus="onFocus"
-    />
+    <w-input v-model="input2" :black-list="['<', '>']" @change="onChange" @input="onInput" />
   </el-card>
 
   <br />
@@ -41,11 +34,7 @@
       <span>前后置内容(prop)，当前绑定值：【{{ input4 }}】</span>
     </template>
 
-    <w-input
-      v-model="input4"
-      suffix-icon="el-icon-date"
-      prefix-icon="el-icon-search"
-    />
+    <w-input v-model="input4" suffix-icon="el-icon-date" prefix-icon="el-icon-search" />
   </el-card>
 
   <br />
@@ -74,8 +63,8 @@
     </template>
 
     <w-input v-model="input6">
-      <template #prepend> Http:// </template>
-      <template #append> .com </template>
+      <template #prepend>Http://</template>
+      <template #append>.com</template>
     </w-input>
   </el-card>
 
@@ -136,14 +125,6 @@
         console.log('[w-input input]', value)
       }
 
-      const onBlur = (event) => {
-        console.log('[w-input blur]', event)
-      }
-
-      const onFocus = (event) => {
-        console.log('[w-input focus]', event)
-      }
-
       const onClear = () => {
         console.log('[w-input clear]')
       }
@@ -153,8 +134,6 @@
 
         onChange,
         onInput,
-        onBlur,
-        onFocus,
         onClear,
       }
     },

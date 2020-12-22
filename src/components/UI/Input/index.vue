@@ -42,7 +42,7 @@
       },
     },
 
-    emits: ['update:modelValue', 'change', 'clear'],
+    emits: [...ElInput.emits],
 
     setup(props, { attrs, emit }) {
       const onInput = (value) => {
@@ -53,6 +53,7 @@
         const legalValue = clearIllegalChars(value, props.blackList)
 
         emit('update:modelValue', legalValue)
+        emit('input', legalValue)
       }
 
       const onClear = () => {
