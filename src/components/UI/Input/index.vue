@@ -42,7 +42,7 @@
       },
     },
 
-    emits: [...ElInput.emits],
+    emits: ['update:modelValue', 'input', 'change', 'clear'],
 
     setup(props, { attrs, emit }) {
       const onInput = (value) => {

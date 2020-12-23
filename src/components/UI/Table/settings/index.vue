@@ -1,12 +1,14 @@
 <template>
   <div class="u-mb8 u-float-right">
-    <w-table-settings-refresh :list-func="listFunc" />
+    <el-space size="mini">
+      <w-table-settings-refresh :list-func="listFunc" />
 
-    <w-table-settings-rows v-model:rows="g" />
+      <w-table-settings-rows v-model:rows="g" />
 
-    <w-table-settings-screen-full />
+      <w-table-settings-screen-full />
 
-    <w-table-settings-density @density="onDensity" />
+      <w-table-settings-density @density="onDensity" />
+    </el-space>
   </div>
 </template>
 

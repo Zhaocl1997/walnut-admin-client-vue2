@@ -14,7 +14,14 @@
       <span>黑名单，当前绑定值：【{{ input2 }}】</span>
     </template>
 
-    <w-input v-model="input2" :black-list="['<', '>']" @change="onChange" @input="onInput" />
+    <w-input
+      v-model="input2"
+      :black-list="['<', '>']"
+      @change="onChange"
+      @input="onInput"
+      @blur="onBlur"
+      @focus="onFocus"
+    />
   </el-card>
 
   <br />
@@ -34,7 +41,11 @@
       <span>前后置内容(prop)，当前绑定值：【{{ input4 }}】</span>
     </template>
 
-    <w-input v-model="input4" suffix-icon="el-icon-date" prefix-icon="el-icon-search" />
+    <w-input
+      v-model="input4"
+      suffix-icon="el-icon-date"
+      prefix-icon="el-icon-search"
+    />
   </el-card>
 
   <br />
@@ -125,6 +136,14 @@
         console.log('[w-input input]', value)
       }
 
+      const onBlur = () => {
+        console.log('[w-input blur]')
+      }
+
+      const onFocus = () => {
+        console.log('[w-input focus]')
+      }
+
       const onClear = () => {
         console.log('[w-input clear]')
       }
@@ -134,6 +153,8 @@
 
         onChange,
         onInput,
+        onBlur,
+        onFocus,
         onClear,
       }
     },
