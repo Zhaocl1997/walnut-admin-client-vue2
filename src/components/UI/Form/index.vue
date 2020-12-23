@@ -1,10 +1,17 @@
 <template>
-  <el-form v-bind="getBindValue">
+  <el-form ref="formRef" v-bind="getBindValue">
     <!-- form layout -->
     <el-row :gutter="gutter">
-      <el-col v-for="(item, index) in formModel" :key="index" :span="onCalcSpan(item)">
+      <el-col
+        v-for="(item, index) in formModel"
+        :key="index"
+        :span="onCalcSpan(item)"
+      >
         <!-- divider -->
-        <el-divider v-if="onCalcShowItem(item, FORM_TYPES.DIVIDER)" content-position="left">
+        <el-divider
+          v-if="onCalcShowItem(item, FORM_TYPE.DIVIDER)"
+          content-position="left"
+        >
           <el-space>
             <span class="w-form__fold-title">{{ item.title }}</span>
 
@@ -14,9 +21,7 @@
               :class="[
                 'u-pointer',
                 'w-form__fold-icon',
-                !item.fold && !item.defaultFold
-                  ? 'el-icon-arrow-down'
-                  : 'el-icon-arrow-up',
+                item.fold ? 'el-icon-arrow-up' : 'el-icon-arrow-down',
               ]"
             />
           </el-space>
@@ -24,18 +29,19 @@
 
         <!-- form item -->
         <transition-group name="folded-item" tag="div">
-          <el-form-item :key="index" v-if="onCalcShow(item)" v-bind="item">
+          <el-form-item v-if="onCalcShow(item)" v-bind="item">
             <!-- Input -->
-            <w-input
-              v-if="onCalcShowItem(item, FORM_TYPES.INPUT)"
+            <el-input
+              v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
-            ></w-input>
+              @keyup.enter="onQuery"
+            ></el-input>
 
             <!-- InputNumber -->
             <w-input-number
-              v-if="onCalcShowItem(item, FORM_TYPES.INPUT_NUMBER)"
+              v-if="onCalcShowItem(item, FORM_TYPE.INPUT_NUMBER)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
@@ -43,7 +49,7 @@
 
             <!-- Radio -->
             <w-radio
-              v-if="onCalcShowItem(item, FORM_TYPES.RADIO)"
+              v-if="onCalcShowItem(item, FORM_TYPE.RADIO)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
@@ -51,7 +57,7 @@
 
             <!-- Checkbox -->
             <w-checkbox
-              v-if="onCalcShowItem(item, FORM_TYPES.CHECKBOX)"
+              v-if="onCalcShowItem(item, FORM_TYPE.CHECKBOX)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
@@ -59,7 +65,7 @@
 
             <!-- Select -->
             <w-select
-              v-if="onCalcShowItem(item, FORM_TYPES.SELECT)"
+              v-if="onCalcShowItem(item, FORM_TYPE.SELECT)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
@@ -69,23 +75,29 @@
       </el-col>
     </el-row>
 
+    <!-- form button -->
     <el-form-item>
       <el-space>
-        <el-button v-if="mock && isDevMode" type="text">模拟</el-button>
+        <el-button v-if="mock && isDevMode" type="text" @click="onMock"
+          >模拟</el-button
+        >
 
-        <el-button v-if="scopedMock && isDevMode" type="text">局部模拟</el-button>
+        <el-button
+          v-if="scopedMock && isDevMode"
+          type="text"
+          @click="onScopedMock"
+          >局部模拟</el-button
+        >
 
-        <el-button v-if="query" type="text">查询</el-button>
+        <el-button v-if="print" type="text">打印</el-button>
 
-        <el-button v-if="reset" type="text">重置</el-button>
+        <el-button v-if="query" type="text" @click="onQuery">查询</el-button>
 
-        <el-button type="text">打印</el-button>
+        <el-button v-if="reset" type="text" @click="onReset">重置</el-button>
 
         <el-button v-if="fold" type="text" @click="onToggleFormFold">
           {{ isFolded ? '展开' : '收起' }}
-          <i
-            :class="isFolded ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"
-          />
+          <i :class="isFolded ? 'el-icon-arrow-down' : 'el-icon-arrow-up'" />
         </el-button>
       </el-space>
     </el-form-item>
@@ -105,11 +117,12 @@
   } from 'vue'
   import { findAllIndex } from 'easy-fns-ts/dist/esm'
 
+  import { isDevMode } from '/@/utils/mode'
+
   import { wFormProps } from './props'
   import { wFormComponents } from './components'
-  import { FORM_TYPES } from './types'
-
-  import { isDevMode } from '/@/utils/mode'
+  import { FORM_TYPE } from './types'
+  import { mockData } from './mock'
 
   export default defineComponent({
     name: 'wForm',
@@ -120,11 +133,14 @@
 
     props: wFormProps,
 
-    setup(props, { attrs }) {
+    emits: ['update:modelValue', 'query', 'reset'],
+
+    setup(props, { attrs, emit }) {
       const state = reactive({
         isFolded: false,
 
         formModel: [],
+        formRef: null,
       })
 
       watch(
@@ -154,7 +170,27 @@
         if (props.defaultFold) {
           state.isFolded = true
           state.formModel = props.model.slice(0, props.countToFold)
-        }      
+        }
+      }
+
+      const onMock = () => {
+        const formData = mockData(state.formModel)
+        emit('update:modelValue', { ...props.modelValue, ...formData })
+      }
+
+      const onScopedMock = () => {
+        const formData = mockData(state.formModel.filter((i) => i.mock))
+        emit('update:modelValue', { ...props.modelValue, ...formData })
+      }
+
+      const onQuery = () => {
+        emit('query')
+      }
+
+      const onReset = () => {
+        state.formRef.resetFields()
+
+        emit('reset')
       }
 
       const onCalcShowItem = (item, TYPE) => {
@@ -167,7 +203,7 @@
       }
 
       const onCalcSpan = (item) => {
-        if (item.wType === FORM_TYPES.DIVIDER) {
+        if (item.wType === FORM_TYPE.DIVIDER) {
           return 24
         }
         return item.span ? item.span : props.span
@@ -184,11 +220,14 @@
       }
 
       const onToggleDividerFold = (index, item) => {
-        state.formModel.splice(index, 1, { ...item, fold: !item.fold })
+        state.formModel.splice(index, 1, {
+          ...state.formModel[index],
+          fold: !item.fold,
+        })
 
         const dividerAllIndex = findAllIndex(
           state.formModel,
-          (item) => item.wType === FORM_TYPES.DIVIDER
+          (item) => item.wType === FORM_TYPE.DIVIDER
         )
 
         const startIndex = !!item.countToFold
@@ -212,12 +251,17 @@
       })
 
       return {
-        FORM_TYPES,
+        FORM_TYPE,
         isDevMode,
 
         ...toRefs(state),
 
         getBindValue,
+
+        onMock,
+        onScopedMock,
+        onQuery,
+        onReset,
 
         onCalcShow,
         onCalcSpan,
@@ -230,16 +274,16 @@
 </script>
 
 <style lang="scss" scoped>
-.w-form__fold-title {
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.w-form__fold-icon {
-  color: #304156;
-
-  &:hover {
-    transform: scale(1.3);
+  .w-form__fold-title {
+    font-weight: 700;
+    font-size: 20px;
   }
-}
+
+  .w-form__fold-icon {
+    color: #304156;
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
 </style>

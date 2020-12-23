@@ -21,17 +21,17 @@
             <el-switch v-model="resetButton" />
           </el-form-item>
 
-          <!--  <el-form-item label="展开">
-            <el-switch v-model="hasExpand" />
+          <el-form-item label="展开/收起">
+            <el-switch v-model="foldButton" />
           </el-form-item>
 
-          <el-form-item label="设置">
-            <el-switch v-model="showSettings" />
+          <el-form-item label="打印">
+            <el-switch v-model="printButton" />
           </el-form-item>
 
-          <el-form-item label="分页">
-            <el-switch v-model="showPage" />
-          </el-form-item>-->
+          <el-form-item label="禁用">
+            <el-switch v-model="formDisabled" />
+          </el-form-item>
         </el-space>
       </el-form>
     </template>
@@ -39,13 +39,17 @@
     <w-form
       v-model="formData"
       :model="getFormModel"
+      :rules="formRules"
       label-width="100px"
-      fold
       :mock="mockButton"
       :scoped-mock="scopedMockButton"
       :query="queryButton"
       :reset="resetButton"
+      :fold="foldButton"
       :count-to-fold="3"
+      :disabled="formDisabled"
+      @query="onQuery"
+      @reset="onReset"
     ></w-form>
   </el-card>
 
@@ -66,7 +70,10 @@
         mockButton: false,
         scopedMockButton: false,
         queryButton: false,
-        resetButton: false
+        resetButton: false,
+        foldButton: false,
+        printButton: false,
+        formDisabled: false,
       })
 
       const options = [
@@ -92,6 +99,14 @@
         console.log(v)
       }
 
+      const onQuery = () => {
+        console.log('query')
+      }
+
+      const onReset = () => {
+        console.log('reset')
+      }
+
       const getFormModel = computed(() => {
         return [
           // ==================================
@@ -101,7 +116,7 @@
             wType: 'Divider',
             title: 'Input',
             fold: true,
-            defaultFold: true,
+            defaultFold: false,
             countToFold: 1,
           },
           {
@@ -110,6 +125,7 @@
             label: '基本',
             placeholder: '基本',
             clearable: true,
+            mock: true,
           },
           {
             wType: 'Input',
@@ -216,13 +232,27 @@
       })
 
       const state = reactive({
-        formData: {},
+        formData: {
+          pageNum: 1,
+          pageSize: 10,
+        },
       })
 
       return {
         ...toRefs(state),
         ...toRefs(formState),
         getFormModel,
+        formRules: {
+          formInputBase: [
+            { required: true, message: '请输入', trigger: 'blur' },
+          ],
+          formSelectBase: [
+            { required: true, message: '请选择', trigger: 'change' },
+          ],
+        },
+
+        onQuery,
+        onReset,
       }
     },
   })

@@ -119,4 +119,14 @@ export const wFormProps = {
     type: Boolean,
     default: false,
   },
+
+  /**
+   * @description print button
+   * @type {Boolean}
+   * @default false
+   */
+  print: {
+    type: Boolean,
+    default: false,
+  },
 }

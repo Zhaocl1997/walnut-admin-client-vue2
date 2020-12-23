@@ -1,8 +1,8 @@
 .folded-item-enter-active,
 .folded-item-leave-active {
-    transition: opacity 0.5s;
+  transition: opacity 0.5s;
 }
 .folded-item-enter,
 .folded-item-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
