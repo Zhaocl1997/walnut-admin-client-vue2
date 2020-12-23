@@ -29,7 +29,11 @@ module.exports = {
    * Configure dep optimization behavior.
    */
   optimizeDeps: {
-    include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale'],
+    include: [
+      'element-plus/lib/locale/lang/zh-cn',
+      'element-plus/lib/locale',
+      'mockjs',
+    ],
   },
 
   proxy: {
