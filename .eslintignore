@@ -3,3 +3,7 @@ node_modules
 public
 dist
 build
+.eslintrc.js
+.prettierrc.js
+babel.config.js
+vite.config.js
