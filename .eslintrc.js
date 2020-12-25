@@ -12,5 +12,7 @@ module.exports = {
     // 'vue/no-unused-vars': 'error'
     'vue/require-default-prop': 1,
     'vue/no-unused-components': 1,
+    'vue/no-unused-vars': 1,
+    'vue/valid-v-slot': 1,
   },
 }
