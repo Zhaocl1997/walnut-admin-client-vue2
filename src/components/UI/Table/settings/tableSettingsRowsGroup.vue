@@ -111,6 +111,7 @@
         },
         {
           deep: true,
+          immediate: true,
         }
       )
 

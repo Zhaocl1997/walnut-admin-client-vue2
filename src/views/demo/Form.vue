@@ -5,6 +5,10 @@
 
       <el-form inline>
         <el-space>
+          <el-form-item label="控制显隐">
+            <el-switch v-model="inputBaseShow" />
+          </el-form-item>
+
           <el-form-item label="模拟">
             <el-switch v-model="mockButton" />
           </el-form-item>
@@ -50,7 +54,11 @@
       :disabled="formDisabled"
       @query="onQuery"
       @reset="onReset"
-    ></w-form>
+    >
+      <template #formSlot="{ props }">
+        <el-input v-model="formData.formSlot"></el-input>
+      </template>
+    </w-form>
   </el-card>
 
   <br />
@@ -74,6 +82,8 @@
         foldButton: false,
         printButton: false,
         formDisabled: false,
+
+        inputBaseShow: false,
       })
 
       const options = [
@@ -126,6 +136,14 @@
             placeholder: '基本',
             clearable: true,
             mock: true,
+            show: formState.inputBaseShow,
+          },
+          {
+            wType: 'Input',
+            prop: 'formSlot',
+            label: '自定义插槽',
+            placeholder: '自定义插槽',
+            slot: true,
           },
           {
             wType: 'Input',

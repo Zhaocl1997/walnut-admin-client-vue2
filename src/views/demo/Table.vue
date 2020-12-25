@@ -32,25 +32,34 @@
           <el-form-item label="分页">
             <el-switch v-model="showPage" />
           </el-form-item>
+
+          <el-form-item label="斑马纹">
+            <el-switch v-model="stripe" />
+          </el-form-item>
+
+          <el-form-item label="边框">
+            <el-switch v-model="border" />
+          </el-form-item>
         </el-space>
       </el-form>
 
       <div>单选/多选 绑定值：【{{ tableValue }}】</div>
       <div>pageSize 绑定值：【{{ pageSize }}】</div>
       <div>pageNum 绑定值：【{{ pageNum }}】</div>
-      <div>header 绑定值</div>
+      <div>header 绑定值：</div>
       <div>
-        <w-JSON v-model="tableHeader" />
+        <w-JSON v-model="getTableHeader" />
       </div>
     </template>
 
     <w-table
       v-model="tableValue"
-      v-model:headers="tableHeader"
+      v-model:headers="getTableHeader"
       v-model:pageSize="pageSize"
       v-model:pageNum="pageNum"
       :data="tableData"
       :total="total"
+      :loading="loading"
       :list-func="getDataList"
       :has-index="hasIndex"
       :has-select="hasSelect"
@@ -59,7 +68,11 @@
       :show-page="showPage"
       :single="single"
       :multiple="multiple"
+      :stripe="stripe"
+      :border="border"
+      @cell-change="onCellChange"
     >
+      <!-- expand 列 -->
       <template #expand="{ expand }">
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="用户姓名">
@@ -84,8 +97,25 @@
         </el-form>
       </template>
 
+      <!-- 自定义列 -->
       <template #status="{ props }">
         <el-switch v-model="props.row.status" />
+      </template>
+
+      <!-- 自定义编辑插槽 -->
+      <template #age-editableSlot="{ props }">
+        <el-input-number size="mini" v-model="props.row.age" />
+      </template>
+
+      <!-- 自定义头部插槽 -->
+      <template #family.mom-headerSlot="{ props }">
+        <el-input
+          v-model="search"
+          @input="onTableSearch"
+          @keyup.enter="onTableSearch"
+          size="mini"
+          placeholder="输入关键字搜索"
+        />
       </template>
     </w-table>
   </el-card>
@@ -105,6 +135,7 @@
     toRef,
     toRefs,
     watch,
+    toRaw,
   } from 'vue'
 
   import { listUser } from '/@/mock/user.js'
@@ -124,6 +155,11 @@
 
         single: false,
         multiple: false,
+
+        stripe: false,
+        border: false,
+
+        search: '',
       })
 
       const queryFormData = reactive({
@@ -135,13 +171,29 @@
         total: 0,
         tableData: [],
         tableValue: undefined,
+        loading: false,
       })
 
-      const tableHeader = [
+      const onTableFilter = (value, row, column) => {
+        const property = column['property']
+        return row[property] === value
+      }
+
+      const onTableSearch = () => {
+        table.tableData.length === 0
+        table.tableData = table.tableData.filter(
+          (data) =>
+            !state.search ||
+            data.family.mom.toLowerCase().includes(state.search.toLowerCase())
+        )
+      }
+
+      const getTableHeader = [
         {
           label: '姓名',
           prop: 'name',
-          width: '100px',
+          width: '200px',
+          editable: true,
         },
         {
           label: '性别',
@@ -151,13 +203,23 @@
         {
           label: '年龄',
           prop: 'age',
-          width: '100px',
+          width: '200px',
           formatter: ({ age }) => `${age}岁`,
+          editable: true,
+          editableSlot: true,
         },
         {
           label: '省份',
           prop: 'province',
           width: '100px',
+          filters: [
+            { text: '北京', value: '北京' },
+            { text: '河南省', value: '河南省' },
+            { text: '广东省', value: '广东省' },
+            { text: '黑龙江省', value: '黑龙江省' },
+          ],
+          filterPlacement: 'bottom-end',
+          filterMethod: onTableFilter,
         },
         {
           label: '城市',
@@ -188,19 +250,28 @@
         {
           label: '父亲姓名',
           prop: 'family.dad',
-          width: '100px',
+          width: '150px',
         },
         {
           label: '母亲姓名',
           prop: 'family.mom',
-          width: '100px',
+          width: '150px',
+          headerSlot: true,
         },
       ]
 
       const getDataList = () => {
+        table.loading = true
         const result = listUser(queryFormData)
         table.tableData = result.data
         table.total = result.total
+        setTimeout(() => {
+          table.loading = false
+        }, 2000)
+      }
+
+      const onCellChange = (row) => {
+        console.log(row)
       }
 
       onMounted(() => {
@@ -209,12 +280,14 @@
 
       return {
         getDataList,
+        onCellChange,
+        onTableSearch,
 
+        ...toRefs(state),
         ...toRefs(queryFormData),
         ...toRefs(table),
-        ...toRefs(state),
 
-        tableHeader,
+        getTableHeader,
       }
     },
   })

@@ -1,99 +1,149 @@
 <template>
   <div class="w-table">
-    <!-- settings -->
-    <w-table-settings
-      v-show="showSettings"
-      v-model="modelHeaders"
-      :list-func="listFunc"
-      @density="onDensityChange"
-    />
+    <el-skeleton :loading="loading" :count="1" animated>
+      <!-- template -->
+      <template #template>
+        <el-skeleton-item style="height: 24px; margin: 10px" />
+      </template>
 
-    <!-- main -->
-    <el-table v-if="flag" v-bind="getBindValue">
-      <!-- select -->
-      <el-table-column
-        v-if="hasSelect"
-        key="select"
-        type="selection"
-        width="50"
-        align="center"
-        fixed="left"
-        :selectable="selectable"
-        :reserve-selection="reserveSelection"
-      />
+      <!-- content -->
+      <template #default>
+        <!-- settings -->
+        <w-table-settings
+          v-if="showSettings"
+          v-model="modelHeaders"
+          :list-func="listFunc"
+          @density="onDensityChange"
+        />
 
-      <!-- index -->
-      <el-table-column
-        v-if="hasIndex"
-        key="index"
-        label="序号"
-        type="index"
-        width="50"
-        align="center"
-        fixed="left"
-      >
-        <template #default="scope">
-          <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
-        </template>
-      </el-table-column>
+        <!-- main -->
+        <el-table v-bind="getBindValue">
+          <!-- select -->
+          <el-table-column
+            v-if="hasSelect"
+            key="select"
+            type="selection"
+            width="50"
+            align="center"
+            fixed="left"
+            :selectable="selectable"
+            :reserve-selection="reserveSelection"
+          />
 
-      <!-- expand -->
-      <el-table-column
-        v-if="hasExpand"
-        key="expand"
-        type="expand"
-        width="50"
-        align="center"
-        fixed="left"
-      >
-        <template #default="props">
-          <slot name="expand" :expand="props" />
-        </template>
-      </el-table-column>
+          <!-- index -->
+          <el-table-column
+            v-if="hasIndex"
+            key="index"
+            label="序号"
+            type="index"
+            width="50"
+            align="center"
+            fixed="left"
+          >
+            <template #default="scope">
+              <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
+            </template>
+          </el-table-column>
 
-      <!-- base -->
-      <template v-for="item in visibleHeaders" :key="item.prop">
-        <el-table-column
-          :label="item.label"
-          :prop="item.prop"
-          :type="item.type"
-          :min-width="item.width ? item.width : '100px'"
-          :fixed="item.fixed"
-          :formatter="item.formatter"
-          :column-key="item.prop"
-          :align="item.align ? item.align : 'center'"
-          :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
-          :sortable="item.sortable ? 'custom' : false"
-          :sort-orders="['ascending', 'descending']"
-        >
-          <template v-if="item.slot" #default="props">
-            <!-- custom slot -->
-            <slot :name="item.prop" :props="props" />
+          <!-- expand -->
+          <el-table-column
+            v-if="hasExpand"
+            key="expand"
+            type="expand"
+            width="50"
+            align="center"
+            fixed="left"
+          >
+            <template #default="props">
+              <slot name="expand" :expand="props" />
+            </template>
+          </el-table-column>
+
+          <!-- base -->
+          <template
+            v-for="(item, index) in modelHeaders"
+            :key="item.prop + index"
+          >
+            <el-table-column
+              v-if="item.visible"
+              v-bind="item"
+              :min-width="item.width ? item.width : '100px'"
+              :row-key="item.prop + index"
+              :column-key="item.prop + index"
+              :align="item.align ? item.align : 'center'"
+              :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
+              :sortable="item.sortable ? 'custom' : false"
+              :sort-orders="['ascending', 'descending']"
+            >
+              <!-- header slot -->
+              <template v-if="item.headerSlot" #header>
+                <slot :name="`${item.prop}-headerSlot`" />
+              </template>
+
+              <!-- custom slot -->
+              <template v-if="item.slot" #default="props">
+                <slot :name="item.prop" :props="props" />
+              </template>
+
+              <!-- editable column -->
+              <template v-if="item.editable" #default="props">
+                <el-space>
+                  <template v-if="!item.showColumn || !props.row.showRow">
+                    <el-space size="mini">
+                      <span v-if="item.formatter">{{
+                        item.formatter(props.row)
+                      }}</span>
+                      <span v-else>{{ props.row[item.prop] }}</span>
+                      <i
+                        class="el-icon-edit u-pointer"
+                        @click="onToggleEditableCell(props, index)"
+                      ></i>
+                    </el-space>
+                  </template>
+
+                  <template v-else>
+                    <el-space size="mini">
+                      <!-- editable custom slot -->
+                      <template v-if="item.editableSlot">
+                        <slot
+                          :name="`${item.prop}-editableSlot`"
+                          :props="props"
+                        ></slot>
+                      </template>
+
+                      <!-- editable column default input -->
+                      <template v-else>
+                        <el-input
+                          v-model="props.row[item.prop]"
+                          size="small"
+                          @keyup.enter="onEditableCellSave(props, index)"
+                        ></el-input>
+                      </template>
+
+                      <i
+                        class="el-icon-check u-pointer"
+                        @click="onEditableCellSave(props, index)"
+                      ></i>
+                    </el-space>
+                  </template>
+                </el-space>
+              </template>
+            </el-table-column>
           </template>
-        </el-table-column>
-      </template>
-    </el-table>
+        </el-table>
 
-    <!-- page -->
-    <w-pagination
-      v-show="showPage"
-      class="u-float-right"
-      :total="+total"
-      @change="onPageChange"
-    />
+        <!-- page -->
+        <w-pagination
+          v-if="showPage"
+          class="u-float-right"
+          :total="+total"
+          :currentPage="+pageNum"
+          :pageSize="+pageSize"
+          @change="onPageChange"
+        />
+      </template>
+    </el-skeleton>
   </div>
-
-  <br />
-
-  <!-- <el-table :data="data">
-    <div>
-      <template v-for="(item, index) in visibleHeaders" :key="item.prop">
-        <div>
-          <el-table-column v-bind="item"></el-table-column>
-        </div>
-      </template>
-    </div>
-  </el-table>-->
 </template>
 
 <script>
@@ -105,6 +155,7 @@
     watch,
     toRefs,
     nextTick,
+    unref,
   } from 'vue'
 
   import wTableSettings from './settings/index.vue'
@@ -112,7 +163,7 @@
   import { wTableProps } from './props'
 
   export default defineComponent({
-    name: 'WTable',
+    name: 'wTable',
 
     components: { wTableSettings, wPagination },
 
@@ -125,53 +176,68 @@
       'update:pageNum',
       'update:pageSize',
       'update:modelValue',
+      'cellChange',
     ],
 
     setup(props, { attrs, emit }) {
       const state = reactive({
         modelHeaders: [],
-        visibleHeaders: [],
-
+        tableData: [],
         rowStyle: {},
-
-        flag: false,
+        editable: false
       })
+
+      // watch(
+      //   () => props.headers,
+      //   (val) => {
+      //     nextTick(() => {
+      //       onTableHeader()
+      //     })
+      //   },
+      //   {
+      //     deep: true,
+      //     immediate: true,
+      //   }
+      // )
 
       watch(
         () => state.modelHeaders,
         (val) => {
-          state.flag = false
-          state.visibleHeaders.length = 0
-
           nextTick(() => {
-            state.visibleHeaders = val.filter((i) => i.visible === true)
-            state.flag = true
+            emit('update:headers', val)
           })
-
-          emit('update:headers', val)
         },
         {
-          immediate: true,
           deep: true,
+          immediate: true,
         }
       )
 
       watch(
-        [() => props.hasSelect, () => props.hasIndex, () => props.hasExpand],
+        () => props.data,
         (val) => {
-          state.flag = false
-
-          nextTick(() => {
-            state.flag = true
+          state.tableData.length === 0
+          console.log(state.tableData);
+          
+          val.map((item, index) => {
+            state.tableData.splice(index, 1, {
+              ...item,
+              showRow: false, // showRow
+            })
           })
+        },
+        {
+          deep: true,
+          immediate: true,
         }
       )
 
-      const init = () => {
-        props.headers.map((i) => {
-          state.modelHeaders.push({
-            ...i,
-            visible: i.visible === false ? false : true, // checkbox
+      const onTableHeader = () => {
+        props.headers.map((item, index) => {
+          state.modelHeaders.splice(index, 1, {
+            ...item,
+            visible: item.visible === false ? false : true, // checkbox
+            showColumn: false, // showColumn
           })
         })
       }
@@ -214,14 +280,29 @@
         }
       }
 
-      onMounted(() => {
-        init()
-      })
+      const onToggleEditableCell = (prop, index) => {
+        state.modelHeaders.splice(index, 1, {
+          ...state.modelHeaders[index],
+          showColumn: !state.modelHeaders[index].showColumn,
+        })
+
+        state.tableData.splice(prop.$index, 1, {
+          ...state.tableData[prop.$index],
+          showRow: !state.tableData[prop.$index].showRow,
+        })
+      }
+
+      const onEditableCellSave = (prop, index) => {
+        emit('cellChange', prop.row)
+
+        onToggleEditableCell(prop, index)
+      }
 
       const getBindValue = computed(() => {
         return {
           ...attrs,
           ...props,
+          data: state.tableData,
           rowStyle: state.rowStyle,
           highlightCurrentRow: props.single,
           onCurrentChange,
@@ -229,10 +310,16 @@
         }
       })
 
+      onMounted(() => {
+        onTableHeader()
+      })
+
       return {
         getBindValue,
         onPageChange,
         onDensityChange,
+        onToggleEditableCell,
+        onEditableCellSave,
 
         ...toRefs(state),
       }

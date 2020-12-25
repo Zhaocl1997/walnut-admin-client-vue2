@@ -41,6 +41,9 @@ import {
   ElBacktop,
   ElRow,
   ElCol,
+  ElSkeleton,
+  ElSkeletonItem,
+  ElLoading,
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -98,6 +101,10 @@ const components = [
   ElDropdownItem,
 
   ElSwitch,
+
+  ElSkeleton,
+  ElSkeletonItem,
+  ElLoading,
 ]
 
 export function setupElementPlus(app) {

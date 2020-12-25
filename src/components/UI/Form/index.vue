@@ -31,13 +31,13 @@
         <transition-group name="folded-item" tag="div">
           <el-form-item v-if="onCalcShow(item)" v-bind="item">
             <!-- Input -->
-            <el-input
+            <w-input
               v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
               v-model="modelValue[item.prop]"
               v-bind="item"
               v-on="item"
               @keyup.enter="onQuery"
-            ></el-input>
+            ></w-input>
 
             <!-- InputNumber -->
             <w-input-number
@@ -70,6 +70,9 @@
               v-bind="item"
               v-on="item"
             ></w-select>
+
+            <!-- custom slot -->
+            <slot v-if="item.slot" :name="item.prop" />
           </el-form-item>
         </transition-group>
       </el-col>

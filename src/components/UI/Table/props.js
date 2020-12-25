@@ -92,4 +92,9 @@ export const wTableProps = {
    * @description get table data method, for settings-refresh use
    */
   listFunc: Function,
+
+  /**
+   * @description table loading
+   */
+  loading: Boolean,
 }
