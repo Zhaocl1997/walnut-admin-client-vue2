@@ -25,12 +25,20 @@
             <el-switch v-model="hasExpand" />
           </el-form-item>
 
+          <el-form-item label="操作">
+            <el-switch v-model="hasAction" />
+          </el-form-item>
+
+          <el-form-item label="标题">
+            <el-switch v-model="hasTitle" />
+          </el-form-item>
+
           <el-form-item label="设置">
-            <el-switch v-model="showSettings" />
+            <el-switch v-model="hasSettings" />
           </el-form-item>
 
           <el-form-item label="分页">
-            <el-switch v-model="showPage" />
+            <el-switch v-model="hasPage" />
           </el-form-item>
 
           <el-form-item label="斑马纹">
@@ -57,6 +65,7 @@
       v-model:headers="getTableHeader"
       v-model:pageSize="pageSize"
       v-model:pageNum="pageNum"
+      :title="title"
       :data="tableData"
       :total="total"
       :loading="loading"
@@ -64,13 +73,16 @@
       :has-index="hasIndex"
       :has-select="hasSelect"
       :has-expand="hasExpand"
-      :show-settings="showSettings"
-      :show-page="showPage"
+      :has-action="hasAction"
+      :has-title="hasTitle"
+      :has-settings="hasSettings"
+      :has-page="hasPage"
       :single="single"
       :multiple="multiple"
       :stripe="stripe"
       :border="border"
       @cell-change="onCellChange"
+      @sort-change="onSortChange"
     >
       <!-- expand 列 -->
       <template #expand="{ expand }">
@@ -104,17 +116,17 @@
 
       <!-- 自定义编辑插槽 -->
       <template #age-editableSlot="{ props }">
-        <el-input-number size="mini" v-model="props.row.age" />
+        <el-input-number v-model="props.row.age" size="mini" />
       </template>
 
       <!-- 自定义头部插槽 -->
       <template #family.mom-headerSlot="{ props }">
         <el-input
           v-model="search"
-          @input="onTableSearch"
-          @keyup.enter="onTableSearch"
           size="mini"
           placeholder="输入关键字搜索"
+          @input="onTableSearch"
+          @keyup.enter="onTableSearch"
         />
       </template>
     </w-table>
@@ -124,19 +136,10 @@
 </template>
 
 <script>
+  import Message from 'element-plus/lib/el-message'
   import wTable from '/@/components/UI/Table/index.vue'
   import wJSON from '/@/components/Others/JSON/index.vue'
-  import {
-    ref,
-    reactive,
-    computed,
-    defineComponent,
-    onMounted,
-    toRef,
-    toRefs,
-    watch,
-    toRaw,
-  } from 'vue'
+  import { reactive, defineComponent, onMounted, toRefs } from 'vue'
 
   import { listUser } from '/@/mock/user.js'
 
@@ -147,11 +150,15 @@
 
     setup() {
       const state = reactive({
+        title: 'table扩展',
+
         hasIndex: false,
         hasSelect: false,
         hasExpand: false,
-        showSettings: false,
-        showPage: false,
+        hasAction: false,
+        hasTitle: false,
+        hasSettings: false,
+        hasPage: false,
 
         single: false,
         multiple: false,
@@ -180,7 +187,6 @@
       }
 
       const onTableSearch = () => {
-        table.tableData.length === 0
         table.tableData = table.tableData.filter(
           (data) =>
             !state.search ||
@@ -198,7 +204,8 @@
         {
           label: '性别',
           prop: 'sex',
-          width: '50px',
+          width: '80px',
+          sortable: 'custom',
         },
         {
           label: '年龄',
@@ -270,8 +277,17 @@
         }, 2000)
       }
 
-      const onCellChange = (row) => {
-        console.log(row)
+      const onCellChange = (state) => {
+        state.loadStart()
+        setTimeout(() => {
+          state.row[state.prop] = state.newValue
+          state.loadEnd()
+          Message.success('更新成功')
+        }, 2000)
+      }
+
+      const onSortChange = ({ column, prop, order }) => {
+        console.log({ column, prop, order })
       }
 
       onMounted(() => {
@@ -281,6 +297,7 @@
       return {
         getDataList,
         onCellChange,
+        onSortChange,
         onTableSearch,
 
         ...toRefs(state),

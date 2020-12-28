@@ -10,7 +10,10 @@
 
   <br />
 
-  <w-dialog v-model="dialogVisible1" />
+  <w-dialog v-model="dialogVisible1" title="弹窗扩展" header footer>
+    <h1 v-for="i in 20" :key="i">标题 {{ i }}</h1>
+  </w-dialog>
+
   <w-dialog v-model="dialogVisible2" fullscreen />
 </template>
 

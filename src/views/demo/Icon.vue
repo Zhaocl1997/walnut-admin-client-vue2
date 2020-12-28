@@ -153,18 +153,40 @@
 
     <w-screen-full target=".custom-sf" />
   </el-card>
+
+  <br />
+
+  <el-card>
+    <template #header>
+      <span>箭头图标</span>
+    </template>
+
+    <w-arrow :active="active" @click="onToggleArrow"></w-arrow>
+  </el-card>
 </template>
 
 <script>
   import wScreenFull from '/@/components/Others/Screenfull/index.vue'
+  import wArrow from '/@/components/UI/Arrow/index.vue'
   import { ref, reactive, computed, defineComponent } from 'vue'
 
   export default defineComponent({
     name: 'IconDemo',
 
-    components: { wScreenFull },
+    components: { wScreenFull, wArrow },
 
-    setup(props, { attrs }) {},
+    setup(props, { attrs }) {
+      const active = ref(false)
+
+      const onToggleArrow = () => {
+        active.value = !active.value
+      }
+
+      return {
+        active,
+        onToggleArrow,
+      }
+    },
   })
 </script>
 

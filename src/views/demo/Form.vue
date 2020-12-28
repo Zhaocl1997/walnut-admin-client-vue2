@@ -187,7 +187,7 @@
             wType: 'Divider',
             title: 'InputNumber',
             fold: true,
-            defaultFold: false,
+            defaultFold: true,
           },
           {
             wType: 'InputNumber',
