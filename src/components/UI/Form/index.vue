@@ -13,23 +13,18 @@
           content-position="left"
         >
           <el-space>
-            <span class="w-form__fold-title">{{ item.title }}</span>
-
-            <i
-              v-if="item.fold === true || item.fold === false"
+            <w-title>{{ item.title }}</w-title>
+            <w-arrow
+              style="margin-top: 2px"
+              :active="item.fold"
               @click="onToggleDividerFold(index, item)"
-              :class="[
-                'u-pointer',
-                'w-form__fold-icon',
-                item.fold ? 'el-icon-arrow-up' : 'el-icon-arrow-down',
-              ]"
-            />
+            ></w-arrow>
           </el-space>
         </el-divider>
 
         <!-- form item -->
-        <transition-group name="folded-item" tag="div">
-          <el-form-item v-if="onCalcShow(item)" v-bind="item">
+        <transition name="folded-item">
+          <el-form-item v-if="onCalcShow(item)" :key="index" v-bind="item">
             <!-- Input -->
             <w-input
               v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
@@ -74,13 +69,13 @@
             <!-- custom slot -->
             <slot v-if="item.slot" :name="item.prop" />
           </el-form-item>
-        </transition-group>
+        </transition>
       </el-col>
     </el-row>
 
     <!-- form button -->
     <el-form-item>
-      <el-space>
+      <el-space size="mini">
         <el-button v-if="mock && isDevMode" type="text" @click="onMock"
           >模拟</el-button
         >
@@ -94,14 +89,24 @@
 
         <el-button v-if="print" type="text">打印</el-button>
 
-        <el-button v-if="query" type="text" @click="onQuery">查询</el-button>
+        <w-button
+          v-if="fold"
+          class="w-form__fold-button"
+          size="small"
+          @click="onToggleFormFold"
+        >
+          <span>{{ isFolded ? '展开' : '收起' }}</span>
 
-        <el-button v-if="reset" type="text" @click="onReset">重置</el-button>
+          <template #suffix>
+            <w-arrow :active="!isFolded"></w-arrow>
+          </template>
+        </w-button>
 
-        <el-button v-if="fold" type="text" @click="onToggleFormFold">
-          {{ isFolded ? '展开' : '收起' }}
-          <i :class="isFolded ? 'el-icon-arrow-down' : 'el-icon-arrow-up'" />
-        </el-button>
+        <el-button v-if="reset" size="small" @click="onReset">重 置</el-button>
+
+        <el-button v-if="query" size="small" type="primary" @click="onQuery"
+          >查 询</el-button
+        >
       </el-space>
     </el-form-item>
   </el-form>
@@ -128,7 +133,7 @@
   import { mockData } from './mock'
 
   export default defineComponent({
-    name: 'wForm',
+    name: 'WForm',
 
     components: wFormComponents,
 
@@ -277,16 +282,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .w-form__fold-title {
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  .w-form__fold-icon {
-    color: #304156;
-
-    &:hover {
-      transform: scale(1.3);
-    }
+  .w-form__fold-button {
+    padding: 2.5px 8px;
   }
 </style>
