@@ -11,9 +11,7 @@
 
       <template v-if="footer" #footer>
         <el-button size="small" @click="onCancel">取 消</el-button>
-        <el-button size="small" type="primary" @click="onConfirm"
-          >确 定</el-button
-        >
+        <el-button size="small" type="primary" @click="onConfirm">确 定</el-button>
       </template>
     </el-dialog>
   </div>
@@ -61,32 +59,32 @@
         onCancel,
         onConfirm,
       }
-    },
+    }
   })
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/index.scss';
+@import '../../../assets/style/index.scss';
 
-  .w-dialog {
-    ::v-deep .el-dialog__header {
-      border-bottom: 1px solid #e8eaec;
-    }
-
-    ::v-deep .el-dialog__footer {
-      border-top: 1px solid #e8eaec;
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-    }
-
-    &__body {
-      @include scrollBar;
-
-      max-height: 60vh;
-      overflow-y: auto;
-
-      margin-bottom: 63px;
-    }
+.w-dialog {
+  &:deep(.el-dialog__header) {
+    border-bottom: 1px solid #e8eaec;
   }
+
+  &:deep(.el-dialog__footer) {
+    border-top: 1px solid #e8eaec;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+
+  &__body {
+    @include scrollBar;
+
+    max-height: 60vh;
+    overflow-y: auto;
+
+    margin-bottom: 63px;
+  }
+}
 </style>
