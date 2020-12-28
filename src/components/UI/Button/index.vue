@@ -1,13 +1,19 @@
 <template>
   <el-button v-bind="getBindValue">
-    <i v-if="prefixIcon" :class="prefixIcon" />
+    <el-space size="mini">
+      <i v-if="prefixIcon" :class="prefixIcon" />
 
-    <span v-if="$slots.default" style="margin: 3px">
-      <span v-if="delayText">{{ delayText }}</span>
-      <slot v-else />
-    </span>
+      <slot v-if="$slots.prefix" name="prefix"></slot>
 
-    <i v-if="suffixIcon" :class="suffixIcon" />
+      <span v-if="$slots.default" style="margin: 3px">
+        <span v-if="delayText">{{ delayText }}</span>
+        <slot v-else />
+      </span>
+
+      <slot v-if="$slots.suffix" name="suffix"></slot>
+
+      <i v-if="suffixIcon" :class="suffixIcon" />
+    </el-space>
   </el-button>
 </template>
 
@@ -93,4 +99,8 @@
   })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+  .el-button .el-space__item:last-child {
+    margin-right: 0 !important;
+  }
+</style>
