@@ -1,6 +1,6 @@
 <template>
   <div class="w-table">
-    <el-skeleton :loading="loading" :count="1" animated>
+    <el-skeleton :loading="loading" :count="10" animated>
       <!-- template -->
       <template #template>
         <el-skeleton-item style="height: 24px; margin: 10px" />
@@ -8,17 +8,16 @@
 
       <!-- content -->
       <template #default>
-        <!-- settings -->
+        <w-title v-if="hasTitle" class="u-float-left">{{ title }}</w-title>
+
         <w-table-settings
-          v-if="showSettings"
+          v-if="hasSettings"
           v-model="modelHeaders"
           :list-func="listFunc"
           @density="onDensityChange"
         />
 
-        <!-- main -->
         <el-table v-bind="getBindValue">
-          <!-- select -->
           <el-table-column
             v-if="hasSelect"
             key="select"
@@ -30,7 +29,6 @@
             :reserve-selection="reserveSelection"
           />
 
-          <!-- index -->
           <el-table-column
             v-if="hasIndex"
             key="index"
@@ -39,13 +37,13 @@
             width="50"
             align="center"
             fixed="left"
+            :index="index"
           >
             <template #default="scope">
               <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
             </template>
           </el-table-column>
 
-          <!-- expand -->
           <el-table-column
             v-if="hasExpand"
             key="expand"
@@ -59,7 +57,19 @@
             </template>
           </el-table-column>
 
-          <!-- base -->
+          <el-table-column
+            v-if="hasAction"
+            key="action"
+            label="操作"
+            min-width="100"
+            align="center"
+            fixed="right"
+          >
+            <template #default="props">
+              <span>123</span>
+            </template>
+          </el-table-column>
+
           <template
             v-for="(item, index) in modelHeaders"
             :key="item.prop + index"
@@ -67,17 +77,23 @@
             <el-table-column
               v-if="item.visible"
               v-bind="item"
-              :min-width="item.width ? item.width : '100px'"
               :row-key="item.prop + index"
               :column-key="item.prop + index"
               :align="item.align ? item.align : 'center'"
               :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
-              :sortable="item.sortable ? 'custom' : false"
-              :sort-orders="['ascending', 'descending']"
             >
               <!-- header slot -->
-              <template v-if="item.headerSlot" #header>
-                <slot :name="`${item.prop}-headerSlot`" />
+              <template v-if="item.headerSlot || item.editable" #header="scope">
+                <div v-if="item.headerSlot">
+                  <slot :name="`${item.prop}-headerSlot`" />
+                </div>
+
+                <div v-if="item.editable">
+                  <el-space size="mini">
+                    <span>{{ scope.column.label }}</span>
+                    <i class="el-icon-edit-outline"></i>
+                  </el-space>
+                </div>
               </template>
 
               <!-- custom slot -->
@@ -87,58 +103,29 @@
 
               <!-- editable column -->
               <template v-if="item.editable" #default="props">
-                <el-space>
-                  <template v-if="!item.showColumn || !props.row.showRow">
-                    <el-space size="mini">
-                      <span v-if="item.formatter">{{
-                        item.formatter(props.row)
-                      }}</span>
-                      <span v-else>{{ props.row[item.prop] }}</span>
-                      <i
-                        class="el-icon-edit u-pointer"
-                        @click="onToggleEditableCell(props, index)"
-                      ></i>
-                    </el-space>
+                <w-table-editable-cell
+                  :item="item"
+                  :row="props.row"
+                  @cell-change="onCellChange"
+                >
+                  <template #default>
+                    <slot
+                      :name="`${item.prop}-editableSlot`"
+                      :props="props"
+                    ></slot>
                   </template>
-
-                  <template v-else>
-                    <el-space size="mini">
-                      <!-- editable custom slot -->
-                      <template v-if="item.editableSlot">
-                        <slot
-                          :name="`${item.prop}-editableSlot`"
-                          :props="props"
-                        ></slot>
-                      </template>
-
-                      <!-- editable column default input -->
-                      <template v-else>
-                        <el-input
-                          v-model="props.row[item.prop]"
-                          size="small"
-                          @keyup.enter="onEditableCellSave(props, index)"
-                        ></el-input>
-                      </template>
-
-                      <i
-                        class="el-icon-check u-pointer"
-                        @click="onEditableCellSave(props, index)"
-                      ></i>
-                    </el-space>
-                  </template>
-                </el-space>
+                </w-table-editable-cell>
               </template>
             </el-table-column>
           </template>
         </el-table>
 
-        <!-- page -->
         <w-pagination
-          v-if="showPage"
+          v-if="hasPage"
           class="u-float-right"
           :total="+total"
-          :currentPage="+pageNum"
-          :pageSize="+pageSize"
+          :current-page="+pageNum"
+          :page-size="+pageSize"
           @change="onPageChange"
         />
       </template>
@@ -158,14 +145,16 @@
     unref,
   } from 'vue'
 
-  import wTableSettings from './settings/index.vue'
+  import wTitle from '../Title/index.vue'
   import wPagination from '../Pagination/index.vue'
+  import wTableSettings from './settings/index.vue'
+  import wTableEditableCell from './editableCell.vue'
   import { wTableProps } from './props'
 
   export default defineComponent({
-    name: 'wTable',
+    name: 'WTable',
 
-    components: { wTableSettings, wPagination },
+    components: { wTitle, wPagination, wTableSettings, wTableEditableCell },
 
     inheritAttrs: false,
 
@@ -176,29 +165,14 @@
       'update:pageNum',
       'update:pageSize',
       'update:modelValue',
-      'cellChange',
+      'cell-change',
     ],
 
     setup(props, { attrs, emit }) {
       const state = reactive({
         modelHeaders: [],
-        tableData: [],
         rowStyle: {},
-        editable: false
       })
-
-      // watch(
-      //   () => props.headers,
-      //   (val) => {
-      //     nextTick(() => {
-      //       onTableHeader()
-      //     })
-      //   },
-      //   {
-      //     deep: true,
-      //     immediate: true,
-      //   }
-      // )
 
       watch(
         () => state.modelHeaders,
@@ -213,31 +187,11 @@
         }
       )
 
-      watch(
-        () => props.data,
-        (val) => {
-          state.tableData.length === 0
-          console.log(state.tableData);
-          
-          val.map((item, index) => {
-            state.tableData.splice(index, 1, {
-              ...item,
-              showRow: false, // showRow
-            })
-          })
-        },
-        {
-          deep: true,
-          immediate: true,
-        }
-      )
-
       const onTableHeader = () => {
         props.headers.map((item, index) => {
           state.modelHeaders.splice(index, 1, {
             ...item,
             visible: item.visible === false ? false : true, // checkbox
-            showColumn: false, // showColumn
           })
         })
       }
@@ -280,29 +234,14 @@
         }
       }
 
-      const onToggleEditableCell = (prop, index) => {
-        state.modelHeaders.splice(index, 1, {
-          ...state.modelHeaders[index],
-          showColumn: !state.modelHeaders[index].showColumn,
-        })
-
-        state.tableData.splice(prop.$index, 1, {
-          ...state.tableData[prop.$index],
-          showRow: !state.tableData[prop.$index].showRow,
-        })
-      }
-
-      const onEditableCellSave = (prop, index) => {
-        emit('cellChange', prop.row)
-
-        onToggleEditableCell(prop, index)
+      const onCellChange = (val) => {
+        emit('cell-change', val)
       }
 
       const getBindValue = computed(() => {
         return {
           ...attrs,
           ...props,
-          data: state.tableData,
           rowStyle: state.rowStyle,
           highlightCurrentRow: props.single,
           onCurrentChange,
@@ -318,8 +257,7 @@
         getBindValue,
         onPageChange,
         onDensityChange,
-        onToggleEditableCell,
-        onEditableCellSave,
+        onCellChange,
 
         ...toRefs(state),
       }

@@ -1,5 +1,5 @@
 <template>
-  <div class="u-mb8 u-float-right">
+  <div class="w-table__settings u-mb8 u-float-right">
     <el-space size="mini">
       <w-table-settings-refresh :list-func="listFunc" />
 
@@ -74,4 +74,9 @@
   })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .w-table__settings {
+    border-left: 1px solid #e5e6e7;
+    padding-left: 6px;
+  }
+</style>

@@ -4,6 +4,8 @@ import fullscreenExit from '@iconify-icons/ic/fullscreen-exit'
 import refresh from '@iconify-icons/ic/outline-refresh'
 import settings from '@iconify-icons/ic/outline-settings'
 import drag from '@iconify-icons/ic/outline-drag-indicator'
+import baselineKeyboardArrowDown from '@iconify-icons/ic/baseline-keyboard-arrow-down'
+import baselineKeyboardArrowUp from '@iconify-icons/ic/baseline-keyboard-arrow-up'
 
 import verticalAlignBottomOutlined from '@iconify-icons/ant-design/vertical-align-bottom-outlined'
 import verticalAlignMiddleOutlined from '@iconify-icons/ant-design/vertical-align-middle-outlined'
@@ -20,4 +22,7 @@ export const iconsLists = {
   vabo: verticalAlignBottomOutlined,
   vamo: verticalAlignMiddleOutlined,
   vato: verticalAlignTopOutlined,
+
+  baselineKeyboardArrowDown,
+  baselineKeyboardArrowUp,
 }
