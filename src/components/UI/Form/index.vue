@@ -1,6 +1,9 @@
 <template>
-  <el-form ref="formRef" v-bind="getBindValue">
-    <!-- form layout -->
+  <el-form
+    ref="formRef"
+    :class="['w-form', { 'w-form-prettier': prettier }]"
+    v-bind="getBindValue"
+  >
     <el-row :gutter="gutter">
       <el-col
         v-for="(item, index) in formModel"
@@ -9,8 +12,9 @@
       >
         <!-- divider -->
         <el-divider
-          v-if="onCalcShowItem(item, FORM_TYPE.DIVIDER)"
+          v-if="onCalcShowItem(item, FORM_TYPE.DIVIDER) && !prettier"
           content-position="left"
+          class="el-col"
         >
           <el-space>
             <w-title>{{ item.title }}</w-title>
@@ -22,58 +26,60 @@
           </el-space>
         </el-divider>
 
-        <!-- form item -->
-        <transition name="folded-item">
+        <transition-group name="folded-item" tag="div">
           <el-form-item v-if="onCalcShow(item)" :key="index" v-bind="item">
-            <!-- Input -->
-            <w-input
-              v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
-              v-model="modelValue[item.prop]"
-              v-bind="item"
-              v-on="item"
-              @keyup.enter="onQuery"
-            ></w-input>
+            <template v-if="!prettier">
+              <w-input
+                v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
+                v-model="modelValue[item.prop]"
+                v-bind="item"
+                v-on="item"
+                @keyup.enter="onQuery"
+              ></w-input>
 
-            <!-- InputNumber -->
-            <w-input-number
-              v-if="onCalcShowItem(item, FORM_TYPE.INPUT_NUMBER)"
-              v-model="modelValue[item.prop]"
-              v-bind="item"
-              v-on="item"
-            ></w-input-number>
+              <w-input-number
+                v-if="onCalcShowItem(item, FORM_TYPE.INPUT_NUMBER)"
+                v-model="modelValue[item.prop]"
+                v-bind="item"
+                v-on="item"
+              ></w-input-number>
 
-            <!-- Radio -->
-            <w-radio
-              v-if="onCalcShowItem(item, FORM_TYPE.RADIO)"
-              v-model="modelValue[item.prop]"
-              v-bind="item"
-              v-on="item"
-            ></w-radio>
+              <w-radio
+                v-if="onCalcShowItem(item, FORM_TYPE.RADIO)"
+                v-model="modelValue[item.prop]"
+                v-bind="item"
+                v-on="item"
+              ></w-radio>
 
-            <!-- Checkbox -->
-            <w-checkbox
-              v-if="onCalcShowItem(item, FORM_TYPE.CHECKBOX)"
-              v-model="modelValue[item.prop]"
-              v-bind="item"
-              v-on="item"
-            ></w-checkbox>
+              <w-checkbox
+                v-if="onCalcShowItem(item, FORM_TYPE.CHECKBOX)"
+                v-model="modelValue[item.prop]"
+                v-bind="item"
+                v-on="item"
+              ></w-checkbox>
 
-            <!-- Select -->
-            <w-select
-              v-if="onCalcShowItem(item, FORM_TYPE.SELECT)"
-              v-model="modelValue[item.prop]"
-              v-bind="item"
-              v-on="item"
-            ></w-select>
+              <w-select
+                v-if="onCalcShowItem(item, FORM_TYPE.SELECT)"
+                v-model="modelValue[item.prop]"
+                v-bind="item"
+                v-on="item"
+              ></w-select>
 
-            <!-- custom slot -->
-            <slot v-if="item.slot" :name="item.prop" />
+              <!-- custom slot -->
+              <slot v-if="item.slot" :name="item.prop" />
+            </template>
+
+            <!-- prettier layout -->
+            <template v-else>
+              <span v-if="item.wType !== FORM_TYPE.DIVIDER">{{
+                onCalcPrettierSpan(modelValue[item.prop], item)
+              }}</span>
+            </template>
           </el-form-item>
-        </transition>
+        </transition-group>
       </el-col>
     </el-row>
 
-    <!-- form button -->
     <el-form-item>
       <el-space size="mini">
         <el-button v-if="mock && isDevMode" type="text" @click="onMock"
@@ -123,7 +129,7 @@
     toRefs,
     nextTick,
   } from 'vue'
-  import { findAllIndex } from 'easy-fns-ts/dist/esm'
+  import { findAllIndex, isEmpty } from 'easy-fns-ts/dist/esm'
 
   import { isDevMode } from '/@/utils/mode'
 
@@ -137,7 +143,7 @@
 
     components: wFormComponents,
 
-    inheritAttrs: false,
+    inheritAttrs: true,
 
     props: wFormProps,
 
@@ -152,7 +158,7 @@
       })
 
       watch(
-        () => props.model,
+        () => props.schema,
         (val) => {
           state.formModel = toRaw(val)
 
@@ -170,14 +176,28 @@
         }
       )
 
+      const getLabelPosition = computed(() => {
+        return props.prettier ? 'left' : props.labelPosition
+      })
+
+      const getFormRules = computed(() => {
+        return props.prettier ? {} : props.rules
+      })
+
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return {
+          ...attrs,
+          ...props,
+          model: props.modelValue,
+          rules: getFormRules.value,
+          labelPosition: getLabelPosition.value,
+        }
       })
 
       const init = () => {
         if (props.defaultFold) {
           state.isFolded = true
-          state.formModel = props.model.slice(0, props.countToFold)
+          state.formModel = props.schema.slice(0, props.countToFold)
         }
       }
 
@@ -197,7 +217,6 @@
 
       const onReset = () => {
         state.formRef.resetFields()
-
         emit('reset')
       }
 
@@ -217,13 +236,32 @@
         return item.span ? item.span : props.span
       }
 
+      const onCalcPrettierSpan = (val, item) => {
+        if (isEmpty(val)) {
+          return '暂无内容'
+        } else {
+          if (item.formatter) {
+            const labels = item.formatter(val)
+
+            if (Array.isArray(labels)) {
+              if (labels.length > 1) {
+                return labels.join(' / ')
+              }
+            }
+            return labels
+          } else {
+            return val
+          }
+        }
+      }
+
       const onToggleFormFold = () => {
         state.isFolded = !state.isFolded
 
         if (!state.isFolded) {
-          state.formModel = props.model
+          state.formModel = props.schema
         } else {
-          state.formModel = props.model.slice(0, props.countToFold)
+          state.formModel = props.schema.slice(0, props.countToFold)
         }
       }
 
@@ -274,6 +312,7 @@
         onCalcShow,
         onCalcSpan,
         onCalcShowItem,
+        onCalcPrettierSpan,
         onToggleFormFold,
         onToggleDividerFold,
       }
@@ -284,5 +323,23 @@
 <style lang="scss" scoped>
   .w-form__fold-button {
     padding: 2.5px 8px;
+  }
+
+  .w-form-prettier {
+    &:deep(.el-form-item__label) {
+      background-color: #fafafa;
+      padding: 2px 8px;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    &:deep(.el-form-item__content) {
+      padding-left: 8px;
+      border: 1px solid #f0f0f0;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 14px;
+      overflow-wrap: break-word;
+    }
   }
 </style>

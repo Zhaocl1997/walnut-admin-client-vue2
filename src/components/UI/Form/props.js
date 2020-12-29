@@ -12,7 +12,7 @@ export const wFormProps = {
    * @description form model to render relevant component
    * @type {Array}
    */
-  model: Array,
+  schema: Array,
 
   /**
    * @description v-model value for form
@@ -126,6 +126,16 @@ export const wFormProps = {
    * @default false
    */
   print: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * @description prettier display
+   * @type {Boolean}
+   * @default false
+   */
+  prettier: {
     type: Boolean,
     default: false,
   },
