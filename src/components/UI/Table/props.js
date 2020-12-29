@@ -10,26 +10,31 @@ export const wTableProps = {
 
   /**
    * @description v-model value ,for single or multiple
+   * @type {Array, Object}
    */
   modelValue: [Array, Object],
 
   /**
    * @description table title
+   * @type {String}
    */
   title: String,
 
   /**
    * @description index column index function
+   * @type {Function}
    */
   index: Function,
 
   /**
    * @description v-model:headers value, for table header columns
+   * @type {Array}
    */
   headers: Array,
 
   /**
    * @description v-model:pageNum value, for pagination currentPage
+   * @type {Number}
    * @default 1
    */
   pageNum: {
@@ -39,6 +44,7 @@ export const wTableProps = {
 
   /**
    * @description v-model:pageSize value, for pagination pageSize
+   * @type {Number}
    * @default 10
    */
   pageSize: {
@@ -48,6 +54,7 @@ export const wTableProps = {
 
   /**
    * @description has select column or not
+   * @type {Boolean}
    * @default false
    */
   hasSelect: {
@@ -57,6 +64,7 @@ export const wTableProps = {
 
   /**
    * @description has index column or not
+   * @type {Boolean}
    * @default false
    */
   hasIndex: {
@@ -66,6 +74,7 @@ export const wTableProps = {
 
   /**
    * @description has expand column or not
+   * @type {Boolean}
    * @default false
    */
   hasExpand: {
@@ -75,6 +84,7 @@ export const wTableProps = {
 
   /**
    * @description has action column or not
+   * @type {Boolean}
    * @default false
    */
   hasAction: {
@@ -84,6 +94,7 @@ export const wTableProps = {
 
   /**
    * @description show title or not
+   * @type {Boolean}
    * @default false
    */
   hasTitle: {
@@ -93,6 +104,7 @@ export const wTableProps = {
 
   /**
    * @description show settings or not
+   * @type {Boolean}
    * @default false
    */
   hasSettings: {
@@ -102,6 +114,7 @@ export const wTableProps = {
 
   /**
    * @description show pagination or not
+   * @type {Boolean}
    * @default false
    */
   hasPage: {
@@ -111,6 +124,7 @@ export const wTableProps = {
 
   /**
    * @description able to use v-model for single choose
+   * @type {Boolean}
    * @default false
    */
   single: {
@@ -120,6 +134,7 @@ export const wTableProps = {
 
   /**
    * @description able to use v-model for multiple selections
+   * @type {Boolean}
    * @default false
    */
   multiple: {
@@ -129,11 +144,13 @@ export const wTableProps = {
 
   /**
    * @description select column able/enable function
+   * @type {Function}
    */
   selectable: Function,
 
   /**
    * @description reserve multiple select or not
+   * @type {Boolean}
    * @default false
    */
   reserveSelection: {
@@ -143,16 +160,22 @@ export const wTableProps = {
 
   /**
    * @description total for pagination use
+   * @type {Number}
    */
   total: Number,
 
   /**
    * @description get table data method, for settings-refresh use
+   * @type {Function}
    */
   listFunc: Function,
 
   /**
    * @description table loading using skeleton
+   * @type {Boolean}
    */
-  loading: Boolean,
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 }

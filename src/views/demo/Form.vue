@@ -36,13 +36,17 @@
           <el-form-item label="禁用">
             <el-switch v-model="formDisabled" />
           </el-form-item>
+
+          <el-form-item label="prettier">
+            <el-switch v-model="formPrettier" />
+          </el-form-item>
         </el-space>
       </el-form>
     </template>
 
     <w-form
       v-model="formData"
-      :model="getFormModel"
+      :schema="getFormSchema"
       :rules="formRules"
       label-width="100px"
       :mock="mockButton"
@@ -52,6 +56,7 @@
       :fold="foldButton"
       :count-to-fold="3"
       :disabled="formDisabled"
+      :prettier="formPrettier"
       @query="onQuery"
       @reset="onReset"
     >
@@ -82,6 +87,7 @@
         foldButton: false,
         printButton: false,
         formDisabled: false,
+        formPrettier: false,
 
         inputBaseShow: false,
       })
@@ -117,7 +123,7 @@
         console.log('reset')
       }
 
-      const getFormModel = computed(() => {
+      const getFormSchema = computed(() => {
         return [
           // ==================================
           // ============== Input =============
@@ -216,6 +222,7 @@
             placeholder: '基本',
             options,
             clearable: true,
+            formatter: (val) => options.find((i) => i.value === val).label,
           },
           {
             wType: 'Select',
@@ -225,6 +232,14 @@
             options,
             clearable: true,
             multiple: true,
+            formatter: (val) => {
+              let ret = []
+              val.map((v) => {
+                const l = options.find((i) => i.value === v).label
+                ret.push(l)
+              })
+              return ret
+            },
           },
           {
             wType: 'Select',
@@ -259,7 +274,7 @@
       return {
         ...toRefs(state),
         ...toRefs(formState),
-        getFormModel,
+        getFormSchema,
         formRules: {
           formInputBase: [
             { required: true, message: '请输入', trigger: 'blur' },

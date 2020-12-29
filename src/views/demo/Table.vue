@@ -136,7 +136,7 @@
 </template>
 
 <script>
-  import {ElMessage} from 'element-plus'
+  import { ElMessage } from 'element-plus'
   import wTable from '/@/components/UI/Table/index.vue'
   import wJSON from '/@/components/Others/JSON/index.vue'
   import { reactive, defineComponent, onMounted, toRefs } from 'vue'
@@ -311,18 +311,18 @@
 </script>
 
 <style lang="scss" scoped>
-.demo-table-expand:deep() {
-  font-size: 0;
+  .demo-table-expand:deep() {
+    font-size: 0;
 
-  label {
-    width: 90px;
-    color: #99a9bf;
-  }
+    label {
+      width: 90px;
+      color: #99a9bf;
+    }
 
-  .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
+    .el-form-item {
+      margin-right: 0;
+      margin-bottom: 0;
+      width: 50%;
+    }
   }
-}
 </style>

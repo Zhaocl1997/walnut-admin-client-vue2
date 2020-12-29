@@ -37,6 +37,10 @@
         <tag-demo />
       </el-tab-pane>
 
+      <el-tab-pane label="Tree" name="Tree">
+        <tree-demo />
+      </el-tab-pane>
+
       <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo />
       </el-tab-pane>
@@ -75,6 +79,7 @@
   import StorageDemo from './Storage.vue'
   import TableDemo from './Table.vue'
   import TagDemo from './Tag.vue'
+  import TreeDemo from './Tree.vue'
   import { ref, reactive, defineComponent } from 'vue'
 
   export default defineComponent({
@@ -95,6 +100,7 @@
       StorageDemo,
       TableDemo,
       TagDemo,
+      TreeDemo,
     },
 
     setup() {
