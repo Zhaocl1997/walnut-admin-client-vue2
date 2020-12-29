@@ -1,5 +1,5 @@
 <template>
-  <div class="w-dialog">
+  <div :class="['w-dialog', { 'w-dialog-line': line }]">
     <el-dialog v-bind="getBindValue">
       <template v-if="header" #title>
         <w-title>{{ title }}</w-title>
@@ -11,15 +11,17 @@
 
       <template v-if="footer" #footer>
         <el-button size="small" @click="onCancel">取 消</el-button>
-        <el-button size="small" type="primary" @click="onConfirm">确 定</el-button>
+        <el-button size="small" type="primary" @click="onConfirm"
+          >确 定</el-button
+        >
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script>
-  import { ElDialog } from 'element-plus'
   import { computed, defineComponent } from 'vue'
+  import { wDialogProps } from './props'
 
   import wTitle from '../Title/index.vue'
 
@@ -30,13 +32,7 @@
 
     inheritAttrs: false,
 
-    props: {
-      ...ElDialog.props,
-
-      footer: Boolean,
-
-      header: Boolean,
-    },
+    props: wDialogProps,
 
     emits: ['confirm', 'cancel'],
 
@@ -59,32 +55,34 @@
         onCancel,
         onConfirm,
       }
-    }
+    },
   })
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/style/index.scss';
+  @import '../../../assets/style/index.scss';
 
-.w-dialog {
-  &:deep(.el-dialog__header) {
-    border-bottom: 1px solid #e8eaec;
+  .w-dialog {
+    &__body {
+      @include scrollBar;
+
+      max-height: 60vh;
+      overflow-y: auto;
+
+      margin-bottom: 63px;
+    }
   }
 
-  &:deep(.el-dialog__footer) {
-    border-top: 1px solid #e8eaec;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+  .w-dialog-line {
+    &:deep(.el-dialog__header) {
+      border-bottom: 1px solid #e8eaec;
+    }
+
+    &:deep(.el-dialog__footer) {
+      border-top: 1px solid #e8eaec;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
   }
-
-  &__body {
-    @include scrollBar;
-
-    max-height: 60vh;
-    overflow-y: auto;
-
-    margin-bottom: 63px;
-  }
-}
 </style>
