@@ -1,28 +1,28 @@
 import { resolve } from 'path'
 import { loadEnv } from './src/utils/env'
+import globbyTransform from './build/vite/globby/index.js'
 
 function pathResolve(dir) {
   return resolve(__dirname, '.', dir)
 }
 
+const root = process.cwd()
+const alias = {
+  '/@/': pathResolve('src'),
+}
+const resolvers = []
+
 const { VITE_PORT } = loadEnv()
 
 module.exports = {
+  root,
+  alias,
+
   /**
    * @description port
    * @default 80
    */
   port: VITE_PORT,
-
-  /**
-   * @description
-   * Import alias. The entries can either be exact request -> request mappings
-   * (exact, no wildcard syntax), or request path -> fs directory mappings.
-   * When using directory mappings, the key **must start and end with a slash**.
-   */
-  alias: {
-    '/@/': pathResolve('src'),
-  },
 
   /**
    * @description
@@ -49,4 +49,13 @@ module.exports = {
   },
 
   plugins: [],
+
+  transforms: [
+    globbyTransform({
+      resolvers: resolvers,
+      root: root,
+      alias: alias,
+      includes: [resolve('src/router'), resolve('src/locales')],
+    }),
+  ],
 }
