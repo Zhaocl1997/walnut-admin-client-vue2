@@ -105,13 +105,16 @@ const components = [
 
   ElSkeleton,
   ElSkeletonItem,
-  ElLoading,
 
   ElTree,
 ]
 
+const plugins = [ElLoading]
+
 export function setupElementPlus(app) {
   locale.use(lang)
 
-  components.map((comp) => app.use(comp))
+  components.map((comp) => app.component(comp.name, comp))
+
+  plugins.map((plugin) => app.use(plugin))
 }
