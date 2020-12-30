@@ -26,7 +26,7 @@
           </el-space>
         </el-divider>
 
-        <transition-group name="folded-item" tag="div">
+        <transition name="el-zoom-in-center">
           <el-form-item v-if="onCalcShow(item)" :key="index" v-bind="item">
             <template v-if="!prettier">
               <w-input
@@ -76,7 +76,7 @@
               }}</span>
             </template>
           </el-form-item>
-        </transition-group>
+        </transition>
       </el-col>
     </el-row>
 

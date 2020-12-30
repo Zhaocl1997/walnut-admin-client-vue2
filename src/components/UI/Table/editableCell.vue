@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import { ref, computed, defineComponent, unref, nextTick } from 'vue'
+  import { ref, computed, defineComponent, nextTick } from 'vue'
 
   export default defineComponent({
     name: 'WTableEditableCell',

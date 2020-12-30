@@ -166,7 +166,7 @@
 </template>
 
 <script>
-  import wScreenFull from '/@/components/Others/Screenfull/index.vue'
+  import wScreenFull from '/@/components/Help/Screenfull/index.vue'
   import wArrow from '/@/components/UI/Arrow/index.vue'
   import { ref, reactive, computed, defineComponent } from 'vue'
 

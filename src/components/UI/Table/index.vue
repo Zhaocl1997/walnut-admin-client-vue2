@@ -32,9 +32,9 @@
           <el-table-column
             v-if="hasIndex"
             key="index"
-            label="序号"
+            :label="t('component.table.index')"
             type="index"
-            width="50"
+            width="60"
             align="center"
             fixed="left"
             :index="index"
@@ -60,7 +60,7 @@
           <el-table-column
             v-if="hasAction"
             key="action"
-            label="操作"
+            :label="t('component.table.action')"
             min-width="100"
             align="center"
             fixed="right"
@@ -142,7 +142,6 @@
     watch,
     toRefs,
     nextTick,
-    unref,
   } from 'vue'
 
   import wTitle from '../Title/index.vue'
@@ -150,6 +149,7 @@
   import wTableSettings from './settings/index.vue'
   import wTableEditableCell from './editableCell.vue'
   import { wTableProps } from './props'
+  import { useI18n } from '/@/hooks/useI18n.js'
 
   export default defineComponent({
     name: 'WTable',
@@ -169,6 +169,7 @@
     ],
 
     setup(props, { attrs, emit }) {
+      const { t } = useI18n()
       const state = reactive({
         modelHeaders: [],
         rowStyle: {},
@@ -254,6 +255,8 @@
       })
 
       return {
+        t,
+
         getBindValue,
         onPageChange,
         onDensityChange,

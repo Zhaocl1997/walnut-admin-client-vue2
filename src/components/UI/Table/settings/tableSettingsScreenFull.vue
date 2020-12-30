@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import wScreenFull from '../../../Others/Screenfull/index.vue'
+  import wScreenFull from '/@/components/Help/Screenfull/index.vue'
   import { defineComponent } from 'vue'
 
   export default defineComponent({

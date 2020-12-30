@@ -138,7 +138,7 @@
 <script>
   import { ElMessage } from 'element-plus'
   import wTable from '/@/components/UI/Table/index.vue'
-  import wJSON from '/@/components/Others/JSON/index.vue'
+  import wJSON from '/@/components/Help/JSON/index.vue'
   import { reactive, defineComponent, onMounted, toRefs } from 'vue'
 
   import { listUser } from '/@/mock/user.js'
