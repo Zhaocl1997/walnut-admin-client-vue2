@@ -41,9 +41,17 @@
         <tree-demo />
       </el-tab-pane>
 
+      <el-tab-pane label="Dropdown" name="Dropdown">
+        <dropdown-demo />
+      </el-tab-pane>
+
+      <!-- <el-tab-pane label="Menu" name="Menu">
+        <menu-demo />
+      </el-tab-pane>
+
       <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <el-tab-pane label="Pagination" name="Pagination">
         <pagination-demo />
@@ -70,9 +78,11 @@
   import CheckboxDemo from './Checkbox.vue'
   import DateDemo from './Date.vue'
   import DialogDemo from './Dialog.vue'
+  import DropdownDemo from './Dropdown.vue'
   import FormDemo from './Form.vue'
   import InputDemo from './Input.vue'
   import InputNumberDemo from './InputNumber.vue'
+  import MenuDemo from './Menu.vue'
   import PaginationDemo from './Pagination.vue'
   import RadioDemo from './Radio.vue'
   import SelectDemo from './Select.vue'
@@ -91,9 +101,11 @@
       CheckboxDemo,
       DateDemo,
       DialogDemo,
+      DropdownDemo,
       FormDemo,
       InputDemo,
       InputNumberDemo,
+      MenuDemo,
       PaginationDemo,
       RadioDemo,
       SelectDemo,

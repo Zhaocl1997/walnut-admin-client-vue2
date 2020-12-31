@@ -45,6 +45,9 @@ import {
   ElSkeletonItem,
   ElLoading,
   ElTree,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu,
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -107,6 +110,10 @@ const components = [
   ElSkeletonItem,
 
   ElTree,
+
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu,
 ]
 
 const plugins = [ElLoading]

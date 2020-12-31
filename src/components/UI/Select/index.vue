@@ -15,7 +15,7 @@
   import { computed, defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'WSelect',
+    name: 'wSelect',
 
     inheritAttrs: false,
 
@@ -28,6 +28,8 @@
 
       valueKey: String,
     },
+
+    emits: [],
 
     setup(props, { attrs }) {
       const getBindValue = computed(() => {
