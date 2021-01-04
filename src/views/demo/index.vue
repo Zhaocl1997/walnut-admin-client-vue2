@@ -5,6 +5,10 @@
         <icon-demo />
       </el-tab-pane>
 
+      <el-tab-pane label="Help" name="Help">
+        <help-demo />
+      </el-tab-pane>
+
       <el-tab-pane label="Button" name="Button">
         <button-demo />
       </el-tab-pane>
@@ -73,13 +77,14 @@
 </template>
 
 <script>
-  import IconDemo from './Icon.vue'
   import ButtonDemo from './Button.vue'
   import CheckboxDemo from './Checkbox.vue'
   import DateDemo from './Date.vue'
   import DialogDemo from './Dialog.vue'
   import DropdownDemo from './Dropdown.vue'
   import FormDemo from './Form.vue'
+  import IconDemo from './Icon.vue'
+  import HelpDemo from './Help.vue'
   import InputDemo from './Input.vue'
   import InputNumberDemo from './InputNumber.vue'
   import MenuDemo from './Menu.vue'
@@ -96,13 +101,14 @@
     name: 'Demo',
 
     components: {
-      IconDemo,
       ButtonDemo,
       CheckboxDemo,
       DateDemo,
       DialogDemo,
       DropdownDemo,
       FormDemo,
+      IconDemo,
+      HelpDemo,
       InputDemo,
       InputNumberDemo,
       MenuDemo,

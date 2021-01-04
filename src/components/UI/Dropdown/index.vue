@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown v-bind="getBindValue.value" @command="onCommand">
+  <el-dropdown v-bind="getBindValue" @command="onCommand">
     <slot></slot>
 
     <template #dropdown>
@@ -19,6 +19,7 @@
 <script>
   import { ElDropdown } from 'element-plus'
   import { ref, reactive, computed, defineComponent } from 'vue'
+  import { omit } from 'easy-fns-ts/dist/esm'
   import { wDropdownProps } from './props'
 
   export default defineComponent({
@@ -45,10 +46,13 @@
       }
 
       const getBindValue = computed(() => {
-        return {
-          ...attrs,
-          ...ElDropdown.props,
-        }
+        return omit(
+          {
+            ...attrs,
+            ...props,
+          },
+          ['options', 'modelValue']
+        )
       })
 
       return {

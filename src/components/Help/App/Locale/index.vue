@@ -1,6 +1,8 @@
 <template>
   <w-dropdown v-model="lang" :options="langLists" @command="onCommand">
-    <w-icon icon="language" pointer width="24"></w-icon>
+    <template #default>
+      <w-icon icon="language" pointer width="24"></w-icon>
+    </template>
   </w-dropdown>
 </template>
 
@@ -15,6 +17,18 @@
 
     components: { wDropdown },
 
+    props: {
+      reload: {
+        type: Boolean,
+        default: true,
+      },
+
+      showText: {
+        type: Boolean,
+        default: true,
+      },
+    },
+
     setup(props, { attrs }) {
       const store = useStore()
 
@@ -23,6 +37,7 @@
       const onCommand = (val) => {
         store.dispatch('app/toggleLang', val)
         i18n.global.locale.value = val
+        props.reload && location.reload()
       }
 
       return {

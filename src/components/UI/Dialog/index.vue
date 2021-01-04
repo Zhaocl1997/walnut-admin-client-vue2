@@ -23,7 +23,7 @@
   import { computed, defineComponent } from 'vue'
   import { wDialogProps } from './props'
 
-  import wTitle from '../Title/index.vue'
+  import wTitle from '../../Help/Title/index.vue'
 
   export default defineComponent({
     name: 'WDialog',

@@ -167,7 +167,7 @@
 
 <script>
   import wScreenFull from '/@/components/Help/Screenfull/index.vue'
-  import wArrow from '/@/components/UI/Arrow/index.vue'
+  import wArrow from '/@/components/Help/Arrow/index.vue'
   import { ref, reactive, computed, defineComponent } from 'vue'
 
   export default defineComponent({

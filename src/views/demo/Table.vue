@@ -3,7 +3,7 @@
     <template #header>
       <span>集成表格</span>
 
-      <div><w-picker-locale></w-picker-locale></div>
+      <div><w-locale-picker></w-locale-picker></div>
 
       <el-form inline>
         <el-space>
@@ -141,7 +141,7 @@
   import { ElMessage } from 'element-plus'
   import wTable from '/@/components/UI/Table/index.vue'
   import wJSON from '/@/components/Help/JSON/index.vue'
-  import wPickerLocale from '/@/components/Help/Picker/Locale/index.vue'
+  import wLocalePicker from '/@/components/Help/App/Locale/index.vue'
   import { reactive, defineComponent, onMounted, toRefs } from 'vue'
 
   import { listUser } from '/@/mock/user.js'
@@ -149,7 +149,7 @@
   export default defineComponent({
     name: 'TableDemo',
 
-    components: { wTable, wJSON, wPickerLocale },
+    components: { wTable, wJSON, wLocalePicker },
 
     setup() {
       const state = reactive({

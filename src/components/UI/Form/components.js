@@ -1,7 +1,7 @@
 'use strict'
 
-import wTitle from '../Title/index.vue'
-import wArrow from '../Arrow/index.vue'
+import wTitle from '../../Help/Title/index.vue'
+import wArrow from '../../Help/Arrow/index.vue'
 
 import wButton from '../Button/index.vue'
 
