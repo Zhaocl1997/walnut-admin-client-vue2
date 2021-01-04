@@ -3,15 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "vite build",
+    "build:staging": "vite build --mode staging",
+    "build:prod": "vite build",
     "update:easy": "npm i easy-fns-ts@latest",
     "lint": "eslint --ext .js,.vue src -f table",
     "lint:fix": "eslint --ext .js,.vue src -f table --fix",
     "lint:prettier": "prettier --write ."
   },
   "dependencies": {
-    "easy-fns-ts": "^1.0.10",
-    "element-plus": "^1.0.1-beta.17",
+    "easy-fns-ts": "^1.0.12",
+    "element-plus": "^1.0.1-beta.19",
     "screenfull": "^5.1.0",
     "sortablejs": "^1.10.2",
     "vue": "^3.0.4",
