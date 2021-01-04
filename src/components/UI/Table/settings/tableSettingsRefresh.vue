@@ -1,11 +1,16 @@
 <template>
-  <el-tooltip effect="dark" content="刷新" placement="top">
+  <el-tooltip
+    effect="dark"
+    :content="t('component.table.refresh.tooltip')"
+    placement="top"
+  >
     <w-icon pointer icon="refresh" width="20" @click="listFunc" />
   </el-tooltip>
 </template>
 
 <script>
   import { defineComponent } from 'vue'
+  import { useI18n } from '/@/hooks/useI18n.js'
 
   export default defineComponent({
     name: 'WTableSettingsRefresh',
@@ -14,7 +19,12 @@
       listFunc: Function,
     },
 
-    setup(props, { attrs }) {},
+    setup(props, { attrs }) {
+      const { t } = useI18n()
+      return {
+        t,
+      }
+    },
   })
 </script>
 

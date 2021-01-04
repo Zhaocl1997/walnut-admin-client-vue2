@@ -60,7 +60,7 @@
           <el-table-column
             v-if="hasAction"
             key="action"
-            :label="t('component.table.action')"
+            :label="t('component.table.operation')"
             min-width="100"
             align="center"
             fixed="right"
@@ -144,7 +144,7 @@
     nextTick,
   } from 'vue'
 
-  import wTitle from '../Title/index.vue'
+  import wTitle from '../../Help/Title/index.vue'
   import wPagination from '../Pagination/index.vue'
   import wTableSettings from './settings/index.vue'
   import wTableEditableCell from './editableCell.vue'

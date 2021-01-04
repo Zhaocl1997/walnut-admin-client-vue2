@@ -2,7 +2,11 @@
   <el-popover placement="bottom" trigger="click" popper-class="w-table-popover">
     <template #reference>
       <div class="u-inline">
-        <el-tooltip effect="dark" content="列设置" placement="top">
+        <el-tooltip
+          effect="dark"
+          :content="t('component.table.settings.tooltip')"
+          placement="top"
+        >
           <w-icon pointer icon="settings" width="20" />
         </el-tooltip>
       </div>
@@ -14,7 +18,10 @@
       v-model:group="rows"
       :type="TABLE_GROUP_TYPE.LEFT"
     >
-      <i class="el-icon-info" />固定在左侧
+      <el-space size="mini">
+        <i class="el-icon-info" />
+        <span>{{ t('component.table.settings.fixedLeft') }}</span>
+      </el-space>
     </w-table-settings-rows-group>
 
     <!-- common -->
@@ -23,17 +30,23 @@
       v-model:group="rows"
       :type="TABLE_GROUP_TYPE.COMMON"
     >
-      <el-space>
-        <i class="el-icon-info" />不固定
+      <el-space wrap size="mini">
+        <i class="el-icon-info" />
+
+        <span>{{ t('component.table.settings.fixedUnset') }}</span>
+
         <el-checkbox
+          class="w-table__settings-checkall"
           v-model="checkAll"
           :indeterminate="isIndeterminate"
           @change="onCheckAllChange"
         >
-          全选
+          {{ t('component.table.settings.checkAll') }}
         </el-checkbox>
 
-        <el-button size="mini" type="text" @click="onReset"> 重置 </el-button>
+        <el-button size="mini" type="text" @click="onReset">
+          {{ t('component.table.settings.reset') }}
+        </el-button>
       </el-space>
     </w-table-settings-rows-group>
 
@@ -43,7 +56,10 @@
       v-model:group="rows"
       :type="TABLE_GROUP_TYPE.RIGHT"
     >
-      <i class="el-icon-info" />固定在右侧
+      <el-space size="mini">
+        <i class="el-icon-info" />
+        <span>{{ t('component.table.settings.fixedRight') }}</span>
+      </el-space>
     </w-table-settings-rows-group>
   </el-popover>
 </template>
@@ -61,23 +77,23 @@
   } from 'vue'
   import { deepClone } from 'easy-fns-ts/dist/esm'
 
+  import { useI18n } from '/@/hooks/useI18n.js'
+
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
   import { TABLE_GROUP_TYPE } from '../constant'
 
   export default defineComponent({
     name: 'WTableSettingsRows',
 
-    components: {
-      wTableSettingsRowsGroup,
-    },
+    components: { wTableSettingsRowsGroup },
 
-    props: {
-      rows: Array,
-    },
+    props: { rows: Array },
 
     emits: ['update:rows'],
 
     setup(props, { attrs, emit }) {
+      const { t } = useI18n()
+
       const state = reactive({
         checkAll: true,
         isIndeterminate: false,
@@ -146,6 +162,8 @@
       })
 
       return {
+        t,
+
         TABLE_GROUP_TYPE,
 
         onCheckAllChange,
@@ -160,6 +178,9 @@
 <style lang="scss" scoped>
   .el-divider--horizontal {
     margin: 10px 0;
+  }
+  .w-table__settings-checkall:deep(.el-checkbox__label) {
+    padding-left: 5px;
   }
 </style>
 

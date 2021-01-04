@@ -26,7 +26,10 @@
           </div>
 
           <div class="w-table__setting-fix w-table__setting-icon u-float-right">
-            <el-tooltip content="不固定" :open-delay="200">
+            <el-tooltip
+              :content="t('component.table.settings.fixUnset')"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
                   v-if="type !== TABLE_GROUP_TYPE.COMMON"
@@ -36,7 +39,10 @@
               </div>
             </el-tooltip>
 
-            <el-tooltip content="固定在列首" :open-delay="200">
+            <el-tooltip
+              :content="t('component.table.settings.fixLeft')"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
                   v-if="type !== TABLE_GROUP_TYPE.LEFT"
@@ -46,7 +52,10 @@
               </div>
             </el-tooltip>
 
-            <el-tooltip content="固定在列尾" :open-delay="200">
+            <el-tooltip
+              :content="t('component.table.settings.fixRight')"
+              :open-delay="200"
+            >
               <div class="u-inline">
                 <w-icon
                   v-if="type !== TABLE_GROUP_TYPE.RIGHT"
@@ -75,6 +84,8 @@
     toRefs,
     nextTick,
   } from 'vue'
+  import { omit } from 'easy-fns-ts/dist/esm'
+  import { useI18n } from '/@/hooks/useI18n.js'
 
   import { TABLE_GROUP_TYPE } from '../constant'
 
@@ -96,6 +107,8 @@
     emits: ['update:group'],
 
     setup(props, { attrs, emit }) {
+      const { t } = useI18n()
+
       const state = reactive({
         h: [],
       })
@@ -147,16 +160,6 @@
 
         // eslint-disable-next-line
         props.group.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT })
-      }
-
-      const omit = (obj, uselessKeys) => {
-        return Object.keys(obj).reduce(
-          (prev, key) =>
-            uselessKeys.includes(key)
-              ? { ...prev }
-              : { ...prev, [key]: obj[key] },
-          {}
-        )
       }
 
       const onSetCommon = (item) => {
@@ -220,6 +223,8 @@
       // );
 
       return {
+        t,
+
         TABLE_GROUP_TYPE,
         className,
 
