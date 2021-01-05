@@ -6,3 +6,8 @@
   height: 100%;
   width: 100%;
 }
+
+.w-highlight {
+  background-color: rgba(236, 245, 255, 0.8);
+  color: rgba(102, 177, 255, 0.8);
+}

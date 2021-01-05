@@ -1,7 +1,10 @@
 <template>
   <w-dropdown v-model="lang" :options="langLists" @command="onCommand">
     <template #default>
-      <w-icon icon="language" pointer width="24"></w-icon>
+      <div class="u-pointer">
+        <w-icon icon="language" width="24"></w-icon>
+        <span v-if="showText" class="w-locale__text">{{ langText }}</span>
+      </div>
     </template>
   </w-dropdown>
 </template>
@@ -20,7 +23,7 @@
     props: {
       reload: {
         type: Boolean,
-        default: true,
+        default: false,
       },
 
       showText: {
@@ -34,6 +37,10 @@
 
       const lang = computed(() => store.state.app.lang)
 
+      const langText = computed(
+        () => langLists.find((i) => i.value === lang.value).label
+      )
+
       const onCommand = (val) => {
         store.dispatch('app/toggleLang', val)
         i18n.global.locale.value = val
@@ -42,6 +49,7 @@
 
       return {
         lang,
+        langText,
         langLists,
         onCommand,
       }
@@ -49,9 +57,12 @@
   })
 </script>
 
-<style lang="scss">
-  .w-highlight {
-    background-color: rgba(236, 245, 255, 0.8);
-    color: rgba(102, 177, 255, 0.8);
+<style lang="scss" scoped>
+  .w-locale__text {
+    position: absolute;
+    top: 3px;
+    margin-left: 5px;
+    font-weight: 700;
+    width: max-content;
   }
 </style>

@@ -14,7 +14,10 @@
     name: 'WArrow',
 
     props: {
-      active: Boolean,
+      active: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     setup(props, { attrs }) {

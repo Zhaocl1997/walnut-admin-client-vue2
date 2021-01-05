@@ -3,8 +3,6 @@
     <template #header>
       <span>集成表格</span>
 
-      <div><w-locale-picker></w-locale-picker></div>
-
       <el-form inline>
         <el-space>
           <el-form-item label="单选">
