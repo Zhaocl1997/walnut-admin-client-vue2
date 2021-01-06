@@ -141,51 +141,18 @@
       class="iconify"
     />
   </el-card>
-
-  <br />
-
-  <el-card class="custom-sf">
-    <template #header>
-      <span>全屏 / 指定元素全屏 / 指定元素窗口内全屏</span>
-    </template>
-
-    <w-screen-full />
-
-    <w-screen-full target=".custom-sf" />
-  </el-card>
-
-  <br />
-
-  <el-card>
-    <template #header>
-      <span>箭头图标</span>
-    </template>
-
-    <w-arrow :active="active" @click="onToggleArrow"></w-arrow>
-  </el-card>
 </template>
 
 <script>
-  import wScreenFull from '/@/components/Help/Screenfull/index.vue'
-  import wArrow from '/@/components/Help/Arrow/index.vue'
   import { ref, reactive, computed, defineComponent } from 'vue'
 
   export default defineComponent({
     name: 'IconDemo',
 
-    components: { wScreenFull, wArrow },
+    components: {},
 
     setup(props, { attrs }) {
-      const active = ref(false)
-
-      const onToggleArrow = () => {
-        active.value = !active.value
-      }
-
-      return {
-        active,
-        onToggleArrow,
-      }
+      return {}
     },
   })
 </script>

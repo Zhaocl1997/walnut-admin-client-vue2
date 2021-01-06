@@ -56,7 +56,7 @@
       <div>pageNum 绑定值：【{{ pageNum }}】</div>
       <div>header 绑定值：</div>
       <div>
-        <w-JSON v-model="getTableHeader" />
+        <w-JSON :value="getTableHeader" />
       </div>
     </template>
 

@@ -18,16 +18,28 @@
         type: Boolean,
         default: false,
       },
+
+      right: {
+        type: Boolean,
+        default: false,
+      },
+
+      left: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     setup(props, { attrs }) {
       const getClass = computed(() => {
-        const { active } = props
+        const { active, right, left } = props
         if (typeof active === 'boolean') {
           return [
             'w-arrow',
             {
               'w-arrow--active': active,
+              right,
+              left,
             },
           ]
         }
@@ -50,6 +62,22 @@
 
     &--active {
       transform: rotate(180deg);
+    }
+
+    &.right {
+      transform: rotate(-90deg);
+    }
+
+    &.right.w-arrow--active {
+      transform: rotate(90deg);
+    }
+
+    &.left {
+      transform: rotate(90deg);
+    }
+
+    &.left.w-arrow--active {
+      transform: rotate(-90deg);
     }
   }
 </style>

@@ -268,13 +268,4 @@
   })
 </script>
 
-<style lang="scss" scoped>
-  .w-table {
-    background-color: #ffffff;
-    margin: 10px;
-
-    &:not(:root):fullscreen {
-      padding: 20px;
-    }
-  }
-</style>
+<style lang="scss" scoped></style>

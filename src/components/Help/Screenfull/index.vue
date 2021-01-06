@@ -10,6 +10,7 @@
 <script>
   import screenfull from 'screenfull'
   import { ref, defineComponent, onMounted, onUnmounted } from 'vue'
+  import { toggleClass } from 'easy-fns-ts/dist/esm/dom'
 
   export default defineComponent({
     name: 'WScreenfull',
@@ -52,6 +53,7 @@
         }
 
         const ele = document.querySelector(props.target)
+        toggleClass(ele, 'w-screenfull', !isFullscreen.value)
         screenfull.toggle(ele)
       }
 

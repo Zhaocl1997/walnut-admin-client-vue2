@@ -1,15 +1,16 @@
 <template>
-  <pre class="json-pre" :style="{ height: height }" />
+  <pre class="json-pre" :id="id" :style="{ height: height }" />
 </template>
 
 <script>
-  import { reactive, defineComponent, watch } from 'vue'
+  import { reactive, defineComponent, watch, onMounted } from 'vue'
+  import { genString } from 'easy-fns-ts/dist/esm'
 
   export default defineComponent({
     name: 'WJSON',
 
     props: {
-      modelValue: [Object, Array],
+      value: [Object, Array],
 
       height: {
         type: String,
@@ -17,13 +18,11 @@
       },
     },
 
-    emits: ['update:modelValue'],
-
     setup(props, { attrs }) {
-      let perttierJSON = reactive({})
+      const id = genString(8)
 
       watch(
-        () => props.modelValue,
+        () => props.value,
         (value) => {
           init()
         },
@@ -69,12 +68,18 @@
       }
 
       const init = () => {
-        const target = document.querySelector('.json-pre')
-        perttierJSON = onSyntaxHighlight(props.modelValue)
+        const target = document.getElementById(id)
+        const perttierJSON = onSyntaxHighlight(props.value)
         target.innerHTML = perttierJSON
       }
 
-      return {}
+      onMounted(() => {
+        init()
+      })
+
+      return {
+        id,
+      }
     },
   })
 </script>
