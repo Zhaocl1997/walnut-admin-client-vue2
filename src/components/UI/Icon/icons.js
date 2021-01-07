@@ -9,6 +9,7 @@ import drag from '@iconify-icons/ic/outline-drag-indicator'
 import baselineKeyboardArrowDown from '@iconify-icons/ic/baseline-keyboard-arrow-down'
 import baselineKeyboardArrowUp from '@iconify-icons/ic/baseline-keyboard-arrow-up'
 import baselineLanguage from '@iconify-icons/ic/baseline-language'
+import baselineAccountBox from '@iconify-icons/ic/baseline-account-box'
 
 import verticalAlignBottomOutlined from '@iconify-icons/ant-design/vertical-align-bottom-outlined'
 import verticalAlignMiddleOutlined from '@iconify-icons/ant-design/vertical-align-middle-outlined'
@@ -29,4 +30,5 @@ export const iconsLists = {
 
   baselineKeyboardArrowDown,
   baselineKeyboardArrowUp,
+  baselineAccountBox,
 }
