@@ -8,7 +8,9 @@
 
       <!-- content -->
       <template #default>
-        <w-title v-if="hasTitle" class="u-float-left">{{ title }}</w-title>
+        <w-title v-if="hasTitle" show-left class="u-float-left">{{
+          title
+        }}</w-title>
 
         <w-table-settings
           v-if="hasSettings"
@@ -70,15 +72,12 @@
             </template>
           </el-table-column>
 
-          <template
-            v-for="(item, index) in modelHeaders"
-            :key="item.prop + index"
-          >
+          <template v-for="(item, index) in modelHeaders">
             <el-table-column
+              :key="index.toString() + item.prop"
               v-if="item.visible"
               v-bind="item"
-              :row-key="item.prop + index"
-              :column-key="item.prop + index"
+              :column-key="index.toString() + item.prop"
               :align="item.align ? item.align : 'center'"
               :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
             >
