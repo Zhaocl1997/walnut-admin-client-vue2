@@ -2,7 +2,7 @@
 
 import { createI18n } from 'vue-i18n'
 import store from '/@/store'
-import messages from 'globby?locale!/@/locales/lang/**/*.@(js)'
+import messages from './utils'
 
 const localOptions = {
   legacy: false, // you must set `false`, to use Compostion API
