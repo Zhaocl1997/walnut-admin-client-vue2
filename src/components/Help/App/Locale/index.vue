@@ -16,7 +16,7 @@
   import wDropdown from '/@/components/UI/Dropdown/index.vue'
 
   export default defineComponent({
-    name: 'wPickerLocale',
+    name: 'WPickerLocale',
 
     components: { wDropdown },
 

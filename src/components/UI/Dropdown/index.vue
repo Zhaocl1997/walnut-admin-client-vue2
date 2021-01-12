@@ -23,7 +23,7 @@
   import { wDropdownProps } from './props'
 
   export default defineComponent({
-    name: 'wDropdown',
+    name: 'WDropdown',
 
     inheritAttrs: false,
 

@@ -74,8 +74,8 @@
 
           <template v-for="(item, index) in modelHeaders">
             <el-table-column
-              :key="index.toString() + item.prop"
               v-if="item.visible"
+              :key="index.toString() + item.prop"
               v-bind="item"
               :column-key="index.toString() + item.prop"
               :align="item.align ? item.align : 'center'"

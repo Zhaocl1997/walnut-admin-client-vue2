@@ -15,7 +15,7 @@
   import { computed, defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'wSelect',
+    name: 'WSelect',
 
     inheritAttrs: false,
 

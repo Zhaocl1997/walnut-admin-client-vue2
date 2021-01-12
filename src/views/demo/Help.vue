@@ -10,7 +10,7 @@
       </el-form>
     </template>
 
-    <w-locale-picker :showText="showText"></w-locale-picker>
+    <w-locale-picker :show-text="showText"></w-locale-picker>
   </el-card>
 
   <br />
@@ -29,7 +29,7 @@
       </el-form>
     </template>
 
-    <w-title :showLeft="showLeft" :showBottom="showBottom">一些标题</w-title>
+    <w-title :show-left="showLeft" :show-bottom="showBottom">一些标题</w-title>
   </el-card>
 
   <br />

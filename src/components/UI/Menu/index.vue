@@ -7,7 +7,7 @@
   import { wMenuProps } from './props'
 
   export default defineComponent({
-    name: 'wMenu',
+    name: 'WMenu',
 
     inheritAttrs: false,
 

@@ -1,5 +1,5 @@
 <template>
-  <pre class="json-pre" :id="id" :style="{ height: height }" />
+  <pre :id="id" class="json-pre" :style="{ height: height }" />
 </template>
 
 <script>

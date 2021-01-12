@@ -7,7 +7,7 @@
   import { wTreeProps } from './props'
 
   export default defineComponent({
-    name: 'wTree',
+    name: 'WTree',
 
     inheritAttrs: false,
 
