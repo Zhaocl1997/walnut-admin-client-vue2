@@ -36,10 +36,11 @@
 
 <script>
   import wFlipper from '/@/components/Help/Flipper/index.vue'
-  import { defineComponent, ref } from 'vue'
+  import { defineComponent, ref, onMounted } from 'vue'
+  import { hello } from '/@/api'
 
   export default defineComponent({
-    name: '',
+    name: 'Auth',
     components: { wFlipper },
     setup() {
       const isFlipped = ref(false)
@@ -52,6 +53,10 @@
       const onDisplayCard = () => {
         showCard.value = !showCard.value
       }
+
+      onMounted(() => {
+        hello()
+      })
 
       return {
         isFlipped,

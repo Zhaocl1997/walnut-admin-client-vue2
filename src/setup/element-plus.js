@@ -51,8 +51,8 @@ import {
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
-import lang from 'element-plus/lib/locale/lang/zh-cn'
-import locale from 'element-plus/lib/locale'
+// import lang from 'element-plus/lib/locale/lang/zh-cn'
+// import locale from 'element-plus/lib/locale'
 
 const components = [
   ElAside,
@@ -119,7 +119,7 @@ const components = [
 const plugins = [ElLoading]
 
 export function setupElementPlus(app) {
-  locale.use(lang)
+  // locale.use(lang)
 
   components.map((comp) => app.component(comp.name, comp))
 
