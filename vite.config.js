@@ -8,27 +8,44 @@ function pathResolve(dir) {
   return resolve(__dirname, '.', dir)
 }
 
+const { VITE_PORT, VITE_PROXY, VITE_API_PREFIX, VITE_API_VERSION } = loadEnv()
+
+const apiPrefix = VITE_API_PREFIX + VITE_API_VERSION
+
 const root = process.cwd()
 const alias = {
   '/@/': `${pathResolve('src')}/`,
 }
+const server = {
+  port: VITE_PORT,
 
-const { VITE_PORT } = loadEnv()
+  proxy: {
+    [apiPrefix]: {
+      target: VITE_PROXY,
+      changeOrigin: true,
+      ws: true,
+      rewrite: (path) => path.replace(new RegExp(`^${apiPrefix}`), ''),
+    },
+  },
+}
 
 export default ({ command, mode }) => {
   return {
     root,
+
     alias,
+
+    server,
 
     plugins: [vue()],
 
-    port: VITE_PORT,
-
     optimizeDeps: {
       include: [
-        'element-plus/lib/locale/lang/zh-cn',
-        'element-plus/lib/locale',
+        // 'element-plus/lib/locale/lang/zh-cn',
+        // 'element-plus/lib/locale',
         'mockjs',
+        'element-plus',
+        // 'easy-fns-ts'
       ],
     },
   }
