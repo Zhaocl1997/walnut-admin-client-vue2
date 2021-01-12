@@ -9,7 +9,7 @@
     </w-icon>
 
     <transition name="el-fade-in-linear">
-      <div class="w-auth-card" v-show="showCard">
+      <div v-show="showCard" class="w-auth-card">
         <w-flipper
           class="w-auth-card"
           width="450px"
