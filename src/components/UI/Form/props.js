@@ -23,11 +23,11 @@ export const wFormProps = {
   /**
    * @description override original labelWidth with a default value
    * @type {String}
-   * @default 60px
+   * @default 0
    */
   labelWidth: {
     type: String,
-    default: '60px',
+    default: '0',
   },
 
   /**

@@ -1,7 +1,7 @@
 <template>
-  <template v-if="originText">
+  <template v-if="originText || text">
     <el-checkbox v-bind="getBindValue">
-      {{ originText }}
+      {{ originText || text }}
     </el-checkbox>
   </template>
 
@@ -34,6 +34,8 @@
       options: { type: Array, default: () => [] },
       optionValue: { type: String, default: 'value' },
       optionLabel: { type: String, default: 'label' },
+
+      text: String,
     },
 
     setup(props, { attrs, slots }) {
