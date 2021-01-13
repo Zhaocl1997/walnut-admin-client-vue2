@@ -7,7 +7,8 @@ import messages from './utils'
 const localOptions = {
   legacy: false, // you must set `false`, to use Compostion API
 
-  locale: store.state.app.lang,
+  // locale: store.state.app.lang,
+  locale: 'en',
   fallbackLocale: 'en',
   messages,
 }
