@@ -2,29 +2,26 @@
 
 import { setLocal, getLocal } from '/@/utils/persistent'
 
-const APP_LOCALE = 'APP_LOCALE'
-
-const APP_MUTATIONS = {
-  TOGGLE_LANG: 'TOGGLE_LANG',
-}
+import { PERSISTENT_KEYS } from '/@/utils/persistent/keys'
+import { MUTATION_TYPES } from '../mutationTypes'
 
 export const appModule = {
   namespaced: true,
 
   state: {
-    lang: getLocal(APP_LOCALE) || 'zh_CN',
+    lang: getLocal(PERSISTENT_KEYS.APP.LOCALE) || 'en',
   },
 
   mutations: {
-    [APP_MUTATIONS.TOGGLE_LANG]: (state, lang) => {
+    [MUTATION_TYPES.APP.TOGGLE_LANG]: (state, lang) => {
       state.lang = lang
-      setLocal(APP_LOCALE, lang)
+      setLocal(PERSISTENT_KEYS.APP.LOCALE, lang)
     },
   },
 
   actions: {
     toggleLang({ commit }, lang) {
-      commit(APP_MUTATIONS.TOGGLE_LANG, lang)
+      commit(MUTATION_TYPES.APP.TOGGLE_LANG, lang)
     },
   },
 }
