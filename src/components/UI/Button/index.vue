@@ -1,5 +1,5 @@
 <template>
-  <el-button v-bind="getBindValue">
+  <el-button v-bind="getBindValue" :style="{ width: block ? '100%' : 'auto' }">
     <el-space size="mini">
       <i v-if="prefixIcon" :class="prefixIcon" />
 
@@ -34,6 +34,8 @@
 
       retryDelay: [String, Number],
       loadDelay: [String, Number],
+
+      block: Boolean,
     },
 
     emits: ['click'],
