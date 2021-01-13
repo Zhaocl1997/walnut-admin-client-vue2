@@ -1,3 +1,5 @@
+'use strict'
+
 import { createStroage } from 'easy-fns-ts/dist/esm/storage'
 
 const prefixKey = 'WALNUT_'
