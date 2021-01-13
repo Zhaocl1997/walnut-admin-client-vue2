@@ -27,6 +27,10 @@ const server = {
       rewrite: (path) => path.replace(new RegExp(`^${apiPrefix}`), ''),
     },
   },
+
+  hmr: {
+    overlay: true,
+  },
 }
 
 export default ({ command, mode }) => {
