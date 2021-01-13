@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { log } from 'easy-fns-ts/dist/esm/log'
+import { checkStatus } from './status'
 
 export class WalnutAxios {
   constructor(options) {
@@ -51,15 +52,21 @@ export class WalnutAxios {
   }
 
   /**
-   * @description: 相应拦截器
+   * @description: 响应拦截器
    */
   createResponseInterceptor() {
     this.instance.interceptors.response.use(
       (res) => {
         log.capsule('[Walnut Request]', 'Success', 'success')
-        return res
+        return res.data
       },
       (err) => {
+        const statusCode = err.response.data.statusCode
+        const msg = err.response.data.detail.message
+
+        checkStatus(statusCode, msg)
+
+        log.capsule('[Walnut Request]', 'Error', 'danger')
         return Promise.reject(err)
       }
     )
