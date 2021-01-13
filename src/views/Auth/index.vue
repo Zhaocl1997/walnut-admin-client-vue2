@@ -19,7 +19,7 @@
         >
           <template #front>
             <div class="Card__face">
-              <span class="Card__center">signin</span>
+              <signin />
             </div>
           </template>
 
@@ -38,10 +38,13 @@
   import wFlipper from '/@/components/Help/Flipper/index.vue'
   import { defineComponent, ref, onMounted } from 'vue'
   import { hello } from '/@/api'
+  import Signin from './Signin.vue'
 
   export default defineComponent({
     name: 'Auth',
-    components: { wFlipper },
+
+    components: { wFlipper, Signin },
+
     setup() {
       const isFlipped = ref(false)
       const showCard = ref(false)
@@ -91,6 +94,18 @@
   }
 
   .Card {
+    &__face {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../../../img/1.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    &__pattern {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../../../img/2.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
     &__face,
     &__pattern {
       width: 100%;
