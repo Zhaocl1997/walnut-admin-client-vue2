@@ -24,4 +24,6 @@ function genMessage(langs) {
   return obj
 }
 
-export default genMessage(modules)
+const m = genMessage(modules)
+
+export default m

@@ -15,3 +15,7 @@ const store = createStore({
 })
 
 export default store
+
+export const setupStore = (app) => {
+  app.use(store)
+}

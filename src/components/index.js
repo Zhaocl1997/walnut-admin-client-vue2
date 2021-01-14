@@ -118,7 +118,7 @@ const components = [
 
 const plugins = [ElLoading]
 
-export function setupElementPlus(app) {
+export const setupElementPlus = (app) => {
   // locale.use(lang)
 
   components.map((comp) => app.component(comp.name, comp))
