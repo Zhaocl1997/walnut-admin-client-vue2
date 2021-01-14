@@ -1,18 +1,28 @@
 'use strict'
 
 import axios from 'axios'
-import { log } from 'easy-fns-ts/dist/esm/log'
-import { checkStatus } from './status'
+import { isFunction, merge } from 'lodash-es'
 
-export class WalnutAxios {
+export class wAxios {
   constructor(options) {
     this.options = options
+
     this.instance = axios.create(options)
     this.createInterceptors()
   }
 
   /**
-   * @description: 获取options里的transform
+   * @description 获取实例
+   */
+  getInstance() {
+    if (!this.instance) {
+      this.instance = axios.create(this.options)
+    }
+    return this.instance
+  }
+
+  /**
+   * @description 获取options里的transform
    */
   getTransform() {
     const { transform } = this.options
@@ -20,7 +30,7 @@ export class WalnutAxios {
   }
 
   /**
-   * @description: 拦截器配置
+   * @description 拦截器配置
    */
   createInterceptors() {
     const transform = this.getTransform()
@@ -32,50 +42,41 @@ export class WalnutAxios {
       responseInterceptorsCatch,
     } = transform
 
-    this.createRequestInterceptor()
-    this.createResponseInterceptor()
-  }
-
-  /**
-   * @description: 请求拦截器
-   */
-  createRequestInterceptor() {
-    this.instance.interceptors.request.use(
-      (config) => {
-        // config.headers['Authorization'] = 'Bearer ' + getToken()
-        return config
-      },
-      (error) => {
-        return Promise.reject(error)
-      }
+    this.createRequestInterceptor(requestInterceptors, requestInterceptorsCatch)
+    this.createResponseInterceptor(
+      responseInterceptors,
+      responseInterceptorsCatch
     )
   }
 
   /**
-   * @description: 响应拦截器
+   * @description 请求拦截器
    */
-  createResponseInterceptor() {
-    this.instance.interceptors.response.use(
-      (res) => {
-        log.capsule('[Walnut Request]', 'Success', 'success')
-        return res.data
-      },
-      (err) => {
-        const statusCode = err.response.data.statusCode
-        const msg = err.response.data.detail.message
-
-        checkStatus(statusCode, msg)
-
-        log.capsule('[Walnut Request]', 'Error', 'danger')
-        return Promise.reject(err)
-      }
-    )
+  createRequestInterceptor(i, c) {
+    this.instance.interceptors.request.use(i, c)
   }
 
   /**
-   * @description: 请求方法
+   * @description 响应拦截器
+   */
+  createResponseInterceptor(i, c) {
+    this.instance.interceptors.response.use(i, c)
+  }
+
+  /**
+   * @description 请求方法
    */
   request(config) {
+    const { customOptions } = config
+    const { beforeRequestHook } = this.getTransform()
+
+    if (beforeRequestHook && isFunction(beforeRequestHook)) {
+      config = beforeRequestHook(
+        config,
+        merge(this.options.customOptions, customOptions)
+      )
+    }
+
     return new Promise((resolve, reject) => {
       this.instance
         .request(config)
