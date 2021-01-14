@@ -27,6 +27,5 @@ export const loadEnv = () => {
     process.env[envName] = realName
   }
 
-  const f = filterObj(ret, 'VITE_')
-  return f
+  return filterObj(ret, 'VITE_')
 }

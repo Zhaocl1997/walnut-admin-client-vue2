@@ -1,19 +1,32 @@
 'use strict'
 
 import { createStroage } from 'easy-fns-ts/dist/esm/storage'
+import { myEncryption } from '../crypto'
+import { getlsPrefix, getssPrefix } from '../prefix'
 
-const prefixKey = 'WALNUT_'
-
-const ls = createStroage({ prefixKey, storage: localStorage })
-const ss = createStroage({ prefixKey, storage: sessionStorage })
+// TODO prefix add __
+// TODO cookie
+// TODO easy-fns-ts rebuild
+// TODO encrypt include expire
+const ls = createStroage({
+  prefixKey: `${getlsPrefix()}`,
+  storage: localStorage,
+})
+const ss = createStroage({
+  prefixKey: `${getssPrefix()}`,
+  storage: sessionStorage,
+})
 
 /* LOCAL */
 export const setLocal = (k, v) => {
-  ls.set(k, v)
+  const en = myEncryption.encrypt(v)
+  ls.set(k, en)
 }
 
 export const getLocal = (k) => {
-  return ls.get(k)
+  const v = ls.get(k)
+  const o = myEncryption.decrypt(v)
+  return o
 }
 
 export const clearLocal = () => {

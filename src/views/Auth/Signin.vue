@@ -1,8 +1,8 @@
 <template>
   <div @click.stop>
     <w-form
-      class="signin-form"
       v-model="signinData"
+      class="signin-form"
       :schema="getSigninSchema"
       :rules="getSigninRules"
     >
@@ -10,8 +10,8 @@
         <w-button
           block
           type="primary"
-          @click="onSignin"
           style="background: transparent"
+          @click="onSignin"
           >{{ t('system.auth.signin') }}</w-button
         >
       </template>
