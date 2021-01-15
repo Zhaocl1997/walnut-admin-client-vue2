@@ -31,6 +31,8 @@ const server = {
   hmr: {
     overlay: true,
   },
+
+  open: '/auth',
 }
 
 export default ({ command, mode }) => {
