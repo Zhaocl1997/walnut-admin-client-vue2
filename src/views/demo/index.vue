@@ -69,8 +69,8 @@
         <form-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Storage" name="Storage">
-        <storage-demo />
+      <el-tab-pane label="Persistent" name="Persistent">
+        <persistent-demo />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -91,7 +91,7 @@
   import PaginationDemo from './Pagination.vue'
   import RadioDemo from './Radio.vue'
   import SelectDemo from './Select.vue'
-  import StorageDemo from './Storage.vue'
+  import PersistentDemo from './Persistent.vue'
   import TableDemo from './Table.vue'
   import TagDemo from './Tag.vue'
   import TreeDemo from './Tree.vue'
@@ -115,7 +115,7 @@
       PaginationDemo,
       RadioDemo,
       SelectDemo,
-      StorageDemo,
+      PersistentDemo,
       TableDemo,
       TagDemo,
       TreeDemo,

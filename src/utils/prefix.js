@@ -9,6 +9,7 @@ const appVersion = pkg.version
 const appPrefix = `${appName}__${appVersion}__${mode}`
 const localStoragePrefix = `LOCAL`
 const sessionStoragePrefix = `SESSION`
+const cookiePrefix = `COOKIEs`
 const classPrefix = `${appName.slice(0, 1).toLowerCase()}`
 
 export const getlsPrefix = () => {
@@ -17,6 +18,10 @@ export const getlsPrefix = () => {
 
 export const getssPrefix = () => {
   return `${appPrefix}__${sessionStoragePrefix}`
+}
+
+export const getckPrefix = () => {
+  return `${appPrefix}__${cookiePrefix}`
 }
 
 export const getClsPrefix = (compName) => {

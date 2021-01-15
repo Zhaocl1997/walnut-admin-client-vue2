@@ -1,5 +1,5 @@
 <template>
-  <pre :id="id" class="json-pre" :style="{ height: height }" />
+  <pre :id="id" class="json-pre" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -10,11 +10,16 @@
     name: 'WJSON',
 
     props: {
-      value: [Object, Array],
+      value: [Object, Array, String],
 
       height: {
         type: String,
         default: '200px',
+      },
+
+      width: {
+        type: String,
+        default: '100%',
       },
     },
 
@@ -32,6 +37,10 @@
       )
 
       const onSyntaxHighlight = (json) => {
+        if (!json) {
+          return
+        }
+
         if (typeof json != 'string') {
           json = JSON.stringify(
             json,

@@ -1,55 +1,54 @@
 'use strict'
 
-import { createStroage } from 'easy-fns-ts/dist/esm/storage'
-import { myEncryption } from '../crypto'
-import { getlsPrefix, getssPrefix } from '../prefix'
-
-// TODO prefix add __
-// TODO cookie
-// TODO easy-fns-ts rebuild
-// TODO encrypt include expire
-const ls = createStroage({
-  prefixKey: `${getlsPrefix()}`,
-  storage: localStorage,
-})
-const ss = createStroage({
-  prefixKey: `${getssPrefix()}`,
-  storage: sessionStorage,
-})
+import { myLS, mySS, myCookie } from './src'
 
 /* LOCAL */
 export const setLocal = (k, v) => {
-  const en = myEncryption.encrypt(v)
-  ls.set(k, en)
+  myLS.set(k, v)
 }
 
 export const getLocal = (k) => {
-  const v = ls.get(k)
-  const o = myEncryption.decrypt(v)
-  return o
+  return myLS.get(k)
 }
 
 export const clearLocal = () => {
-  ls.clear()
+  myLS.clear()
 }
 
 export const removeLocal = (k) => {
-  ls.remove(k)
+  myLS.remove(k)
 }
 
 /* SESSION */
 export const setSession = (k, v) => {
-  ss.set(k, v)
+  mySS.set(k, v)
 }
 
 export const getSession = (k) => {
-  return ss.get(k)
+  return mySS.get(k)
 }
 
 export const clearSession = () => {
-  ss.clear()
+  mySS.clear()
 }
 
 export const removeSession = (k) => {
-  ss.remove(k)
+  mySS.remove(k)
+}
+
+/* COOKIE */
+export const setCookie = (k, v) => {
+  myCookie.set(k, v)
+}
+
+export const getCookie = (k) => {
+  return myCookie.get(k)
+}
+
+export const clearCookie = () => {
+  myCookie.clear()
+}
+
+export const removeCookie = (k) => {
+  myCookie.remove(k)
 }
