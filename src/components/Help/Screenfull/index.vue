@@ -10,7 +10,7 @@
 <script>
   import screenfull from 'screenfull'
   import { ref, defineComponent, onMounted, onUnmounted } from 'vue'
-  import { toggleClass } from 'easy-fns-ts/dist/esm/dom'
+  import { toggleClass } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WScreenfull',

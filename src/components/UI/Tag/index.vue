@@ -34,7 +34,7 @@
     nextTick,
     watch,
   } from 'vue'
-  import { deepClone } from 'easy-fns-ts/dist/esm'
+  import { deepClone } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WTag',

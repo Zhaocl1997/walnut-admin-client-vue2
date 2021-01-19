@@ -4,7 +4,7 @@
 
 <script>
   import { reactive, defineComponent, watch, onMounted } from 'vue'
-  import { genString } from 'easy-fns-ts/dist/esm'
+  import { genString } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WJSON',

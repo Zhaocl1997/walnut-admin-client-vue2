@@ -1,7 +1,7 @@
 'use strict'
 
 import { getToken } from '../auth'
-import { log } from 'easy-fns-ts/dist/esm/log'
+import { log } from 'easy-fns-ts'
 import { checkStatus } from './status'
 import { isString } from 'lodash-es'
 

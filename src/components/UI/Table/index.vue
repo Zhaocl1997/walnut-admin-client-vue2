@@ -68,7 +68,7 @@
             fixed="right"
           >
             <template #default="props">
-              <span>123</span>
+              <slot name="action" :action="props" />
             </template>
           </el-table-column>
 

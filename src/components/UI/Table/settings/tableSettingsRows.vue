@@ -75,7 +75,7 @@
     unref,
     computed,
   } from 'vue'
-  import { deepClone } from 'easy-fns-ts/dist/esm'
+  import { deepClone } from 'easy-fns-ts'
 
   import { useI18n } from '/@/hooks/useI18n.js'
 

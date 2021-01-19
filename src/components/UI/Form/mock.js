@@ -10,7 +10,7 @@ import {
   treeToArr,
   formatTime,
   getRandomElements,
-} from 'easy-fns-ts/dist/esm'
+} from 'easy-fns-ts'
 
 import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from './types'
 

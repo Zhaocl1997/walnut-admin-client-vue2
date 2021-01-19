@@ -51,11 +51,11 @@
 
       <!-- <el-tab-pane label="Menu" name="Menu">
         <menu-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo />
-      </el-tab-pane> -->
+      </el-tab-pane>
 
       <el-tab-pane label="Pagination" name="Pagination">
         <pagination-demo />

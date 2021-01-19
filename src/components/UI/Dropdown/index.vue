@@ -19,7 +19,7 @@
 <script>
   import { ElDropdown } from 'element-plus'
   import { ref, reactive, computed, defineComponent } from 'vue'
-  import { omit } from 'easy-fns-ts/dist/esm'
+  import { omit } from 'easy-fns-ts'
   import { wDropdownProps } from './props'
 
   export default defineComponent({

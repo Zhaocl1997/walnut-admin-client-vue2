@@ -1,6 +1,11 @@
 <template>
   <div id="header-container">
-    <el-header>headerheaderheader</el-header>
+    <el-header
+      >headerheaderheader
+      <router-link to="/demo" class="u-mr10">demo</router-link>
+      <router-link to="/menu" class="u-mr10">menu</router-link>
+      <router-link to="/auth" class="u-mr10">auth</router-link>
+    </el-header>
   </div>
 </template>
 

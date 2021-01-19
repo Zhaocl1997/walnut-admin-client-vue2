@@ -1,6 +1,7 @@
 'use strict'
 
 import { useI18n } from '/@/hooks/useI18n.js'
+import router from '/@/router'
 import { ElNotification } from 'element-plus'
 
 const error = (m) => {
@@ -23,6 +24,7 @@ export const checkStatus = (status, msg) => {
     case 401:
       error(t('system.api.errMsg401'))
       // userStore.loginOut(true);
+      router.push('/auth')
       break
 
     case 403:

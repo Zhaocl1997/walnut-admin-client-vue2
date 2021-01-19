@@ -21,7 +21,7 @@
 <script>
   import { ElInput } from 'element-plus'
   import { computed, defineComponent } from 'vue'
-  import { clearIllegalChars } from 'easy-fns-ts/dist/esm'
+  import { clearIllegalChars } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WInput',

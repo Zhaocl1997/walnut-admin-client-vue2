@@ -1,9 +1,9 @@
 <template>
   <div :class="['w-dialog', { 'w-dialog-line': line }]">
     <el-dialog v-bind="getBindValue">
-      <template v-if="header" #title>
+      <!-- <template v-if="header" #title>
         <w-title>{{ title }}</w-title>
-      </template>
+      </template> -->
 
       <div class="w-dialog__body">
         <slot></slot>
@@ -60,16 +60,16 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../assets/style/index.scss';
+  // @import '../../../assets/style/index.scss';
 
   .w-dialog {
     &__body {
-      @include scrollBar;
+      // @include scrollBar;
 
       max-height: 60vh;
       overflow-y: auto;
 
-      margin-bottom: 63px;
+      margin-bottom: 7%;
     }
   }
 

@@ -19,6 +19,7 @@
           <el-space>
             <w-title>{{ item.title }}</w-title>
             <w-arrow
+              v-if="item.fold === true || item.fold === false"
               style="margin-top: 2px"
               :active="item.fold"
               @click="onToggleDividerFold(index, item)"
@@ -129,7 +130,7 @@
     toRefs,
     nextTick,
   } from 'vue'
-  import { findAllIndex, isEmpty } from 'easy-fns-ts/dist/esm'
+  import { findAllIndex, isEmpty } from 'easy-fns-ts'
 
   import { isDevMode } from '/@/utils/mode'
 

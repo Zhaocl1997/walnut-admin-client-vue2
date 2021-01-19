@@ -84,7 +84,7 @@
     toRefs,
     nextTick,
   } from 'vue'
-  import { omit } from 'easy-fns-ts/dist/esm'
+  import { omit } from 'easy-fns-ts'
   import { useI18n } from '/@/hooks/useI18n.js'
 
   import { TABLE_GROUP_TYPE } from '../constant'

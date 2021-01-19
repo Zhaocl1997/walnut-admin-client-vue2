@@ -21,6 +21,8 @@
     height: auto;
     width: 80%;
 
+    padding: 20px;
+
     margin-top: 40px;
     position: absolute;
     flex: 1 1 auto;
