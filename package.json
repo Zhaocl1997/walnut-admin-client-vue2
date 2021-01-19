@@ -13,8 +13,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
-    "easy-fns-ts": "^1.0.12",
-    "element-plus": "^1.0.1-beta.26",
+    "easy-fns-ts": "^1.0.15",
+    "element-plus": "^1.0.1-beta.27",
     "lodash-es": "^4.17.20",
     "screenfull": "^5.1.0",
     "sortablejs": "^1.10.2",
@@ -40,7 +40,7 @@
     "mockjs": "^1.1.0",
     "prettier": "^2.2.1",
     "sass": "^1.29.0",
-    "vite": "^2.0.0-beta.29"
+    "vite": "^2.0.0-beta.30"
   },
   "husky": {
     "hooks": {
