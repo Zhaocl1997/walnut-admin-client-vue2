@@ -46,7 +46,12 @@ export default ({ command, mode }) => {
     plugins: [vue()],
 
     optimizeDeps: {
-      include: ['mockjs', 'element-plus'],
+      include: [
+        'mockjs',
+        'element-plus',
+        'element-plus/lib/locale/lang/zh-cn',
+        'element-plus/lib/locale/lang/en',
+      ],
     },
   }
 }
