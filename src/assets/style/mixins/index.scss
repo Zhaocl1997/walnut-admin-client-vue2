@@ -8,16 +8,16 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #99a9bf;
     border-radius: 20px;
+    background: #99a9bf;
   }
 }
 
 @mixin clearfix {
   &::after {
-    content: '';
-    display: table;
     clear: both;
+    display: table;
+    content: '';
   }
 }
 
