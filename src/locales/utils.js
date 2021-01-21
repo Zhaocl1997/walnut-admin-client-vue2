@@ -1,6 +1,8 @@
 'use strict'
 
 import { set } from 'lodash-es'
+import enLocale from 'element-plus/lib/locale/lang/en'
+import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
 
 const modules = import.meta.globEager('./lang/**/*.js')
 
@@ -20,6 +22,9 @@ function genMessage(langs) {
       set(obj[lang], objKey, mod)
     }
   })
+
+  set(obj, 'en.el', enLocale.el)
+  set(obj, 'zh_CN.el', zhLocale.el)
 
   return obj
 }
