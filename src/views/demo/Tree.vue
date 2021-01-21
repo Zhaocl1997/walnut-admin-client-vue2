@@ -8,15 +8,38 @@
           <el-form-item label="多选">
             <el-switch v-model="multiple" />
           </el-form-item>
+
+          <el-form-item v-if="multiple" label="是否只要叶子节点">
+            <el-switch v-model="leafOnly" />
+          </el-form-item>
+
+          <el-form-item v-if="multiple" label="是否包含半选节点">
+            <el-switch v-model="includeHalfChecked" />
+          </el-form-item>
+
+          <el-form-item v-if="multiple" label="展开">
+            <el-switch v-model="expandAll" @change="onExpandAllChange" />
+          </el-form-item>
+
+          <el-form-item v-if="multiple" label="全选">
+            <el-switch v-model="checkAll" @change="onCheckAllChange" />
+          </el-form-item>
+
+          <el-form-item>
+            <el-button size="mini" @click="onReset">重置</el-button>
+          </el-form-item>
         </el-space>
       </el-form>
     </template>
 
     <w-tree
+      ref="wTreeDemo"
       v-model="treeValue"
       :data="data"
       :props="treeProps"
       :multiple="multiple"
+      :leaf-only="leafOnly"
+      :include-half-checked="includeHalfChecked"
     ></w-tree>
   </el-card>
 
@@ -33,8 +56,14 @@
     components: { wTree },
 
     setup(props, { attrs }) {
+      const wTreeDemo = ref(null)
+
       const state = reactive({
         multiple: false,
+        leafOnly: false,
+        includeHalfChecked: false,
+        expandAll: false,
+        checkAll: false,
       })
 
       const tree = reactive({
@@ -134,9 +163,31 @@
         ],
       })
 
+      const onExpandAllChange = (val) => {
+        wTreeDemo.value.expandAll(val)
+      }
+
+      const onCheckAllChange = (val) => {
+        wTreeDemo.value.checkAll(val)
+      }
+
+      const onReset = () => {
+        tree.treeValue = ''
+        state.multiple = false
+        state.leafOnly = false
+        state.includeHalfChecked = false
+        state.expandAll = false
+        state.checkAll = false
+      }
+
       return {
+        wTreeDemo,
         ...toRefs(state),
         ...toRefs(tree),
+
+        onExpandAllChange,
+        onCheckAllChange,
+        onReset,
       }
     },
   })

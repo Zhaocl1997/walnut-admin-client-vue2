@@ -3,7 +3,14 @@
 </template>
 
 <script>
-  import { ref, reactive, computed, defineComponent, nextTick } from 'vue'
+  import {
+    ref,
+    computed,
+    defineComponent,
+    nextTick,
+    onMounted,
+    watch,
+  } from 'vue'
   import { wTreeProps } from './props'
 
   export default defineComponent({
@@ -25,6 +32,7 @@
         disabled: 'disabled',
       }
 
+      // single
       const onNodeClick = (data, node, arr) => {
         if (props.multiple) {
           return
@@ -34,6 +42,7 @@
         emit('node-click', data, node, arr)
       }
 
+      // multiple
       const onCheck = (
         data,
         { checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys }
@@ -43,16 +52,7 @@
         }
 
         nextTick(() => {
-          // 1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
-          const res = wTreeRef.value.getCheckedNodes(
-            props.leafOnly,
-            props.includeHalfChecked
-          )
-
-          let ret = []
-          res.map((i) => {
-            ret.push(i[getNodeKey.value])
-          })
+          const ret = onGetCheckedNodes()
 
           emit('update:modelValue', ret)
           emit('check', data, {
@@ -62,6 +62,84 @@
             halfCheckedKeys,
           })
         })
+      }
+
+      const arr_diffA = (a, b) => {
+        return a.filter((x) => !new Set(b).has(x))
+      }
+
+      const feedback = () => {
+        if (props.includeHalfChecked) {
+          return
+        }
+
+        if (!props.modelValue) {
+          if (props.multiple) {
+            nextTick(() => {
+              wTreeRef.value.setCheckedKeys([])
+            })
+          } else {
+            nextTick(() => {
+              wTreeRef.value.setCurrentKey(null)
+            })
+          }
+
+          return
+        }
+
+        if (props.multiple) {
+          const levelOneNodeIdArr = props.data.map((i) => i[getNodeKey.value])
+          const val = arr_diffA(props.modelValue, levelOneNodeIdArr)
+
+          nextTick(() => {
+            wTreeRef.value.setCheckedKeys(val)
+          })
+        } else {
+          nextTick(() => {
+            wTreeRef.value.setCurrentKey(props.modelValue)
+          })
+        }
+      }
+
+      const expandAll = (val) => {
+        let nodes = wTreeRef.value.store.nodesMap
+        for (let i in nodes) {
+          nodes[i].expanded = val
+        }
+      }
+
+      const checkAll = (val) => {
+        if (!props.multiple) {
+          return
+        }
+
+        if (val) {
+          wTreeRef.value.setCheckedNodes(props.data)
+
+          nextTick(() => {
+            const ret = onGetCheckedNodes()
+
+            emit('update:modelValue', ret)
+          })
+        } else {
+          wTreeRef.value.setCheckedKeys([])
+
+          emit('update:modelValue', [])
+        }
+      }
+
+      const onGetCheckedNodes = () => {
+        // 1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
+        const res = wTreeRef.value.getCheckedNodes(
+          props.leafOnly,
+          props.includeHalfChecked
+        )
+
+        let ret = []
+        res.map((i) => {
+          ret.push(i[getNodeKey.value])
+        })
+        return ret
       }
 
       const getProps = computed(() => {
@@ -90,10 +168,25 @@
         }
       })
 
+      onMounted(() => {
+        feedback()
+      })
+
+      watch(
+        () => props.modelValue,
+        () => {
+          feedback()
+        }
+      )
+
       return {
         wTreeRef,
         getBindValue,
         onNodeClick,
+
+        // method
+        expandAll,
+        checkAll,
       }
     },
   })
