@@ -55,7 +55,9 @@
   "lint-staged": {
     "*.{js,vue}": [
       "npm run lint:fix",
-      "npm run lint:prettier",
+      "npm run lint:prettier"
+    ],
+    "*.{scss}": [
       "npm run lint:style"
     ]
   }
