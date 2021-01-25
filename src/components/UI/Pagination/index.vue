@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  import { ElPagination } from 'element-plus'
   import { ref, reactive, computed, defineComponent, nextTick } from 'vue'
+  import { wPaginationProps } from './props'
 
   import scrollTo from './scroll-to'
 
@@ -20,17 +20,7 @@
 
     inheritAttrs: false,
 
-    props: {
-      ...ElPagination.props,
-
-      background: { type: Boolean, default: true },
-      autoScroll: { type: Boolean, default: true },
-
-      layout: {
-        type: String,
-        default: 'total, sizes, prev, pager, next, jumper, slot',
-      },
-    },
+    props: wPaginationProps,
 
     emits: ['change', 'update:pageSize', 'update:currentPage'],
 

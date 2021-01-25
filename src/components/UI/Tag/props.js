@@ -1,18 +1,18 @@
 'use strict'
 
-import { ElDropdown } from 'element-plus'
+import { ElTag } from 'element-plus'
 
-export const wDropdownProps = {
+export const wTagProps = {
   /**
-   * @description original ElDropdown props
+   * @description ElTag original props
    */
-  ...ElDropdown.props,
+  ...ElTag.props,
 
   /**
    * @description v-model
-   * @type {[String, Number]}
+   * @type {[Array, Boolean, String]}
    */
-  modelValue: [String, Number],
+  modelValue: [Array, Boolean, String],
 
   /**
    * @description options for el-option
@@ -40,4 +40,18 @@ export const wDropdownProps = {
    * @type {String}
    */
   valueKey: String,
+
+  /**
+   * @description show add button or not
+   * @type {Boolean}
+   * @default false
+   */
+  addable: { type: Boolean, default: false },
+
+  /**
+   * @description value should be unique or not
+   * @type {Boolean}
+   * @default false
+   */
+  unique: { type: Boolean, default: false },
 }

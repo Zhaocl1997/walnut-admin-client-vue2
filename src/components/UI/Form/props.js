@@ -21,6 +21,7 @@ export const wFormProps = {
   modelValue: Object,
 
   /**
+   * @override
    * @description override original labelWidth with a default value
    * @type {String}
    * @default 0

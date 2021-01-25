@@ -1,18 +1,12 @@
 'use strict'
 
-import { ElDropdown } from 'element-plus'
+import { ElRadioGroup } from 'element-plus'
 
-export const wDropdownProps = {
+export const wRadioProps = {
   /**
-   * @description original ElDropdown props
+   * @description ElRadioGroup original props
    */
-  ...ElDropdown.props,
-
-  /**
-   * @description v-model
-   * @type {[String, Number]}
-   */
-  modelValue: [String, Number],
+  ...ElRadioGroup.props,
 
   /**
    * @description options for el-option
@@ -40,4 +34,18 @@ export const wDropdownProps = {
    * @type {String}
    */
   valueKey: String,
+
+  /**
+   * @description button type or not
+   * @type {Boolean}
+   * @default false
+   */
+  button: { type: Boolean, default: false },
+
+  /**
+   * @description border type or not
+   * @type {Boolean}
+   * @default false
+   */
+  border: { type: Boolean, default: false },
 }

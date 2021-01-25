@@ -4,7 +4,7 @@
       <el-radio-button
         v-for="item in options"
         :key="item[optionValue]"
-        :label="item[optionValue]"
+        :label="valueKey ? item[valueKey] : item[optionValue]"
         :disabled="item.disabled"
       >
         {{ item[optionLabel] }}
@@ -15,8 +15,9 @@
       <el-radio
         v-for="item in options"
         :key="item[optionValue]"
-        :label="item[optionValue]"
+        :label="valueKey ? item[valueKey] : item[optionValue]"
         :disabled="item.disabled"
+        :border="border"
       >
         {{ item[optionLabel] }}
       </el-radio>
@@ -25,23 +26,15 @@
 </template>
 
 <script>
-  import { ElRadioGroup } from 'element-plus'
   import { ref, computed, defineComponent } from 'vue'
+  import { wRadioProps } from './props'
 
   export default defineComponent({
     name: 'WRadio',
 
     inheritAttrs: false,
 
-    props: {
-      ...ElRadioGroup.props,
-
-      options: { type: Array, default: () => [] },
-      optionValue: { type: String, default: 'value' },
-      optionLabel: { type: String, default: 'label' },
-
-      button: Boolean,
-    },
+    props: wRadioProps,
 
     setup(props, { attrs }) {
       const getBindValue = computed(() => {

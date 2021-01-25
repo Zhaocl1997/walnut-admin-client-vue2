@@ -83,6 +83,16 @@
   </el-card>
 
   <br />
+
+  <el-card>
+    <template #header>
+      <span>block模式，当前绑定值：【{{ button }}】</span>
+    </template>
+
+    <w-button type="primary" block @click="onClick">填充满父容器宽度</w-button>
+  </el-card>
+
+  <br />
 </template>
 
 <script>

@@ -195,7 +195,6 @@
         emit('update:modelValue', treeValue.value)
 
         nextTick(() => {
-          console.log()
           selectTreeRef.value.blur()
         })
       }

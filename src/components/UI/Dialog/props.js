@@ -39,7 +39,7 @@ export const wDialogProps = {
   },
 
   /**
-   * @description override top
+   * @override
    * @type {String}
    * @default 6vh
    */

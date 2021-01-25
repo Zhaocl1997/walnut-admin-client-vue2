@@ -6,20 +6,26 @@
       <el-dropdown-menu>
         <el-dropdown-item
           v-for="item in options"
-          :key="item.value"
-          :command="item.value"
-          :class="calcClass(item.value)"
-          >{{ item.label }}</el-dropdown-item
+          :key="item[optionValue]"
+          :command="valueKey ? item[valueKey] : item[optionValue]"
+          :disabled="item.disabled"
+          :divided="item.divided"
+          :icon="item.icon"
+          :class="calcClass(item[optionValue])"
         >
+          <span v-if="!item.slot"> {{ item[optionLabel] }}</span>
+          <template v-else>
+            <slot :name="item[optionValue]" :prop="item[optionLabel]"></slot>
+          </template>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 
 <script>
-  import { ElDropdown } from 'element-plus'
   import { ref, reactive, computed, defineComponent } from 'vue'
-  import { omit } from 'easy-fns-ts'
+  import { omit } from 'lodash-es'
   import { wDropdownProps } from './props'
 
   export default defineComponent({
@@ -51,7 +57,7 @@
             ...attrs,
             ...props,
           },
-          ['options', 'modelValue']
+          ['options', 'optionValue', 'optionLabel', 'modelValue', 'valueKey']
         )
       })
 

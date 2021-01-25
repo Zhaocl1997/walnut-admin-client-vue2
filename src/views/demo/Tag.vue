@@ -21,17 +21,17 @@
 
   <el-card>
     <template #header>
-      <span>可加，当前绑定值：【{{ tag3 }}】</span>
+      <span>显示值与真实值相同 / 可加，当前绑定值：【{{ tag3 }}】</span>
     </template>
 
-    <w-tag v-model="tag3" :options="options" addable />
+    <w-tag v-model="tag3" :options="options" value-key="value" addable />
   </el-card>
 
   <br />
 
   <el-card>
     <template #header>
-      <span>简单数组，当前绑定值：【{{ tag4 }}】</span>
+      <span>显示值与真实值相同 / 唯一值，当前绑定值：【{{ tag4 }}】</span>
     </template>
 
     <w-tag
@@ -40,6 +40,7 @@
       value-key="cityName"
       addable
       closable
+      unique
     />
   </el-card>
 

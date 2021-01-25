@@ -1,5 +1,5 @@
 <template>
-  <el-button v-bind="getBindValue" :style="{ width: block ? '100%' : 'auto' }">
+  <el-button v-bind="getBindValue" :style="style">
     <el-space size="mini">
       <i v-if="prefixIcon" :class="prefixIcon" />
 
@@ -20,27 +20,21 @@
 <script>
   import { ElButton } from 'element-plus'
   import { ref, computed, defineComponent, unref } from 'vue'
+  import hooks from '/@/hooks'
+  import { wButtonProps } from './props'
 
   export default defineComponent({
     name: 'WButton',
 
     inheritAttrs: false,
 
-    props: {
-      ...ElButton.props,
-
-      prefixIcon: String,
-      suffixIcon: String,
-
-      retryDelay: [String, Number],
-      loadDelay: [String, Number],
-
-      block: Boolean,
-    },
+    props: wButtonProps,
 
     emits: ['click'],
 
     setup(props, { attrs, slots, emit }) {
+      const { useBlock } = hooks
+      const { style } = useBlock()
       const originText = slots.default && slots.default()[0].children
 
       let delayText = ref('')
@@ -94,6 +88,7 @@
       })
 
       return {
+        style,
         getBindValue,
         delayText,
       }

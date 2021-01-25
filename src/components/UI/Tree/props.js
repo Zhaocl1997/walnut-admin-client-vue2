@@ -9,7 +9,7 @@ export const wTreeProps = {
   ...ElTree.props,
 
   /**
-   * @description override default value
+   * @override
    * @type {Boolean}
    * @default true
    */
@@ -19,7 +19,7 @@ export const wTreeProps = {
   },
 
   /**
-   * @description override default value
+   * @override
    * @type {Boolean}
    * @default false
    */

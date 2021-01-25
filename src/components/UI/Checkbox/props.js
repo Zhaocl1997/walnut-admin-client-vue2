@@ -57,7 +57,7 @@ export const wCheckboxProps = {
   text: String,
 
   /**
-   * @description override original modelValue
+   * @override
    * @type {[Object, Array, Boolean, String]}
    */
   modelValue: [Object, Array, Boolean, String],

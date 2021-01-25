@@ -44,7 +44,7 @@ export const wSelectProps = {
   valueType: { type: String, default: 'string' },
 
   /**
-   * @description override original valueKey
+   * @override
    * @type {String}
    */
   valueKey: String,

@@ -1,7 +1,7 @@
 <template>
   <el-tag
     v-for="(item, index) in wOptions"
-    :key="valueKey ? item[valueKey] : item[optionValue]"
+    :key="valueKey ? index : item[optionValue]"
     v-bind="{ ...getBindValue, ...item.props }"
     @close="onCloseTag(index)"
   >
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-  import { ElTag } from 'element-plus'
   import {
     reactive,
     computed,
@@ -33,27 +32,18 @@
     toRefs,
     nextTick,
     watch,
+    unref,
   } from 'vue'
   import { deepClone } from 'easy-fns-ts'
+  import { wTagProps } from './props'
+  import { ElMessage } from 'element-plus'
 
   export default defineComponent({
     name: 'WTag',
 
     inheritAttrs: false,
 
-    props: {
-      ...ElTag.props,
-
-      modelValue: [String, Number, Array],
-
-      options: { type: Array, default: () => [] },
-      optionValue: { type: String, default: 'value' },
-      optionLabel: { type: String, default: 'label' },
-
-      valueKey: String,
-
-      addable: Boolean,
-    },
+    props: wTagProps,
 
     emits: ['update:modelValue'],
 
@@ -71,6 +61,13 @@
 
       const onInputConfirm = () => {
         if (state.inputValue) {
+          if (props.unique) {
+            if (unref(props.modelValue).includes(unref(state.inputValue))) {
+              ElMessage.info('请勿添加重复信息')
+              return
+            }
+          }
+
           state.wOptions.push(
             props.valueKey
               ? {

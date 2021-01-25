@@ -18,6 +18,26 @@
   </el-card>
 
   <br />
+
+  <el-card>
+    <template #header>
+      <span>边框样式，当前绑定值：【{{ radio3 }}】</span>
+    </template>
+
+    <w-radio v-model="radio3" :options="options" border />
+  </el-card>
+
+  <br />
+
+  <el-card>
+    <template #header>
+      <span>显示值与真实值相同，当前绑定值：【{{ radio4 }}】</span>
+    </template>
+
+    <w-radio v-model="radio4" :options="options" value-key="label" />
+  </el-card>
+
+  <br />
 </template>
 
 <script>
@@ -31,10 +51,10 @@
 
     setup() {
       const state = reactive({
-        radio1: '',
-        radio2: '',
-        radio3: '',
-        radio4: '',
+        radio1: '2',
+        radio2: '3',
+        radio3: '3',
+        radio4: '上海',
         radio5: '',
         radio6: '',
         radio7: '',
