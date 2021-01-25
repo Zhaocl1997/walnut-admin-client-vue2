@@ -11,9 +11,8 @@
 </template>
 
 <script>
-  import { omit } from 'easy-fns-ts'
-  import { ElSelect } from 'element-plus'
   import { computed, defineComponent, reactive } from 'vue'
+  import { wSelectProps } from './props'
   import hooks from '/@/hooks'
 
   export default defineComponent({
@@ -21,22 +20,13 @@
 
     inheritAttrs: false,
 
-    props: {
-      ...ElSelect.props,
-
-      options: { type: Array, default: () => [] },
-      optionValue: { type: String, default: 'value' },
-      optionLabel: { type: String, default: 'label' },
-
-      valueKey: String,
-
-      valueFormat: String,
-    },
+    props: wSelectProps,
 
     emits: ['update:modelValue'],
 
     setup(props, { attrs, emit }) {
-      const { origin, getBindValue } = hooks.useValueFormat()
+      const { useValueFormat } = hooks
+      const { origin, getBindValue } = useValueFormat()
 
       return {
         origin,

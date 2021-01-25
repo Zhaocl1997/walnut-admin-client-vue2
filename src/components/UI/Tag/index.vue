@@ -11,7 +11,7 @@
   <template v-if="addable">
     <el-input
       v-if="inputVisible"
-      ref="inputElement"
+      ref="inputRef"
       v-model="inputValue"
       class="input-new-tag"
       size="small"
@@ -62,7 +62,7 @@
         wOptions: deepClone(props.options),
         inputVisible: false,
         inputValue: '',
-        inputElement: null,
+        inputRef: null,
       })
 
       const onCloseTag = (index) => {
@@ -90,7 +90,7 @@
       const onInputShow = () => {
         state.inputVisible = true
         nextTick(() => {
-          state.inputElement.focus()
+          state.inputRef.focus()
         })
       }
 
@@ -103,8 +103,8 @@
           emit('update:modelValue', values)
         },
         {
-          immediate: true,
           deep: true,
+          immediate: true,
         }
       )
 

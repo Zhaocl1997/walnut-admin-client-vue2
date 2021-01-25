@@ -17,6 +17,4 @@ function genHooks(h) {
   return obj
 }
 
-const hooks = genHooks(hooksModules)
-
-export default hooks
+export default genHooks(hooksModules)

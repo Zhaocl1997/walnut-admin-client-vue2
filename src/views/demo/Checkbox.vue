@@ -14,7 +14,22 @@
       <span>多选-基本，当前绑定值：【{{ checkbox2 }}】</span>
     </template>
 
-    <w-checkbox v-model="checkbox2" :options="options" />
+    <w-checkbox v-model="checkbox2" :options="options" multiple />
+  </el-card>
+
+  <br />
+
+  <el-card>
+    <template #header>
+      <span>多选-字符串，当前绑定值：【{{ checkbox3 }}】</span>
+    </template>
+
+    <w-checkbox
+      v-model="checkbox3"
+      :options="options"
+      multiple
+      value-format=","
+    />
   </el-card>
 
   <br />
@@ -32,8 +47,8 @@
     setup() {
       const state = reactive({
         checkbox1: false,
-        checkbox2: [],
-        checkbox3: '',
+        checkbox2: [1, 4],
+        checkbox3: '2,3',
         checkbox4: '',
         checkbox5: '',
         checkbox6: '',

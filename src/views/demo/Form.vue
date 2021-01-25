@@ -123,6 +123,10 @@
         console.log('reset')
       }
 
+      const onBlur = () => {
+        console.log('blur')
+      }
+
       const getFormSchema = computed(() => {
         return [
           // ==================================
@@ -223,6 +227,7 @@
             options,
             clearable: true,
             formatter: (val) => options.find((i) => i.value === val).label,
+            blur: onBlur,
           },
           {
             wType: 'Select',

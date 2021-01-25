@@ -1,12 +1,12 @@
 <template>
-  <template v-if="originText || text">
-    <el-checkbox v-bind="getBindValue">
+  <template v-if="originText || !multiple">
+    <el-checkbox v-model="origin" v-bind="getBindValue">
       {{ originText || text }}
     </el-checkbox>
   </template>
 
   <template v-else>
-    <el-checkbox-group v-bind="getBindValue">
+    <el-checkbox-group v-model="origin" v-bind="getBindValue">
       <el-checkbox
         v-for="item in options"
         :key="item[optionValue]"
@@ -20,32 +20,24 @@
 </template>
 
 <script>
-  import { ElCheckboxGroup } from 'element-plus'
-  import { reactive, computed, defineComponent } from 'vue'
+  import { reactive, computed, defineComponent, watch } from 'vue'
+  import { wCheckboxProps } from './props'
+  import hooks from '/@/hooks'
 
   export default defineComponent({
     name: 'WCheckbox',
 
     inheritAttrs: false,
 
-    props: {
-      ...ElCheckboxGroup.props,
-
-      options: { type: Array, default: () => [] },
-      optionValue: { type: String, default: 'value' },
-      optionLabel: { type: String, default: 'label' },
-
-      text: String,
-    },
+    props: wCheckboxProps,
 
     setup(props, { attrs, slots }) {
+      const { useValueFormat } = hooks
+      const { origin, getBindValue } = useValueFormat()
       const originText = slots.default && slots.default()[0].children
 
-      const getBindValue = computed(() => {
-        return { ...attrs, ...props }
-      })
-
       return {
+        origin,
         getBindValue,
         originText,
       }

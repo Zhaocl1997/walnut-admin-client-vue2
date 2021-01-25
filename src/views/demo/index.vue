@@ -49,6 +49,10 @@
         <dropdown-demo />
       </el-tab-pane>
 
+      <el-tab-pane label="SelectTree" name="SelectTree">
+        <select-tree-demo />
+      </el-tab-pane>
+
       <!-- <el-tab-pane label="Menu" name="Menu">
         <menu-demo />
       </el-tab-pane> -->
@@ -91,6 +95,7 @@
   import PaginationDemo from './Pagination.vue'
   import RadioDemo from './Radio.vue'
   import SelectDemo from './Select.vue'
+  import SelectTreeDemo from './SelectTree.vue'
   import PersistentDemo from './Persistent.vue'
   import TableDemo from './Table.vue'
   import TagDemo from './Tag.vue'
@@ -115,6 +120,7 @@
       PaginationDemo,
       RadioDemo,
       SelectDemo,
+      SelectTreeDemo,
       PersistentDemo,
       TableDemo,
       TagDemo,

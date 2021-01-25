@@ -5,6 +5,10 @@
 
       <el-form inline>
         <el-space>
+          <el-form-item label="手风琴">
+            <el-switch v-model="accordion" />
+          </el-form-item>
+
           <el-form-item label="多选">
             <el-switch v-model="multiple" />
           </el-form-item>
@@ -38,6 +42,7 @@
       :data="data"
       :props="treeProps"
       :multiple="multiple"
+      :accordion="accordion"
       :leaf-only="leafOnly"
       :include-half-checked="includeHalfChecked"
     ></w-tree>
@@ -64,6 +69,7 @@
         includeHalfChecked: false,
         expandAll: false,
         checkAll: false,
+        accordion: false,
       })
 
       const tree = reactive({
