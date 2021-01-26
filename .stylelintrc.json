@@ -278,6 +278,7 @@
         "ignoreProperties": ["background-clip"]
       }
     ],
+    "no-descending-specificity": true,
     "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
     "length-zero-no-unit": true,

@@ -28,7 +28,7 @@
     "@iconify-icons/ant-design": "^1.1.0",
     "@iconify-icons/ic": "^1.1.1",
     "@iconify/vue": "^2.0.0-rc.2",
-    "@vitejs/plugin-vue": "^1.0.5",
+    "@vitejs/plugin-vue": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.5",
     "babel-plugin-component": "^1.1.1",
     "cross-env": "^7.0.3",
@@ -45,7 +45,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0",
-    "vite": "^2.0.0-beta.48"
+    "vite": "^2.0.0-beta.49"
   },
   "husky": {
     "hooks": {
@@ -57,7 +57,7 @@
       "npm run lint:fix",
       "npm run lint:prettier"
     ],
-    "*.{scss}": [
+    "*.{vue,scss}": [
       "npm run lint:style"
     ]
   }
