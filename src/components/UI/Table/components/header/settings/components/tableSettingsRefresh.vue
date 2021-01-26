@@ -10,19 +10,22 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
 
   export default defineComponent({
     name: 'WTableSettingsRefresh',
 
-    props: {
-      listFunc: Function,
-    },
-
-    setup(props, { attrs }) {
+    setup() {
+      const { useI18n } = hooks
       const { t } = useI18n()
+
+      const { getContextProps } = useTableContext()
+      const { listFunc } = getContextProps()
+
       return {
         t,
+        listFunc,
       }
     },
   })

@@ -26,10 +26,19 @@
         <el-form-item label="显示下划线">
           <el-switch v-model="showBottom"></el-switch>
         </el-form-item>
+
+        <el-form-item label="显示帮助信息">
+          <el-switch v-model="showHelp"></el-switch>
+        </el-form-item>
       </el-form>
     </template>
 
-    <w-title :show-left="showLeft" :show-bottom="showBottom">一些标题</w-title>
+    <w-title
+      :show-left="showLeft"
+      :show-bottom="showBottom"
+      :content="showHelp ? '一些帮助信息' : ''"
+      >一些标题</w-title
+    >
   </el-card>
 
   <br />
@@ -130,6 +139,7 @@
 
         showLeft: false,
         showBottom: false,
+        showHelp: false,
 
         active: false,
         left: false,
@@ -189,8 +199,8 @@
 
     &__center {
       display: block;
-      font-size: 32pt;
       align-self: center;
+      font-size: 32pt;
     }
   }
 </style>

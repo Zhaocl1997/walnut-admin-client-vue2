@@ -1,6 +1,6 @@
 'use strict'
 
-import { useI18n } from '/@/hooks/useI18n.js'
+import hooks from '/@/hooks'
 import router from '/@/router'
 import { ElNotification } from 'element-plus'
 
@@ -11,6 +11,7 @@ const error = (m) => {
 }
 
 export const checkStatus = (status, msg) => {
+  const { useI18n } = hooks
   const { t } = useI18n()
 
   switch (status) {

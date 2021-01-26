@@ -9,7 +9,7 @@
         <help-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Button" name="Button">
+      <!-- <el-tab-pane label="Button" name="Button">
         <button-demo />
       </el-tab-pane>
 
@@ -51,31 +51,31 @@
 
       <el-tab-pane label="SelectTree" name="SelectTree">
         <select-tree-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <!-- <el-tab-pane label="Menu" name="Menu">
         <menu-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Dialog" name="Dialog">
+      <!-- <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo />
       </el-tab-pane>
 
       <el-tab-pane label="Pagination" name="Pagination">
         <pagination-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <el-tab-pane label="Table" name="Table">
         <table-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Form" name="Form">
+      <!-- <el-tab-pane label="Form" name="Form">
         <form-demo />
       </el-tab-pane>
 
       <el-tab-pane label="Persistent" name="Persistent">
         <persistent-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

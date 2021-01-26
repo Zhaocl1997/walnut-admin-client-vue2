@@ -29,10 +29,6 @@
             <el-switch v-model="hasAction" />
           </el-form-item>
 
-          <el-form-item label="标题">
-            <el-switch v-model="hasTitle" />
-          </el-form-item>
-
           <el-form-item label="设置">
             <el-switch v-model="hasSettings" />
           </el-form-item>
@@ -65,7 +61,8 @@
       v-model:headers="getTableHeader"
       v-model:pageSize="pageSize"
       v-model:pageNum="pageNum"
-      :title="title"
+      table-title="Table Title"
+      table-help="Table Help"
       :data="tableData"
       :total="total"
       :loading="loading"
@@ -74,7 +71,6 @@
       :has-select="hasSelect"
       :has-expand="hasExpand"
       :has-action="hasAction"
-      :has-title="hasTitle"
       :has-settings="hasSettings"
       :has-page="hasPage"
       :single="single"
@@ -157,7 +153,6 @@
         hasSelect: false,
         hasExpand: false,
         hasAction: false,
-        hasTitle: false,
         hasSettings: false,
         hasPage: false,
 
@@ -312,6 +307,7 @@
 </script>
 
 <style lang="scss" scoped>
+  /* stylelint-disable */
   .demo-table-expand:deep() {
     font-size: 0;
 

@@ -24,7 +24,7 @@
 <script>
   import { reactive, defineComponent, onMounted, computed } from 'vue'
   import { useStore } from 'vuex'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
 
   import wForm from '/@/components/UI/Form/index.vue'
   import wButton from '/@/components/UI/Button/index.vue'
@@ -40,6 +40,7 @@
 
     setup() {
       const store = useStore()
+      const { useI18n } = hooks
       const { t } = useI18n()
 
       const signinData = reactive({})

@@ -121,15 +121,17 @@
       transform: scale(1.1);
     }
   }
+
+  .w-table-edit-icon {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    display: none;
+  }
+
   .w-table-edit-cell:hover {
     .w-table-edit-icon {
       display: initial;
     }
-  }
-  .w-table-edit-icon {
-    position: absolute;
-    top: 4px;
-    right: 0;
-    display: none;
   }
 </style>

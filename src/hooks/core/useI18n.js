@@ -1,6 +1,6 @@
 'use strict'
 
-import { i18n } from '../locales'
+import { i18n } from '../../locales'
 
 export function useI18n(namespace) {
   function getKey(key) {
@@ -34,7 +34,4 @@ export function useI18n(namespace) {
     ...methods,
     t: tFn,
   }
-
-  // const { t } = VueUseI18n()
-  // return { t }
 }

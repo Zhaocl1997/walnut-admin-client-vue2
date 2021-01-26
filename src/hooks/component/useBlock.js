@@ -6,11 +6,11 @@ export const useBlock = () => {
   const instance = getCurrentInstance()
   const { props } = instance
 
-  const style = computed(() => {
+  const block = computed(() => {
     return { width: props.block ? '100%' : 'auto' }
   })
 
   return {
-    style,
+    block,
   }
 }

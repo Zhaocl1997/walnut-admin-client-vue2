@@ -1,5 +1,5 @@
 <template>
-  <el-button v-bind="getBindValue" :style="style">
+  <el-button v-bind="getBindValue" :style="block">
     <el-space size="mini">
       <i v-if="prefixIcon" :class="prefixIcon" />
 
@@ -34,7 +34,7 @@
 
     setup(props, { attrs, slots, emit }) {
       const { useBlock } = hooks
-      const { style } = useBlock()
+      const { block } = useBlock()
       const originText = slots.default && slots.default()[0].children
 
       let delayText = ref('')
@@ -88,7 +88,7 @@
       })
 
       return {
-        style,
+        block,
         getBindValue,
         delayText,
       }

@@ -1,134 +1,121 @@
 <template>
   <div class="w-table">
-    <el-skeleton :loading="loading" :count="10" animated>
-      <!-- template -->
-      <template #template>
-        <el-skeleton-item style="height: 24px; margin: 10px" />
-      </template>
+    <w-table-loading>
+      <w-table-header></w-table-header>
 
-      <!-- content -->
-      <template #default>
-        <w-title v-if="hasTitle" show-left class="u-float-left">{{
-          title
-        }}</w-title>
+      <el-table v-bind="getBindValue">
+        <!-- empty -->
+        <template #empty>
+          <w-table-empty></w-table-empty>
+        </template>
 
-        <w-table-settings
-          v-if="hasSettings"
-          v-model="modelHeaders"
-          :list-func="listFunc"
-          @density="onDensityChange"
+        <el-table-column
+          v-if="hasSelect"
+          key="select"
+          type="selection"
+          width="50"
+          align="center"
+          fixed="left"
+          :selectable="selectable"
+          :reserve-selection="reserveSelection"
         />
 
-        <el-table v-bind="getBindValue">
-          <el-table-column
-            v-if="hasSelect"
-            key="select"
-            type="selection"
-            width="50"
-            align="center"
-            fixed="left"
-            :selectable="selectable"
-            :reserve-selection="reserveSelection"
-          />
-
-          <el-table-column
-            v-if="hasIndex"
-            key="index"
-            :label="t('component.table.index')"
-            type="index"
-            width="60"
-            align="center"
-            fixed="left"
-            :index="index"
-          >
-            <template #default="scope">
-              <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            v-if="hasExpand"
-            key="expand"
-            type="expand"
-            width="50"
-            align="center"
-            fixed="left"
-          >
-            <template #default="props">
-              <slot name="expand" :expand="props" />
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            v-if="hasAction"
-            key="action"
-            :label="t('component.table.operation')"
-            min-width="100"
-            align="center"
-            fixed="right"
-          >
-            <template #default="props">
-              <slot name="action" :action="props" />
-            </template>
-          </el-table-column>
-
-          <template v-for="(item, index) in modelHeaders">
-            <el-table-column
-              v-if="item.visible"
-              :key="index.toString() + item.prop"
-              v-bind="item"
-              :column-key="index.toString() + item.prop"
-              :align="item.align ? item.align : 'center'"
-              :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
-            >
-              <!-- header slot -->
-              <template v-if="item.headerSlot || item.editable" #header="scope">
-                <div v-if="item.headerSlot">
-                  <slot :name="`${item.prop}-headerSlot`" />
-                </div>
-
-                <div v-if="item.editable">
-                  <el-space size="mini">
-                    <span>{{ scope.column.label }}</span>
-                    <i class="el-icon-edit-outline"></i>
-                  </el-space>
-                </div>
-              </template>
-
-              <!-- custom slot -->
-              <template v-if="item.slot" #default="props">
-                <slot :name="item.prop" :props="props" />
-              </template>
-
-              <!-- editable column -->
-              <template v-if="item.editable" #default="props">
-                <w-table-editable-cell
-                  :item="item"
-                  :row="props.row"
-                  @cell-change="onCellChange"
-                >
-                  <template #default>
-                    <slot
-                      :name="`${item.prop}-editableSlot`"
-                      :props="props"
-                    ></slot>
-                  </template>
-                </w-table-editable-cell>
-              </template>
-            </el-table-column>
+        <el-table-column
+          v-if="hasIndex"
+          key="index"
+          :label="t('component.table.index')"
+          type="index"
+          width="60"
+          align="center"
+          fixed="left"
+          :index="index"
+        >
+          <template #default="scope">
+            <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
           </template>
-        </el-table>
+        </el-table-column>
 
-        <w-pagination
-          v-if="hasPage"
-          class="u-float-right"
-          :total="+total"
-          :current-page="+pageNum"
-          :page-size="+pageSize"
-          @change="onPageChange"
-        />
-      </template>
-    </el-skeleton>
+        <el-table-column
+          v-if="hasExpand"
+          key="expand"
+          type="expand"
+          width="50"
+          align="center"
+          fixed="left"
+        >
+          <template #default="props">
+            <slot name="expand" :expand="props" />
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          v-if="hasAction"
+          key="action"
+          :label="t('component.table.operation')"
+          min-width="100"
+          align="center"
+          fixed="right"
+        >
+          <template #default="props">
+            <slot name="action" :action="props" />
+          </template>
+        </el-table-column>
+
+        <template v-for="(item, index) in modelHeaders">
+          <el-table-column
+            v-if="item.visible"
+            :key="index.toString() + item.prop"
+            v-bind="item"
+            :column-key="index.toString() + item.prop"
+            :align="item.align ? item.align : 'center'"
+            :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
+          >
+            <!-- header slot -->
+            <template v-if="item.headerSlot || item.editable" #header="scope">
+              <div v-if="item.headerSlot">
+                <slot :name="`${item.prop}-headerSlot`" />
+              </div>
+
+              <div v-if="item.editable">
+                <el-space size="mini">
+                  <span>{{ scope.column.label }}</span>
+                  <i class="el-icon-edit-outline"></i>
+                </el-space>
+              </div>
+            </template>
+
+            <!-- custom slot -->
+            <template v-if="item.slot" #default="props">
+              <slot :name="item.prop" :props="props" />
+            </template>
+
+            <!-- editable column -->
+            <template v-if="item.editable" #default="props">
+              <w-table-editable-cell
+                :item="item"
+                :row="props.row"
+                @cell-change="onCellChange"
+              >
+                <template #default>
+                  <slot
+                    :name="`${item.prop}-editableSlot`"
+                    :props="props"
+                  ></slot>
+                </template>
+              </w-table-editable-cell>
+            </template>
+          </el-table-column>
+        </template>
+      </el-table>
+
+      <w-pagination
+        class="u-float-right"
+        :total="+total"
+        :current-page="+pageNum"
+        :page-size="+pageSize"
+        @change="onPageChange"
+      ></w-pagination
+    ></w-table-loading>
   </div>
 </template>
 
@@ -141,19 +128,34 @@
     watch,
     toRefs,
     nextTick,
+    unref,
   } from 'vue'
+  import hooks from '/@/hooks'
 
-  import wTitle from '../../Help/Title/index.vue'
+  import wTableHeader from './components/header/index.vue'
+
   import wPagination from '../Pagination/index.vue'
-  import wTableSettings from './settings/index.vue'
-  import wTableEditableCell from './editableCell.vue'
+
+  import wTableLoading from './components/state/loading/index.vue'
+  import wTableEmpty from './components/state/empty/index.vue'
+
+  import wTableEditableCell from './components/editableCell/index.vue'
   import { wTableProps } from './props'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import { useTableContext } from './hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTable',
 
-    components: { wTitle, wPagination, wTableSettings, wTableEditableCell },
+    components: {
+      wTableHeader,
+
+      wPagination,
+
+      wTableLoading,
+      wTableEmpty,
+
+      wTableEditableCell,
+    },
 
     inheritAttrs: false,
 
@@ -168,12 +170,42 @@
     ],
 
     setup(props, { attrs, emit }) {
+      const { useI18n } = hooks
       const { t } = useI18n()
+
       const state = reactive({
         modelHeaders: [],
-        rowStyle: {},
+        selfProps: {},
       })
 
+      const { setContextProps, setContextMethods } = useTableContext()
+
+      // handle headers
+      const onTableHeader = () => {
+        props.headers.map((item, index) => {
+          state.modelHeaders.splice(index, 1, {
+            ...item,
+            visible: item.visible === false ? false : true, // checkbox
+          })
+        })
+      }
+
+      onMounted(() => {
+        onTableHeader()
+      })
+
+      // set props
+      setContextProps(unref({ ...props, headers: state.modelHeaders }))
+
+      // set methods
+      const tableMethods = {
+        setProps: (newProps) => {
+          state.selfProps = { ...unref(state.selfProps), ...newProps }
+        },
+      }
+      setContextMethods(tableMethods)
+
+      // v-model:headers
       watch(
         () => state.modelHeaders,
         (val) => {
@@ -187,39 +219,11 @@
         }
       )
 
-      const onTableHeader = () => {
-        props.headers.map((item, index) => {
-          state.modelHeaders.splice(index, 1, {
-            ...item,
-            visible: item.visible === false ? false : true, // checkbox
-          })
-        })
-      }
-
       const onPageChange = (value) => {
         emit('update:pageNum', value.pageNum)
         emit('update:pageSize', value.pageSize)
 
         props.listFunc()
-      }
-
-      const onDensityChange = (command) => {
-        switch (command) {
-          case '0':
-            state.rowStyle = { height: '40px' }
-            break
-
-          case '1':
-            state.rowStyle = { height: '60px' }
-            break
-
-          case '2':
-            state.rowStyle = { height: '80px' }
-            break
-
-          default:
-            break
-        }
       }
 
       const onCurrentChange = (val) => {
@@ -242,15 +246,11 @@
         return {
           ...attrs,
           ...props,
-          rowStyle: state.rowStyle,
+          ...unref(state.selfProps),
           highlightCurrentRow: props.single,
           onCurrentChange,
           onSelectionChange,
         }
-      })
-
-      onMounted(() => {
-        onTableHeader()
       })
 
       return {
@@ -258,7 +258,6 @@
 
         getBindValue,
         onPageChange,
-        onDensityChange,
         onCellChange,
 
         ...toRefs(state),

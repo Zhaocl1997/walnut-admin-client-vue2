@@ -18,41 +18,46 @@
 <script>
   import { computed, defineComponent, reactive, toRefs } from 'vue'
   import wDropdown from '/@/components/UI/Dropdown/index.vue'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
 
   export default defineComponent({
     name: 'WTableSettingsDensity',
 
     components: { wDropdown },
 
-    emits: ['density'],
-
-    setup(props, { attrs, emit }) {
+    setup() {
+      const { useI18n } = hooks
       const { t } = useI18n()
 
+      const { getContextMethods } = useTableContext()
+      const { setProps } = getContextMethods()
+
       const state = reactive({
-        density: '0',
+        density: '',
       })
 
       const options = computed(() => {
         return [
           {
-            value: '0',
+            value: '',
             label: t('component.table.density.default'),
           },
           {
-            value: '1',
-            label: t('component.table.density.medium'),
+            value: 'small',
+            label: t('component.table.density.small'),
           },
           {
-            value: '2',
-            label: t('component.table.density.loose'),
+            value: 'mini',
+            label: t('component.table.density.mini'),
           },
         ]
       })
 
       const onDropdownCommand = (command) => {
-        emit('density', command)
+        setProps({
+          size: command,
+        })
       }
 
       return {

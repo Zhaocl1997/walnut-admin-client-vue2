@@ -1,16 +1,25 @@
 <template>
   <div class="w-title">
-    <div :class="getClass">{{ text }}</div>
+    <span :class="getClass">
+      {{ text }}
+      <w-help-message v-if="content" v-bind="getHelpProps"></w-help-message>
+    </span>
   </div>
 </template>
 
 <script>
-  import { ref, reactive, computed, defineComponent } from 'vue'
+  import { ref, reactive, computed, defineComponent, unref } from 'vue'
+  import wHelpMessage from '../HelpMessage/index.vue'
+  import { omit } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WTitle',
 
+    components: { wHelpMessage },
+
     props: {
+      ...wHelpMessage.props,
+
       showLeft: {
         type: Boolean,
         default: false,
@@ -19,6 +28,11 @@
       showBottom: {
         type: Boolean,
         default: false,
+      },
+
+      placement: {
+        type: String,
+        default: 'right',
       },
     },
 
@@ -37,9 +51,14 @@
         ]
       })
 
+      const getHelpProps = computed(() => {
+        return omit(unref(props), ['showLeft', 'showBottom'])
+      })
+
       return {
         text,
         getClass,
+        getHelpProps,
       }
     },
   })
@@ -51,24 +70,23 @@
     line-height: 30px;
 
     &__text {
-      padding-bottom: 10px;
       position: relative;
-      font-size: 16px;
+      padding-bottom: 8px;
       font-weight: 700;
-      user-select: none;
+      font-size: 16px;
 
       &-left {
         padding-left: 15px;
 
         &::before {
-          content: ' ';
-          border-left: 4px solid orangered;
-          display: inline-block;
-          height: 16px;
           position: absolute;
           top: 50%;
           left: 0;
+          display: inline-block;
+          height: 16px;
           margin-top: -13px;
+          border-left: 4px solid orangered;
+          content: ' ';
         }
       }
 

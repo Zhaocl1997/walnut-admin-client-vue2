@@ -4,8 +4,8 @@ export default {
   density: {
     tooltip: '密度',
     default: '默认',
-    medium: '中等',
-    loose: '宽松',
+    small: '中等',
+    mini: '紧凑 ',
   },
   refresh: {
     tooltip: '刷新',
@@ -15,6 +15,10 @@ export default {
     fixedLeft: '固定在左侧',
     fixedUnset: '不固定',
     fixedRight: '固定在右侧',
+    fixedLeftHelp: '此状态下的竖列会一直锁定在表格左侧，一般用于展示重要信息。',
+    fixedUnsetHelp: '此状态下的竖列是正常状态。',
+    fixedRightHelp:
+      '此状态下的竖列会一直锁定在表格右侧，一般用于放置操作按钮。',
     checkAll: '全选',
     reset: '重置',
     fixLeft: '固定在列首',

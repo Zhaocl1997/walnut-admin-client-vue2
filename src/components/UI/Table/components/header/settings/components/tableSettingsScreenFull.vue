@@ -6,7 +6,7 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
   import wScreenFull from '/@/components/Help/Screenfull/index.vue'
 
   export default defineComponent({
@@ -14,7 +14,8 @@
 
     components: { wScreenFull },
 
-    setup(props, { attrs }) {
+    setup() {
+      const { useI18n } = hooks
       const { t } = useI18n()
       return {
         t,

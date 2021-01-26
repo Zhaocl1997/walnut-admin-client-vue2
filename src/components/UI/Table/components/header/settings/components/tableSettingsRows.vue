@@ -14,24 +14,27 @@
 
     <!-- fixed left -->
     <!-- eslint-disable -->
-    <w-table-settings-rows-group
-      v-model:group="rows"
-      :type="TABLE_GROUP_TYPE.LEFT"
-    >
+    <w-table-settings-rows-group :type="TABLE_GROUP_TYPE.LEFT">
       <el-space size="mini">
-        <i class="el-icon-info" />
+        <w-help-message
+          icon="el-icon-info"
+          placement="left"
+          :content="t('component.table.settings.fixedLeftHelp')"
+        ></w-help-message>
+
         <span>{{ t('component.table.settings.fixedLeft') }}</span>
       </el-space>
     </w-table-settings-rows-group>
 
     <!-- common -->
     <!-- eslint-disable -->
-    <w-table-settings-rows-group
-      v-model:group="rows"
-      :type="TABLE_GROUP_TYPE.COMMON"
-    >
-      <el-space wrap size="mini">
-        <i class="el-icon-info" />
+    <w-table-settings-rows-group :type="TABLE_GROUP_TYPE.COMMON">
+      <el-space wrap size="small">
+        <w-help-message
+          icon="el-icon-info"
+          placement="left"
+          :content="t('component.table.settings.fixedUnsetHelp')"
+        ></w-help-message>
 
         <span>{{ t('component.table.settings.fixedUnset') }}</span>
 
@@ -45,19 +48,23 @@
         </el-checkbox>
 
         <el-button size="mini" type="text" @click="onReset">
-          {{ t('component.table.settings.reset') }}
+          <span style="color: orangered">
+            {{ t('component.table.settings.reset') }}
+          </span>
         </el-button>
       </el-space>
     </w-table-settings-rows-group>
 
-    <!-- right left -->
+    <!-- fixed right -->
     <!-- eslint-disable -->
-    <w-table-settings-rows-group
-      v-model:group="rows"
-      :type="TABLE_GROUP_TYPE.RIGHT"
-    >
+    <w-table-settings-rows-group :type="TABLE_GROUP_TYPE.RIGHT">
       <el-space size="mini">
-        <i class="el-icon-info" />
+        <w-help-message
+          icon="el-icon-info"
+          placement="left"
+          :content="t('component.table.settings.fixedRightHelp')"
+        ></w-help-message>
+
         <span>{{ t('component.table.settings.fixedRight') }}</span>
       </el-space>
     </w-table-settings-rows-group>
@@ -73,55 +80,42 @@
     onMounted,
     nextTick,
     unref,
-    computed,
   } from 'vue'
   import { deepClone } from 'easy-fns-ts'
 
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
+  import wHelpMessage from '/@/components/Help/HelpMessage/index.vue'
 
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
-  import { TABLE_GROUP_TYPE } from '../constant'
+  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
 
   export default defineComponent({
     name: 'WTableSettingsRows',
 
-    components: { wTableSettingsRowsGroup },
-
-    props: { rows: Array },
-
-    emits: ['update:rows'],
+    components: { wHelpMessage, wTableSettingsRowsGroup },
 
     setup(props, { attrs, emit }) {
+      const { useI18n } = hooks
       const { t } = useI18n()
+
+      const { getContextProps } = useTableContext()
+      const { headers } = getContextProps()
 
       const state = reactive({
         checkAll: true,
         isIndeterminate: false,
         cachedHeaders: [],
-        selfHeaders: [],
       })
-
-      watch(
-        () => state.selfHeaders,
-        (val) => {
-          emit('update:rows', val)
-        },
-        {
-          deep: true,
-          immediate: true,
-        }
-      )
 
       // change checkAll state
       watch(
-        () => props.rows,
+        () => headers,
         (val) => {
-          state.selfHeaders = val
-
           const visibleItems = val.filter((i) => i.visible)
 
           if (Array.isArray(visibleItems) && visibleItems.length !== 0) {
-            if (visibleItems.length === props.rows.length) {
+            if (visibleItems.length === headers.length) {
               state.isIndeterminate = false
               state.checkAll = true
             } else {
@@ -138,26 +132,26 @@
 
       // checkAll or not
       const onCheckAllChange = (val) => {
-        props.rows.map((item, index) => {
+        headers.map((item, index) => {
           // eslint-disable-next-line
-          props.rows.splice(index, 1, {
-            ...props.rows[index],
+          headers.splice(index, 1, {
+            ...headers[index],
             visible: val,
           })
         })
       }
 
-      // reset to init state
+      // reset to initial state
       const onReset = () => {
         state.cachedHeaders.map((item, index) => {
           // eslint-disable-next-line
-          props.rows.splice(index, 1, item)
+          headers.splice(index, 1, item)
         })
       }
 
       onMounted(() => {
         nextTick(() => {
-          state.cachedHeaders = Object.freeze(deepClone(unref(props.rows)))
+          state.cachedHeaders = Object.freeze(deepClone(unref(headers)))
         })
       })
 
@@ -179,6 +173,7 @@
   .el-divider--horizontal {
     margin: 10px 0;
   }
+  /* stylelint-disable */
   .w-table__settings-checkall:deep(.el-checkbox__label) {
     padding-left: 5px;
   }
@@ -186,7 +181,7 @@
 
 <style lang="scss">
   .w-table-popover {
-    min-width: 200px !important;
+    min-width: 230px !important;
 
     &.el-popover--plain {
       padding: 0;

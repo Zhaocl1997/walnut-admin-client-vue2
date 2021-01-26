@@ -85,9 +85,10 @@
     nextTick,
   } from 'vue'
   import { omit } from 'easy-fns-ts'
-  import { useI18n } from '/@/hooks/useI18n.js'
+  import hooks from '/@/hooks'
 
-  import { TABLE_GROUP_TYPE } from '../constant'
+  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
 
   export default defineComponent({
     name: 'WTableSettingsRowsGroup',
@@ -97,24 +98,21 @@
        * @description table header group type，left/common/right
        */
       type: String,
-
-      /**
-       * @description table header
-       */
-      group: Array,
     },
 
-    emits: ['update:group'],
-
-    setup(props, { attrs, emit }) {
+    setup(props) {
+      const { useI18n } = hooks
       const { t } = useI18n()
+
+      const { getContextProps } = useTableContext()
+      const { headers } = getContextProps()
 
       const state = reactive({
         h: [],
       })
 
       watch(
-        () => props.group,
+        () => headers,
         (val) => {
           if (props.type === TABLE_GROUP_TYPE.COMMON) {
             state.h = val.filter((i) => !i.fixed)
@@ -133,49 +131,48 @@
       })
 
       const onToggleVisible = (prop) => {
-        const index = props.group.findIndex((i) => i.prop === prop)
+        const index = headers.findIndex((i) => i.prop === prop)
 
         // eslint-disable-next-line
-        props.group.splice(index, 1, {
-          ...props.group[index],
-          visible: !props.group[index].visible,
+        headers.splice(index, 1, {
+          ...headers[index],
+          visible: !headers[index].visible,
         })
       }
 
       const onSetLeftFixed = (item) => {
-        const index = props.group.findIndex((i) => i.prop === item.prop)
+        const index = headers.findIndex((i) => i.prop === item.prop)
 
         // eslint-disable-next-line
-        props.group.splice(index, 1)
+        headers.splice(index, 1)
 
         // eslint-disable-next-line
-        props.group.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT })
+        headers.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT })
       }
 
       const onSetRightFixed = (item) => {
-        const index = props.group.findIndex((i) => i.prop === item.prop)
+        const index = headers.findIndex((i) => i.prop === item.prop)
 
         // eslint-disable-next-line
-        props.group.splice(index, 1)
+        headers.splice(index, 1)
 
         // eslint-disable-next-line
-        props.group.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT })
+        headers.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT })
       }
 
       const onSetCommon = (item) => {
-        const index = props.group.findIndex((i) => i.prop === item.prop)
+        const index = headers.findIndex((i) => i.prop === item.prop)
 
         // eslint-disable-next-line
-        props.group.splice(index, 1)
+        headers.splice(index, 1)
 
         // eslint-disable-next-line
-        props.group.unshift(omit(item, 'fixed'))
+        headers.unshift(omit(item, 'fixed'))
       }
 
       const calcDeviation = () => {
         if (props.type === TABLE_GROUP_TYPE.COMMON) {
-          return props.group.filter((i) => i.fixed === TABLE_GROUP_TYPE.LEFT)
-            .length
+          return headers.filter((i) => i.fixed === TABLE_GROUP_TYPE.LEFT).length
         }
 
         if (props.type === TABLE_GROUP_TYPE.LEFT) {
@@ -183,7 +180,7 @@
         }
 
         if (props.type === TABLE_GROUP_TYPE.RIGHT) {
-          return props.group.filter((i) => i.fixed !== TABLE_GROUP_TYPE.RIGHT)
+          return headers.filter((i) => i.fixed !== TABLE_GROUP_TYPE.RIGHT)
             .length
         }
       }
@@ -197,13 +194,13 @@
           ghostClass: 'sortable-ghost',
           onEnd: (e) => {
             const d = calcDeviation()
-            const oldItem = props.group[e.oldIndex + d]
+            const oldItem = headers[e.oldIndex + d]
 
             // eslint-disable-next-line
-            props.group.splice(e.oldIndex + d, 1)
+            headers.splice(e.oldIndex + d, 1)
 
             // eslint-disable-next-line
-            props.group.splice(e.newIndex + d, 0, oldItem)
+            headers.splice(e.newIndex + d, 0, oldItem)
           },
         })
       }
@@ -211,16 +208,6 @@
       onMounted(() => {
         onSetDrag()
       })
-
-      // watch(
-      //   () => props.group,
-      //   value => {
-      //     onSetDrag();
-      //   },
-      //   {
-      //     deep: true
-      //   }
-      // );
 
       return {
         t,
@@ -240,7 +227,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../assets/style/index.scss';
+  @import '../../../../../../../assets/style/index.scss';
 
   .w-table__setting-group-title {
     color: grey;
@@ -265,19 +252,18 @@
   .w-table__setting-group-common,
   .w-table__setting-group-left,
   .w-table__setting-group-right {
-    @include scrollBar;
-
-    font-size: 16px;
     list-style: none;
-    margin: 0;
-
     max-height: 200px;
+    margin: 0;
     overflow-y: auto;
+    font-size: 16px;
+
+    @include scrollBar;
   }
 
   .sortable-ghost {
-    opacity: 0.8;
     color: #fff !important;
     background: #42b983 !important;
+    opacity: 0.8;
   }
 </style>

@@ -178,4 +178,50 @@ export const wTableProps = {
     type: Boolean,
     default: false,
   },
+
+  /**
+   * =======================================
+   * =======================================
+   * ============ Title / Help =============
+   * =======================================
+   * =======================================
+   */
+
+  /**
+   * @description title content
+   * @type {String}
+   */
+  tableTitle: String,
+
+  /**
+   * @description help message content
+   * @type {String}
+   */
+  tableHelp: String,
+
+  /**
+   * =======================================
+   * =======================================
+   * ============ No data case =============
+   * =======================================
+   * =======================================
+   */
+
+  /**
+   * @description description when no data
+   * @type {String}
+   */
+  description: String,
+
+  /**
+   * @description image uri to display
+   * @type {String}
+   */
+  image: String,
+
+  /**
+   * @description image size
+   * @type {Number}
+   */
+  imageSize: Number,
 }

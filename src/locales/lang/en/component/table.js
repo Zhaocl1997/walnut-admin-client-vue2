@@ -4,8 +4,8 @@ export default {
   density: {
     tooltip: 'Density',
     default: 'Default',
-    medium: 'Medium',
-    loose: 'Loose',
+    small: 'Small',
+    mini: 'Mini',
   },
   refresh: {
     tooltip: 'Refresh',
@@ -15,6 +15,9 @@ export default {
     fixedLeft: 'Fixed on left',
     fixedUnset: 'Unset',
     fixedRight: 'Fixed on right',
+    fixedLeftHelp: 'Columns fixed on the left',
+    fixedUnsetHelp: 'Normal columns',
+    fixedRightHelp: 'Columns fixed on the right',
     checkAll: 'Check All',
     reset: 'Reset',
     fixLeft: 'Fix on left',
