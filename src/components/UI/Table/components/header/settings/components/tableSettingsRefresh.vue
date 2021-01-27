@@ -11,7 +11,7 @@
 <script>
   import { defineComponent } from 'vue'
   import hooks from '/@/hooks'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsRefresh',

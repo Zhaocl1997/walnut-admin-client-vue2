@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import { ref, reactive, defineComponent } from 'vue'
+  import { defineComponent } from 'vue'
   import wTitle from '/@/components/Help/Title/index.vue'
   import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 

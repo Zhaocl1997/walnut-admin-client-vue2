@@ -12,18 +12,22 @@
 </template>
 
 <script>
-  import { ref, reactive, defineComponent } from 'vue'
+  import { defineComponent } from 'vue'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableColumnSelect',
 
-    props: {
-      hasSelect: Boolean,
-      selectable: Function,
-      reserveSelection: Boolean,
-    },
+    setup() {
+      const { getContextProps } = useTableContext()
+      const { hasSelect, selectable, reserveSelection } = getContextProps()
 
-    setup() {},
+      return {
+        hasSelect,
+        selectable,
+        reserveSelection,
+      }
+    },
   })
 </script>
 

@@ -48,9 +48,7 @@
         </el-checkbox>
 
         <el-button size="mini" type="text" @click="onReset">
-          <span style="color: orangered">
-            {{ t('component.table.settings.reset') }}
-          </span>
+          {{ t('component.table.settings.reset') }}
         </el-button>
       </el-space>
     </w-table-settings-rows-group>
@@ -88,7 +86,7 @@
 
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
   import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsRows',

@@ -44,6 +44,10 @@
           <el-form-item label="边框">
             <el-switch v-model="border" />
           </el-form-item>
+
+          <el-form-item label="加载">
+            <el-switch v-model="loading" />
+          </el-form-item>
         </el-space>
       </el-form>
 
@@ -150,7 +154,7 @@
         title: 'table扩展',
 
         hasIndex: false,
-        hasSelect: false,
+        hasSelect: true,
         hasExpand: false,
         hasAction: false,
         hasSettings: false,
@@ -161,6 +165,8 @@
 
         stripe: false,
         border: false,
+
+        loading: false,
 
         search: '',
       })
@@ -174,7 +180,6 @@
         total: 0,
         tableData: [],
         tableValue: undefined,
-        loading: false,
       })
 
       const onTableFilter = (value, row, column) => {
@@ -264,12 +269,12 @@
       ]
 
       const getDataList = () => {
-        table.loading = true
+        state.loading = true
         const result = listUser(queryFormData)
         table.tableData = result.data
         table.total = result.total
         setTimeout(() => {
-          table.loading = false
+          state.loading = false
         }, 2000)
       }
 

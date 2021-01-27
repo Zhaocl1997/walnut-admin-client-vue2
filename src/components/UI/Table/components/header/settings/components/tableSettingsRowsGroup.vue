@@ -88,7 +88,7 @@
   import hooks from '/@/hooks'
 
   import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext '
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsRowsGroup',

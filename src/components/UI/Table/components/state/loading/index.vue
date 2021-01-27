@@ -12,7 +12,7 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import { useTableContext } from '../../../hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableLoading',
