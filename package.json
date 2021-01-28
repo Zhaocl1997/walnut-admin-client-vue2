@@ -9,7 +9,7 @@
     "lint": "eslint --ext .js,.vue src -f table",
     "lint:fix": "eslint --ext .js,.vue src -f table --fix",
     "lint:prettier": "prettier --write .",
-    "lint:style": "stylelint src/assets/style/**/*.scss --fix"
+    "lint:style": "stylelint **/*.{css,sass,vue} --fix"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -45,7 +45,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0",
-    "vite": "^2.0.0-beta.49"
+    "vite": "^2.0.0-beta.52"
   },
   "husky": {
     "hooks": {

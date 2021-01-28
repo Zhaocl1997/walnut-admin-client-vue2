@@ -1,20 +1,14 @@
 'use strict'
 
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
 import { loadEnv } from './src/utils/env'
 
-function pathResolve(dir) {
-  return resolve(__dirname, '.', dir)
-}
-
 const { VITE_PORT, VITE_PROXY, VITE_API_PREFIX, VITE_API_VERSION } = loadEnv()
-
 const apiPrefix = VITE_API_PREFIX + VITE_API_VERSION
 
 const root = process.cwd()
 const alias = {
-  '/@/': `${pathResolve('src')}/`,
+  '/@/': `${require('path').resolve(__dirname, '.', 'src')}/`,
 }
 const server = {
   port: VITE_PORT,
@@ -32,7 +26,7 @@ const server = {
     overlay: true,
   },
 
-  open: '/auth',
+  // open: '/auth',
 }
 
 export default ({ command, mode }) => {
@@ -44,14 +38,5 @@ export default ({ command, mode }) => {
     server,
 
     plugins: [vue()],
-
-    optimizeDeps: {
-      include: [
-        'mockjs',
-        'element-plus',
-        'element-plus/lib/locale/lang/zh-cn',
-        'element-plus/lib/locale/lang/en',
-      ],
-    },
   }
 }
