@@ -327,20 +327,22 @@
   }
 
   .w-form-prettier {
+    /* stylelint-disable-next-line */
     &:deep(.el-form-item__label) {
-      background-color: #fafafa;
       padding: 2px 8px;
-      color: rgba(0, 0, 0, 0.85);
       font-weight: 400;
       font-size: 14px;
+      color: rgba(0, 0, 0, 0.85);
+      background-color: #fafafa;
     }
 
+    /* stylelint-disable-next-line */
     &:deep(.el-form-item__content) {
       padding-left: 8px;
       border: 1px solid #f0f0f0;
-      color: rgba(0, 0, 0, 0.65);
       font-size: 14px;
       overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 0.65);
     }
   }
 </style>

@@ -221,24 +221,30 @@
 </script>
 
 <style lang="scss" scoped>
+  /* stylelint-disable */
+  /* TODO */
   .el-select-dropdown__item.hover,
   .el-select-dropdown__item:hover {
     background-color: #fff;
   }
+
+  .el-select-dropdown__item,
   .el-select-dropdown__item::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+    /* 滚动条整体样式 */
+    width: 5px; /* 高宽分别对应横竖滚动条的尺寸 */
     height: 1px;
   }
 
+  .el-select-dropdown__item,
   .el-select-dropdown__item::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
+    /* 滚动条里面小方块 */
     border-radius: 10px;
     background: #535353;
   }
 
+  .el-select-dropdown__item,
   .el-select-dropdown__item::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
+    /* 滚动条里面轨道 */
     border-radius: 10px;
     background: #ededed;
   }

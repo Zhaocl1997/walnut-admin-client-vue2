@@ -65,8 +65,8 @@
   .wPagination {
     position: relative;
     height: 25px;
-    margin-bottom: 10px;
-    margin-top: 15px;
     padding: 0 20px !important;
+    margin-top: 15px;
+    margin-bottom: 10px;
   }
 </style>

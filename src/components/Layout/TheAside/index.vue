@@ -18,14 +18,11 @@
 
 <style lang="scss" scoped>
   #aside-container {
-    background-color: #d3dce6;
-
     position: absolute;
-
-    width: 200px;
-
     top: 50px;
+    width: 200px;
     height: calc(100% - 50px);
+    background-color: #d3dce6;
 
     &.fixed {
       position: fixed;

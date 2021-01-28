@@ -24,18 +24,17 @@
 <style lang="scss" scoped>
   #header-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-
+    align-items: center;
     height: 50px;
     line-height: 50px;
     background-color: #b3c0d1;
 
     &.fixed {
       position: fixed;
+      z-index: 1000;
       top: 0;
       left: 0;
-      z-index: 1000;
       width: 100%;
     }
   }

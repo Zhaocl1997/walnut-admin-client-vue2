@@ -24,6 +24,7 @@
   import { wDialogProps } from './props'
 
   import wTitle from '../../Help/Title/index.vue'
+  import { omit } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WDialog',
@@ -38,7 +39,7 @@
 
     setup(props, { attrs, emit }) {
       const getBindValue = computed(() => {
-        return { ...attrs, ...props }
+        return omit({ ...attrs, ...props }, ['header', 'footer', 'line'])
       })
 
       const onCancel = () => {
@@ -60,29 +61,26 @@
 </script>
 
 <style lang="scss" scoped>
-  // @import '../../../assets/style/index.scss';
-
   .w-dialog {
     &__body {
-      // @include scrollBar;
-
       max-height: 60vh;
-      overflow-y: auto;
-
       margin-bottom: 7%;
+      overflow-y: auto;
     }
   }
 
   .w-dialog-line {
+    /* stylelint-disable-next-line */
     &:deep(.el-dialog__header) {
       border-bottom: 1px solid #e8eaec;
     }
 
+    /* stylelint-disable-next-line */
     &:deep(.el-dialog__footer) {
-      border-top: 1px solid #e8eaec;
       position: absolute;
-      width: 100%;
       bottom: 0;
+      width: 100%;
+      border-top: 1px solid #e8eaec;
     }
   }
 </style>

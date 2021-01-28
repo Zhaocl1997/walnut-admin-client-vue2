@@ -9,7 +9,11 @@
     </template>
   </w-table-columns-expand>
 
-  <w-table-columns-action></w-table-columns-action>
+  <w-table-columns-action>
+    <template #action="{ action }">
+      <slot name="action" :action="action"></slot>
+    </template>
+  </w-table-columns-action>
 </template>
 
 <script>

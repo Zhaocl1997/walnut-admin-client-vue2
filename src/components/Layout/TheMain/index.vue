@@ -18,16 +18,13 @@
 
 <style lang="scss" scoped>
   #main-container {
-    height: auto;
-    width: 80%;
-
-    padding: 20px;
-
-    margin-top: 40px;
     position: absolute;
     flex: 1 1 auto;
+    width: 80%;
+    height: auto;
     min-height: 0;
-
+    padding: 20px;
+    margin-top: 40px;
     background-color: #e9eef3;
 
     &.fixed {

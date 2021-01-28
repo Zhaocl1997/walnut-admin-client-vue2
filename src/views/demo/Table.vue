@@ -45,8 +45,30 @@
             <el-switch v-model="border" />
           </el-form-item>
 
+          <el-form-item label="加载类型">
+            <el-switch
+              v-model="loadingType"
+              inactive-text="默认"
+              active-text="骨框架"
+              inactive-value="default"
+              active-value="skeleton"
+            />
+          </el-form-item>
+
           <el-form-item label="加载">
             <el-switch v-model="loading" />
+          </el-form-item>
+
+          <el-form-item label="无数据插槽">
+            <el-switch
+              v-model="emptyType"
+              active-text="自定义插槽"
+              inactive-text="默认"
+            />
+          </el-form-item>
+
+          <el-form-item label="无数据">
+            <el-switch v-model="empty" />
           </el-form-item>
         </el-space>
       </el-form>
@@ -67,10 +89,11 @@
       v-model:pageNum="pageNum"
       table-title="Table Title"
       table-help="Table Help"
-      :data="tableData"
+      :data="empty ? [] : tableData"
       :total="total"
       :loading="loading"
-      :list-func="getDataList"
+      :loading-type="loadingType"
+      :api-fn="getDataList"
       :has-index="hasIndex"
       :has-select="hasSelect"
       :has-expand="hasExpand"
@@ -84,6 +107,11 @@
       @cell-change="onCellChange"
       @sort-change="onSortChange"
     >
+      <!-- 自定义空数据显示内容 -->
+      <template v-if="emptyType" #empty>
+        <span>自定义空数据显示内容</span>
+      </template>
+
       <!-- expand 列 -->
       <template #expand="{ expand }">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -139,7 +167,6 @@
   import { ElMessage } from 'element-plus'
   import wTable from '/@/components/UI/Table/index.vue'
   import wJSON from '/@/components/Help/JSON/index.vue'
-  import wLocalePicker from '/@/components/Help/App/Locale/index.vue'
   import { reactive, defineComponent, onMounted, toRefs } from 'vue'
 
   import { listUser } from '/@/mock/user.js'
@@ -147,14 +174,14 @@
   export default defineComponent({
     name: 'TableDemo',
 
-    components: { wTable, wJSON, wLocalePicker },
+    components: { wTable, wJSON },
 
     setup() {
       const state = reactive({
         title: 'table扩展',
 
         hasIndex: false,
-        hasSelect: true,
+        hasSelect: false,
         hasExpand: false,
         hasAction: false,
         hasSettings: false,
@@ -167,6 +194,9 @@
         border: false,
 
         loading: false,
+        loadingType: 'default',
+        empty: false,
+        emptyType: false,
 
         search: '',
       })

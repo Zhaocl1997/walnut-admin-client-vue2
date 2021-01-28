@@ -83,8 +83,8 @@
 
   import hooks from '/@/hooks'
   import wHelpMessage from '/@/components/Help/HelpMessage/index.vue'
-
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
+
   import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
   import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
 
@@ -93,7 +93,7 @@
 
     components: { wHelpMessage, wTableSettingsRowsGroup },
 
-    setup(props, { attrs, emit }) {
+    setup() {
       const { useI18n } = hooks
       const { t } = useI18n()
 
@@ -171,7 +171,8 @@
   .el-divider--horizontal {
     margin: 10px 0;
   }
-  /* stylelint-disable */
+
+  /* stylelint-disable-next-line */
   .w-table__settings-checkall:deep(.el-checkbox__label) {
     padding-left: 5px;
   }

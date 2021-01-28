@@ -75,9 +75,8 @@
   @import '../../assets/style/index.scss';
 
   .w-auth {
-    height: 100%;
     width: 100%;
-
+    height: 100%;
     background: transparent url('../../../img/auth_bg.jpg') no-repeat center
       center fixed;
     background-size: cover;
@@ -108,18 +107,16 @@
 
     &__face,
     &__pattern {
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      box-shadow: 0 3px 15px rgba(#000, 0.45);
-      cursor: pointer;
-
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      width: 100%;
       height: 100%;
       padding: 15px;
+      border-radius: 20px;
       background-color: #fff;
+      box-shadow: 0 3px 15px rgba(#000, 0.45);
+      cursor: pointer;
     }
 
     &__value {

@@ -1,21 +1,26 @@
 <template>
   <div class="w-table">
     <w-table-loading>
-      <!-- <w-table-header></w-table-header> -->
+      <w-table-header></w-table-header>
 
       <el-table v-bind="getBindValue">
-        <!-- empty -->
         <template #empty>
-          <!-- <w-table-empty></w-table-empty> -->
+          <w-table-empty>
+            <slot name="empty"></slot>
+          </w-table-empty>
         </template>
 
         <w-table-columns>
           <template #expand="{ expand }">
             <slot name="expand" :expand="expand"></slot>
           </template>
+
+          <template #action="{ action }">
+            <slot name="action" :action="action"></slot>
+          </template>
         </w-table-columns>
 
-        <template v-for="(item, index) in modelHeaders">
+        <template v-for="(item, index) in tableHeader">
           <el-table-column
             v-if="item.visible"
             :key="index.toString() + item.prop"
@@ -63,11 +68,10 @@
       </el-table>
 
       <w-pagination
+        v-model:currentPage="pageNum"
+        v-model:pageSize="pageSize"
         class="u-float-right"
-        :total="+total"
-        :current-page="+pageNum"
-        :page-size="+pageSize"
-        @change="onPageChange"
+        :total="+tableTotal"
       ></w-pagination>
     </w-table-loading>
   </div>
@@ -75,79 +79,49 @@
 
 <script>
   import {
-    reactive,
     computed,
     defineComponent,
     onMounted,
-    watch,
-    toRefs,
-    nextTick,
     unref,
-    provide,
     ref,
+    nextTick,
   } from 'vue'
-  import hooks from '/@/hooks'
 
-  import wTableHeader from './components/header/index.vue'
+  import wTableProps from './props'
+  import wTableComponents from './components'
 
-  import wTableColumns from './components/columns/main.vue'
-
-  import wPagination from '../Pagination/index.vue'
-
-  import wTableLoading from './components/state/loading/index.vue'
-  import wTableEmpty from './components/state/empty/index.vue'
-
-  import wTableEditableCell from './components/editableCell/index.vue'
-  import { wTableProps } from './props'
   import { useTableContext } from './hooks/useTableContext'
   import { useTableState } from './hooks/useTableState'
+  import { useTableHeader } from './hooks/useTableHeader'
+  import { useTablePage } from './hooks/useTablePage'
+  import { useTableData } from './hooks/useTableData'
   import { createAsyncComponent } from './async'
 
   export default defineComponent({
     name: 'WTable',
 
-    components: {
-      wTableHeader,
-
-      wTableColumns,
-
-      wPagination,
-
-      wTableLoading: createAsyncComponent(() =>
-        import('./components/state/loading/index.vue')
-      ),
-      wTableEmpty,
-
-      wTableEditableCell,
-    },
+    components: wTableComponents,
 
     inheritAttrs: false,
 
     props: wTableProps,
 
-    emits: [
-      'update:headers',
-      'update:pageNum',
-      'update:pageSize',
-      'update:modelValue',
-      'cell-change',
-    ],
+    emits: ['update:headers', 'update:modelValue', 'cell-change'],
 
     setup(props, { attrs, emit }) {
-      const { useI18n } = hooks
-      const { t } = useI18n()
-
       const insideProps = ref()
 
       const getProps = computed(() => {
         return { ...props, ...unref(insideProps) }
       })
 
-      const state = reactive({
-        modelHeaders: [],
-      })
-
       const { setContextProps, setContextMethods } = useTableContext()
+      const { onFormatTableHeader, tableHeader } = useTableHeader(props, emit)
+      const { pageNum, pageSize, apiFnPageParams } = useTablePage(props)
+      const { tableData, tableTotal, onInitTableData } = useTableData(
+        props,
+        apiFnPageParams
+      )
 
       const { getHasSelect } = useTableState(props, 'hasSelect')
       const { getHasIndex } = useTableState(props, 'hasIndex')
@@ -156,41 +130,12 @@
       const { getHasExpand } = useTableState(props, 'hasExpand')
       const { getHasAction } = useTableState(props, 'hasAction')
       const { getLoading } = useTableState(props, 'loading')
-
-      // handle headers
-      const onTableHeader = () => {
-        props.headers.map((item, index) => {
-          state.modelHeaders.splice(index, 1, {
-            ...item,
-            visible: item.visible === false ? false : true, // checkbox
-          })
-        })
-      }
+      const { getLoadingType } = useTableState(props, 'loadingType')
 
       onMounted(() => {
-        onTableHeader()
+        onFormatTableHeader()
+        onInitTableData()
       })
-
-      // v-model:headers
-      watch(
-        () => state.modelHeaders,
-        (val) => {
-          nextTick(() => {
-            emit('update:headers', val)
-          })
-        },
-        {
-          deep: true,
-          immediate: true,
-        }
-      )
-
-      const onPageChange = (value) => {
-        emit('update:pageNum', value.pageNum)
-        emit('update:pageSize', value.pageSize)
-
-        props.listFunc()
-      }
 
       const onCurrentChange = (val) => {
         if (props.single) {
@@ -213,12 +158,17 @@
           ...attrs,
           ...unref(getProps),
           loading: getLoading,
+          loadingType: getLoadingType,
           hasSelect: getHasSelect,
           hasIndex: getHasIndex,
-          pageNum: getPageNum,
-          pageSize: getPageSize,
+          // pageNum: getPageNum,
+          // pageSize: getPageSize,
+          // pageNum,
+          // pageSize,
           hasExpand: getHasExpand,
           hasAction: getHasAction,
+          headers: tableHeader,
+          data: unref(tableData),
           highlightCurrentRow: props.single,
           onCurrentChange,
           onSelectionChange,
@@ -237,13 +187,12 @@
       setContextMethods(tableMethods)
 
       return {
-        t,
-
+        pageNum,
+        pageSize,
+        tableHeader,
+        tableTotal,
         getBindValue,
-        onPageChange,
         onCellChange,
-
-        ...toRefs(state),
       }
     },
   })

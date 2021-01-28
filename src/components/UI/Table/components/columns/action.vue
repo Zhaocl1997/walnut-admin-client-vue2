@@ -3,7 +3,7 @@
     v-if="hasAction"
     key="action"
     :label="t('component.table.operation')"
-    min-width="100"
+    min-width="120"
     align="center"
     fixed="right"
   >

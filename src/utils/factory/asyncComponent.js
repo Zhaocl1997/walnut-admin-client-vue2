@@ -1,5 +1,6 @@
 import { defineAsyncComponent } from 'vue'
 
+// TODO
 export function createAsyncComponent(loader) {
   const delay = 100
   const timeout = 30000

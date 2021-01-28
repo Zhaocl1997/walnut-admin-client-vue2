@@ -18,13 +18,13 @@
 
 <style lang="scss" scoped>
   #footer-container {
-    background-color: #b3c0d1;
-    margin-left: 200px;
     position: fixed;
     bottom: 0;
     left: 0;
-    height: 20px;
-    line-height: 20px;
     width: 100%;
+    height: 20px;
+    margin-left: 200px;
+    line-height: 20px;
+    background-color: #b3c0d1;
   }
 </style>

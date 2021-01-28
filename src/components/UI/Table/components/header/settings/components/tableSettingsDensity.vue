@@ -3,7 +3,7 @@
     <div>
       <w-dropdown
         v-model="density"
-        :options="options"
+        :options="getOptions"
         trigger="click"
         @command="onDropdownCommand"
       >
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { computed, defineComponent, reactive, toRefs } from 'vue'
+  import { ref, computed, defineComponent } from 'vue'
   import wDropdown from '/@/components/UI/Dropdown/index.vue'
   import hooks from '/@/hooks'
   import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
@@ -33,11 +33,9 @@
       const { getContextMethods } = useTableContext()
       const { setProps } = getContextMethods()
 
-      const state = reactive({
-        density: '',
-      })
+      const density = ref('')
 
-      const options = computed(() => {
+      const getOptions = computed(() => {
         return [
           {
             value: '',
@@ -62,8 +60,8 @@
 
       return {
         t,
-        options,
-        ...toRefs(state),
+        density,
+        getOptions,
         onDropdownCommand,
       }
     },

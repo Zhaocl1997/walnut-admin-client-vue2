@@ -107,17 +107,15 @@
       const { getContextProps } = useTableContext()
       const { headers } = getContextProps()
 
-      const state = reactive({
-        h: [],
-      })
+      const h = ref([])
 
       watch(
         () => headers,
         (val) => {
           if (props.type === TABLE_GROUP_TYPE.COMMON) {
-            state.h = val.filter((i) => !i.fixed)
+            h.value = val.filter((i) => !i.fixed)
           } else {
-            state.h = val.filter((i) => i.fixed === props.type)
+            h.value = val.filter((i) => i.fixed === props.type)
           }
         },
         {
@@ -191,6 +189,8 @@
         new Sortable(target, {
           animation: 180,
           delay: 0,
+          // TODO more flexable
+          // group: 'name123',
           ghostClass: 'sortable-ghost',
           onEnd: (e) => {
             const d = calcDeviation()
@@ -211,6 +211,7 @@
 
       return {
         t,
+        h,
 
         TABLE_GROUP_TYPE,
         className,
@@ -219,8 +220,6 @@
         onSetLeftFixed,
         onSetRightFixed,
         onSetCommon,
-
-        ...toRefs(state),
       }
     },
   })

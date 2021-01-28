@@ -61,8 +61,8 @@
   .w-locale__text {
     position: absolute;
     top: 3px;
+    width: max-content;
     margin-left: 5px;
     font-weight: 700;
-    width: max-content;
   }
 </style>

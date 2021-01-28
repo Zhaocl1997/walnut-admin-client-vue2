@@ -35,6 +35,7 @@
         v-model="formData"
         :schema="getFormSchema"
         label-width="100px"
+        mock
       ></w-form>
     </w-dialog>
   </div>
@@ -323,15 +324,19 @@
         if (typeof id === 'string') {
           dialogState.formData.pid = id
         }
-        dialogState.title = '新增菜单'
-        dialogState.visible = true
+        nextTick(() => {
+          dialogState.title = '新增菜单'
+          dialogState.visible = true
+        })
       }
 
       const onUpdate = async (id) => {
         const res = await readMenu(id)
         dialogState.formData = res
-        dialogState.title = '编辑菜单'
-        dialogState.visible = true
+        nextTick(() => {
+          dialogState.title = '编辑菜单'
+          dialogState.visible = true
+        })
       }
 
       const onDelete = (id) => {}

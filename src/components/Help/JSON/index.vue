@@ -96,31 +96,37 @@
 <style lang="scss" scoped>
   @import '../../../assets/style/index.scss';
 
+  /* stylelint-disable-next-line */
   .json-pre:deep() {
-    @include scrollBar;
-
-    outline: 1px solid #ccc;
     padding: 5px;
     margin: 5px;
+    outline: 1px solid #ccc;
     overflow-y: auto;
 
     .string {
       color: green !important;
     }
+
     .number {
       color: darkorange !important;
     }
+
     .boolean {
       color: blue !important;
     }
+
     .null {
       color: magenta !important;
     }
+
     .key {
       color: red !important;
     }
+
     .function {
-      color: DarkTurquoise !important;
+      color: darkturquoise !important;
     }
+
+    @include scrollBar;
   }
 </style>

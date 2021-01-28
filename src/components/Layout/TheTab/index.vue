@@ -83,8 +83,8 @@
 
 <style lang="scss" scoped>
   #tab-container {
+    width: 100%;
     height: 30px;
     line-height: 30px;
-    width: 100%;
   }
 </style>

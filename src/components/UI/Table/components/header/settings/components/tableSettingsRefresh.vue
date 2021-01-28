@@ -4,7 +4,7 @@
     :content="t('component.table.refresh.tooltip')"
     placement="top"
   >
-    <w-icon pointer icon="refresh" width="20" @click="listFunc" />
+    <w-icon pointer icon="refresh" width="20" @click="apiFn" />
   </el-tooltip>
 </template>
 
@@ -21,11 +21,11 @@
       const { t } = useI18n()
 
       const { getContextProps } = useTableContext()
-      const { listFunc } = getContextProps()
+      const { apiFn } = getContextProps()
 
       return {
         t,
-        listFunc,
+        apiFn,
       }
     },
   })

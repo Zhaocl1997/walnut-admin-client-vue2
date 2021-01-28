@@ -2,7 +2,7 @@
 
 import { ElTable } from 'element-plus'
 
-export const wTableProps = {
+export default {
   /**
    * @description original ElTable props
    */
@@ -165,12 +165,6 @@ export const wTableProps = {
   total: Number,
 
   /**
-   * @description get table data method, for settings-refresh use
-   * @type {Function}
-   */
-  listFunc: Function,
-
-  /**
    * @description table loading using skeleton
    * @type {Boolean}
    */
@@ -202,7 +196,7 @@ export const wTableProps = {
   /**
    * =======================================
    * =======================================
-   * ============ No data case =============
+   * ============ State / Empty ============
    * =======================================
    * =======================================
    */
@@ -224,4 +218,33 @@ export const wTableProps = {
    * @type {Number}
    */
   imageSize: Number,
+
+  /**
+   * =======================================
+   * =======================================
+   * ========== State / Loading ============
+   * =======================================
+   * =======================================
+   */
+
+  /**
+   * @description loading type, only support for ['default', 'skeleton'] two types
+   * @type {String}
+   * @default loading
+   */
+  loadingType: { type: String, default: 'default' },
+
+  /**
+   * =======================================
+   * =======================================
+   * ================ api  =================
+   * =======================================
+   * =======================================
+   */
+
+  /**
+   * @description api list function
+   * @type {Function}
+   */
+  apiFn: Function,
 }

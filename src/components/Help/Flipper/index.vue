@@ -100,24 +100,27 @@
     position: relative;
     perspective: 1000px;
   }
+
   .Flipper__face {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     display: block;
     transform-style: preserve-3d;
     backface-visibility: hidden;
   }
+
   .Flipper__face--back,
   .Flipper--flipped .Flipper__face--front {
-    transform: rotateY(180deg);
     visibility: hidden;
+    transform: rotateY(180deg);
   }
+
   .Flipper--flipped .Flipper__face--back {
-    transform: rotateY(360deg);
     visibility: visible;
+    transform: rotateY(360deg);
   }
 
   /* .Flipper {

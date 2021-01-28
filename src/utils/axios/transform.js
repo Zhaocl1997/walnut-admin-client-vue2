@@ -19,7 +19,8 @@ export const transform = {
 
   responseInterceptors: (res) => {
     log.capsule('[Walnut Request]', 'Success', 'success')
-    return res.data
+
+    return Promise.resolve(res.data)
   },
 
   responseInterceptorsCatch: (err) => {

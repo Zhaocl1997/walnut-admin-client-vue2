@@ -65,8 +65,12 @@
         <pagination-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Table" name="Table">
+      <!-- <el-tab-pane label="Table" name="Table">
         <table-demo />
+      </el-tab-pane> -->
+
+      <el-tab-pane label="TableAPI" name="TableAPI">
+        <table-api-demo />
       </el-tab-pane>
 
       <!-- <el-tab-pane label="Form" name="Form">
@@ -98,6 +102,7 @@
   import SelectTreeDemo from './SelectTree.vue'
   import PersistentDemo from './Persistent.vue'
   import TableDemo from './Table.vue'
+  import TableApiDemo from './TableApi.vue'
   import TagDemo from './Tag.vue'
   import TreeDemo from './Tree.vue'
   import { ref, reactive, defineComponent } from 'vue'
@@ -123,6 +128,7 @@
       SelectTreeDemo,
       PersistentDemo,
       TableDemo,
+      TableApiDemo,
       TagDemo,
       TreeDemo,
     },
