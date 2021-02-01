@@ -1,6 +1,16 @@
 <template>
   <div>
+    <w-form
+      v-model="queryFormData"
+      :schema="getQueryFormSchema"
+      compact
+      query
+      reset
+      fold
+    ></w-form>
+
     <el-button @click="onCreate">Create</el-button>
+
     <w-table
       v-model:headers="headers"
       v-model:pageSize="queryData.pageSize"
@@ -70,6 +80,54 @@
     components: { wTable, wForm, wDialog },
 
     setup() {
+      const formState = reactive({
+        queryFormData: {},
+        getQueryFormSchema: [
+          {
+            wType: 'Input',
+            prop: 'formInputBase',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+          {
+            wType: 'Input',
+            prop: 'formInputBase1',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+          {
+            wType: 'Input',
+            prop: 'formInputBase2',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+          {
+            wType: 'Input',
+            prop: 'formInputBase3',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+          {
+            wType: 'Input',
+            prop: 'formInputBase4',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+          {
+            wType: 'Input',
+            prop: 'formInputBase5',
+            label: '基本',
+            placeholder: '基本',
+            clearable: true,
+          },
+        ],
+      })
+
       const tableState = reactive({
         headers: [
           {
@@ -381,6 +439,7 @@
         ...toRefs(tableState),
         ...toRefs(queryState),
         ...toRefs(dialogState),
+        ...toRefs(formState),
       }
     },
   })

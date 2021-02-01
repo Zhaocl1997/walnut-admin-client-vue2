@@ -95,7 +95,6 @@
   import { useTableHeader } from './hooks/useTableHeader'
   import { useTablePage } from './hooks/useTablePage'
   import { useTableData } from './hooks/useTableData'
-  import { createAsyncComponent } from './async'
 
   export default defineComponent({
     name: 'WTable',
@@ -106,7 +105,7 @@
 
     props: wTableProps,
 
-    emits: ['update:headers', 'update:modelValue', 'cell-change'],
+    emits: ['update:headers', 'update:modelValue', 'cell-change', 'register'],
 
     setup(props, { attrs, emit }) {
       const insideProps = ref()
@@ -167,7 +166,7 @@
           // pageSize,
           hasExpand: getHasExpand,
           hasAction: getHasAction,
-          headers: tableHeader,
+          headers: unref(tableHeader),
           data: unref(tableData),
           highlightCurrentRow: props.single,
           onCurrentChange,
@@ -186,6 +185,9 @@
       }
       setContextMethods(tableMethods)
 
+      // use hook
+      // emit('register', { ...tableMethods, ...unref(getBindValue) })
+
       return {
         pageNum,
         pageSize,
@@ -193,6 +195,7 @@
         tableTotal,
         getBindValue,
         onCellChange,
+        ...tableMethods,
       }
     },
   })

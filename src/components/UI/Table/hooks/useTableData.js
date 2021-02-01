@@ -9,9 +9,23 @@ export const useTableData = (props, params) => {
     tableTotal: 0,
   })
 
-  const onInitTableData = async () => {
-    const res = await props.apiFn(unref(params))
+  watch(
+    () => unref(props).data,
+    (val) => {
+      state.tableData = val
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
 
+  const onInitTableData = async () => {
+    if (!props.apiFn) {
+      return
+    }
+
+    const res = await props.apiFn(unref(params))
     state.tableData = res[TABLE_AXIOS_CONFIG.DATA_FIELD]
     state.tableTotal = res[TABLE_AXIOS_CONFIG.TOTAL_FILED]
   }

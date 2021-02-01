@@ -5,6 +5,10 @@
 
       <el-form inline>
         <el-space>
+          <el-form-item label="紧凑(去掉验证)">
+            <el-switch v-model="compact" />
+          </el-form-item>
+
           <el-form-item label="控制显隐">
             <el-switch v-model="inputBaseShow" />
           </el-form-item>
@@ -49,6 +53,7 @@
       :schema="getFormSchema"
       :rules="formRules"
       label-width="100px"
+      :compact="compact"
       :mock="mockButton"
       :scoped-mock="scopedMockButton"
       :query="queryButton"
@@ -80,6 +85,7 @@
 
     setup(props, { attrs }) {
       const formState = reactive({
+        compact: false,
         mockButton: false,
         scopedMockButton: false,
         queryButton: false,

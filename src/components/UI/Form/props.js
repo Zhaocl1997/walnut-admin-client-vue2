@@ -24,11 +24,11 @@ export const wFormProps = {
    * @override
    * @description override original labelWidth with a default value
    * @type {String}
-   * @default 0
+   * @default 80px
    */
   labelWidth: {
     type: String,
-    default: '0',
+    default: '80px',
   },
 
   /**
@@ -44,11 +44,11 @@ export const wFormProps = {
   /**
    * @description form item span provided by el-col
    * @type {Number}
-   * @default 24
+   * @default 8
    */
   span: {
     type: Number,
-    default: 24,
+    default: 8,
   },
 
   /**
@@ -74,11 +74,11 @@ export const wFormProps = {
   /**
    * @description count to fold form items
    * @type {Number}
-   * @default 0
+   * @default 3
    */
   countToFold: {
     type: Number,
-    default: 0,
+    default: 3,
   },
 
   /**
@@ -137,6 +137,16 @@ export const wFormProps = {
    * @default false
    */
   prettier: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * @description compact form
+   * @type {Boolean}
+   * @default false
+   */
+  compact: {
     type: Boolean,
     default: false,
   },

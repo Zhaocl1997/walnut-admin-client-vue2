@@ -93,7 +93,6 @@
       :total="total"
       :loading="loading"
       :loading-type="loadingType"
-      :api-fn="getDataList"
       :has-index="hasIndex"
       :has-select="hasSelect"
       :has-expand="hasExpand"

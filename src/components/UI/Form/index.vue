@@ -28,7 +28,12 @@
         </el-divider>
 
         <transition name="el-zoom-in-center">
-          <el-form-item v-if="onCalcShow(item)" :key="index" v-bind="item">
+          <el-form-item
+            v-if="onCalcShow(item)"
+            :key="index"
+            v-bind="item"
+            :style="compact ? 'margin-bottom: 10px' : ''"
+          >
             <template v-if="!prettier">
               <w-input
                 v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
@@ -95,27 +100,34 @@
         >
 
         <el-button v-if="print" type="text">打印</el-button>
-
-        <w-button
-          v-if="fold"
-          class="w-form__fold-button"
-          size="small"
-          @click="onToggleFormFold"
-        >
-          <span>{{ isFolded ? '展开' : '收起' }}</span>
-
-          <template #suffix>
-            <w-arrow :active="!isFolded"></w-arrow>
-          </template>
-        </w-button>
-
-        <el-button v-if="reset" size="small" @click="onReset">重 置</el-button>
-
-        <el-button v-if="query" size="small" type="primary" @click="onQuery"
-          >查 询</el-button
-        >
       </el-space>
     </el-form-item>
+
+    <div class="w-form-query">
+      <el-button v-if="query" size="small" type="primary" @click="onQuery"
+        >查 询</el-button
+      >
+
+      <el-button v-if="reset" size="small" @click="onReset">重 置</el-button>
+
+      <w-button
+        v-if="
+          fold &&
+          formModel.length >= countToFold &&
+          formModel.length >= 24 / span
+        "
+        class="w-form__fold-button"
+        size="small"
+        type="text"
+        @click="onToggleFormFold"
+      >
+        <span>{{ isFolded ? '展开' : '收起' }}</span>
+
+        <template #suffix>
+          <w-arrow :active="!isFolded"></w-arrow>
+        </template>
+      </w-button>
+    </div>
   </el-form>
 </template>
 
@@ -324,6 +336,16 @@
 <style lang="scss" scoped>
   .w-form__fold-button {
     padding: 2.5px 8px;
+  }
+
+  .w-form {
+    position: relative;
+  }
+
+  .w-form-query {
+    position: absolute;
+    bottom: -30px;
+    right: 0;
   }
 
   .w-form-prettier {
