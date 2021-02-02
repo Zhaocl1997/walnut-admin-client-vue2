@@ -26,7 +26,7 @@
   import { useStore } from 'vuex'
   import hooks from '/@/hooks'
 
-  import wForm from '/@/components/UI/Form/index.vue'
+  import wForm from '/@/components/UI/Form'
   import wButton from '/@/components/UI/Button/index.vue'
   import wLocalePicker from '/@/components/Help/App/Locale/index.vue'
 

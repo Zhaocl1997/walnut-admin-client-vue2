@@ -3,10 +3,10 @@
     <w-form
       v-model="queryFormData"
       :schema="getQueryFormSchema"
+      label-width="50px"
+      :span="8"
       compact
       query
-      reset
-      fold
     ></w-form>
 
     <el-button @click="onCreate">Create</el-button>
@@ -63,7 +63,7 @@
   } from 'vue'
   import { formatTime, arrToTree, orderTree } from 'easy-fns-ts'
   import wTable from '/@/components/UI/Table/index.vue'
-  import wForm from '/@/components/UI/Form/index.vue'
+  import wForm from '/@/components/UI/Form'
   import wDialog from '/@/components/UI/Dialog/index.vue'
   import {
     listMenu,

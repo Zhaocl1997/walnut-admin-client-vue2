@@ -77,8 +77,8 @@
         <use-table-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Form" name="Form">
-        <form-demo />
+      <el-tab-pane label="Form-base" name="Form-base">
+        <base-form-demo />
       </el-tab-pane>
 
       <el-tab-pane label="Persistent" name="Persistent">
@@ -94,7 +94,7 @@
   import DateDemo from './Date.vue'
   import DialogDemo from './Dialog.vue'
   import DropdownDemo from './Dropdown.vue'
-  import FormDemo from './Form.vue'
+  import BaseFormDemo from './Form/baseForm.vue'
   import IconDemo from './Icon.vue'
   import HelpDemo from './Help.vue'
   import InputDemo from './Input.vue'
@@ -123,7 +123,7 @@
       DateDemo,
       DialogDemo,
       DropdownDemo,
-      FormDemo,
+      BaseFormDemo,
       IconDemo,
       HelpDemo,
       InputDemo,

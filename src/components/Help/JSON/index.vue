@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import { reactive, defineComponent, watch, onMounted } from 'vue'
+  import { defineComponent, watch, onMounted, nextTick } from 'vue'
   import { genString } from 'easy-fns-ts'
 
   export default defineComponent({
@@ -29,7 +29,9 @@
       watch(
         () => props.value,
         (value) => {
-          init()
+          nextTick(() => {
+            init()
+          })
         },
         {
           deep: true,
@@ -83,7 +85,9 @@
       }
 
       onMounted(() => {
-        init()
+        nextTick(() => {
+          init()
+        })
       })
 
       return {

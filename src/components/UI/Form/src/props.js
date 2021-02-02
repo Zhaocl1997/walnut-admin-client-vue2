@@ -2,7 +2,7 @@
 
 import { ElForm } from 'element-plus'
 
-export const wFormProps = {
+export default {
   /**
    * @description original ElForm props
    */
@@ -24,11 +24,11 @@ export const wFormProps = {
    * @override
    * @description override original labelWidth with a default value
    * @type {String}
-   * @default 80px
+   * @default 0
    */
   labelWidth: {
     type: String,
-    default: '80px',
+    default: '0',
   },
 
   /**
@@ -44,21 +44,11 @@ export const wFormProps = {
   /**
    * @description form item span provided by el-col
    * @type {Number}
-   * @default 8
+   * @default 24
    */
   span: {
     type: Number,
-    default: 8,
-  },
-
-  /**
-   * @description show fold button or not
-   * @type {Boolean}
-   * @default false
-   */
-  fold: {
-    type: Boolean,
-    default: false,
+    default: 24,
   },
 
   /**
@@ -102,21 +92,11 @@ export const wFormProps = {
   },
 
   /**
-   * @description query button, for search form use
+   * @description query group button
    * @type {Boolean}
    * @default false
    */
   query: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * @description reset button, for search form use
-   * @type {Boolean}
-   * @default false
-   */
-  reset: {
     type: Boolean,
     default: false,
   },

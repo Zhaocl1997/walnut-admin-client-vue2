@@ -1,72 +1,31 @@
 <template>
   <el-card>
     <template #header>
-      <span>集成表单，当前绑定值：【{{ formData }}】</span>
+      <span>集成表单，当前绑定值：</span>
 
-      <el-form inline>
-        <el-space>
-          <el-form-item label="紧凑(去掉验证)">
-            <el-switch v-model="compact" />
-          </el-form-item>
+      <w-JSON :value="baseFormData"></w-JSON>
 
-          <el-form-item label="控制显隐">
-            <el-switch v-model="inputBaseShow" />
-          </el-form-item>
-
-          <el-form-item label="模拟">
-            <el-switch v-model="mockButton" />
-          </el-form-item>
-
-          <el-form-item label="局部模拟">
-            <el-switch v-model="scopedMockButton" />
-          </el-form-item>
-
-          <el-form-item label="查询">
-            <el-switch v-model="queryButton" />
-          </el-form-item>
-
-          <el-form-item label="重置">
-            <el-switch v-model="resetButton" />
-          </el-form-item>
-
-          <el-form-item label="展开/收起">
-            <el-switch v-model="foldButton" />
-          </el-form-item>
-
-          <el-form-item label="打印">
-            <el-switch v-model="printButton" />
-          </el-form-item>
-
-          <el-form-item label="禁用">
-            <el-switch v-model="formDisabled" />
-          </el-form-item>
-
-          <el-form-item label="prettier">
-            <el-switch v-model="formPrettier" />
-          </el-form-item>
-        </el-space>
-      </el-form>
+      <w-form
+        v-model="baseFormStateData"
+        :schema="baseFormStateSchemas"
+        label-width="auto"
+        compact
+        :span="4"
+      ></w-form>
     </template>
 
     <w-form
-      v-model="formData"
+      v-model="baseFormData"
+      v-bind="baseFormStateData"
       :schema="getFormSchema"
-      :rules="formRules"
-      label-width="100px"
-      :compact="compact"
-      :mock="mockButton"
-      :scoped-mock="scopedMockButton"
-      :query="queryButton"
-      :reset="resetButton"
-      :fold="foldButton"
+      :rules="baseFormRules"
       :count-to-fold="3"
-      :disabled="formDisabled"
-      :prettier="formPrettier"
+      :label-width="`${baseFormStateData.labelWidth}px`"
       @query="onQuery"
       @reset="onReset"
     >
       <template #formSlot="{ props }">
-        <el-input v-model="formData.formSlot"></el-input>
+        <el-input v-model="baseFormData.formSlot"></el-input>
       </template>
     </w-form>
   </el-card>
@@ -75,27 +34,30 @@
 </template>
 
 <script>
-  import { ref, reactive, computed, defineComponent, toRefs } from 'vue'
-  import wForm from '/@/components/UI/Form/index.vue'
+  import { reactive, computed, defineComponent, toRefs, toRef } from 'vue'
+  import wForm from '/@/components/UI/Form'
+  import wJSON from '/@/components/Help/JSON/index.vue'
+  import { baseFormStateSchemas } from './schemas'
 
   export default defineComponent({
-    name: 'FormDemo',
+    name: 'BaseFormDemo',
 
-    components: { wForm },
+    components: { wForm, wJSON },
 
-    setup(props, { attrs }) {
-      const formState = reactive({
+    setup() {
+      const baseFormStateData = reactive({
+        itemShow: false,
+
         compact: false,
-        mockButton: false,
-        scopedMockButton: false,
-        queryButton: false,
-        resetButton: false,
-        foldButton: false,
-        printButton: false,
-        formDisabled: false,
-        formPrettier: false,
-
-        inputBaseShow: false,
+        mock: false,
+        scopedMock: false,
+        query: false,
+        print: false,
+        disabled: false,
+        inline: false,
+        labelWidth: 100,
+        span: 24,
+        gutter: 0,
       })
 
       const options = [
@@ -152,7 +114,7 @@
             placeholder: '基本',
             clearable: true,
             mock: true,
-            show: formState.inputBaseShow,
+            show: baseFormStateData.itemShow,
           },
           {
             wType: 'Input',
@@ -275,18 +237,21 @@
         ]
       })
 
-      const state = reactive({
-        formData: {
+      const baseForm = reactive({
+        baseFormData: {
           pageNum: 1,
           pageSize: 10,
         },
       })
 
       return {
-        ...toRefs(state),
-        ...toRefs(formState),
+        baseFormStateData,
+        baseFormStateSchemas,
+
+        ...toRefs(baseForm),
         getFormSchema,
-        formRules: {
+
+        baseFormRules: {
           formInputBase: [
             { required: true, message: '请输入', trigger: 'blur' },
           ],

@@ -9,6 +9,8 @@ export const FORM_TYPE = {
   SELECT: 'Select',
   RADIO: 'Radio',
   CHECKBOX: 'Checkbox',
+  SLIDER: 'Slider',
+  SWITCH: 'Switch',
 }
 
 // input type
@@ -43,3 +45,5 @@ export const TIME_TYPE = {
   SELECT: 'select',
   PICKER: 'picker',
 }
+
+export const FORM_CONTEXT_KEYS = Symbol('w-form')

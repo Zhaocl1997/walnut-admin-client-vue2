@@ -12,7 +12,7 @@ import {
   getRandomElements,
 } from 'easy-fns-ts'
 
-import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from './types'
+import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from '../types/index'
 
 const Random = Mock.Random
 
@@ -31,7 +31,7 @@ Random.extend({
   },
 })
 
-export const mockData = (options) => {
+const mockData = (options) => {
   const result = {}
 
   for (let i = 0; i < options.length; i++) {
@@ -260,3 +260,5 @@ export const mockData = (options) => {
 
   return result
 }
+
+export default mockData
