@@ -24,7 +24,7 @@
       @query="onQuery"
       @reset="onReset"
     >
-      <template #formSlot="{ props }">
+      <template #formSlot="{ disabled }">
         <el-input v-model="baseFormData.formSlot"></el-input>
       </template>
     </w-form>
@@ -52,7 +52,6 @@
         mock: false,
         scopedMock: false,
         query: false,
-        print: false,
         disabled: false,
         inline: false,
         labelWidth: 100,

@@ -106,6 +106,7 @@
     margin: 5px;
     outline: 1px solid #ccc;
     overflow-y: auto;
+    line-height: 16px;
 
     .string {
       color: green !important;

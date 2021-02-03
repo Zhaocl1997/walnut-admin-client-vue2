@@ -10,7 +10,7 @@
     :collapse-tags="collapse"
     @change="onSelectChange"
   >
-    <el-option :value="optionValue" style="max-height: 200px; overflow-y: auto">
+    <el-option :value="optionValue" class="w-tree-select-option">
       <w-tree
         ref="treeRef"
         v-model="treeValue"
@@ -221,6 +221,11 @@
 </script>
 
 <style lang="scss" scoped>
+  .w-tree-select-option {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
   /* stylelint-disable */
   /* TODO */
   .el-select-dropdown__item.hover,

@@ -65,9 +65,9 @@
         <pagination-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Table-base" name="Table-base">
+      <!-- <el-tab-pane label="Table-base" name="Table-base">
         <base-table-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <el-tab-pane label="Table-api" name="Table-api">
         <api-table-demo />

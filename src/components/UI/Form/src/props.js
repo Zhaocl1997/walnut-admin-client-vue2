@@ -102,26 +102,6 @@ export default {
   },
 
   /**
-   * @description print button
-   * @type {Boolean}
-   * @default false
-   */
-  print: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * @description prettier display
-   * @type {Boolean}
-   * @default false
-   */
-  prettier: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * @description compact form
    * @type {Boolean}
    * @default false

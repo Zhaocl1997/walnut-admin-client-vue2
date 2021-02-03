@@ -1,6 +1,4 @@
 <template>
-  <w-form-query-button-groups></w-form-query-button-groups>
-
   <el-form ref="formRef" class="w-form" v-bind="getBindValue">
     <el-row :gutter="gutter" :style="{ display: inline ? 'inline' : 'flex' }">
       <el-col
@@ -29,7 +27,7 @@
             v-if="onCalcShow(item)"
             :key="index"
             v-bind="item"
-            :style="compact ? 'margin-bottom: 10px' : ''"
+            :class="compact ? 'u-mb10' : ''"
           >
             <w-input
               v-if="onCalcShowItem(item, FORM_TYPE.INPUT)"
@@ -88,54 +86,24 @@
       </el-col>
     </el-row>
 
-    <el-form-item>
-      <el-space size="mini">
-        <el-button v-if="mock && isDevMode" type="text" @click="onMock"
-          >模 拟</el-button
-        >
+    <w-form-mock :schemas="schemas" @change="onMockChange"></w-form-mock>
 
-        <el-button
-          v-if="scopedMock && isDevMode"
-          type="text"
-          @click="onScopedMock"
-          >局部模拟</el-button
-        >
-
-        <el-button v-if="print" type="text">打印</el-button>
-      </el-space>
-    </el-form-item>
-
-    <div v-if="query" class="w-form-query">
-      <el-button size="small" type="primary" @click="onQuery">查 询</el-button>
-
-      <el-button size="small" @click="onReset">重 置</el-button>
-
-      <w-button
-        v-if="schemas.length >= countToFold && schemas.length >= 24 / span"
-        size="small"
-        type="text"
-        @click="onToggleFormFold"
-      >
-        <span>{{ isFolded ? '展开' : '收起' }}</span>
-
-        <template #suffix>
-          <w-arrow :active="!isFolded"></w-arrow>
-        </template>
-      </w-button>
-    </div>
+    <w-form-query
+      :is-folded="isFolded"
+      :schemas="schemas"
+      :toggle="onToggleFormFold"
+      @reset="onReset"
+      @query="onQuery"
+    ></w-form-query>
   </el-form>
 </template>
 
 <script>
-  import { computed, defineComponent, onMounted, ref, unref } from 'vue'
-
-  import { isDevMode } from '/@/utils/mode'
-  import hooks from '/@/hooks'
+  import { computed, defineComponent, onMounted, ref } from 'vue'
 
   import wFormProps from './props'
   import wFormComponents from './componentMap'
   import { FORM_TYPE } from './types'
-  import mockData from './utils/mock'
   import { useFormSchema } from './hooks/useSchema'
   import { useFormContext } from './hooks/useFormContext'
 
@@ -152,9 +120,6 @@
 
     setup(props, { attrs, emit }) {
       const formRef = ref(null)
-
-      const { useI18n } = hooks
-      const { t } = useI18n()
 
       const { setContextProps } = useFormContext()
 
@@ -174,14 +139,8 @@
         }
       })
 
-      const onMock = () => {
-        const formData = mockData(unref(schemas))
-        emit('update:modelValue', { ...props.modelValue, ...formData })
-      }
-
-      const onScopedMock = () => {
-        const formData = mockData(unref(schemas).filter((i) => i.mock))
-        emit('update:modelValue', { ...props.modelValue, ...formData })
+      const onMockChange = (val) => {
+        emit('update:modelValue', val)
       }
 
       const onQuery = () => {
@@ -189,7 +148,7 @@
       }
 
       const onReset = () => {
-        state.formRef.resetFields()
+        formRef.value.resetFields()
         emit('reset')
       }
 
@@ -216,7 +175,6 @@
       setContextProps(props)
 
       return {
-        t,
         formRef,
 
         schemas,
@@ -225,12 +183,10 @@
         onToggleDividerFold,
 
         FORM_TYPE,
-        isDevMode,
 
         getBindValue,
 
-        onMock,
-        onScopedMock,
+        onMockChange,
         onQuery,
         onReset,
 

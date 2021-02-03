@@ -28,11 +28,6 @@ export const baseFormStateSchemas = [
   },
   {
     wType: 'Switch',
-    prop: 'print',
-    label: '打印',
-  },
-  {
-    wType: 'Switch',
     prop: 'disabled',
     label: '禁用',
   },

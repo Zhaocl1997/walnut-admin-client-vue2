@@ -13,7 +13,8 @@ import wCheckbox from '../../Checkbox/index.vue'
 import wSlider from '../../Slider/index.vue'
 import wSwitch from '../../Switch/index.vue'
 
-import wFormQueryButtonGroups from './components/queryButtonGroups.vue'
+import wFormQuery from './components/query.vue'
+import wFormMock from './components/mock.vue'
 
 export default {
   wTitle,
@@ -29,5 +30,6 @@ export default {
   wSlider,
   wSwitch,
 
-  wFormQueryButtonGroups,
+  wFormQuery,
+  wFormMock,
 }
