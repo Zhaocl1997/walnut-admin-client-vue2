@@ -1,6 +1,6 @@
 'use strict'
 
-import { reactive, toRefs, watch, nextTick } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import { findAllIndex } from 'easy-fns-ts'
 import { FORM_TYPE } from '../types'
 
@@ -13,7 +13,7 @@ export const useFormSchema = (props) => {
   const onFormDefaultFold = () => {
     if (props.defaultFold) {
       state.isFolded = true
-      state.schemas = props.schema.slice(0, props.countToFold)
+      state.schemas = props.schemas.slice(0, props.countToFold)
     }
   }
 
@@ -21,9 +21,9 @@ export const useFormSchema = (props) => {
     state.isFolded = !state.isFolded
 
     if (!state.isFolded) {
-      state.schemas = props.schema
+      state.schemas = props.schemas
     } else {
-      state.schemas = props.schema.slice(0, props.countToFold)
+      state.schemas = props.schemas.slice(0, props.countToFold)
     }
   }
 
@@ -55,18 +55,18 @@ export const useFormSchema = (props) => {
   }
 
   watch(
-    () => props.schema,
+    () => props.schemas,
     (val) => {
       // handle visible
-      state.schemas = val.filter((i) => i.show === true || i.show === undefined)
+      state.schemas = val.filter((i) => {
+        return i.show === true || i.show === undefined
+      })
 
       // handle `Divider` default fold
-      nextTick(() => {
-        state.schemas.map((item, index) => {
-          if (item.wType === FORM_TYPE.DIVIDER && item.defaultFold) {
-            onToggleDividerFold(index, item)
-          }
-        })
+      state.schemas.map((item, index) => {
+        if (item.wType === FORM_TYPE.DIVIDER && item.defaultFold) {
+          onToggleDividerFold(index, item)
+        }
       })
     },
     {

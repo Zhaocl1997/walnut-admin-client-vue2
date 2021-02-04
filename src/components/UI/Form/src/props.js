@@ -12,7 +12,7 @@ export default {
    * @description form model to render relevant component
    * @type {Array}
    */
-  schema: Array,
+  schemas: Array,
 
   /**
    * @description v-model value for form

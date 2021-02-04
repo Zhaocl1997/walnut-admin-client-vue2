@@ -69,9 +69,9 @@
         <base-table-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Table-api" name="Table-api">
+      <!--  <el-tab-pane label="Table-api" name="Table-api">
         <api-table-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <!-- <el-tab-pane label="useTable" name="useTable">
         <use-table-demo />
@@ -81,9 +81,9 @@
         <base-form-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Persistent" name="Persistent">
+      <!--  <el-tab-pane label="Persistent" name="Persistent">
         <persistent-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

@@ -7,7 +7,7 @@
 
       <w-form
         v-model="baseFormStateData"
-        :schema="baseFormStateSchemas"
+        :schemas="baseFormStateSchemas"
         label-width="auto"
         compact
         :span="4"
@@ -17,7 +17,7 @@
     <w-form
       v-model="baseFormData"
       v-bind="baseFormStateData"
-      :schema="getFormSchema"
+      :schemas="getFormSchema"
       :rules="baseFormRules"
       :count-to-fold="3"
       :label-width="`${baseFormStateData.labelWidth}px`"
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { reactive, computed, defineComponent, toRefs, toRef } from 'vue'
+  import { reactive, computed, defineComponent, toRefs, ref } from 'vue'
   import wForm from '/@/components/UI/Form'
   import wJSON from '/@/components/Help/JSON/index.vue'
   import { baseFormStateSchemas } from './schemas'
@@ -45,6 +45,7 @@
     components: { wForm, wJSON },
 
     setup() {
+      const flag = ref(false)
       const baseFormStateData = reactive({
         itemShow: false,
 
@@ -120,7 +121,6 @@
             prop: 'formSlot',
             label: '自定义插槽',
             placeholder: '自定义插槽',
-            slot: true,
           },
           {
             wType: 'Input',
@@ -164,7 +164,8 @@
             wType: 'Divider',
             title: 'InputNumber',
             fold: true,
-            defaultFold: true,
+            defaultFold: false,
+            countToFold: 0,
           },
           {
             wType: 'InputNumber',
@@ -185,6 +186,7 @@
             title: 'Select',
             fold: true,
             defaultFold: false,
+            countToFold: 0,
           },
           {
             wType: 'Select',
@@ -233,6 +235,38 @@
             multiple: true,
             valueKey: 'value',
           },
+
+          // ==================================
+          // ============== Switch ============
+          // ==================================
+          {
+            wType: 'Divider',
+            title: 'Switch',
+            fold: true,
+            defaultFold: false,
+            countToFold: 0,
+          },
+          {
+            wType: 'Switch',
+            prop: 'formSwitchBase',
+            label: '基本',
+          },
+
+          // ==================================
+          // ============== Slider ============
+          // ==================================
+          {
+            wType: 'Divider',
+            title: 'Slider',
+            fold: true,
+            defaultFold: true,
+            countToFold: 0,
+          },
+          {
+            wType: 'Slider',
+            prop: 'formSliderBase',
+            label: '基本',
+          },
         ]
       })
 
@@ -243,7 +277,13 @@
         },
       })
 
+      setTimeout(() => {
+        flag.value = true
+      }, 2000)
+
       return {
+        flag,
+
         baseFormStateData,
         baseFormStateSchemas,
 

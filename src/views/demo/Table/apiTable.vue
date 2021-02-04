@@ -76,7 +76,7 @@
 <script>
   import { defineComponent, reactive } from 'vue'
   import wForm from '/@/components/UI/Form'
-  import wTable from '/@/components/UI/Table/index.vue'
+  import wTable from '/@/components/UI/Table'
   import wJSON from '/@/components/Help/JSON/index.vue'
 
   import { listUser } from '/@/mock/user.js'

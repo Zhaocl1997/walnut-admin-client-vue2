@@ -11,11 +11,15 @@
 }
 
 .u-inline {
-  display: inline;
+  display: inline !important;
 }
 
 .u-none {
   display: none;
+}
+
+.u-flex {
+  display: flex !important;
 }
 
 .u-inline-block {

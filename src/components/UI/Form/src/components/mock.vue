@@ -38,16 +38,16 @@
       const { t } = useI18n()
 
       const { getContextProps } = useFormContext()
-      const { mock, scopedMock } = getContextProps()
+      const { mock, scopedMock, modelValue } = getContextProps()
 
       const onMock = () => {
         const formData = mockData(unref(props.schemas))
-        emit('change', { ...props.modelValue, ...formData })
+        emit('change', { ...unref(modelValue), ...formData })
       }
 
       const onScopedMock = () => {
         const formData = mockData(unref(props.schemas).filter((i) => i.mock))
-        emit('change', { ...props.modelValue, ...formData })
+        emit('change', { ...unref(modelValue), ...formData })
       }
 
       return {

@@ -1,3 +1,5 @@
+'use strict'
+
 import { defineAsyncComponent } from 'vue'
 
 // TODO

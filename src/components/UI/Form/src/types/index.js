@@ -2,10 +2,12 @@
 
 // form type
 export const FORM_TYPE = {
+  /* funtional component */
   DIVIDER: 'Divider',
 
+  /* dynamic */
   INPUT: 'Input',
-  INPUT_NUMBER: 'InputNumber',
+  INPUTNUMBER: 'InputNumber',
   SELECT: 'Select',
   RADIO: 'Radio',
   CHECKBOX: 'Checkbox',

@@ -1,7 +1,15 @@
 'use strict'
 
 import { isEmpty, isEqual, omit } from 'lodash-es'
-import { computed, getCurrentInstance, reactive, toRefs, watch } from 'vue'
+import {
+  computed,
+  getCurrentInstance,
+  reactive,
+  toRefs,
+  watch,
+  unref,
+  toRaw,
+} from 'vue'
 
 export const useValueFormat = () => {
   const instance = getCurrentInstance()
@@ -25,21 +33,23 @@ export const useValueFormat = () => {
   const onFormatArrToStr = (val) => {
     if (val) {
       return val.join(valueFormat)
-    } else {
-      return undefined
     }
+    return ''
   }
 
   // string to array
   const onFormatStrToArr = (val) => {
     if (val) {
       return val.split(valueFormat)
-    } else {
-      return undefined
     }
+    return ''
   }
 
   const onSingleFormatType = (value) => {
+    if (!value) {
+      return
+    }
+
     if (valueType === 'string') {
       return String(value)
     }
@@ -50,6 +60,10 @@ export const useValueFormat = () => {
   }
 
   const onMultipleFormatType = (value) => {
+    if (value[0] === undefined) {
+      return
+    }
+
     if (valueType === 'string') {
       return value.map(String)
     }
@@ -63,6 +77,10 @@ export const useValueFormat = () => {
     if (valueKey !== undefined) {
       // v-model value is object
       if (props.multiple) {
+        if (value[0] === undefined) {
+          return
+        }
+
         return value.map((i) => {
           return {
             ...i,
@@ -90,7 +108,7 @@ export const useValueFormat = () => {
       if (!isEqual(val, oldVal)) {
         emit(
           'update:modelValue',
-          getCanFormat.value ? onFormatArrToStr(val) : val
+          getCanFormat.value ? onFormatArrToStr(unref(val)) : unref(val)
         )
       }
     },
@@ -119,7 +137,7 @@ export const useValueFormat = () => {
       // format
       if (!isEqual(val, oldVal)) {
         state.origin = onFormatValueType(
-          getCanFormat.value ? onFormatStrToArr(val) : val
+          getCanFormat.value ? onFormatStrToArr(unref(val)) : unref(val)
         )
       }
     },
