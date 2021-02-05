@@ -13,7 +13,7 @@
         <button-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Input" name="Input">
+     <el-tab-pane label="Input" name="Input">
         <input-demo />
       </el-tab-pane>
 
@@ -65,9 +65,9 @@
         <pagination-demo />
       </el-tab-pane> -->
 
-      <!-- <el-tab-pane label="Table-base" name="Table-base">
+      <el-tab-pane label="Table-base" name="Table-base">
         <base-table-demo />
-      </el-tab-pane> -->
+      </el-tab-pane>
 
       <!--  <el-tab-pane label="Table-api" name="Table-api">
         <api-table-demo />
@@ -77,9 +77,9 @@
         <use-table-demo />
       </el-tab-pane> -->
 
-      <el-tab-pane label="Form-base" name="Form-base">
+      <!-- <el-tab-pane label="Form-base" name="Form-base">
         <base-form-demo />
-      </el-tab-pane>
+      </el-tab-pane> -->
 
       <!--  <el-tab-pane label="Persistent" name="Persistent">
         <persistent-demo />

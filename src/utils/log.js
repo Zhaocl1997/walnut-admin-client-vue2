@@ -2,6 +2,12 @@
 
 import pkg from '../../package.json'
 
+const appName = pkg.name.toUpperCase()
+
 export const appError = (msg) => {
-  throw new Error(`[${pkg.name.toUpperCase()}] error: ${msg}`)
+  console.error(`[${appName}]`, msg)
+}
+
+export const appWarning = (msg) => {
+  console.warn(`[${appName}]`, msg)
 }

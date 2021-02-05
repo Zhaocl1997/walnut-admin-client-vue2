@@ -32,4 +32,9 @@ export const wButtonProps = {
    * @description block mode
    */
   block: Boolean,
+
+  /**
+   * @description text for prop
+   */
+  text: String,
 }

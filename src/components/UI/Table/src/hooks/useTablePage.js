@@ -1,11 +1,11 @@
 'use strict'
 
 import { ref, unref, computed } from 'vue'
-import { TABLE_AXIOS_CONFIG } from '../constant'
+import { TABLE_AXIOS_CONFIG } from '../types'
 
 export const useTablePage = (props) => {
-  const pageNum = ref(1)
-  const pageSize = ref(10)
+  const pageNum = ref(props.pageNum)
+  const pageSize = ref(props.pageSize)
 
   const apiFnPageParams = computed(() => {
     return {

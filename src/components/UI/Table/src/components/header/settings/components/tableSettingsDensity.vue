@@ -19,7 +19,7 @@
   import { ref, computed, defineComponent } from 'vue'
   import wDropdown from '/@/components/UI/Dropdown/index.vue'
   import hooks from '/@/hooks'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsDensity',

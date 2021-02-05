@@ -13,7 +13,7 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableColumnSelect',

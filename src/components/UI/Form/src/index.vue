@@ -14,7 +14,7 @@
 
         <transition name="el-zoom-in-center">
           <el-form-item v-bind="item" :class="compact ? 'u-mb10' : ''">
-            <template v-if="$slots[item.props]">
+            <template v-if="$slots[item.prop]">
               <slot :name="item.prop" />
             </template>
 
@@ -74,7 +74,7 @@
 
     emits: ['update:modelValue', 'query', 'reset'],
 
-    setup(props, { attrs, emit }) {
+    setup(props, { attrs, emit, slots }) {
       const instance = getCurrentInstance()
       const formRef = ref(null)
 

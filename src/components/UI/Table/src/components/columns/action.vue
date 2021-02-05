@@ -15,7 +15,7 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
   import hooks from '/@/hooks'
 
   export default defineComponent({

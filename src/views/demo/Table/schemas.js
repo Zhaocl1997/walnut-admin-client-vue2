@@ -33,6 +33,21 @@ export const baseTableStateSchemas = [
   },
   {
     wType: 'Switch',
+    prop: 'hasTitle',
+    label: '标题',
+  },
+  {
+    wType: 'Switch',
+    prop: 'hasSettings',
+    label: '设置',
+  },
+  {
+    wType: 'Switch',
+    prop: 'hasPage',
+    label: '分页',
+  },
+  {
+    wType: 'Switch',
     prop: 'stripe',
     label: '斑马纹',
   },
@@ -71,7 +86,6 @@ export const baseTableStateSchemas = [
     wType: 'Input',
     prop: 'headers',
     label: 'header绑定值',
-    slot: true,
     span: 24,
   },
 ]

@@ -10,7 +10,7 @@ import { setupRouter } from '/@/router'
 import { setupStore } from '/@/store'
 import { setupI18n } from '/@/locales'
 import { setupElementPlus } from '/@/components'
-import { setupGlobalConfig } from './app'
+import { setupAppGlobalConfig } from './app'
 
 const app = createApp(App)
 
@@ -18,6 +18,6 @@ setupRouter(app)
 setupStore(app)
 setupI18n(app)
 setupElementPlus(app)
-setupGlobalConfig(app)
+setupAppGlobalConfig(app)
 
 app.mount('#app')

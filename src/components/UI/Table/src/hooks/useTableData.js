@@ -1,7 +1,7 @@
 'use strict'
 
-import { reactive, toRefs, unref, watch, nextTick } from 'vue'
-import { TABLE_AXIOS_CONFIG } from '../constant'
+import { reactive, toRefs, unref, watch } from 'vue'
+import { TABLE_AXIOS_CONFIG } from '../types'
 
 export const useTableData = (props, params) => {
   const state = reactive({
@@ -10,9 +10,10 @@ export const useTableData = (props, params) => {
   })
 
   watch(
-    () => unref(props).data,
-    (val) => {
-      state.tableData = val
+    [() => unref(props).data, () => unref(props).total],
+    ([data, total]) => {
+      state.tableData = data
+      state.tableTotal = total
     },
     {
       deep: true,
@@ -33,9 +34,7 @@ export const useTableData = (props, params) => {
   watch(
     () => unref(params),
     () => {
-      nextTick(() => {
-        onInitTableData()
-      })
+      onInitTableData()
     }
   )
 

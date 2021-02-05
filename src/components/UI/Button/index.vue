@@ -5,10 +5,7 @@
 
       <slot v-if="$slots.prefix" name="prefix"></slot>
 
-      <span v-if="$slots.default" style="margin: 3px">
-        <span v-if="delayText">{{ delayText }}</span>
-        <slot v-else />
-      </span>
+      <span v-text="getDisplayText"></span>
 
       <slot v-if="$slots.suffix" name="suffix"></slot>
 
@@ -22,6 +19,7 @@
   import { ref, computed, defineComponent, unref } from 'vue'
   import hooks from '/@/hooks'
   import { wButtonProps } from './props'
+  import { getDefaultSlotText } from '/@/utils/vue'
 
   export default defineComponent({
     name: 'WButton',
@@ -35,7 +33,7 @@
     setup(props, { attrs, slots, emit }) {
       const { useBlock } = hooks
       const { block } = useBlock()
-      const originText = slots.default && slots.default()[0].children
+      const originText = getDefaultSlotText(slots)
 
       let delayText = ref('')
 
@@ -76,6 +74,9 @@
 
       const getDisabled = computed(() => selfDisabled.value || props.disabled)
       const getLoading = computed(() => selfLoading.value || props.loading)
+      const getDisplayText = computed(() => {
+        return originText || props.text || delayText.value
+      })
 
       const getBindValue = computed(() => {
         return {
@@ -90,7 +91,7 @@
       return {
         block,
         getBindValue,
-        delayText,
+        getDisplayText,
       }
     },
   })

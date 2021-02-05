@@ -1,7 +1,8 @@
 'use strict'
 
+import { reactive, watch, toRefs } from 'vue'
 import hooks from '/@/hooks'
-import { TABLE_CONTEXT_KEYS } from '../constant'
+import { TABLE_CONTEXT_KEYS } from '../types'
 
 export const useTableContext = () => {
   const { useContext } = hooks
@@ -12,7 +13,24 @@ export const useTableContext = () => {
   }
 
   const getContextProps = () => {
-    return getContext(TABLE_CONTEXT_KEYS.PROPS)
+    let state = reactive({})
+
+    const injectedProps = getContext(TABLE_CONTEXT_KEYS.PROPS)
+
+    watch(
+      () => injectedProps,
+      (val) => {
+        state = val
+      },
+      {
+        deep: true,
+        immediate: true,
+      }
+    )
+
+    return {
+      ...toRefs(state),
+    }
   }
 
   const setContextMethods = (value) => {

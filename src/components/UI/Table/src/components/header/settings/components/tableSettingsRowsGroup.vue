@@ -1,5 +1,5 @@
 <template>
-  <div v-if="h.length !== 0">
+  <div v-if="getShouldShowHeaders.length !== 0">
     <el-divider v-if="type !== TABLE_GROUP_TYPE.LEFT" />
 
     <span class="w-table__setting-group-title">
@@ -7,10 +7,10 @@
     </span>
   </div>
 
-  <div :class="`${className} u-relative`">
+  <div :class="`${getClassName} u-relative`">
     <ul>
       <li
-        v-for="item in h"
+        v-for="item in getShouldShowHeaders"
         :key="item.prop"
         @click.stop.prevent="onToggleVisible(item.prop)"
       >
@@ -73,22 +73,12 @@
 
 <script>
   import Sortable from 'sortablejs'
-  import {
-    ref,
-    reactive,
-    computed,
-    defineComponent,
-    toRaw,
-    watch,
-    onMounted,
-    toRefs,
-    nextTick,
-  } from 'vue'
+  import { computed, defineComponent, onMounted, unref } from 'vue'
   import { omit } from 'easy-fns-ts'
   import hooks from '/@/hooks'
 
-  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
+  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/src/types'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsRowsGroup',
@@ -107,70 +97,55 @@
       const { getContextProps } = useTableContext()
       const { headers } = getContextProps()
 
-      const h = ref([])
+      const getHeaders = computed(() => unref(headers))
 
-      watch(
-        () => headers,
-        (val) => {
-          if (props.type === TABLE_GROUP_TYPE.COMMON) {
-            h.value = val.filter((i) => !i.fixed)
-          } else {
-            h.value = val.filter((i) => i.fixed === props.type)
-          }
-        },
-        {
-          deep: true,
-          immediate: true,
+      const getShouldShowHeaders = computed(() => {
+        if (props.type === TABLE_GROUP_TYPE.COMMON) {
+          return getHeaders.value.filter((i) => !i.fixed)
+        } else {
+          return getHeaders.value.filter((i) => i.fixed === props.type)
         }
-      )
+      })
 
-      const className = computed(() => {
+      const getClassName = computed(() => {
         return `w-table__setting-group-${props.type}`
       })
 
       const onToggleVisible = (prop) => {
-        const index = headers.findIndex((i) => i.prop === prop)
+        const index = getHeaders.value.findIndex((i) => i.prop === prop)
 
-        // eslint-disable-next-line
-        headers.splice(index, 1, {
-          ...headers[index],
-          visible: !headers[index].visible,
+        getHeaders.value.splice(index, 1, {
+          ...getHeaders.value[index],
+          visible: !getHeaders.value[index].visible,
         })
       }
 
       const onSetLeftFixed = (item) => {
-        const index = headers.findIndex((i) => i.prop === item.prop)
+        const index = getHeaders.value.findIndex((i) => i.prop === item.prop)
 
-        // eslint-disable-next-line
-        headers.splice(index, 1)
-
-        // eslint-disable-next-line
-        headers.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT })
+        getHeaders.value.splice(index, 1)
+        getHeaders.value.unshift({ ...item, fixed: TABLE_GROUP_TYPE.LEFT })
       }
 
       const onSetRightFixed = (item) => {
-        const index = headers.findIndex((i) => i.prop === item.prop)
+        const index = getHeaders.value.findIndex((i) => i.prop === item.prop)
 
-        // eslint-disable-next-line
-        headers.splice(index, 1)
-
-        // eslint-disable-next-line
-        headers.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT })
+        getHeaders.value.splice(index, 1)
+        getHeaders.value.push({ ...item, fixed: TABLE_GROUP_TYPE.RIGHT })
       }
 
       const onSetCommon = (item) => {
-        const index = headers.findIndex((i) => i.prop === item.prop)
+        const index = getHeaders.value.findIndex((i) => i.prop === item.prop)
 
-        // eslint-disable-next-line
-        headers.splice(index, 1)
-
-        // eslint-disable-next-line
-        headers.unshift(omit(item, 'fixed'))
+        getHeaders.value.splice(index, 1)
+        getHeaders.value.unshift(omit(item, 'fixed'))
       }
 
       const calcDeviation = () => {
         if (props.type === TABLE_GROUP_TYPE.COMMON) {
-          return headers.filter((i) => i.fixed === TABLE_GROUP_TYPE.LEFT).length
+          return getHeaders.value.filter(
+            (i) => i.fixed === TABLE_GROUP_TYPE.LEFT
+          ).length
         }
 
         if (props.type === TABLE_GROUP_TYPE.LEFT) {
@@ -178,13 +153,14 @@
         }
 
         if (props.type === TABLE_GROUP_TYPE.RIGHT) {
-          return headers.filter((i) => i.fixed !== TABLE_GROUP_TYPE.RIGHT)
-            .length
+          return getHeaders.value.filter(
+            (i) => i.fixed !== TABLE_GROUP_TYPE.RIGHT
+          ).length
         }
       }
 
       const onSetDrag = () => {
-        const target = document.querySelector(`.${className.value} ul`)
+        const target = document.querySelector(`.${getClassName.value} ul`)
 
         new Sortable(target, {
           animation: 180,
@@ -194,13 +170,10 @@
           ghostClass: 'sortable-ghost',
           onEnd: (e) => {
             const d = calcDeviation()
-            const oldItem = headers[e.oldIndex + d]
+            const oldItem = getHeaders.value[e.oldIndex + d]
 
-            // eslint-disable-next-line
-            headers.splice(e.oldIndex + d, 1)
-
-            // eslint-disable-next-line
-            headers.splice(e.newIndex + d, 0, oldItem)
+            getHeaders.value.splice(e.oldIndex + d, 1)
+            getHeaders.value.splice(e.newIndex + d, 0, oldItem)
           },
         })
       }
@@ -211,10 +184,11 @@
 
       return {
         t,
-        h,
 
         TABLE_GROUP_TYPE,
-        className,
+
+        getShouldShowHeaders,
+        getClassName,
 
         onToggleVisible,
         onSetLeftFixed,
@@ -226,8 +200,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../../../../../assets/style/index.scss';
-
   .w-table__setting-group-title {
     color: grey;
   }
@@ -265,4 +237,7 @@
     background: #42b983 !important;
     opacity: 0.8;
   }
+
+  /* TODO */
+  @import '../../../../../../../../assets/style/index.scss';
 </style>

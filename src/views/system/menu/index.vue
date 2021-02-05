@@ -2,7 +2,7 @@
   <div>
     <w-form
       v-model="queryFormData"
-      :schema="getQueryFormSchema"
+      :schemas="getQueryFormSchema"
       label-width="50px"
       :span="8"
       compact
@@ -62,7 +62,7 @@
     nextTick,
   } from 'vue'
   import { formatTime, arrToTree, orderTree } from 'easy-fns-ts'
-  import wTable from '/@/components/UI/Table/index.vue'
+  import wTable from '/@/components/UI/Table'
   import wForm from '/@/components/UI/Form'
   import wDialog from '/@/components/UI/Dialog/index.vue'
   import {

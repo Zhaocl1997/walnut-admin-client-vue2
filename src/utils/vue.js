@@ -8,3 +8,7 @@ export const isInSetup = () => {
     appError('Hook can only be used in `setup` function!')
   }
 }
+
+export const getDefaultSlotText = (slots) => {
+  return slots.default && slots.default()[0].children
+}

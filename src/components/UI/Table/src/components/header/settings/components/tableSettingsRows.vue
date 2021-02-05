@@ -76,8 +76,9 @@
     watch,
     toRefs,
     onMounted,
-    nextTick,
     unref,
+    computed,
+    nextTick,
   } from 'vue'
   import { deepClone } from 'easy-fns-ts'
 
@@ -85,8 +86,8 @@
   import wHelpMessage from '/@/components/Help/HelpMessage/index.vue'
   import wTableSettingsRowsGroup from './tableSettingsRowsGroup.vue'
 
-  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/constant'
-  import { useTableContext } from '/@/components/UI/Table/hooks/useTableContext'
+  import { TABLE_GROUP_TYPE } from '/@/components/UI/Table/src/types'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WTableSettingsRows',
@@ -100,6 +101,8 @@
       const { getContextProps } = useTableContext()
       const { headers } = getContextProps()
 
+      const getHeaders = computed(() => unref(headers))
+
       const state = reactive({
         checkAll: true,
         isIndeterminate: false,
@@ -108,12 +111,12 @@
 
       // change checkAll state
       watch(
-        () => headers,
+        () => getHeaders.value,
         (val) => {
           const visibleItems = val.filter((i) => i.visible)
 
           if (Array.isArray(visibleItems) && visibleItems.length !== 0) {
-            if (visibleItems.length === headers.length) {
+            if (visibleItems.length === getHeaders.value.length) {
               state.isIndeterminate = false
               state.checkAll = true
             } else {
@@ -130,10 +133,9 @@
 
       // checkAll or not
       const onCheckAllChange = (val) => {
-        headers.map((item, index) => {
-          // eslint-disable-next-line
-          headers.splice(index, 1, {
-            ...headers[index],
+        getHeaders.value.map((item, index) => {
+          getHeaders.value.splice(index, 1, {
+            ...getHeaders.value[index],
             visible: val,
           })
         })
@@ -142,14 +144,13 @@
       // reset to initial state
       const onReset = () => {
         state.cachedHeaders.map((item, index) => {
-          // eslint-disable-next-line
-          headers.splice(index, 1, item)
+          getHeaders.value.splice(index, 1, item)
         })
       }
 
       onMounted(() => {
         nextTick(() => {
-          state.cachedHeaders = Object.freeze(deepClone(unref(headers)))
+          state.cachedHeaders = Object.freeze(deepClone(unref(getHeaders)))
         })
       })
 

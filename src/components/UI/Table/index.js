@@ -1,5 +1,5 @@
 'use strict'
 
-import wTable from './index.vue'
+import wTable from './src/index.vue'
 
 export default wTable

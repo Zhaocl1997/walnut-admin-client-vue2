@@ -3,18 +3,9 @@
     <w-form
       v-model="signinData"
       class="signin-form"
-      :schema="getSigninSchema"
+      :schemas="getSigninSchema"
       :rules="getSigninRules"
     >
-      <template #button>
-        <w-button
-          block
-          type="primary"
-          style="background: transparent"
-          @click="onSignin"
-          >{{ t('system.auth.signin') }}</w-button
-        >
-      </template>
     </w-form>
 
     <w-locale-picker class="u-float-right"></w-locale-picker>
@@ -69,11 +60,15 @@
             text: t('system.auth.remember'),
           },
           {
-            wType: 'Input',
-            prop: 'button',
+            wType: 'Button',
+            prop: 'submitButton',
             label: '',
             placeholder: '',
-            slot: true,
+            block: true,
+            type: 'primary',
+            click: onSignin,
+            text: t('system.auth.signin'),
+            style: 'background: transparent',
           },
         ]
       })

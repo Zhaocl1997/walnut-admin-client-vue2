@@ -18,8 +18,8 @@ export const tableHeader = [
     prop: 'age',
     width: '200px',
     formatter: ({ age }) => `${age}岁`,
-    // editable: true,
-    // editableSlot: true,
+    editable: true,
+    editableSlot: true,
   },
   {
     label: '省份',
@@ -53,7 +53,7 @@ export const tableHeader = [
     label: '状态',
     prop: 'status',
     width: '100px',
-    // slot: true,
+    slot: true,
   },
   {
     label: '创建日期',

@@ -6,6 +6,7 @@ export const FORM_TYPE = {
   DIVIDER: 'Divider',
 
   /* dynamic */
+  BUTTON: 'Button',
   INPUT: 'Input',
   INPUTNUMBER: 'InputNumber',
   SELECT: 'Select',

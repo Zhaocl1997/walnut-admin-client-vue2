@@ -23,6 +23,7 @@
   import { reactive, computed, defineComponent, watch } from 'vue'
   import { wCheckboxProps } from './props'
   import hooks from '/@/hooks'
+  import { getDefaultSlotText } from '/@/utils/vue'
 
   export default defineComponent({
     name: 'WCheckbox',
@@ -34,7 +35,7 @@
     setup(props, { attrs, slots }) {
       const { useValueFormat } = hooks
       const { origin, getBindValue } = useValueFormat()
-      const originText = slots.default && slots.default()[0].children
+      const originText = getDefaultSlotText(slots)
 
       return {
         origin,

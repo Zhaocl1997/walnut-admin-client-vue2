@@ -22,11 +22,8 @@ export const resolveDynamicComponent = (schemas) => {
   const usedCompNameMaps = [
     ...new Set(schemas.map((i) => i.wType.toUpperCase())),
   ]
-
   const usedComps = filterObj(FORM_TYPE, usedCompNameMaps)
-
   const functionalComps = ['DIVIDER']
-
   const dynamicComponents = omit(usedComps, functionalComps)
 
   const ret = {
