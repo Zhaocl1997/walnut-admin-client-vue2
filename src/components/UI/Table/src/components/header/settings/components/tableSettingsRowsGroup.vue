@@ -21,7 +21,9 @@
 
           <div class="u-one-line u-inline-block" style="max-width: 110px">
             <el-checkbox v-model="item.visible" :disabled="item.disabled">
-              <span :title="item.label">{{ item.label }}</span>
+              <span :title="`${item.label}(宽: ${item.width})`"
+                >{{ item.label }}({{ item.width }})</span
+              >
             </el-checkbox>
           </div>
 

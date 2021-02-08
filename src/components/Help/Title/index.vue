@@ -1,16 +1,17 @@
 <template>
   <div class="w-title">
     <span :class="getClass">
-      {{ text }}
+      {{ slotText }}
       <w-help-message v-if="content" v-bind="getHelpProps"></w-help-message>
     </span>
   </div>
 </template>
 
 <script>
-  import { ref, reactive, computed, defineComponent, unref } from 'vue'
+  import { ref, reactive, computed, defineComponent, unref, watch } from 'vue'
   import wHelpMessage from '../HelpMessage/index.vue'
   import { omit } from 'easy-fns-ts'
+  import { getDefaultSlotText } from '/@/utils/vue'
 
   export default defineComponent({
     name: 'WTitle',
@@ -37,7 +38,7 @@
     },
 
     setup(props, { attrs, slots }) {
-      const text = slots.default && slots.default()[0].children
+      const slotText = getDefaultSlotText(slots)
 
       const getClass = computed(() => {
         const { showLeft, showBottom } = props
@@ -56,7 +57,7 @@
       })
 
       return {
-        text,
+        slotText,
         getClass,
         getHelpProps,
       }

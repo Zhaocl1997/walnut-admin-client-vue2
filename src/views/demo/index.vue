@@ -57,11 +57,11 @@
         <menu-demo />
       </el-tab-pane> -->
 
-      <!-- <el-tab-pane label="Dialog" name="Dialog">
+      <el-tab-pane label="Dialog" name="Dialog">
         <dialog-demo />
       </el-tab-pane>
 
-      <el-tab-pane label="Pagination" name="Pagination">
+      <!--<el-tab-pane label="Pagination" name="Pagination">
         <pagination-demo />
       </el-tab-pane> -->
 
@@ -77,9 +77,9 @@
         <use-table-demo />
       </el-tab-pane> -->
 
-      <!-- <el-tab-pane label="Form-base" name="Form-base">
+      <el-tab-pane label="Form-base" name="Form-base">
         <base-form-demo />
-      </el-tab-pane> -->
+      </el-tab-pane>
 
       <!--  <el-tab-pane label="Persistent" name="Persistent">
         <persistent-demo />

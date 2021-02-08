@@ -1,8 +1,8 @@
 <template>
   <div :class="['w-dialog', { 'w-dialog-line': line }]">
-    <el-dialog v-bind="getBindValue">
+    <el-dialog v-bind="getBindValue" @close="onDialogClose">
       <!-- <template v-if="header" #title>
-        <w-title>{{ title }}</w-title>
+        <w-title show-left>{{ title }}</w-title>
       </template> -->
 
       <div class="w-dialog__body">
@@ -20,11 +20,17 @@
 </template>
 
 <script>
-  import { computed, defineComponent } from 'vue'
-  import { wDialogProps } from './props'
+  import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    ref,
+    unref,
+  } from 'vue'
+  import { omit, deepMerge, log } from 'easy-fns-ts'
 
-  import wTitle from '../../Help/Title/index.vue'
-  import { omit } from 'easy-fns-ts'
+  import wDialogProps from './props'
+  import wTitle from '/@/components/Help/Title/index.vue'
 
   export default defineComponent({
     name: 'WDialog',
@@ -35,12 +41,33 @@
 
     props: wDialogProps,
 
-    emits: ['confirm', 'cancel'],
+    emits: ['confirm', 'cancel', 'hook'],
 
     setup(props, { attrs, emit }) {
+      const instance = getCurrentInstance()
+
+      const visibleRef = ref(false)
+      const insidePropsRef = ref(null)
+
       const getBindValue = computed(() => {
-        return omit({ ...attrs, ...props }, ['header', 'footer', 'line'])
+        return omit(
+          {
+            ...attrs,
+            ...props,
+            ...unref(insidePropsRef),
+            modelValue: visibleRef.value,
+          },
+          ['header', 'footer', 'line']
+        )
       })
+
+      const toggleDialogVisible = (visible) => {
+        visibleRef.value = visible
+      }
+
+      const onDialogClose = () => {
+        toggleDialogVisible(false)
+      }
 
       const onCancel = () => {
         emit('cancel')
@@ -50,7 +77,18 @@
         emit('confirm')
       }
 
+      const setDialogProps = (newProps) => {
+        insidePropsRef.value = deepMerge(unref(insidePropsRef) || {}, newProps)
+      }
+
+      emit('hook', instance.uid, {
+        setDialogProps,
+        toggleDialogVisible,
+      })
+
       return {
+        onDialogClose,
+
         getBindValue,
 
         onCancel,

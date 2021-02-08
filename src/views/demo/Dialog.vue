@@ -25,11 +25,12 @@
     </template>
 
     <el-button @click="onOpenDialog">打开dialog</el-button>
+    <el-button @click="openDialog">hook打开dialog</el-button>
   </el-card>
 
   <br />
 
-  <w-dialog
+  <!-- <w-dialog
     v-model="dialogVisible"
     title="弹窗扩展"
     :header="header"
@@ -38,11 +39,19 @@
     :fullscreen="fullscreen"
   >
     <h1 v-for="i in 20" :key="i">标题 {{ i }}</h1>
+  </w-dialog> -->
+
+  <w-dialog
+    @hook="register"
+    @confirm="onDialogConfirm"
+    @cancel="onDialogCancel"
+  >
+    <h1 v-for="i in 100" :key="i">{{ i }}</h1>
   </w-dialog>
 </template>
 
 <script>
-  import wDialog from '/@/components/UI/Dialog/index.vue'
+  import wDialog, { useDialog } from '/@/components/UI/Dialog'
   import { ref, reactive, computed, defineComponent, toRefs } from 'vue'
 
   export default defineComponent({
@@ -51,6 +60,10 @@
     components: { wDialog },
 
     setup(props, { attrs }) {
+      const [register, { openDialog, closeDialog }] = useDialog({
+        title: 'hook方式打开dialog',
+      })
+
       const state = reactive({
         dialogVisible: false,
 
@@ -64,7 +77,25 @@
         state.dialogVisible = true
       }
 
+      const onDialogConfirm = () => {
+        // confirm logic
+        console.log('confirm')
+        closeDialog()
+      }
+
+      const onDialogCancel = () => {
+        // cancel logic
+        console.log('cancel')
+        closeDialog()
+      }
+
       return {
+        register,
+        openDialog,
+
+        onDialogConfirm,
+        onDialogCancel,
+
         ...toRefs(state),
         onOpenDialog,
       }

@@ -2,15 +2,16 @@
   <el-form ref="formRef" class="w-form" v-bind="getBindValue">
     <el-row :gutter="gutter" :class="inline ? 'u-inline' : 'u-flex'">
       <el-col
-        v-for="(item, index) in schemas"
-        :key="index"
+        v-for="(item, index) in insideSchemas"
+        :key="`${item.prop || 'wForm'}${index}`"
         :span="onCalcSpan(item)"
       >
-        <w-form-divider
+        <component
+          :is="'w-form-divider'"
           v-if="onCalcShowItem(item, FORM_TYPE.DIVIDER) && !inline"
           :item="item"
           :toggle="() => onToggleDividerFold(index, item)"
-        ></w-form-divider>
+        ></component>
 
         <transition name="el-zoom-in-center">
           <el-form-item v-bind="item" :class="compact ? 'u-mb10' : ''">
@@ -33,18 +34,20 @@
       </el-col>
     </el-row>
 
-    <w-form-mock
+    <component
+      :is="'w-form-mock'"
       :schemas="schemas"
       @change="(val) => emit('update:modelValue', val)"
-    ></w-form-mock>
+    ></component>
 
-    <w-form-query
+    <component
+      :is="'w-form-query'"
       :is-folded="isFolded"
       :schemas="schemas"
       :toggle="onToggleFormFold"
       @reset="onReset"
       @query="onQuery"
-    ></w-form-query>
+    ></component>
   </el-form>
 </template>
 
@@ -54,16 +57,15 @@
     defineComponent,
     onMounted,
     ref,
-    getCurrentInstance,
     onBeforeMount,
     unref,
   } from 'vue'
 
   import wFormProps from './props'
-  import { resolveDynamicComponent } from './components'
   import { FORM_TYPE } from './types'
   import { useFormSchema } from './hooks/useSchema'
   import { useFormContext } from './hooks/useFormContext'
+  import { useDynamicComponent } from './hooks/useDynamicComponent'
 
   export default defineComponent({
     name: 'WForm',
@@ -75,18 +77,19 @@
     emits: ['update:modelValue', 'query', 'reset'],
 
     setup(props, { attrs, emit, slots }) {
-      const instance = getCurrentInstance()
       const formRef = ref(null)
 
       const { setContextProps } = useFormContext()
 
       const {
-        schemas,
+        insideSchemas,
         isFolded,
         onFormDefaultFold,
         onToggleFormFold,
         onToggleDividerFold,
       } = useFormSchema(props)
+
+      const { onInitialComponents } = useDynamicComponent(props)
 
       const getBindValue = computed(() => {
         return {
@@ -129,12 +132,8 @@
         return `w-${name}`
       }
 
-      const onGenUsedComp = () => {
-        instance.type.components = resolveDynamicComponent(unref(props.schemas))
-      }
-
       onBeforeMount(() => {
-        onGenUsedComp()
+        onInitialComponents()
       })
 
       onMounted(() => {
@@ -147,7 +146,7 @@
         emit,
         formRef,
 
-        schemas,
+        insideSchemas,
         isFolded,
         onToggleFormFold,
         onToggleDividerFold,

@@ -1,19 +1,19 @@
 'use strict'
 
-import { reactive, toRefs, watch } from 'vue'
+import { reactive, toRefs, watch, toRaw } from 'vue'
 import { findAllIndex } from 'easy-fns-ts'
 import { FORM_TYPE } from '../types'
 
 export const useFormSchema = (props) => {
   const state = reactive({
-    schemas: [],
+    insideSchemas: [],
     isFolded: false,
   })
 
   const onFormDefaultFold = () => {
-    if (props.defaultFold) {
+    if (props.query && props.defaultFold) {
       state.isFolded = true
-      state.schemas = props.schemas.slice(0, props.countToFold)
+      state.insideSchemas = props.schemas.slice(0, props.countToFold)
     }
   }
 
@@ -21,49 +21,63 @@ export const useFormSchema = (props) => {
     state.isFolded = !state.isFolded
 
     if (!state.isFolded) {
-      state.schemas = props.schemas
+      state.insideSchemas = props.schemas
     } else {
-      state.schemas = props.schemas.slice(0, props.countToFold)
+      state.insideSchemas = props.schemas.slice(0, props.countToFold)
     }
   }
 
   const onToggleDividerFold = (index, item) => {
-    state.schemas.splice(index, 1, {
-      ...state.schemas[index],
+    // change fold state
+    props.schemas.splice(index, 1, {
+      ...props.schemas[index],
       fold: !item.fold,
     })
 
+    // find all divider index
     const allDividerIndex = findAllIndex(
-      state.schemas,
+      props.schemas,
       (item) => item.wType === FORM_TYPE.DIVIDER
     )
 
+    // fold start index
     const startIndex = !!item.countToFold
       ? index + +item.countToFold + 1
       : index
 
+    // fold end index
     const endIndex =
       allDividerIndex[allDividerIndex.indexOf(index) + 1] ||
-      state.schemas.length
+      props.schemas.length
 
     for (let i = startIndex; i < endIndex; i++) {
-      state.schemas.splice(i, 1, {
-        ...state.schemas[i],
+      props.schemas.splice(i, 1, {
+        ...props.schemas[i],
         foldShow: item.fold,
       })
     }
+
+    onFormItemVisible(toRaw(props.schemas))
   }
 
+  const onFormItemVisible = (val) => {
+    // handle visible
+    state.insideSchemas = val.filter((i) => {
+      return (
+        (i.show === undefined || i.show === true) &&
+        (i.foldShow === undefined || i.foldShow === true)
+      )
+    })
+  }
+
+  // watch for computed schemas
   watch(
     () => props.schemas,
     (val) => {
-      // handle visible
-      state.schemas = val.filter((i) => {
-        return i.show === true || i.show === undefined
-      })
+      onFormItemVisible(val)
 
       // handle `Divider` default fold
-      state.schemas.map((item, index) => {
+      state.insideSchemas.map((item, index) => {
         if (item.wType === FORM_TYPE.DIVIDER && item.defaultFold) {
           onToggleDividerFold(index, item)
         }

@@ -2,7 +2,7 @@
 
 import { ElDialog } from 'element-plus'
 
-export const wDialogProps = {
+export default {
   /**
    * @description original ElDialog props
    */
@@ -34,6 +34,16 @@ export const wDialogProps = {
    * @default true
    */
   line: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
+   * @description draggable
+   * @type {Boolean}
+   * @default true
+   */
+  draggable: {
     type: Boolean,
     default: true,
   },

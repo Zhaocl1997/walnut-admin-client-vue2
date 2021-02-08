@@ -3,7 +3,7 @@
     <w-table-loading>
       <w-table-header></w-table-header>
 
-      <el-table v-bind="getBindValue">
+      <el-table ref="wTableElRef" v-bind="getBindValue">
         <template #empty>
           <w-table-empty>
             <slot name="empty"></slot>
@@ -117,6 +117,7 @@
     ],
 
     setup(props, { attrs, emit }) {
+      const wTableElRef = ref(null)
       const insideProps = ref()
 
       const getProps = computed(() => {
@@ -162,6 +163,18 @@
         emit('page-change')
       }
 
+      // change width property
+      const onHeaderDragend = (newWidth, oldWidth, column, event) => {
+        const index = props.headers.findIndex((i) => i.prop === column.property)
+        const item = props.headers.find((i) => i.prop === column.property)
+
+        // eslint-disable-next-line
+        props.headers.splice(index, 1, {
+          ...item,
+          width: newWidth,
+        })
+      }
+
       const getBindValue = computed(() => {
         return {
           ...attrs,
@@ -169,6 +182,7 @@
           highlightCurrentRow: props.single,
           onCurrentChange,
           onSelectionChange,
+          onHeaderDragend,
         }
       })
 
@@ -187,6 +201,8 @@
       // emit('register', { ...tableMethods, ...unref(getBindValue) })
 
       return {
+        wTableElRef,
+
         tableHeader,
 
         pageNum,
