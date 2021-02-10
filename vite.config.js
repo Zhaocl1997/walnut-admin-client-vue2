@@ -26,7 +26,7 @@ const server = {
     overlay: true,
   },
 
-  // open: '/auth',
+  open: '/auth',
 }
 
 export default ({ command, mode }) => {
