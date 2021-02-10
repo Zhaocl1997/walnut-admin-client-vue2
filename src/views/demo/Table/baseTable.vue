@@ -122,6 +122,7 @@
         single: false,
         multiple: false,
 
+        hasButtons: false,
         hasIndex: false,
         hasSelect: false,
         hasExpand: false,

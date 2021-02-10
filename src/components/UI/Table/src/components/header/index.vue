@@ -1,9 +1,16 @@
 <template>
-  <w-excel-import @success="onImportSuccess">
+  <!-- <w-excel-import @success="onImportSuccess">
     <el-button>导入</el-button>
   </w-excel-import>
 
-  <el-button @click="onExport">导出</el-button>
+  <el-button @click="onExport">导出</el-button> -->
+  <w-table-buttons
+    class="u-mb10"
+    @create="emit('create')"
+    @import="emit('import')"
+    @export="emit('export')"
+  ></w-table-buttons>
+
   <div class="u-flex-aside">
     <w-table-title></w-table-title>
 
@@ -15,8 +22,11 @@
   import { defineComponent, unref, toRaw } from 'vue'
   import XLSX from 'xlsx'
   import { transform, isObject } from 'lodash-es'
+
+  import wTableButtons from './buttons/index.vue'
   import wTableTitle from './title/index.vue'
   import wTableSettings from './settings/index.vue'
+
   import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
   import { wExcelImport } from '/@/components/UI/Excel'
   import { omit } from 'easy-fns-ts'
@@ -24,9 +34,11 @@
   export default defineComponent({
     name: 'WTableHeader',
 
-    components: { wTableTitle, wTableSettings, wExcelImport },
+    components: { wTableButtons, wTableTitle, wTableSettings, wExcelImport },
 
-    setup() {
+    emits: ['create', 'import', 'export'],
+
+    setup(props, { emit }) {
       const { getContextProps, getContextMethods } = useTableContext()
       const { data, headers } = getContextProps()
       const { setProps } = getContextMethods()
@@ -126,6 +138,7 @@
       }
 
       return {
+        emit,
         onExport,
         onImportSuccess,
       }

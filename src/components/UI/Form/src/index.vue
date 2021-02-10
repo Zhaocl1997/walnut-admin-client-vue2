@@ -170,11 +170,5 @@
 <style lang="scss" scoped>
   .w-form {
     position: relative;
-
-    &-query {
-      position: absolute;
-      bottom: -40px;
-      right: 0;
-    }
   }
 </style>

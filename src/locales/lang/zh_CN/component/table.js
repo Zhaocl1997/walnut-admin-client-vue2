@@ -26,4 +26,9 @@ export default {
     fixRight: '固定在列尾',
   },
   screenfull: '全屏',
+  buttons: {
+    create: '新增',
+    import: '导入',
+    export: '导出',
+  },
 }

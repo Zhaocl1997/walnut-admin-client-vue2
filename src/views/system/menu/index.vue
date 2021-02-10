@@ -9,43 +9,53 @@
       query
     ></w-form>
 
-    <el-button @click="onCreate">Create</el-button>
-
     <w-table
       v-model:headers="headers"
-      v-model:pageSize="queryData.pageSize"
-      v-model:pageNum="queryData.pageNum"
       :data="data"
       :total="total"
       row-key="_id"
+      :expand-row-keys="[rootId]"
       border
-      has-page
       has-action
+      has-buttons
+      @create="onCreate"
     >
       <template #action="{ action }">
         <el-button size="small" type="text" @click="onCreate(action.row._id)"
           >新增</el-button
         >
-        <el-button size="small" type="text" @click="onUpdate(action.row._id)"
+        <el-button
+          size="small"
+          type="text"
+          :disabled="action.row._id === rootId"
+          @click="onUpdate(action.row._id)"
           >编辑</el-button
         >
-        <el-button size="small" type="text" @click="onDelete(action.row._id)"
-          >删除</el-button
+        <el-popconfirm
+          title="确定删除吗？"
+          icon="el-icon-info"
+          icon-color="red"
+          @confirm="onDelete(action.row._id)"
         >
+          <template #reference>
+            <el-button
+              size="small"
+              type="text"
+              :disabled="action.row._id === rootId"
+              >删除</el-button
+            >
+          </template>
+        </el-popconfirm>
       </template>
     </w-table>
 
-    <w-dialog
-      v-model="visible"
-      :title="title"
-      @confirm="onConfirm"
-      @cancel="onCancel"
-    >
+    <w-dialog @hook="register" @confirm="onConfirm" @cancel="onCancel">
       <w-form
         v-model="formData"
-        :schema="getFormSchema"
+        :schemas="getFormSchema"
         label-width="100px"
         mock
+        :span="12"
       ></w-form>
     </w-dialog>
   </div>
@@ -64,7 +74,7 @@
   import { formatTime, arrToTree, orderTree } from 'easy-fns-ts'
   import wTable from '/@/components/UI/Table'
   import wForm from '/@/components/UI/Form'
-  import wDialog from '/@/components/UI/Dialog/index.vue'
+  import wDialog, { useDialog } from '/@/components/UI/Dialog'
   import {
     listMenu,
     createMenu,
@@ -80,6 +90,10 @@
     components: { wTable, wForm, wDialog },
 
     setup() {
+      const [register, { openDialog, closeDialog }] = useDialog()
+
+      const rootId = ref()
+
       const formState = reactive({
         queryFormData: {},
         getQueryFormSchema: [
@@ -188,9 +202,6 @@
       })
 
       const dialogState = reactive({
-        visible: false,
-        title: '',
-
         formData: {
           type: 'catalog',
           external: false,
@@ -198,6 +209,8 @@
           cache: false,
         },
       })
+
+      const menuType = computed(() => dialogState.formData.type)
 
       const getFormSchema = computed(() => {
         return [
@@ -242,6 +255,7 @@
             label: '路由地址',
             placeholder: '路由地址',
             clearable: true,
+            helpMessage: '浏览器地址栏里的地址',
           },
           {
             wType: 'Input',
@@ -249,6 +263,11 @@
             label: '路由名称',
             placeholder: '路由名称',
             clearable: true,
+            modelModifiers: {
+              capitalize: true,
+            },
+            helpMessage:
+              '对应route里的name字段，也是keep-alive的关键，需要唯一',
           },
           {
             wType: 'Input',
@@ -256,6 +275,8 @@
             label: '组件路径',
             placeholder: '组件路径',
             clearable: true,
+            disabled: menuType.value === 'catalog',
+            helpMessage: '菜单类型时生效，是文件在views下的路径，不需要vue后缀',
           },
 
           {
@@ -268,6 +289,7 @@
             label: '菜单名称',
             placeholder: '菜单名称',
             clearable: true,
+            helpMessage: '左侧菜单显示文字',
           },
           {
             wType: 'Input',
@@ -376,6 +398,7 @@
 
         tableState.data = orderTree(treeData)
         tableState.total = res.total
+        rootId.value = orderTree(treeData)[0]._id
       }
 
       const onCreate = (id) => {
@@ -383,8 +406,9 @@
           dialogState.formData.pid = id
         }
         nextTick(() => {
-          dialogState.title = '新增菜单'
-          dialogState.visible = true
+          openDialog({
+            title: '新增菜单',
+          })
         })
       }
 
@@ -392,12 +416,17 @@
         const res = await readMenu(id)
         dialogState.formData = res
         nextTick(() => {
-          dialogState.title = '编辑菜单'
-          dialogState.visible = true
+          openDialog({
+            title: '编辑菜单',
+          })
         })
       }
 
-      const onDelete = (id) => {}
+      const onDelete = async (id) => {
+        await deleteMenu(id)
+        ElMessage.success('成功')
+        await onList()
+      }
 
       const onConfirm = async () => {
         if (dialogState.formData._id) {
@@ -413,14 +442,14 @@
       }
 
       const onCancel = () => {
-        dialogState.title = ''
-        dialogState.visible = false
         dialogState.formData = {
           type: 'catalog',
           external: false,
           internal: false,
           cache: false,
         }
+
+        closeDialog()
       }
 
       onMounted(() => {
@@ -428,6 +457,10 @@
       })
 
       return {
+        rootId,
+
+        register,
+
         onCreate,
         onUpdate,
         onDelete,

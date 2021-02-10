@@ -10,7 +10,7 @@
         {{ t('component.form.query') }}
       </el-button>
 
-      <el-button size="small" @click="onReset">
+      <el-button size="small" type="info" @click="onReset">
         {{ t('component.form.reset') }}
       </el-button>
 
@@ -92,8 +92,7 @@
 
 <style lang="scss" scoped>
   .w-form-query {
-    position: absolute;
-    bottom: -40px;
-    right: 0;
+    display: flex;
+    flex-direction: row-reverse;
   }
 </style>

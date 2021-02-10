@@ -147,7 +147,7 @@
   import { ref, reactive, computed, defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'IconDemo',
+    name: 'Icon',
 
     components: {},
 

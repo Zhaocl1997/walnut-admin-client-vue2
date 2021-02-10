@@ -1,9 +1,17 @@
 <template>
   <div class="w-table">
     <w-table-loading>
-      <w-table-header></w-table-header>
+      <w-table-header
+        @create="emit('create')"
+        @import="emit('import')"
+        @export="emit('export')"
+      ></w-table-header>
 
-      <el-table ref="wTableElRef" v-bind="getBindValue">
+      <el-table
+        ref="wTableElRef"
+        v-bind="getBindValue"
+        @cell-dblclick="onCellDblClick"
+      >
         <template #empty>
           <w-table-empty>
             <slot name="empty"></slot>
@@ -113,7 +121,10 @@
       'update:pageSize',
       'cell-change',
       'page-change',
-      'register',
+      'hook',
+      'create',
+      'import',
+      'export',
     ],
 
     setup(props, { attrs, emit }) {
@@ -163,7 +174,7 @@
         emit('page-change')
       }
 
-      // change width property
+      // change width property when col is dragged
       const onHeaderDragend = (newWidth, oldWidth, column, event) => {
         const index = props.headers.findIndex((i) => i.prop === column.property)
         const item = props.headers.find((i) => i.prop === column.property)
@@ -173,6 +184,10 @@
           ...item,
           width: newWidth,
         })
+      }
+
+      const onCellDblClick = (row, column, cell, event) => {
+        console.log(row, column, cell, event)
       }
 
       const getBindValue = computed(() => {
@@ -198,9 +213,10 @@
       setContextMethods(tableMethods)
 
       // use hook
-      // emit('register', { ...tableMethods, ...unref(getBindValue) })
+      // emit('hook', { ...tableMethods, ...unref(getBindValue) })
 
       return {
+        emit,
         wTableElRef,
 
         tableHeader,
@@ -212,6 +228,7 @@
         getBindValue,
         onCellChange,
         onPaginationChange,
+        onCellDblClick,
       }
     },
   })

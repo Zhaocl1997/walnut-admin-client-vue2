@@ -27,8 +27,9 @@ export const useDialog = (props) => {
     return instance
   }
 
-  const openDialog = () => {
+  const openDialog = (props) => {
     getInstance().toggleDialogVisible(true)
+    getInstance().setDialogProps(props)
   }
 
   const closeDialog = () => {

@@ -4,12 +4,17 @@ export const baseTableStateSchemas = [
   {
     wType: 'Switch',
     prop: 'single',
-    label: '单选',
+    label: '单选v-model',
   },
   {
     wType: 'Switch',
     prop: 'multiple',
-    label: '多选',
+    label: '多选v-model',
+  },
+  {
+    wType: 'Switch',
+    prop: 'hasButtons',
+    label: '按钮组',
   },
   {
     wType: 'Switch',

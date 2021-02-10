@@ -15,6 +15,12 @@
     <template v-if="$slots.prefix" #prefix>
       <slot name="prefix" />
     </template>
+
+    <template v-if="helpMessage" #append>
+      <el-tooltip effect="dark" :content="helpMessage" placement="top">
+        <i class="el-icon-question"></i>
+      </el-tooltip>
+    </template>
   </el-input>
 </template>
 
@@ -40,6 +46,8 @@
         type: Array,
         default: () => [],
       },
+
+      helpMessage: String,
     },
 
     emits: ['update:modelValue', 'input', 'change', 'clear'],

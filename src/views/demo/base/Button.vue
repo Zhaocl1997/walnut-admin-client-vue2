@@ -100,7 +100,7 @@
   import { ref, reactive, defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'ButtonDemo',
+    name: 'Button',
 
     components: { wButton },
 

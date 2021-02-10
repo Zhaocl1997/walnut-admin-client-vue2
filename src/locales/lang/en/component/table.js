@@ -25,4 +25,9 @@ export default {
     fixRight: 'Fix on right',
   },
   screenfull: 'Full Screen',
+  buttons: {
+    create: 'Create',
+    import: 'Import',
+    export: 'Export',
+  },
 }

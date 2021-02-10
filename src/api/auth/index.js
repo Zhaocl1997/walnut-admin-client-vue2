@@ -9,3 +9,10 @@ export const signin = (params) => {
     params,
   })
 }
+
+export const getPermissionMenus = () => {
+  return axios.request({
+    method: 'GET',
+    url: '/auth/permissionMenus',
+  })
+}

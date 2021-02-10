@@ -124,6 +124,15 @@
           },
           {
             wType: 'Input',
+            prop: 'formModelModifiers',
+            label: '自定义修饰符',
+            placeholder: '自定义修饰符',
+            modelModifiers: {
+              capitalize: true,
+            },
+          },
+          {
+            wType: 'Input',
             prop: 'formInputBlackList',
             label: '黑名单',
             placeholder: "禁止输入['<', '>']",

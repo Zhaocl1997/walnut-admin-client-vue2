@@ -57,7 +57,7 @@
             ...unref(insidePropsRef),
             modelValue: visibleRef.value,
           },
-          ['header', 'footer', 'line']
+          ['header', 'footer', 'line', 'draggable']
         )
       })
 
@@ -78,7 +78,10 @@
       }
 
       const setDialogProps = (newProps) => {
-        insidePropsRef.value = deepMerge(unref(insidePropsRef) || {}, newProps)
+        insidePropsRef.value = deepMerge(
+          unref(insidePropsRef) || {},
+          newProps || {}
+        )
       }
 
       emit('hook', instance.uid, {

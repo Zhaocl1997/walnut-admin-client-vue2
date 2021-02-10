@@ -23,6 +23,12 @@ export default {
   modelValue: [Array, Object],
 
   /**
+   * @description v-model:headers value, for table header columns
+   * @type {Array}
+   */
+  headers: Array,
+
+  /**
    * @description able to use v-model for single choose
    * @type {Boolean}
    * @default false
@@ -41,12 +47,6 @@ export default {
     type: Boolean,
     default: false,
   },
-
-  /**
-   * @description v-model:headers value, for table header columns
-   * @type {Array}
-   */
-  headers: Array,
 
   /**
    * =======================================
@@ -260,6 +260,16 @@ export default {
    * @default false
    */
   hasPage: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * @description button groups
+   * @type {Boolean}
+   * @default false
+   */
+  hasButtons: {
     type: Boolean,
     default: false,
   },

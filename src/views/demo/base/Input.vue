@@ -4,7 +4,15 @@
       <span>基本，当前绑定值：【{{ input1 }}】</span>
     </template>
 
-    <w-input v-model="input1" clearable @clear="onClear" />
+    <w-input
+      v-model="input1"
+      clearable
+      @clear="onClear"
+      @change="onChange"
+      @input="onInput"
+      @blur="onBlur"
+      @focus="onFocus"
+    />
   </el-card>
 
   <br />
@@ -17,10 +25,7 @@
     <w-input
       v-model="input2"
       :black-list="['<', '>']"
-      @change="onChange"
-      @input="onInput"
-      @blur="onBlur"
-      @focus="onFocus"
+      placeholder="禁止输入'<', '>'"
     />
   </el-card>
 
@@ -103,7 +108,17 @@
       <span>自定义修饰符，当前绑定值：【{{ input8 }}】</span>
     </template>
 
-    <w-input v-model.capitalize="input8" />
+    <w-input v-model.capitalize="input8" placeholder="首字母大写" />
+  </el-card>
+
+  <br />
+
+  <el-card>
+    <template #header>
+      <span>帮助消息，当前绑定值：【{{ input9 }}】</span>
+    </template>
+
+    <w-input v-model="input9" help-message="一些帮助填写的信息" />
   </el-card>
 </template>
 
@@ -112,7 +127,7 @@
   import { reactive, defineComponent, toRefs } from 'vue'
 
   export default defineComponent({
-    name: 'InputDemo',
+    name: 'Input',
 
     components: { wInput },
 
@@ -126,6 +141,7 @@
         input6: '',
         input7: '',
         input8: '',
+        input9: '',
       })
 
       const onChange = (value) => {
