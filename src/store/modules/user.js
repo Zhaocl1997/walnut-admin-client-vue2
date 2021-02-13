@@ -3,8 +3,8 @@
 import router from '/@/router'
 import { signin } from '/@/api/auth'
 
-import { setLocal, getLocal } from '/@/utils/persistent'
-
+import { setToken, getToken } from '/@/utils/auth'
+import { setLocal } from '/@/utils/persistent'
 import { PERSISTENT_KEYS } from '/@/utils/persistent/keys'
 import { MUTATION_TYPES } from '../mutationTypes'
 
@@ -12,13 +12,13 @@ export const userModule = {
   namespaced: true,
 
   state: {
-    token: getLocal(PERSISTENT_KEYS.USER.TOKEN),
+    token: getToken(),
   },
 
   mutations: {
     [MUTATION_TYPES.USER.SET_TOKEN]: (state, token) => {
       state.token = token
-      setLocal(PERSISTENT_KEYS.USER.TOKEN, token)
+      setToken(token)
     },
   },
 

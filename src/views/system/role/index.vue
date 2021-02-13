@@ -1,5 +1,8 @@
 <template>
-  <div>Role</div>
+  <div>
+    <div>Role</div>
+    <el-input v-model="v"></el-input>
+  </div>
 </template>
 
 <script>
@@ -7,7 +10,12 @@
   export default defineComponent({
     name: 'Role',
     components: {},
-    setup() {},
+    setup() {
+      const v = ref()
+      return {
+        v,
+      }
+    },
   })
 </script>
 

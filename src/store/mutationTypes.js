@@ -8,4 +8,9 @@ export const MUTATION_TYPES = {
   USER: {
     SET_TOKEN: 'SET_TOKEN',
   },
+
+  MENU: {
+    BUILD_MENU: 'BUILD_MENU',
+    SET_KEEPALIVE: 'SET_KEEPALIVE',
+  },
 }

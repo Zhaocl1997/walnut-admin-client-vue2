@@ -19,7 +19,7 @@
             <w-icon icon="drag" />
           </div>
 
-          <div class="u-one-line u-inline-block" style="max-width: 110px">
+          <div class="u-one-line u-inline-block column-item-content">
             <el-checkbox v-model="item.visible" :disabled="item.disabled">
               <span :title="`${item.label}(宽: ${item.width})`"
                 >{{ item.label }}({{ item.width }})</span
@@ -202,6 +202,10 @@
 </script>
 
 <style lang="scss" scoped>
+  /* stylelint-disable */
+  /* TODO */
+  @import '../../../../../../../../assets/style/index.scss';
+
   .w-table__setting-group-title {
     color: grey;
   }
@@ -214,11 +218,17 @@
     margin-top: 3px;
   }
 
-  .column-item:hover {
-    background: rgba(240, 248, 255, 0.8);
+  .column-item {
+    &:hover {
+      background: rgba(240, 248, 255, 0.8);
 
-    .w-table__setting-fix {
-      display: initial;
+      .w-table__setting-fix {
+        display: initial;
+      }
+    }
+
+    &-content {
+      max-width: 110px;
     }
   }
 
@@ -239,7 +249,4 @@
     background: #42b983 !important;
     opacity: 0.8;
   }
-
-  /* TODO */
-  @import '../../../../../../../../assets/style/index.scss';
 </style>

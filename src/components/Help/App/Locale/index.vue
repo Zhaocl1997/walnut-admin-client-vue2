@@ -35,6 +35,7 @@
     setup(props, { attrs }) {
       const store = useStore()
 
+      // TODO getters
       const lang = computed(() => store.state.app.lang)
 
       const langText = computed(

@@ -3,6 +3,7 @@
 import { createStore } from 'vuex'
 import { appModule } from './modules/app'
 import { userModule } from './modules/user'
+import { menuModule } from './modules/menu'
 import { isDevMode } from '/@/utils/mode'
 
 const store = createStore({
@@ -11,6 +12,7 @@ const store = createStore({
   modules: {
     app: appModule,
     user: userModule,
+    menu: menuModule,
   },
 })
 

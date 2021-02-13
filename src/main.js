@@ -14,9 +14,9 @@ import { setupAppGlobalConfig } from './app'
 
 const app = createApp(App)
 
+setupI18n(app)
 setupRouter(app)
 setupStore(app)
-setupI18n(app)
 setupElementPlus(app)
 setupAppGlobalConfig(app)
 

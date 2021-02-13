@@ -1,11 +1,6 @@
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu
-      :default-active="activeMenu"
-      :collapse="false"
-      class="el-menu-vertical-demo"
-      @select="onChange"
-    >
+    <el-menu :default-active="activeMenu" :collapse="false" @select="onChange">
       <w-aside-menu-item
         v-for="item in menus"
         :key="item.path"
@@ -26,16 +21,14 @@
 
     components: { wAsideMenuItem },
 
-    props: {
-      menus: Array,
-    },
+    props: { menus: Array },
 
-    setup(props) {
+    setup() {
       const route = useRoute()
       const router = useRouter()
 
       const activeMenu = computed(() => {
-        if (route.meta.activeMenu) return route.meta.activeMenu
+        if (route.name) return route.name
         return route.path
       })
 

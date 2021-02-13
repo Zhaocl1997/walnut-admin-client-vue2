@@ -25,31 +25,31 @@
       const init = async () => {
         const res = await getPermissionMenus()
         menus.value = orderTree(arrToTree(res, { id: '_id' }))[0].children
-        const ft = formatTree(menus.value, {
-          format: (node) => {
-            if (node.type === 'catalog') {
-              return {
-                path: node.path,
-                name: node.name,
-                component: () =>
-                  import(/* @vite-ignore */ `/@/views/Empty.vue`),
-              }
-            }
+        // const ft = formatTree(menus.value, {
+        //   format: (node) => {
+        //     if (node.type === 'catalog') {
+        //       return {
+        //         path: node.path,
+        //         name: node.name,
+        //         component: () =>
+        //           import(/* @vite-ignore */ `/@/views/Empty.vue`),
+        //       }
+        //     }
 
-            if (node.type === 'menu' && node.component) {
-              return {
-                path: node.path,
-                name: node.name,
-                component: () =>
-                  import(/* @vite-ignore */ `/@/views/${node.component}.vue`),
-              }
-            }
-          },
-        })
+        //     if (node.type === 'menu' && node.component) {
+        //       return {
+        //         path: node.path,
+        //         name: node.name,
+        //         component: () =>
+        //           import(/* @vite-ignore */ `/@/views/${node.component}.vue`),
+        //       }
+        //     }
+        //   },
+        // })
 
-        ft.forEach((route) => {
-          addRoute('Layout', route)
-        })
+        // ft.forEach((route) => {
+        //   addRoute('Layout', route)
+        // })
       }
 
       onMounted(() => {
