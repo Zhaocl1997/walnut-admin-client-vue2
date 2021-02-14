@@ -59,13 +59,16 @@
     ref,
     onBeforeMount,
     unref,
+    toRaw,
   } from 'vue'
+  import { deepMerge } from 'easy-fns-ts'
 
   import wFormProps from './props'
   import { FORM_TYPE } from './types'
   import { useFormSchema } from './hooks/useSchema'
   import { useFormContext } from './hooks/useFormContext'
   import { useDynamicComponent } from './hooks/useDynamicComponent'
+  import { getDynamicProps } from '/@/utils/vue'
 
   export default defineComponent({
     name: 'WForm',
@@ -74,10 +77,22 @@
 
     props: wFormProps,
 
-    emits: ['update:modelValue', 'query', 'reset'],
+    emits: ['update:modelValue', 'query', 'reset', 'hook'],
 
     setup(props, { attrs, emit, slots }) {
       const formRef = ref(null)
+      const insidePropsRef = ref(null)
+
+      const setProps = (newProps) => {
+        insidePropsRef.value = deepMerge(
+          unref(insidePropsRef) || {},
+          newProps || {}
+        )
+      }
+
+      const getProps = computed(() => {
+        return { ...props, ...unref(insidePropsRef) }
+      })
 
       const { setContextProps } = useFormContext()
 
@@ -87,15 +102,15 @@
         onFormDefaultFold,
         onToggleFormFold,
         onToggleDividerFold,
-      } = useFormSchema(props)
+      } = useFormSchema(getProps)
 
-      const { onInitialComponents } = useDynamicComponent(props)
+      const { onInitialComponents } = useDynamicComponent(getProps)
 
       const getBindValue = computed(() => {
         return {
           ...attrs,
-          ...props,
-          model: props.modelValue,
+          ...unref(getProps),
+          model: unref(getProps).modelValue,
         }
       })
 
@@ -106,7 +121,7 @@
       const onReset = () => {
         formRef.value.resetFields()
         emit('reset')
-        emit('update:modelValue', { ...unref(props.modelValue) })
+        emit('update:modelValue', unref(getProps).modelValue)
       }
 
       const onCalcShowItem = (item, TYPE) => {
@@ -122,7 +137,7 @@
         if (item.wType === FORM_TYPE.DIVIDER) {
           return 24
         }
-        return item.span ? item.span : props.span
+        return item.span ? item.span : unref(getProps).span
       }
 
       const onCalcCompName = (type) => {
@@ -140,7 +155,19 @@
         onFormDefaultFold()
       })
 
-      setContextProps(props)
+      setContextProps(getProps)
+
+      const formActions = {
+        validate: async () => {
+          return await formRef.value.validate()
+        },
+        setProps,
+        getModelValue: () => {
+          return unref(getProps).modelValue
+        },
+      }
+
+      emit('hook', formActions)
 
       return {
         emit,

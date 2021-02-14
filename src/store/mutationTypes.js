@@ -10,7 +10,7 @@ export const MUTATION_TYPES = {
   },
 
   MENU: {
-    BUILD_MENU: 'BUILD_MENU',
+    SET_MENU: 'SET_MENU',
     SET_KEEPALIVE: 'SET_KEEPALIVE',
   },
 }

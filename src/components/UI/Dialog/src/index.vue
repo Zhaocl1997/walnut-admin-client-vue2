@@ -27,7 +27,7 @@
     ref,
     unref,
   } from 'vue'
-  import { omit, deepMerge, log } from 'easy-fns-ts'
+  import { omit, deepMerge } from 'easy-fns-ts'
 
   import wDialogProps from './props'
   import wTitle from '/@/components/Help/Title/index.vue'

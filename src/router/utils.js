@@ -36,9 +36,13 @@ export const createKeepAliveRouteNameList = (menus) => {
 export const createDynamicMenus = async () => {
   const res = await getPermissionMenus()
 
+  // filter menus not visible aside
+  const visibleMenus = res.filter((i) => i.show)
+
+  // generate keep-alive route name lists
   const keepAliveRouteNames = createKeepAliveRouteNameList(res)
 
-  const menus = orderTree(arrToTree(res, { id: '_id' }))[0].children
+  const menus = orderTree(arrToTree(visibleMenus, { id: '_id' }))[0].children
 
   return {
     menus,

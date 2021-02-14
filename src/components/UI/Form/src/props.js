@@ -12,13 +12,25 @@ export default {
    * @description form model to render relevant component
    * @type {Array}
    */
-  schemas: Array,
+  schemas: {
+    type: Array,
+    default: () => {
+      return []
+    },
+    required: true,
+  },
 
   /**
    * @description v-model value for form
    * @type {Object}
    */
-  modelValue: Object,
+  modelValue: {
+    type: Object,
+    default: () => {
+      return {}
+    },
+    required: true,
+  },
 
   /**
    * @override

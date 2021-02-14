@@ -53,7 +53,7 @@
       <w-form
         v-model="formData"
         :schemas="getFormSchema"
-        label-width="100px"
+        label-width="auto"
         mock
         :span="12"
       ></w-form>
@@ -255,7 +255,7 @@
             label: '路由地址',
             placeholder: '路由地址',
             clearable: true,
-            helpMessage: '浏览器地址栏里的地址',
+            helpMessage: '对应route里的path字段，即浏览器地址栏里的地址',
           },
           {
             wType: 'Input',
@@ -276,7 +276,8 @@
             placeholder: '组件路径',
             clearable: true,
             disabled: menuType.value === 'catalog',
-            helpMessage: '菜单类型时生效，是文件在views下的路径，不需要vue后缀',
+            helpMessage:
+              '对应route里的component字段，菜单类型时生效，是文件在views下的路径，不需要vue后缀',
           },
 
           {

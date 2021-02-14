@@ -11,7 +11,7 @@ export const createAuthGuard = (router) => {
     // Paths in `whiteLists` will enter directly
     if (whiteLists.includes(to.path)) {
       next()
-      return
+      return false
     }
 
     const token = getToken()
@@ -24,17 +24,17 @@ export const createAuthGuard = (router) => {
       }
 
       next(redirectData)
-      return
+      return false
     }
 
     // if already has routes, next and return
     if (store.state.menu.menus.length !== 0) {
       next()
-      return
+      return false
     }
 
     // create routes and add to `router`
-    const routes = await store.dispatch('menu/buildAccessableMenus')
+    const routes = await store.dispatch('menu/buildAccessableRoutes')
     routes.forEach((route) => {
       router.addRoute(rootName, route)
     })

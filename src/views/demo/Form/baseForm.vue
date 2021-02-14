@@ -1,51 +1,53 @@
 <template>
-  <el-card>
-    <template #header>
-      <span>集成表单，当前绑定值：</span>
+  <div>
+    <el-card>
+      <template #header>
+        <span>集成表单，当前绑定值：</span>
 
-      <w-JSON :value="baseFormData"></w-JSON>
+        <w-JSON :value="baseFormData"></w-JSON>
+
+        <w-form
+          v-model="baseFormStateData"
+          :schemas="getFormStateSchema"
+          label-width="auto"
+          compact
+          :span="4"
+        ></w-form>
+
+        <el-button @click="onValidate">验证</el-button>
+      </template>
 
       <w-form
-        v-model="baseFormStateData"
-        :schemas="baseFormStateSchemas"
-        label-width="auto"
-        compact
-        :span="4"
-      ></w-form>
-    </template>
-
-    <w-form
-      v-model="baseFormData"
-      v-bind="baseFormStateData"
-      :schemas="getFormSchema"
-      :rules="baseFormRules"
-      :count-to-fold="3"
-      :label-width="`${baseFormStateData.labelWidth}px`"
-      @query="onQuery"
-      @reset="onReset"
-    >
-      <template #formSlot="{ disabled }">
-        <el-input v-model="baseFormData.formSlot"></el-input>
-      </template>
-    </w-form>
-  </el-card>
-
-  <br />
+        v-model="baseFormData"
+        v-bind="baseFormStateData"
+        :schemas="getFormSchema"
+        :rules="baseFormRules"
+        :count-to-fold="3"
+        :label-width="`${baseFormStateData.labelWidth}px`"
+        @query="onQuery"
+        @reset="onReset"
+      >
+        <template #formSlot="{ disabled }">
+          <el-input v-model="baseFormData.formSlot"></el-input>
+        </template>
+      </w-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
   import { reactive, computed, defineComponent, toRefs, ref } from 'vue'
   import wForm from '/@/components/UI/Form'
   import wJSON from '/@/components/Help/JSON/index.vue'
-  import { baseFormStateSchemas } from './schemas'
 
   export default defineComponent({
-    name: 'BaseFormDemo',
+    name: 'BaseForm',
 
     components: { wForm, wJSON },
 
     setup() {
-      const flag = ref(false)
+      const formRef = ref(null)
+
       const baseFormStateData = reactive({
         itemShow: false,
 
@@ -94,6 +96,88 @@
       const onBlur = () => {
         console.log('blur')
       }
+
+      const onValidate = () => {
+        console.log(formRef)
+      }
+
+      const getFormStateSchema = computed(() => {
+        return [
+          {
+            wType: 'Switch',
+            prop: 'itemShow',
+            label: '显隐',
+          },
+          {
+            wType: 'Switch',
+            prop: 'compact',
+            label: '紧凑',
+          },
+          {
+            wType: 'Switch',
+            prop: 'mock',
+            label: '模拟',
+          },
+          {
+            wType: 'Switch',
+            prop: 'scopedMock',
+            label: '局部模拟',
+          },
+          {
+            wType: 'Switch',
+            prop: 'query',
+            label: '查询',
+          },
+          {
+            wType: 'Switch',
+            prop: 'disabled',
+            label: '禁用',
+          },
+          {
+            wType: 'Switch',
+            prop: 'inline',
+            label: '行内',
+          },
+          {
+            wType: 'Slider',
+            prop: 'labelWidth',
+            label: 'label宽度',
+            span: 24,
+            max: 200,
+            marks: {
+              0: '0px',
+              50: '50px',
+              100: '100px',
+              200: '200px',
+            },
+          },
+          {
+            wType: 'Slider',
+            prop: 'span',
+            label: '栅格占据的列数(span)',
+            span: 12,
+            max: 24,
+            marks: {
+              0: '0',
+              12: '12',
+              24: '24',
+            },
+          },
+          {
+            wType: 'Slider',
+            prop: 'gutter',
+            label: '栅格间隔(gutter)',
+            span: 12,
+            max: 100,
+            marks: {
+              0: '0px',
+              20: '20px',
+              50: '50px',
+              100: '100px',
+            },
+          },
+        ]
+      })
 
       const getFormSchema = computed(() => {
         return [
@@ -286,17 +370,13 @@
         },
       })
 
-      setTimeout(() => {
-        flag.value = true
-      }, 2000)
-
       return {
-        flag,
+        formRef,
 
         baseFormStateData,
-        baseFormStateSchemas,
 
         ...toRefs(baseForm),
+        getFormStateSchema,
         getFormSchema,
 
         baseFormRules: {
@@ -310,6 +390,7 @@
 
         onQuery,
         onReset,
+        onValidate,
       }
     },
   })

@@ -13,7 +13,7 @@ export const menuModule = {
   },
 
   mutations: {
-    [MUTATION_TYPES.MENU.BUILD_MENU]: (state, menu) => {
+    [MUTATION_TYPES.MENU.SET_MENU]: (state, menu) => {
       state.menus = menu
     },
     [MUTATION_TYPES.MENU.SET_KEEPALIVE]: (state, names) => {
@@ -22,14 +22,14 @@ export const menuModule = {
   },
 
   actions: {
-    async buildAccessableMenus({ commit }) {
+    async buildAccessableRoutes({ commit }) {
       const {
         menus,
         keepAliveRouteNames,
         routes,
       } = await createDynamicPermissions()
 
-      commit(MUTATION_TYPES.MENU.BUILD_MENU, routes)
+      commit(MUTATION_TYPES.MENU.SET_MENU, menus)
       commit(MUTATION_TYPES.MENU.SET_KEEPALIVE, keepAliveRouteNames)
 
       return routes

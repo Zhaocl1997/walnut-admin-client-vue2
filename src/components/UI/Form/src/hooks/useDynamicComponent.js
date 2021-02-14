@@ -36,7 +36,7 @@ export const useDynamicComponent = (props) => {
 
   const onSchemaComponent = () => {
     const usedCompNameMaps = [
-      ...new Set(props.schemas.map((i) => i.wType.toUpperCase())),
+      ...new Set(props.value.schemas.map((i) => i.wType.toUpperCase())),
     ]
     const usedComps = filterObj(FORM_TYPE, usedCompNameMaps)
     const fnCompLists = onSchemaFuntionalComponent()
@@ -53,7 +53,9 @@ export const useDynamicComponent = (props) => {
 
   const onSchemaFuntionalComponent = () => {
     const fnCompMaps = ['Divider']
-    const fnComps = props.schemas.filter((i) => fnCompMaps.includes(i.wType))
+    const fnComps = props.value.schemas.filter((i) =>
+      fnCompMaps.includes(i.wType)
+    )
     const usedFnComps = objectArrayUnique(fnComps, 'wType')
 
     const fnCompLists = usedFnComps.map((i) => i.wType.toUpperCase())
@@ -66,13 +68,13 @@ export const useDynamicComponent = (props) => {
   }
 
   const onPropComponent = () => {
-    if (props.query) {
+    if (props.value.query) {
       wFormComponents.wFormQuery = wFormQuery
     } else {
       wFormComponents.wFormQuery = () => {}
     }
 
-    if (props.mock) {
+    if (props.value.mock) {
       wFormComponents.wFormMock = wFormMock
     } else {
       wFormComponents.wFormMock = () => {}
@@ -80,7 +82,7 @@ export const useDynamicComponent = (props) => {
   }
 
   watch(
-    [() => props.mock, () => props.query],
+    [() => props.value.mock, () => props.value.query],
     () => {
       onPropComponent()
       onSetComponent()

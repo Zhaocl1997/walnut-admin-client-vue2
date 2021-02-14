@@ -49,4 +49,4 @@ export const TIME_TYPE = {
   PICKER: 'picker',
 }
 
-export const FORM_CONTEXT_KEYS = Symbol('w-form')
+export const FORM_CONTEXT_KEYS = 'w-form'
