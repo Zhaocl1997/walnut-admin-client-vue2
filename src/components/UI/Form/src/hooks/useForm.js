@@ -1,6 +1,6 @@
 'use strict'
 
-import { ref, nextTick, watchEffect } from 'vue'
+import { ref, unref, nextTick, watchEffect } from 'vue'
 import { appError } from '/@/utils/log'
 import { isInSetup, getDynamicProps } from '/@/utils/vue'
 
@@ -29,8 +29,15 @@ export const useForm = (props) => {
 
   const methods = {
     validate: async () => {
-      const form = await getInstance()
-      form.validate()
+      return (await getInstance()).validate()
+    },
+
+    clearValidate: async () => {
+      return (await getInstance()).clearValidate()
+    },
+
+    resetFields: async () => {
+      return (await getInstance()).resetFields()
     },
   }
 

@@ -4,7 +4,51 @@ import { reactive, toRefs, watch, toRaw } from 'vue'
 import { findAllIndex } from 'easy-fns-ts'
 import { FORM_TYPE } from '../types'
 
-export const useFormSchema = (props) => {
+/**
+ * Form `Schemas` structure
+ * Since not using ts, type suppport won't be nice.
+ * [
+ *   {
+ *      wType: '',
+ *      formProp: {
+ *        prop: '',
+ *        label: '',
+ *        // ...
+ *        // See more on el-form-item `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes)
+ *      },
+ *      componentProp: {
+ *        placeholder: '',
+ *        max: '',
+ *        clearable: true,
+ *        multiple: true,
+ *        // ...
+ *        // See more on different component `props`, since I enhanced some base components like `Input`/`Select` and more, look for more in each component simple docs.
+ *      },
+ *      componentEvent: {
+ *        click: onClick,
+ *        change: onChange,
+ *        // ...
+ *        // See more on different component `events`.
+ *      },
+ *      colProp: {
+ *        span: 12,
+ *        // ...
+ *        // See more on el-col `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/layout#col-attributes)
+ *      },
+ *
+ *      // This is custom props, I will show you all below.
+ *      customProp: {
+ *        // control form item visible or not
+ *        show: false,
+ *      }
+ *   },
+ *   // ...
+ *   // some similar structured objects
+ * ]
+ */
+
+// TODO
+export const useFormSchemas = (props) => {
   const state = reactive({
     insideSchemas: [],
     isFolded: false,

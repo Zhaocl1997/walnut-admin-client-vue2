@@ -1,14 +1,8 @@
 <template>
   <div @click.stop>
-    <w-form
-      v-model="signinData"
-      class="signin-form"
-      :schemas="getSigninSchema"
-      :rules="getSigninRules"
-    >
-    </w-form>
+    <w-form v-model="signinData" class="signin-form" @hook="register"></w-form>
 
-    <w-locale-picker class="u-float-right"></w-locale-picker>
+    <w-locale-picker class="u-float-right" reload></w-locale-picker>
   </div>
 </template>
 
@@ -17,8 +11,7 @@
   import { useStore } from 'vuex'
   import hooks from '/@/hooks'
 
-  import wForm from '/@/components/UI/Form'
-  import wButton from '/@/components/UI/Button/index.vue'
+  import wForm, { useForm } from '/@/components/UI/Form'
   import wLocalePicker from '/@/components/Help/App/Locale/index.vue'
 
   import { getLocal } from '/@/utils/persistent'
@@ -27,48 +20,64 @@
   export default defineComponent({
     name: 'Signin',
 
-    components: { wForm, wButton, wLocalePicker },
+    components: { wForm, wLocalePicker },
 
     setup() {
       const store = useStore()
+
       const { useI18n } = hooks
       const { t } = useI18n()
-
-      const signinData = reactive({})
 
       const getSigninSchema = computed(() => {
         return [
           {
             wType: 'Input',
-            prop: 'username',
-            label: '',
-            placeholder: t('system.auth.username'),
-            clearable: true,
+            formProp: {
+              prop: 'username',
+              label: '',
+            },
+            componentProp: {
+              placeholder: t('system.auth.username'),
+              clearable: true,
+            },
           },
           {
             wType: 'Input',
-            prop: 'password',
-            label: '',
-            placeholder: t('system.auth.password'),
-            clearable: true,
+            formProp: {
+              prop: 'password',
+              label: '',
+            },
+            componentProp: {
+              placeholder: t('system.auth.password'),
+              clearable: true,
+              showPassword: true,
+            },
           },
           {
             wType: 'Checkbox',
-            prop: 'rememberMe',
-            label: '',
-            placeholder: '',
-            text: t('system.auth.remember'),
+            formProp: {
+              prop: 'rememberMe',
+              label: '',
+            },
+            componentProp: {
+              text: t('system.auth.remember'),
+            },
           },
           {
             wType: 'Button',
-            prop: 'submitButton',
-            label: '',
-            placeholder: '',
-            block: true,
-            type: 'primary',
-            click: onSignin,
-            text: t('system.auth.signin'),
-            style: 'background: transparent',
+            formProp: {
+              prop: 'submitButton',
+              label: '',
+            },
+            componentProp: {
+              block: true,
+              type: 'primary',
+              text: t('system.auth.signin'),
+              style: 'background: transparent',
+            },
+            componentEvent: {
+              click: onSignin,
+            },
           },
         ]
       })
@@ -92,8 +101,20 @@
         }
       })
 
-      const onSignin = () => {
-        store.dispatch('user/Signin', signinData)
+      const [register, { validate }] = useForm({
+        schemas: getSigninSchema,
+        rules: getSigninRules,
+      })
+
+      const signinData = reactive({
+        rememberMe: true,
+      })
+
+      const onSignin = async () => {
+        const valid = await validate()
+        if (valid) {
+          store.dispatch('user/Signin', signinData)
+        }
       }
 
       const init = () => {
@@ -106,12 +127,8 @@
       })
 
       return {
-        t,
-
+        register,
         signinData,
-        getSigninSchema,
-        getSigninRules,
-        onSignin,
       }
     },
   })

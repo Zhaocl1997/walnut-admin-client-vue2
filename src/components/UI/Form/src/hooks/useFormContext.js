@@ -1,8 +1,8 @@
 'use strict'
 
-import { reactive, watch, toRefs } from 'vue'
+import { reactive, watch, toRefs, unref } from 'vue'
 import hooks from '/@/hooks'
-import { FORM_CONTEXT_KEYS } from '../types'
+import { FORM_CONTEXT_KEYS } from '../types/context'
 
 export const useFormContext = () => {
   const { useContext } = hooks
@@ -18,7 +18,7 @@ export const useFormContext = () => {
     const injectedProps = getContext(FORM_CONTEXT_KEYS)
 
     watch(
-      () => injectedProps,
+      () => unref(injectedProps),
       (val) => {
         state = val
       },
@@ -29,6 +29,7 @@ export const useFormContext = () => {
     )
 
     return {
+      // TODO
       ...toRefs(state),
     }
   }

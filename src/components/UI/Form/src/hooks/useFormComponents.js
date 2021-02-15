@@ -9,6 +9,7 @@ import wFormQuery from '../components/query.vue'
 import wFormMock from '../components/mock.vue'
 import wFormDivider from '../components/divider.vue'
 
+// TODO
 /**
  * @description generate dynamic component
  * Problems
@@ -19,10 +20,14 @@ import wFormDivider from '../components/divider.vue'
  * 5. There must be a better way!
  */
 
-export const useDynamicComponent = (props) => {
+import wFormItem from '../components/item.vue'
+
+export const useFormComponents = (props) => {
   const instance = getCurrentInstance()
 
-  const wFormComponents = {}
+  const wFormComponents = {
+    wFormItem,
+  }
 
   const onInitialComponents = () => {
     onPropComponent()

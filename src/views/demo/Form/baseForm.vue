@@ -13,11 +13,10 @@
           compact
           :span="4"
         ></w-form>
-
-        <el-button @click="onValidate">验证</el-button>
       </template>
 
       <w-form
+        ref="formRef"
         v-model="baseFormData"
         v-bind="baseFormStateData"
         :schemas="getFormSchema"
@@ -28,7 +27,7 @@
         @reset="onReset"
       >
         <template #formSlot="{ disabled }">
-          <el-input v-model="baseFormData.formSlot"></el-input>
+          <span>custom slot</span>
         </template>
       </w-form>
     </el-card>
@@ -49,7 +48,7 @@
       const formRef = ref(null)
 
       const baseFormStateData = reactive({
-        itemShow: false,
+        itemShow: true,
 
         compact: false,
         mock: false,
@@ -97,83 +96,111 @@
         console.log('blur')
       }
 
-      const onValidate = () => {
-        console.log(formRef)
-      }
-
       const getFormStateSchema = computed(() => {
         return [
           {
             wType: 'Switch',
-            prop: 'itemShow',
-            label: '显隐',
+            formProp: {
+              prop: 'itemShow',
+              label: '显隐',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'compact',
-            label: '紧凑',
+            formProp: {
+              prop: 'compact',
+              label: '紧凑',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'mock',
-            label: '模拟',
+            formProp: {
+              prop: 'mock',
+              label: '模拟',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'scopedMock',
-            label: '局部模拟',
+            formProp: {
+              prop: 'scopedMock',
+              label: '局部模拟',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'query',
-            label: '查询',
+            formProp: {
+              prop: 'query',
+              label: '查询',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'disabled',
-            label: '禁用',
+            formProp: {
+              prop: 'disabled',
+              label: '禁用',
+            },
           },
           {
             wType: 'Switch',
-            prop: 'inline',
-            label: '行内',
-          },
-          {
-            wType: 'Slider',
-            prop: 'labelWidth',
-            label: 'label宽度',
-            span: 24,
-            max: 200,
-            marks: {
-              0: '0px',
-              50: '50px',
-              100: '100px',
-              200: '200px',
+            formProp: {
+              prop: 'inline',
+              label: '行内',
             },
           },
           {
             wType: 'Slider',
-            prop: 'span',
-            label: '栅格占据的列数(span)',
-            span: 12,
-            max: 24,
-            marks: {
-              0: '0',
-              12: '12',
-              24: '24',
+            formProp: {
+              prop: 'labelWidth',
+              label: 'label宽度',
+            },
+            componentProp: {
+              max: 200,
+              marks: {
+                0: '0px',
+                50: '50px',
+                100: '100px',
+                200: '200px',
+              },
+            },
+            colProp: {
+              span: 24,
             },
           },
           {
             wType: 'Slider',
-            prop: 'gutter',
-            label: '栅格间隔(gutter)',
-            span: 12,
-            max: 100,
-            marks: {
-              0: '0px',
-              20: '20px',
-              50: '50px',
-              100: '100px',
+            formProp: {
+              prop: 'span',
+              label: '栅格占据的列数(span)',
+            },
+            componentProp: {
+              max: 24,
+              marks: {
+                0: '0',
+                12: '12',
+                24: '24',
+              },
+            },
+            colProp: {
+              span: 24,
+            },
+          },
+          {
+            wType: 'Slider',
+            formProp: {
+              prop: 'gutter',
+              label: '栅格间隔(gutter)',
+            },
+            componentProp: {
+              max: 100,
+              marks: {
+                0: '0px',
+                20: '20px',
+                50: '50px',
+                100: '100px',
+              },
+            },
+            colProp: {
+              span: 24,
             },
           },
         ]
@@ -184,181 +211,228 @@
           // ==================================
           // ============== Input =============
           // ==================================
-          {
-            wType: 'Divider',
-            title: 'Input',
-            fold: true,
-            defaultFold: false,
-            countToFold: 1,
-          },
+          // {
+          //   wType: 'Divider',
+          //   title: 'Input',
+          //   fold: true,
+          //   defaultFold: false,
+          //   countToFold: 1,
+          // },
           {
             wType: 'Input',
-            prop: 'formInputBase',
-            label: '基本',
-            placeholder: '基本',
-            clearable: true,
+            formProp: {
+              prop: 'formInputBase',
+              label: '基本',
+            },
+            componentProp: {
+              placeholder: '基本',
+              clearable: true,
+            },
             mock: true,
             show: baseFormStateData.itemShow,
           },
           {
             wType: 'Input',
-            prop: 'formSlot',
-            label: '自定义插槽',
-            placeholder: '自定义插槽',
-          },
-          {
-            wType: 'Input',
-            prop: 'formModelModifiers',
-            label: '自定义修饰符',
-            placeholder: '自定义修饰符',
-            modelModifiers: {
-              capitalize: true,
+            formProp: {
+              prop: 'formSlot',
+              label: '自定义插槽',
+            },
+            componentProp: {
+              placeholder: '自定义插槽',
             },
           },
           {
             wType: 'Input',
-            prop: 'formInputBlackList',
-            label: '黑名单',
-            placeholder: "禁止输入['<', '>']",
-            blackList: ['<', '>'],
-            input: onInput,
+            formProp: {
+              prop: 'formModelModifiers',
+              label: '自定义修饰符',
+            },
+            componentProp: {
+              placeholder: '自定义修饰符',
+              modelModifiers: {
+                capitalize: true,
+              },
+            },
           },
           {
             wType: 'Input',
-            prop: 'formInputPassword',
-            label: '密码框',
-            placeholder: '密码框',
-            showPassword: true,
-            clearable: true,
+            formProp: {
+              prop: 'formInputBlackList',
+              label: '黑名单',
+            },
+            componentProp: {
+              placeholder: "禁止输入['<', '>']",
+              blackList: ['<', '>'],
+            },
+            componentEvent: {
+              input: onInput,
+            },
           },
           {
             wType: 'Input',
-            prop: 'formInputProp',
-            label: '前后置内容',
-            placeholder: '前后置内容',
-            suffixIcon: 'el-icon-date',
-            prefixIcon: 'el-icon-search',
+            formProp: {
+              prop: 'formInputPassword',
+              label: '密码框',
+            },
+            componentProp: {
+              placeholder: '密码框',
+              showPassword: true,
+              clearable: true,
+            },
           },
           {
             wType: 'Input',
-            prop: 'formInputTextarea',
-            label: '文本域',
-            placeholder: '文本域',
-            type: 'textarea',
-            maxlength: 200,
-            showWordLimit: true,
-            rows: 5,
+            formProp: {
+              prop: 'formInputProp',
+              label: '前后置内容',
+            },
+            componentProp: {
+              placeholder: '前后置内容',
+              suffixIcon: 'el-icon-date',
+              prefixIcon: 'el-icon-search',
+            },
+          },
+          {
+            wType: 'Input',
+            formProp: {
+              prop: 'formInputTextarea',
+              label: '文本域',
+            },
+            componentProp: {
+              placeholder: '文本域',
+              type: 'textarea',
+              maxlength: 200,
+              showWordLimit: true,
+              rows: 5,
+            },
           },
 
           // ======================================
           // ============= Input Number ===========
           // ======================================
-          {
-            wType: 'Divider',
-            title: 'InputNumber',
-            fold: true,
-            defaultFold: false,
-            countToFold: 0,
-          },
+          // {
+          //   wType: 'Divider',
+          //   title: 'InputNumber',
+          //   fold: true,
+          //   defaultFold: false,
+          //   countToFold: 0,
+          // },
           {
             wType: 'InputNumber',
-            prop: 'formInputNumber',
-            label: '数字框',
-            placeholder: '数字框',
-            step: 5,
-            max: 30,
-            min: 5,
-            precision: 4,
+            formProp: {
+              prop: 'formInputNumber',
+              label: '数字框',
+            },
+            componentProp: {
+              placeholder: '数字框',
+              step: 5,
+              max: 30,
+              min: 5,
+              precision: 4,
+            },
           },
 
           // ==================================
           // ============== Select ============
           // ==================================
-          {
-            wType: 'Divider',
-            title: 'Select',
-            fold: true,
-            defaultFold: false,
-            countToFold: 0,
-          },
-          {
-            wType: 'Select',
-            prop: 'formSelectBase',
-            label: '基本',
-            placeholder: '基本',
-            options,
-            clearable: true,
-            formatter: (val) => options.find((i) => i.value === val).label,
-            blur: onBlur,
-          },
+          // {
+          //   wType: 'Divider',
+          //   title: 'Select',
+          //   fold: true,
+          //   defaultFold: false,
+          //   countToFold: 0,
+          // },
           {
             wType: 'Select',
-            prop: 'formSelectMultipleArray',
-            label: '多选-数组',
-            placeholder: '多选-数组',
-            options,
-            clearable: true,
-            multiple: true,
-            formatter: (val) => {
-              let ret = []
-              val.map((v) => {
-                const l = options.find((i) => i.value === v).label
-                ret.push(l)
-              })
-              return ret
+            formProp: {
+              prop: 'formSelectBase',
+              label: '基本',
+            },
+            componentProp: {
+              placeholder: '基本',
+              options,
+              clearable: true,
+            },
+            componentEvent: {
+              blur: onBlur,
             },
           },
           {
             wType: 'Select',
-            prop: 'formSelectMultipleCollapse',
-            label: '多选-坍塌',
-            placeholder: '多选-坍塌',
-            options,
-            clearable: true,
-            multiple: true,
-            collapseTags: true,
+            formProp: {
+              prop: 'formSelectMultipleArray',
+              label: '多选-数组',
+            },
+            componentProp: {
+              placeholder: '多选-数组',
+              options,
+              clearable: true,
+              multiple: true,
+            },
           },
           {
             wType: 'Select',
-            prop: 'formSelectMultipleObject',
-            label: '多选-对象',
-            placeholder: '多选-对象',
-            options,
-            clearable: true,
-            multiple: true,
-            valueKey: 'value',
+            formProp: {
+              prop: 'formSelectMultipleCollapse',
+              label: '多选-坍塌',
+            },
+            componentProp: {
+              placeholder: '多选-坍塌',
+              options,
+              clearable: true,
+              multiple: true,
+              collapseTags: true,
+            },
+          },
+          {
+            wType: 'Select',
+            formProp: {
+              prop: 'formSelectMultipleObject',
+              label: '多选-对象',
+            },
+            componentProp: {
+              placeholder: '多选-对象',
+              options,
+              clearable: true,
+              multiple: true,
+              valueKey: 'value',
+            },
           },
 
           // ==================================
           // ============== Switch ============
           // ==================================
-          {
-            wType: 'Divider',
-            title: 'Switch',
-            fold: true,
-            defaultFold: false,
-            countToFold: 0,
-          },
+          // {
+          //   wType: 'Divider',
+          //   title: 'Switch',
+          //   fold: true,
+          //   defaultFold: false,
+          //   countToFold: 0,
+          // },
           {
             wType: 'Switch',
-            prop: 'formSwitchBase',
-            label: '基本',
+            formProp: {
+              prop: 'formSwitchBase',
+              label: '基本',
+            },
           },
 
           // ==================================
           // ============== Slider ============
           // ==================================
-          {
-            wType: 'Divider',
-            title: 'Slider',
-            fold: true,
-            defaultFold: true,
-            countToFold: 0,
-          },
+          // {
+          //   wType: 'Divider',
+          //   title: 'Slider',
+          //   fold: true,
+          //   defaultFold: true,
+          //   countToFold: 0,
+          // },
           {
             wType: 'Slider',
-            prop: 'formSliderBase',
-            label: '基本',
+            formProp: {
+              prop: 'formSliderBase',
+              label: '基本',
+            },
           },
         ]
       })
@@ -390,7 +464,6 @@
 
         onQuery,
         onReset,
-        onValidate,
       }
     },
   })

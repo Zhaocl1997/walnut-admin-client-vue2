@@ -48,5 +48,3 @@ export const TIME_TYPE = {
   SELECT: 'select',
   PICKER: 'picker',
 }
-
-export const FORM_CONTEXT_KEYS = 'w-form'
