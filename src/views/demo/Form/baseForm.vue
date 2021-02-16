@@ -211,17 +211,108 @@
           // ==================================
           // ============== Input =============
           // ==================================
-          // {
-          //   wType: 'Divider',
-          //   title: 'Input',
-          //   fold: true,
-          //   defaultFold: false,
-          //   countToFold: 1,
-          // },
+          {
+            wType: 'Divider',
+            title: 'Input',
+            fold: true,
+            defaultFold: false,
+            countToFold: 1,
+            children: [
+              {
+                wType: 'Input',
+                formProp: {
+                  prop: 'dsa',
+                  label: '基本',
+                },
+                componentProp: {
+                  placeholder: '基本',
+                  clearable: true,
+                },
+                mock: true,
+                show: baseFormStateData.itemShow,
+              },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formSlot',
+              //     label: '自定义插槽',
+              //   },
+              //   componentProp: {
+              //     placeholder: '自定义插槽',
+              //   },
+              // },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formModelModifiers',
+              //     label: '自定义修饰符',
+              //   },
+              //   componentProp: {
+              //     placeholder: '自定义修饰符',
+              //     modelModifiers: {
+              //       capitalize: true,
+              //     },
+              //   },
+              // },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formInputBlackList',
+              //     label: '黑名单',
+              //   },
+              //   componentProp: {
+              //     placeholder: "禁止输入['<', '>']",
+              //     blackList: ['<', '>'],
+              //   },
+              //   componentEvent: {
+              //     input: onInput,
+              //   },
+              // },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formInputPassword',
+              //     label: '密码框',
+              //   },
+              //   componentProp: {
+              //     placeholder: '密码框',
+              //     showPassword: true,
+              //     clearable: true,
+              //   },
+              // },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formInputProp',
+              //     label: '前后置内容',
+              //   },
+              //   componentProp: {
+              //     placeholder: '前后置内容',
+              //     suffixIcon: 'el-icon-date',
+              //     prefixIcon: 'el-icon-search',
+              //   },
+              // },
+              // {
+              //   wType: 'Input',
+              //   formProp: {
+              //     prop: 'formInputTextarea',
+              //     label: '文本域',
+              //   },
+              //   componentProp: {
+              //     placeholder: '文本域',
+              //     type: 'textarea',
+              //     maxlength: 200,
+              //     showWordLimit: true,
+              //     rows: 5,
+              //   },
+              // },
+            ],
+          },
+
           {
             wType: 'Input',
             formProp: {
-              prop: 'formInputBase',
+              prop: 'asd',
               label: '基本',
             },
             componentProp: {
@@ -230,81 +321,6 @@
             },
             mock: true,
             show: baseFormStateData.itemShow,
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formSlot',
-              label: '自定义插槽',
-            },
-            componentProp: {
-              placeholder: '自定义插槽',
-            },
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formModelModifiers',
-              label: '自定义修饰符',
-            },
-            componentProp: {
-              placeholder: '自定义修饰符',
-              modelModifiers: {
-                capitalize: true,
-              },
-            },
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formInputBlackList',
-              label: '黑名单',
-            },
-            componentProp: {
-              placeholder: "禁止输入['<', '>']",
-              blackList: ['<', '>'],
-            },
-            componentEvent: {
-              input: onInput,
-            },
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formInputPassword',
-              label: '密码框',
-            },
-            componentProp: {
-              placeholder: '密码框',
-              showPassword: true,
-              clearable: true,
-            },
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formInputProp',
-              label: '前后置内容',
-            },
-            componentProp: {
-              placeholder: '前后置内容',
-              suffixIcon: 'el-icon-date',
-              prefixIcon: 'el-icon-search',
-            },
-          },
-          {
-            wType: 'Input',
-            formProp: {
-              prop: 'formInputTextarea',
-              label: '文本域',
-            },
-            componentProp: {
-              placeholder: '文本域',
-              type: 'textarea',
-              maxlength: 200,
-              showWordLimit: true,
-              rows: 5,
-            },
           },
 
           // ======================================

@@ -1,22 +1,40 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
-      <template v-if="$slots[propName]">
-        <slot :name="propName" />
-      </template>
+  <div>
+    <template v-if="item.wType === 'Divider'">
+      <component :is="'w-form-divider'" :item="item"></component>
 
-      <template v-else>
-        <keep-alive>
-          <component
-            :is="componentName"
-            v-bind="componentProps"
-            v-model="modelValue[propName]"
-            v-on="componentEvents"
-          ></component>
-        </keep-alive>
+      <template v-if="item.children && item.children.length > 0">
+        <template v-for="(child, index) in item.children" :key="index">
+          <w-form-item :item="child" :component="$options.components">
+            <template v-for="i in Object.keys($slots)" #[i]="data">
+              <slot :name="i" v-bind="data"></slot>
+            </template>
+          </w-form-item>
+        </template>
       </template>
-    </el-form-item>
-  </transition>
+    </template>
+
+    <template v-else>
+      <transition name="fade" mode="out-in" appear>
+        <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
+          <template v-if="$slots[propName]">
+            <slot :name="propName" />
+          </template>
+
+          <template v-else>
+            <keep-alive>
+              <component
+                :is="componentName"
+                v-bind="componentProps"
+                v-model="modelValue[propName]"
+                v-on="componentEvents"
+              ></component>
+            </keep-alive>
+          </template>
+        </el-form-item>
+      </transition>
+    </template>
+  </div>
 </template>
 
 <script>

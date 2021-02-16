@@ -4,14 +4,14 @@
       <template #header>
         <span>hook表单，当前绑定值：</span>
 
-        <w-JSON :value="modelValue"></w-JSON>
+        <w-JSON :value="formValue"></w-JSON>
 
         <el-button @click="onValidate">验证</el-button>
         <el-button @click="onClearValidate">清空验证</el-button>
         <el-button @click="onResetFields">重置</el-button>
       </template>
 
-      <w-form v-model="modelValue" @hook="register"></w-form>
+      <w-form v-model="formValue" @hook="register"></w-form>
     </el-card>
   </div>
 </template>
@@ -28,7 +28,7 @@
     components: { wForm, wJSON },
 
     setup() {
-      const modelValue = ref({})
+      const formValue = ref({})
 
       const formConfig = reactive({
         labelWidth: 'auto',
@@ -107,7 +107,7 @@
       }
 
       return {
-        modelValue,
+        formValue,
         register,
 
         onValidate,

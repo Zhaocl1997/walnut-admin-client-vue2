@@ -13,10 +13,11 @@
           :toggle="() => onToggleDividerFold(index, item)"
         ></component> -->
 
-        <w-form-item
-          :item="item"
-          :component="$options.components"
-        ></w-form-item>
+        <w-form-item :item="item" :component="$options.components">
+          <template v-for="i in Object.keys($slots)" #[i]="data">
+            <slot :name="i" v-bind="data"></slot>
+          </template>
+        </w-form-item>
 
         <!-- <transition name="fade" mode="out-in" appear>
           <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
