@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="origin" v-bind="getBindValue">
+  <el-select v-model="origin" style="width: 100%" v-bind="getBindValue">
     <el-option
       v-for="item in options"
       :key="item[optionValue]"

@@ -1,9 +1,13 @@
 <template>
-  <!-- <w-excel-import @success="onImportSuccess">
+  <w-excel-import @success="onImportSuccess">
     <el-button>导入</el-button>
   </w-excel-import>
 
-  <el-button @click="onExport">导出</el-button> -->
+  <!-- <el-button @click="onExport">导出</el-button> -->
+  <w-excel-export :data="data" :headers="headers">
+    <el-button>导出</el-button>
+  </w-excel-export>
+
   <w-table-buttons
     class="u-mb10"
     @create="emit('create')"
@@ -21,20 +25,25 @@
 <script>
   import { defineComponent, unref, toRaw } from 'vue'
   import XLSX from 'xlsx'
-  import { transform, isObject } from 'lodash-es'
 
   import wTableButtons from './buttons/index.vue'
   import wTableTitle from './title/index.vue'
   import wTableSettings from './settings/index.vue'
 
   import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
-  import { wExcelImport } from '/@/components/UI/Excel'
-  import { omit } from 'easy-fns-ts'
+  import { wExcelImport, wExcelExport } from '/@/components/UI/Excel'
+  import { omit, deepReplaceKey, except } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'WTableHeader',
 
-    components: { wTableButtons, wTableTitle, wTableSettings, wExcelImport },
+    components: {
+      wTableButtons,
+      wTableTitle,
+      wTableSettings,
+      wExcelImport,
+      wExcelExport,
+    },
 
     emits: ['create', 'import', 'export'],
 
@@ -63,7 +72,7 @@
       const onExport = () => {
         const { utils, writeFile } = XLSX
 
-        var filename = 'file.xlsx' //文件名称
+        var filename = 'file.csv' //文件名称
         // var data = [
         //   [1, 2, 3],
         //   [true, false, null, 'sheetjs'],
@@ -72,8 +81,6 @@
         // ] //数据，一定注意需要时二维数组
 
         const { headerKey, headerWith, headerLabel } = onInitialHeaders()
-
-        const except = (a, b) => a.filter((i) => b.indexOf(i) === -1)
 
         const getData = (headerKey) => {
           const newData = []
@@ -98,30 +105,17 @@
         workBook['!cols'] = headerWith
 
         utils.book_append_sheet(wb, workBook, ws_name) //将数据添加到工作薄
-        writeFile(wb, filename) //导出Excel
+        writeFile(wb, filename, { bookType: 'csv' }) //导出Excel
       }
 
       const onImportSuccess = (excel) => {
-        function replaceKeysDeep(obj, keysMap) {
-          // keysMap = { oldKey1: newKey1, oldKey2: newKey2, etc...
-          return transform(obj, function (result, value, key) {
-            // transform to a new object
-
-            var currentKey = keysMap[key] || key // if the key is in keysMap use the replacement, if not use the original key
-
-            result[currentKey] = isObject(value)
-              ? replaceKeysDeep(value, keysMap)
-              : value // if the key is an object run it through the inner function - replaceKeys
-          })
-        }
-
         const keysMap = {}
         toRaw(unref(headers)).map((i) => (keysMap[i.label] = i.prop))
 
         const newDF = []
 
         excel[0].results.map((item) => {
-          newDF.push(replaceKeysDeep(item, keysMap))
+          newDF.push(deepReplaceKey(item, keysMap))
         })
 
         console.log(newDF)
@@ -138,6 +132,8 @@
       }
 
       return {
+        data,
+        headers,
         emit,
         onExport,
         onImportSuccess,

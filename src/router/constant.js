@@ -22,6 +22,11 @@ export const RootRoute = {
       name: 'Index',
       component: () => import('../views/index.vue'),
     },
+    {
+      path: 'table',
+      name: 'Table',
+      component: () => import('../views/demo/Table/baseTable.vue'),
+    },
   ],
 }
 

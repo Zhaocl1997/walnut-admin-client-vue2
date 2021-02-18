@@ -1,7 +1,7 @@
 'use strict'
 
 import { getToken } from '../auth'
-import { log } from 'easy-fns-ts'
+import { capsuleLog } from 'easy-fns-ts'
 import { checkStatus } from './status'
 import { isString } from 'lodash-es'
 
@@ -18,7 +18,7 @@ export const transform = {
   },
 
   responseInterceptors: (res) => {
-    log.capsule('[Walnut Request]', 'Success', 'success')
+    capsuleLog('[Walnut Request]', 'Success', 'success')
 
     return Promise.resolve(res.data)
   },
@@ -29,7 +29,7 @@ export const transform = {
 
     checkStatus(statusCode, msg)
 
-    log.capsule('[Walnut Request]', 'Error', 'danger')
+    capsuleLog('[Walnut Request]', 'Error', 'danger')
     return Promise.reject(err)
   },
 
