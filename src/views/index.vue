@@ -11,14 +11,18 @@
 </template>
 
 <script>
-  import { ref, reactive, defineComponent } from 'vue'
+  import { ref, reactive, defineComponent, onMounted } from 'vue'
 
   export default defineComponent({
     name: 'Index',
 
     components: {},
 
-    setup() {},
+    setup() {
+      onMounted(() => {
+        console.log(321)
+      })
+    },
   })
 </script>
 
