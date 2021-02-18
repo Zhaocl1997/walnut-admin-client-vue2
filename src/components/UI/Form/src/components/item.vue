@@ -25,8 +25,8 @@
             <keep-alive>
               <component
                 :is="componentName"
-                v-bind="componentProps"
                 v-model="modelValue[propName]"
+                v-bind="componentProps"
                 v-on="componentEvents"
               ></component>
             </keep-alive>

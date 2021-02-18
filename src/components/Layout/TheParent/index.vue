@@ -5,7 +5,7 @@
         <keep-alive v-if="getOpenKeepAlive" :include="getKeepAliveInclude">
           <component :is="Component" v-bind="getKey(Component, route)" />
         </keep-alive>
-        <component :is="Component" v-bind="getKey(Component, route)" v-else />
+        <component :is="Component" v-else v-bind="getKey(Component, route)" />
       </transition>
     </template>
   </router-view>
