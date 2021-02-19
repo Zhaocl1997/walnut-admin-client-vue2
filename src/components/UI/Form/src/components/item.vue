@@ -5,7 +5,7 @@
 
       <template v-if="item.children && item.children.length > 0">
         <template v-for="(child, index) in item.children" :key="index">
-          <w-form-item :item="child" :component="$options.components">
+          <w-form-item :item="child">
             <template v-for="i in Object.keys($slots)" #[i]="data">
               <slot :name="i" v-bind="data"></slot>
             </template>
@@ -15,24 +15,24 @@
     </template>
 
     <template v-else>
-      <transition name="fade" mode="out-in" appear>
-        <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
-          <template v-if="$slots[propName]">
-            <slot :name="propName" />
-          </template>
+      <keep-alive>
+        <transition name="fade" mode="out-in" appear>
+          <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
+            <template v-if="$slots[propName]">
+              <slot :name="propName" />
+            </template>
 
-          <template v-else>
-            <keep-alive>
+            <template v-else>
               <component
-                :is="componentName"
+                :is="tag"
                 v-model="modelValue[propName]"
                 v-bind="componentProps"
                 v-on="componentEvents"
               ></component>
-            </keep-alive>
-          </template>
-        </el-form-item>
-      </transition>
+            </template>
+          </el-form-item>
+        </transition>
+      </keep-alive>
     </template>
   </div>
 </template>
@@ -49,7 +49,6 @@
 
     props: {
       item: Object,
-      component: Object,
     },
 
     setup(props) {
@@ -57,6 +56,7 @@
       const { compact, modelValue } = getContextProps()
 
       const {
+        tag,
         propName,
         componentName,
         componentProps,
@@ -67,6 +67,7 @@
         compact,
         modelValue,
 
+        tag,
         propName,
         componentName,
         componentProps,

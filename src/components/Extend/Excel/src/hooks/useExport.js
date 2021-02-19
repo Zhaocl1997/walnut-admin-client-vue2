@@ -14,7 +14,7 @@ export const useExport = (prop) => {
   } = prop
   const { utils, writeFile } = XLSX
 
-  const useHeaders = (h) => {
+  const useHeader = (h) => {
     const headerProps = h.map((i) => i.prop)
     const headerCols = h.map((i) => {
       return { wpx: parseInt(i.width) }
@@ -41,7 +41,7 @@ export const useExport = (prop) => {
   const useXLSXExport = (headerLabels, exportData, headerCols) => {
     const workBook = utils.book_new()
     const jsonData = [headerLabels, ...exportData]
-    const workSheet = utils.json_to_sheet(jsonData, {
+    let workSheet = utils.json_to_sheet(jsonData, {
       header: headerProps,
       skipHeader: true,
     })
@@ -54,7 +54,7 @@ export const useExport = (prop) => {
     writeFile(workBook, fileNameWithExtension, { bookType: fileType })
   }
 
-  const { headerCols, headerProps, headerLabels } = useHeaders(headers)
+  const { headerCols, headerProps, headerLabels } = useHeader(unref(headers))
   const { exportData } = useData(data, headerProps)
   useXLSXExport(headerLabels, exportData, headerCols)
 }

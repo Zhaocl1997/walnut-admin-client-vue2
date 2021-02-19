@@ -1,6 +1,6 @@
 <template>
   <div class="u-inline-block">
-    <div @click="onClickExport">
+    <div @click="openDialog">
       <slot></slot>
     </div>
 
@@ -15,23 +15,22 @@
 </template>
 
 <script>
-  import { ref, reactive, computed, defineComponent } from 'vue'
+  import { reactive, computed, defineComponent, nextTick } from 'vue'
   import wDialog, { useDialog } from '/@/components/UI/Dialog'
   import wForm, { useForm } from '/@/components/UI/Form'
   import { useExport } from './hooks/useExport'
+  import { useTableContext } from '/@/components/UI/Table/src/hooks/useTableContext'
 
   export default defineComponent({
     name: 'WExcelExport',
 
     components: { wDialog, wForm },
 
-    props: {
-      data: Array,
-      headers: Array,
-    },
-
     setup(props, { attrs }) {
-      const formValue = reactive({
+      const { getContextProps } = useTableContext()
+      const { data, headers } = getContextProps()
+
+      let formValue = reactive({
         fileType: 'xlsx',
       })
 
@@ -54,6 +53,16 @@
             },
           },
           {
+            wType: 'Input',
+            formProp: {
+              prop: 'sheetName',
+              label: 'sheet页名称',
+            },
+            componentProp: {
+              placeholder: 'sheet页名称',
+            },
+          },
+          {
             wType: 'Select',
             formProp: {
               prop: 'fileType',
@@ -65,23 +74,23 @@
               options: [
                 {
                   value: 'xlsx',
-                  label: 'xlsx',
+                  label: '*.xlsx',
                 },
                 {
                   value: 'csv',
-                  label: 'csv',
+                  label: '*.csv',
                 },
                 {
                   value: 'txt',
-                  label: 'txt',
+                  label: '*.txt',
                 },
                 {
                   value: 'html',
-                  label: 'html',
+                  label: '*.html',
                 },
                 {
                   value: 'xml',
-                  label: 'xml',
+                  label: '*.xml',
                 },
               ],
             },
@@ -89,17 +98,17 @@
         ],
       })
 
-      const onClickExport = () => {
-        openDialog()
-      }
-
       const onConfirm = () => {
         useExport({
           fileName: formValue.fileName,
           fileType: formValue.fileType,
           sheetName: formValue.sheetName,
-          data: props.data,
-          headers: props.headers,
+          data: data,
+          headers: headers,
+        })
+
+        nextTick(() => {
+          closeDialog()
         })
       }
 
@@ -110,7 +119,7 @@
       return {
         formValue,
 
-        onClickExport,
+        openDialog,
         onConfirm,
         onCancel,
 

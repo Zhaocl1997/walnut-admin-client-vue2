@@ -3,14 +3,14 @@
 import pkg from '../../package.json'
 import { mode } from './mode'
 
-const appName = pkg.name.toUpperCase().replace('-', '__')
-const appVersion = pkg.version
+export const appName = pkg.name.toUpperCase().replace('-', '__')
+export const appVersion = pkg.version
 
-const appPrefix = `${appName}__${appVersion}__${mode}`
-const localStoragePrefix = `LOCAL`
-const sessionStoragePrefix = `SESSION`
-const cookiePrefix = `COOKIEs`
-const classPrefix = `${appName.slice(0, 1).toLowerCase()}`
+export const appPrefix = `${appName}__${appVersion}__${mode}`
+export const localStoragePrefix = `LOCAL`
+export const sessionStoragePrefix = `SESSION`
+export const cookiePrefix = `COOKIES`
+export const basePrefix = `${appName.slice(0, 1).toLowerCase()}`
 
 export const getlsPrefix = () => {
   return `${appPrefix}__${localStoragePrefix}`
@@ -25,5 +25,5 @@ export const getckPrefix = () => {
 }
 
 export const getClsPrefix = (compName) => {
-  return `${classPrefix}-${compName}`
+  return `${basePrefix}-${compName}`
 }

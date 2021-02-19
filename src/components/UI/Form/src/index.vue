@@ -6,37 +6,11 @@
         :key="`${onCalcPropName(item) || 'wForm'}${index}`"
         :span="onCalcSpan(item)"
       >
-        <!-- <component
-          :is="'w-form-divider'"
-          v-if="onCalcShowItem(item, FORM_TYPE.DIVIDER) && !inline"
-          :item="item"
-          :toggle="() => onToggleDividerFold(index, item)"
-        ></component> -->
-
-        <w-form-item :item="item" :component="$options.components">
+        <w-form-item :item="item">
           <template v-for="i in Object.keys($slots)" #[i]="data">
             <slot :name="i" v-bind="data"></slot>
           </template>
         </w-form-item>
-
-        <!-- <transition name="fade" mode="out-in" appear>
-          <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
-            <template v-if="$slots[onCalcPropName(item)]">
-              <slot :name="onCalcPropName(item)" />
-            </template>
-
-            <template v-else>
-              <keep-alive>
-                <component
-                  :is="onCalcCompName(item.wType)"
-                  v-model="modelValue[onCalcPropName(item)]"
-                  v-bind="item.componentProp || {}"
-                  v-on="item.componentEvent || {}"
-                ></component>
-              </keep-alive>
-            </template>
-          </el-form-item>
-        </transition> -->
       </el-col>
     </el-row>
 

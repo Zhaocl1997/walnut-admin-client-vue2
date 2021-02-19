@@ -30,7 +30,7 @@ export const useFormContext = () => {
 
     return {
       // TODO
-      ...toRefs(state),
+      ...toRefs(reactive(state)),
     }
   }
 

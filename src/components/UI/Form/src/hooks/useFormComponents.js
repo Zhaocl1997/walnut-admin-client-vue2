@@ -8,7 +8,7 @@ import { FORM_TYPE } from '../types'
 import wFormQuery from '../components/query.vue'
 import wFormMock from '../components/mock.vue'
 import wFormDivider from '../components/divider.vue'
-
+import wInput from '/@/components/UI/Input/index.vue'
 // TODO
 /**
  * @description generate dynamic component
