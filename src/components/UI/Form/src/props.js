@@ -2,12 +2,25 @@
 
 import { ElForm } from 'element-plus'
 
-export default {
+export const originalProps = {
   /**
    * @description original ElForm props
    */
   ...ElForm.props,
 
+  /**
+   * @override
+   * @description override original labelWidth with a default value
+   * @type {String}
+   * @default auto
+   */
+  labelWidth: {
+    type: String,
+    default: 'auto',
+  },
+}
+
+export const extendProps = {
   /**
    * @description form model to render relevant component
    * @type {Array}
@@ -30,17 +43,6 @@ export default {
       return {}
     },
     required: true,
-  },
-
-  /**
-   * @override
-   * @description override original labelWidth with a default value
-   * @type {String}
-   * @default 0
-   */
-  labelWidth: {
-    type: String,
-    default: '0',
   },
 
   /**
@@ -94,16 +96,6 @@ export default {
   },
 
   /**
-   * @description scoped mock button, specify item with `mock: true`
-   * @type {Boolean}
-   * @default false
-   */
-  scopedMock: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * @description query group button
    * @type {Boolean}
    * @default false
@@ -122,4 +114,9 @@ export default {
     type: Boolean,
     default: false,
   },
+}
+
+export default {
+  ...originalProps,
+  ...extendProps,
 }

@@ -24,12 +24,15 @@ export const transform = {
   },
 
   responseInterceptorsCatch: (err) => {
-    const statusCode = err.response.data.statusCode
-    const msg = err.response.data.detail.message
+    if (err.response) {
+      const statusCode = err.response.data.statusCode
+      const msg = err.response.data.detail.message
 
-    checkStatus(statusCode, msg)
+      checkStatus(statusCode, msg)
 
-    capsuleLog('[Walnut Request]', 'Error', 'danger')
+      capsuleLog('[Walnut Request]', 'Error', 'danger')
+    }
+
     return Promise.reject(err)
   },
 

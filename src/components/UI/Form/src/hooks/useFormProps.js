@@ -11,7 +11,7 @@ export const useFormProps = (props) => {
    * @description set props exposed as a method
    */
   const setProps = (newProps) => {
-    formProps.value = deepMerge(unref(formProps) || {}, newProps || {})
+    formProps.value = deepMerge(unref(formProps), newProps)
   }
 
   /**

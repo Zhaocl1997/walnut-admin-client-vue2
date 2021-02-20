@@ -1,5 +1,5 @@
 <template>
-  <div v-if="query" class="w-form-query">
+  <div class="w-form-query">
     <el-space size="mini">
       <el-button
         size="small"
@@ -14,7 +14,7 @@
         {{ t('component.form.reset') }}
       </el-button>
 
-      <w-button v-if="getShowExpand" size="small" type="text" @click="toggle">
+      <w-button v-if="getShowExpand" size="small" type="text" @click="onToggle">
         <span>{{ getExpandText }}</span>
 
         <template #suffix>
@@ -27,14 +27,14 @@
 
 <script>
   import { defineComponent, computed, unref } from 'vue'
-  import hooks from '/@/hooks'
+  import { useI18n } from '/@/hooks/core/useI18n'
   import wButton from '/@/components/UI/Button/index.vue'
   import wArrow from '/@/components/Help/Arrow/index.vue'
 
-  import { useFormContext } from '../hooks/useFormContext'
+  import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
-    name: 'WFormQuery',
+    name: 'FormQuery',
 
     components: {
       wButton,
@@ -44,26 +44,24 @@
     props: {
       isFolded: Boolean,
       toggle: Function,
-      schemas: Array,
     },
 
-    emits: ['reset', 'query'],
+    emits: ['reset', 'query', 'toggle'],
 
     setup(props, { emit }) {
-      const { useI18n } = hooks
       const { t } = useI18n()
 
       const { getContextProps } = useFormContext()
-      const { query, span, countToFold } = getContextProps()
+      const { span, countToFold, schemas } = getContextProps()
 
       const getExpandText = computed(() => {
         return props.isFolded
-          ? `${t('component.form.expand')}`
-          : `${t('component.form.fold')}`
+          ? t('component.form.expand')
+          : t('component.form.fold')
       })
 
       const getShowExpand = computed(() => {
-        const len = props.schemas.length
+        const len = unref(schemas).length
         return len >= unref(countToFold) && len >= 24 / unref(span)
       })
 
@@ -75,24 +73,22 @@
         emit('reset')
       }
 
+      const onToggle = () => {
+        emit('toggle')
+      }
+
       return {
         t,
 
         getExpandText,
         getShowExpand,
 
-        query,
-
         onQuery,
         onReset,
+        onToggle,
       }
     },
   })
 </script>
 
-<style lang="scss" scoped>
-  .w-form-query {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-</style>
+<style lang="scss" scoped></style>

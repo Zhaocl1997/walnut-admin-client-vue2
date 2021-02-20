@@ -10,37 +10,56 @@ import { FORM_TYPE } from '../types'
  * [
  *   {
  *      wType: '',
+ *
+ *      // @description See more on el-form-item `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes)
  *      formProp: {
  *        prop: '',
  *        label: '',
  *        // ...
- *        // See more on el-form-item `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/form#form-item-attributes)
  *      },
+ *
+ *      // @description See more on different component `props`, since I enhanced some base components like `Input`/`Select` and more, look for more in each component simple docs.
  *      componentProp: {
  *        placeholder: '',
  *        max: '',
  *        clearable: true,
  *        multiple: true,
  *        // ...
- *        // See more on different component `props`, since I enhanced some base components like `Input`/`Select` and more, look for more in each component simple docs.
  *      },
+ *
+ *      // @description See more on different component `events`.
  *      componentEvent: {
  *        click: onClick,
  *        change: onChange,
  *        // ...
- *        // See more on different component `events`.
  *      },
+ *
+ *      // @description See more on el-col `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/layout#col-attributes)
  *      colProp: {
  *        span: 12,
  *        // ...
- *        // See more on el-col `Attributes` (https://element-plus.gitee.io/#/zh-CN/component/layout#col-attributes)
  *      },
  *
- *      // This is custom props, I will show you all below.
- *      customProp: {
- *        // control form item visible or not
- *        show: false,
- *      }
+ *      // @description Below is custom props.
+ *      // @description control form item visible or not
+ *      visible: Boolean,
+ *
+ *      // @description control visible in Functional Component `Divider`, not that useful outside in the schemas
+ *      foldVisible: Boolean
+ *
+ *      // @description Below is `Divider` unique props
+ *      // @description `Divider` title
+ *      title: String,
+ *
+ *      // @description arrow state
+ *      fold: Boolean,
+ *
+ *      // @description default fold or not
+ *      defaultFold: Boolean,
+ *
+ *      // @description how many items skipped to start fold
+ *      countToFold: Number
+ *
  *   },
  *   // ...
  *   // some similar structured objects
@@ -54,7 +73,10 @@ export const useFormSchemas = (props) => {
     isFolded: false,
   })
 
-  const onFormDefaultFold = () => {
+  /**
+   * @description Query form default state handler
+   */
+  const onQueryFormDefaultFold = () => {
     if (props.value.query && props.value.defaultFold) {
       state.isFolded = true
       state.insideSchemas = props.value.schemas.slice(
@@ -64,7 +86,10 @@ export const useFormSchemas = (props) => {
     }
   }
 
-  const onToggleFormFold = () => {
+  /**
+   * @description Query form fold/expand
+   */
+  const onQueryFormToggleFold = () => {
     state.isFolded = !state.isFolded
 
     if (!state.isFolded) {
@@ -77,47 +102,11 @@ export const useFormSchemas = (props) => {
     }
   }
 
-  const onToggleDividerFold = (index, item) => {
-    // change fold state
-    props.value.schemas.splice(index, 1, {
-      ...props.value.schemas[index],
-      fold: !item.fold,
-    })
-
-    // find all divider index
-    const allDividerIndex = findAllIndex(
-      props.value.schemas,
-      (item) => item.wType === FORM_TYPE.DIVIDER
+  const onItemVisible = (item) => {
+    return (
+      (item.visible === undefined || item.visible === true) &&
+      (item.foldVisible === undefined || item.foldVisible === true)
     )
-
-    // fold start index
-    const startIndex = !!item.countToFold
-      ? index + +item.countToFold + 1
-      : index
-
-    // fold end index
-    const endIndex =
-      allDividerIndex[allDividerIndex.indexOf(index) + 1] ||
-      props.value.schemas.length
-
-    for (let i = startIndex; i < endIndex; i++) {
-      props.value.schemas.splice(i, 1, {
-        ...props.value.schemas[i],
-        foldShow: item.fold,
-      })
-    }
-
-    onFormItemVisible(toRaw(props.value.schemas))
-  }
-
-  const onFormItemVisible = (val) => {
-    // handle visible
-    state.insideSchemas = val.filter((i) => {
-      return (
-        (i.show === undefined || i.show === true) &&
-        (i.foldShow === undefined || i.foldShow === true)
-      )
-    })
   }
 
   // watch for computed schemas
@@ -125,14 +114,7 @@ export const useFormSchemas = (props) => {
     () => props.value.schemas,
     (val) => {
       if (val) {
-        onFormItemVisible(val)
-
-        // handle `Divider` default fold
-        state.insideSchemas.map((item, index) => {
-          if (item.wType === FORM_TYPE.DIVIDER && item.defaultFold) {
-            onToggleDividerFold(index, item)
-          }
-        })
+        state.insideSchemas = val
       }
     },
     {
@@ -143,8 +125,8 @@ export const useFormSchemas = (props) => {
 
   return {
     ...toRefs(state),
-    onFormDefaultFold,
-    onToggleFormFold,
-    onToggleDividerFold,
+    onQueryFormDefaultFold,
+    onQueryFormToggleFold,
+    onItemVisible,
   }
 }

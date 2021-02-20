@@ -3,7 +3,7 @@
 // form type
 export const FORM_TYPE = {
   /* funtional component */
-  DIVIDER: 'Divider',
+  // DIVIDER: 'Divider',
 
   /* dynamic */
   BUTTON: 'Button',

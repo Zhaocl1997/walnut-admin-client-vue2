@@ -1,48 +1,67 @@
 <template>
   <el-form ref="formRef" class="w-form" v-bind="getBindValue">
     <el-row :gutter="gutter" :class="inline ? 'u-inline' : 'u-flex'">
-      <el-col
-        v-for="(item, index) in insideSchemas"
-        :key="`${onCalcPropName(item) || 'wForm'}${index}`"
-        :span="onCalcSpan(item)"
-      >
-        <w-form-item :item="item">
-          <template v-for="i in Object.keys($slots)" #[i]="data">
-            <slot :name="i" v-bind="data"></slot>
+      <template v-for="(item, index1) in insideSchemas" :key="index1">
+        <template v-if="item.wType === 'Divider'">
+          <el-col v-if="onItemVisible(item)" :span="24">
+            <component :is="'form-divider'" :item="item"></component>
+          </el-col>
+
+          <template
+            v-for="(child, index2) in item.children"
+            :key="child.formProp.prop"
+          >
+            <el-col
+              v-if="onItemVisible(child)"
+              v-bind="child.colProp || { ...child.colProp, span: span }"
+            >
+              <form-item :item="child">
+                <template v-for="i in Object.keys($slots)" #[i]="data">
+                  <slot :name="i" v-bind="data"></slot>
+                </template>
+              </form-item>
+            </el-col>
           </template>
-        </w-form-item>
+        </template>
+
+        <template v-else>
+          <el-col
+            v-if="onItemVisible(item)"
+            v-bind="item.colProp || { ...item.colProp, span: span }"
+          >
+            <form-item :item="item">
+              <template v-for="i in Object.keys($slots)" #[i]="data">
+                <slot :name="i" v-bind="data"></slot>
+              </template>
+            </form-item>
+          </el-col>
+        </template>
+      </template>
+
+      <el-col :span="span">
+        <el-form-item>
+          <form-query
+            v-if="query"
+            :is-folded="isFolded"
+            @query="onQuery"
+            @reset="onReset"
+            @toggle="onQueryFormToggleFold"
+          ></form-query>
+        </el-form-item>
       </el-col>
     </el-row>
 
-    <component
-      :is="'w-form-mock'"
-      :schemas="schemas"
+    <form-mock
+      v-if="mock"
       @change="(val) => emit('update:modelValue', val)"
-    ></component>
-
-    <component
-      :is="'w-form-query'"
-      :is-folded="isFolded"
-      :schemas="schemas"
-      :toggle="onToggleFormFold"
-      @reset="onReset"
-      @query="onQuery"
-    ></component>
+    ></form-mock>
   </el-form>
 </template>
 
 <script>
-  import {
-    ref,
-    unref,
-    computed,
-    defineComponent,
-    onMounted,
-    onBeforeMount,
-  } from 'vue'
+  import { ref, unref, computed, defineComponent, onMounted } from 'vue'
 
-  import wFormProps from './props'
-  import { FORM_TYPE } from './types'
+  import props from './props'
 
   import { useFormComponents } from './hooks/useFormComponents'
   import { useFormContext } from './hooks/useFormContext'
@@ -55,7 +74,7 @@
 
     inheritAttrs: false,
 
-    props: wFormProps,
+    props: props,
 
     emits: ['update:modelValue', 'query', 'reset', 'hook'],
 
@@ -69,12 +88,12 @@
       const {
         insideSchemas,
         isFolded,
-        onFormDefaultFold,
-        onToggleFormFold,
-        onToggleDividerFold,
+        onQueryFormDefaultFold,
+        onQueryFormToggleFold,
+        onItemVisible,
       } = useFormSchemas(getProps)
 
-      const { onInitialComponents } = useFormComponents(getProps)
+      useFormComponents(getProps)
 
       const { formMethods } = useFormMethods(formRef, { setProps })
 
@@ -98,42 +117,11 @@
         emit('update:modelValue', unref(getProps).modelValue)
       }
 
-      const onCalcShowItem = (item, TYPE) => {
-        return item.wType === TYPE && !item.slot
-      }
-
-      const onCalcShow = (item) => {
-        const isShow = item.show === undefined ? true : item.show
-        return isShow && !item.foldShow
-      }
-
-      const onCalcSpan = (item) => {
-        if (item.wType === FORM_TYPE.DIVIDER) {
-          return 24
-        }
-        return item.colProp ? item.colProp.span : unref(getProps).span
-      }
-
-      const onCalcCompName = (type) => {
-        const name =
-          type.substr(0, 1).toLowerCase() + type.substr(1, type.length)
-
-        return `w-${name}`
-      }
-
-      const onCalcPropName = (item) => {
-        return item.formProp ? item.formProp.prop : ''
-      }
-
-      onBeforeMount(() => {
-        onInitialComponents()
-      })
-
       onMounted(() => {
-        onFormDefaultFold()
+        onQueryFormDefaultFold()
       })
 
-      // w-form context props
+      // form context props
       setContextProps(getProps)
 
       // useForm hook
@@ -141,25 +129,16 @@
 
       return {
         emit,
+        getBindValue,
         formRef,
 
         insideSchemas,
         isFolded,
-        onToggleFormFold,
-        onToggleDividerFold,
-
-        FORM_TYPE,
-
-        getBindValue,
+        onQueryFormToggleFold,
+        onItemVisible,
 
         onQuery,
         onReset,
-
-        onCalcShow,
-        onCalcSpan,
-        onCalcShowItem,
-        onCalcCompName,
-        onCalcPropName,
       }
     },
   })

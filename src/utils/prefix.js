@@ -24,6 +24,6 @@ export const getckPrefix = () => {
   return `${appPrefix}__${cookiePrefix}`
 }
 
-export const getClsPrefix = (compName) => {
-  return `${basePrefix}-${compName}`
+export const getComponentName = (type) => {
+  return `${basePrefix.toLocaleUpperCase()}${type}`
 }

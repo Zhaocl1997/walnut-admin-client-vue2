@@ -12,7 +12,7 @@ import {
   getRandomElements,
 } from 'easy-fns-ts'
 
-import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from '../types/index'
+import { FORM_TYPE, INPUT_TYPE, DATE_TYPE, TIME_TYPE } from '../types'
 
 const Random = Mock.Random
 
@@ -165,6 +165,7 @@ const mockData = (options) => {
         break
 
       case FORM_TYPE.SELECT:
+        console.log(e)
         if (e.options) {
           const temp = []
           for (const iterator of e.options.filter((i) => !i.disabled)) {
@@ -192,7 +193,7 @@ const mockData = (options) => {
           }
         } else {
           // no options passed in
-          console.warning('no options passed in')
+          console.warn('no options passed in')
         }
         break
 

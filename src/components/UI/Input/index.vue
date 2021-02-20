@@ -28,9 +28,10 @@
   import { ElInput } from 'element-plus'
   import { computed, defineComponent } from 'vue'
   import { clearIllegalChars } from 'easy-fns-ts'
+  import { getComponentName } from '/@/utils/prefix'
 
   export default defineComponent({
-    name: 'WInput',
+    name: getComponentName('Input'),
 
     inheritAttrs: false,
 
