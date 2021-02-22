@@ -1,47 +1,48 @@
 <template>
-  <el-select
-    ref="wSelect"
-    class="w-select"
-    v-model="customValue"
-    v-loadmore="loadmore"
-    :multiple="multiple"
-    :disabled="disabled"
-    :valueKey="valueKey"
-    :size="size"
-    :clearable="clearable"
-    :collapseTags="collapse"
-    :multipleLimit="multipleLimit"
-    :placeholder="placeholder"
-    :filterable="filterable"
-    :allowCreate="allowCreate"
-    :filterMethod="filterMethod"
-    :remote="remote"
-    :remoteMethod="selfRemoteMethod"
-    :loading="selfLoading"
-    :loadingText="loadingText"
-    :noMatchText="noMatchText"
-    :noDataText="noDataText"
-    :popper-class="selfPopperClass"
-    :reserveKeyword="reserveKeyword"
-    :defaultFirstOption="defaultFirstOption"
-    :popperAppendToBody="popperAppendToBody"
-    :automaticDropdown="automaticDropdown"
-    @change="onChange"
-    @visible-change="onVisibleChange"
-    @remove-tag="onRemoveTag"
-    @clear="onClear"
-    @blur="onBlur"
-    @focus="onFocus"
-    :style="style"
-  >
-    <el-option
-      v-for="item in selfOptions"
-      :key="item[optionValue]"
-      :label="item[optionLabel]"
-      :value="valueKey ? item :item[optionValue]"
-      :disabled="item.disabled || item[optionValue] == selfPopperClass"
-    ></el-option>
-  </el-select>
+  <div class="w-select">
+    <el-select
+      ref="wSelect"
+      v-model="customValue"
+      v-loadmore="loadmore"
+      :multiple="multiple"
+      :disabled="disabled"
+      :valueKey="valueKey"
+      :size="size"
+      :clearable="clearable"
+      :collapseTags="collapse"
+      :multipleLimit="multipleLimit"
+      :placeholder="placeholder"
+      :filterable="filterable"
+      :allowCreate="allowCreate"
+      :filterMethod="filterMethod"
+      :remote="remote"
+      :remoteMethod="selfRemoteMethod"
+      :loading="selfLoading"
+      :loadingText="loadingText"
+      :noMatchText="noMatchText"
+      :noDataText="noDataText"
+      :popper-class="selfPopperClass"
+      :reserveKeyword="reserveKeyword"
+      :defaultFirstOption="defaultFirstOption"
+      :popperAppendToBody="popperAppendToBody"
+      :automaticDropdown="automaticDropdown"
+      @change="onChange"
+      @visible-change="onVisibleChange"
+      @remove-tag="onRemoveTag"
+      @clear="onClear"
+      @blur="onBlur"
+      @focus="onFocus"
+      :style="style"
+    >
+      <el-option
+        v-for="item in selfOptions"
+        :key="item[optionValue]"
+        :label="item[optionLabel]"
+        :value="valueKey ? item : item[optionValue]"
+        :disabled="item.disabled || item[optionValue] == selfPopperClass"
+      ></el-option>
+    </el-select>
+  </div>
 </template>
 
 <script>
@@ -64,7 +65,7 @@ export default {
 
   model: {
     event: "",
-    prop: ""
+    prop: "",
   },
 
   data() {
@@ -77,8 +78,8 @@ export default {
       queryParams: {
         [this.optionLabel]: "",
         pageNum: this.pageNum,
-        pageSize: this.pageSize
-      }
+        pageSize: this.pageSize,
+      },
     };
   },
 
@@ -98,7 +99,7 @@ export default {
     selfQueryParams() {
       return {
         ...this.queryParams,
-        ...this.query
+        ...this.query,
       };
     },
 
@@ -114,7 +115,7 @@ export default {
 
     isDraggable() {
       return this.multiple && this.draggable && !this.collapse;
-    }
+    },
   },
 
   watch: {
@@ -126,7 +127,7 @@ export default {
       if (!isEmpty(newV) && newV != oldV) {
         this.selfOptions = newV;
       }
-    }
+    },
   },
 
   props: {
@@ -170,7 +171,7 @@ export default {
     initResLevel: { type: String, default: "rows" },
     getResLevel: { type: String, default: "data" },
 
-    endText: { type: String, default: "已经到世界尽头了..." }
+    endText: { type: String, default: "已经到世界尽头了..." },
   },
 
   methods: {
@@ -213,7 +214,7 @@ export default {
         await this.getData(this.customValue);
       } else {
         const promises = await this.customValue.map(
-          async i => await this.getData(i)
+          async (i) => await this.getData(i)
         );
         await Promise.all(promises);
       }
@@ -221,7 +222,7 @@ export default {
 
     async getData(value) {
       const index = this.selfOptions.findIndex(
-        i => i[this.optionValue] == value
+        (i) => i[this.optionValue] == value
       );
 
       if (index === -1) {
@@ -231,7 +232,7 @@ export default {
         if (res.code === 200 && getResData) {
           this.selfOptions.unshift({
             [this.optionValue]: value,
-            [this.optionLabel]: getResData[this.optionLabel]
+            [this.optionLabel]: getResData[this.optionLabel],
           });
         }
       }
@@ -250,7 +251,9 @@ export default {
       }
 
       if (
-        this.selfOptions.find(i => i[this.optionValue] == this.selfPopperClass)
+        this.selfOptions.find(
+          (i) => i[this.optionValue] == this.selfPopperClass
+        )
       ) {
         return;
       }
@@ -273,7 +276,7 @@ export default {
             if (this.count === 1) {
               this.selfOptions.push({
                 [this.optionValue]: this.selfPopperClass,
-                [this.optionLabel]: this.endText
+                [this.optionLabel]: this.endText,
               });
             }
 
@@ -336,17 +339,17 @@ export default {
         animation: 180,
         delay: 0,
         ghostClass: "sortable-ghost",
-        setData: function(dataTransfer) {
+        setData: function (dataTransfer) {
           dataTransfer.setData("Text", "");
           // to avoid Firefox bug
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
         },
-        onEnd: evt => {
+        onEnd: (evt) => {
           const target = this.customValue.splice(evt.oldIndex, 1)[0];
           this.customValue.splice(evt.newIndex, 0, target);
 
           this.onValueChange(this.customValue);
-        }
+        },
       });
     },
 
@@ -354,7 +357,7 @@ export default {
       this.queryParams = {
         [this.optionLabel]: "",
         pageNum: 1,
-        pageSize: 10
+        pageSize: 10,
       };
     },
 
@@ -362,7 +365,7 @@ export default {
       return this[resType].includes(".")
         ? res[this[resType].split(".")[0]][this[resType].split(".")[1]]
         : res[this[resType]];
-    }
+    },
   },
 
   created() {},
@@ -383,22 +386,55 @@ export default {
 
   destroyed() {},
 
-  activated() {}
+  activated() {},
 };
 </script>
 
-<style lang="scss" scoped>
-.w-select {
-  ::v-deep {
-    .sortable-ghost {
-      opacity: 0.8;
-      color: #fff !important;
-      background: #42b983 !important;
-    }
-
-    .el-tag {
-      cursor: pointer;
-    }
-  }
+<style lang="scss">
+/* 👆👆 上面不要加scoped! 👆👆 */
+/* 以下均是修复多选状态下的样式 */
+/* ========================== */
+/* 解决多选时label过长 tag也过长的问题 */
+/* tag 最大宽度 120px */
+.el-select__tags-text {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+.el-select .el-tag__close.el-icon-close {
+  top: -7px;
+}
+
+/* 解决label过长 dropdown也过长的问题 */
+/* option label 最大宽度 400px */
+.el-select-dropdown {
+  max-width: 400px;
+}
+
+/* 如果label过长时，希望在下拉框中换行，可以打开以下注释 */
+/* .el-select-dropdown__item {
+  height: auto !important;
+  white-space: normal !important;
+} */
+
+/* 如果希望多选时内容多，但是tag不会把select高度撑开，可以打开以下注释 */
+/* .el-select__tags {
+  flex-wrap: inherit;
+  overflow: auto;
+
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
+} */
 </style>
