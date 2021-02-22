@@ -15,7 +15,7 @@
               v-if="onItemVisible(child)"
               v-bind="child.colProp || { ...child.colProp, span: span }"
             >
-              <form-item :item="child">
+              <form-item :model-value="modelValue" :item="child">
                 <template v-for="i in Object.keys($slots)" #[i]="data">
                   <slot :name="i" v-bind="data"></slot>
                 </template>
@@ -29,7 +29,7 @@
             v-if="onItemVisible(item)"
             v-bind="item.colProp || { ...item.colProp, span: span }"
           >
-            <form-item :item="item">
+            <form-item :model-value="modelValue" :item="item">
               <template v-for="i in Object.keys($slots)" #[i]="data">
                 <slot :name="i" v-bind="data"></slot>
               </template>
@@ -51,10 +51,7 @@
       </el-col>
     </el-row>
 
-    <form-mock
-      v-if="mock"
-      @change="(val) => emit('update:modelValue', val)"
-    ></form-mock>
+    <form-mock v-if="mock" @change="onMock"></form-mock>
   </el-form>
 </template>
 
@@ -117,6 +114,10 @@
         emit('update:modelValue', unref(getProps).modelValue)
       }
 
+      const onMock = (val) => {
+        emit('update:modelValue', val)
+      }
+
       onMounted(() => {
         onQueryFormDefaultFold()
       })
@@ -128,7 +129,6 @@
       emit('hook', formMethods)
 
       return {
-        emit,
         getBindValue,
         formRef,
 
@@ -139,6 +139,7 @@
 
         onQuery,
         onReset,
+        onMock,
       }
     },
   })

@@ -23,7 +23,7 @@ export const useForm = (props) => {
 
     watchEffect(() => {
       // props && instance.setProps(props)
-      props && instance.setProps(getDynamicProps(props))
+      props && instance.setProps(props)
     })
   }
 

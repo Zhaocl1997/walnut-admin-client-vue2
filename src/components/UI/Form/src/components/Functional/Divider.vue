@@ -41,7 +41,7 @@
           })
         } else {
           const startIndex = props.item.countToFold
-          const endIndex = props.item.children.length
+          const endIndex = props.item.children && props.item.children.length
 
           for (let i = startIndex; i < endIndex; i++) {
             // eslint-disable-next-line

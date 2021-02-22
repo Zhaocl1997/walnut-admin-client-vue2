@@ -471,7 +471,7 @@
                 {
                   wType: 'Select',
                   formProp: {
-                    prop: 'formSelectBase',
+                    prop: 'selectBase',
                     label: '基本',
                   },
                   componentProp: {
@@ -483,50 +483,63 @@
                     blur: onBlur,
                   },
                 },
+                {
+                  wType: 'Select',
+                  formProp: {
+                    prop: 'selectMultipleArray',
+                    label: '多选-数组',
+                  },
+                  componentProp: {
+                    placeholder: '多选-数组',
+                    options,
+                    clearable: true,
+                    multiple: true,
+                  },
+                },
+                {
+                  wType: 'Select',
+                  formProp: {
+                    prop: 'selectMultipleCollapse',
+                    label: '多选-坍塌',
+                  },
+                  componentProp: {
+                    placeholder: '多选-坍塌',
+                    options,
+                    clearable: true,
+                    multiple: true,
+                    collapseTags: true,
+                  },
+                },
+                {
+                  wType: 'Select',
+                  formProp: {
+                    prop: 'selectMultipleObject',
+                    label: '多选-对象',
+                  },
+                  componentProp: {
+                    placeholder: '多选-对象',
+                    options,
+                    clearable: true,
+                    multiple: true,
+                    valueKey: 'value',
+                  },
+                },
+                {
+                  wType: 'Select',
+                  formProp: {
+                    prop: 'selectMultipleString',
+                    label: '多选-字符串',
+                  },
+                  componentProp: {
+                    placeholder: '多选-字符串',
+                    options,
+                    clearable: true,
+                    multiple: true,
+                    valueFormat: ',',
+                  },
+                },
               ],
             },
-
-            // {
-            //   wType: 'Select',
-            //   formProp: {
-            //     prop: 'formSelectMultipleArray',
-            //     label: '多选-数组',
-            //   },
-            //   componentProp: {
-            //     placeholder: '多选-数组',
-            //     options,
-            //     clearable: true,
-            //     multiple: true,
-            //   },
-            // },
-            // {
-            //   wType: 'Select',
-            //   formProp: {
-            //     prop: 'formSelectMultipleCollapse',
-            //     label: '多选-坍塌',
-            //   },
-            //   componentProp: {
-            //     placeholder: '多选-坍塌',
-            //     options,
-            //     clearable: true,
-            //     multiple: true,
-            //     collapseTags: true,
-            //   },
-            // },
-            // {
-            //   wType: 'Select',
-            //   formProp: {
-            //     prop: 'formSelectMultipleObject',
-            //     label: '多选-对象',
-            //   },
-            //   componentProp: {
-            //     placeholder: '多选-对象',
-            //     options,
-            //     clearable: true,
-            //     multiple: true,
-            //     valueKey: 'value',
-            //   },
-            // },
 
             // ==================================
             // ============== Switch ============

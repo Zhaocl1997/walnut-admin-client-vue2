@@ -5,7 +5,7 @@ import { deepMerge } from 'easy-fns-ts'
 
 // TODO
 export const useFormProps = (props) => {
-  const formProps = ref(null)
+  const formProps = ref({})
 
   /**
    * @description set props exposed as a method

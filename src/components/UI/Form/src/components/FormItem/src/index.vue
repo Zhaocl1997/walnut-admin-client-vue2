@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <keep-alive>
     <transition name="fade" mode="out-in" appear>
@@ -31,11 +32,12 @@
 
     props: {
       item: Object,
+      modelValue: Object,
     },
 
     setup(props) {
       const { getContextProps } = useFormContext()
-      const { compact, modelValue } = getContextProps()
+      const { compact } = getContextProps()
 
       const {
         component,
@@ -47,7 +49,6 @@
 
       return {
         compact,
-        modelValue,
 
         component,
 
