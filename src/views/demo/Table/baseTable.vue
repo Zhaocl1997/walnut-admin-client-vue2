@@ -94,6 +94,10 @@
             @keyup.enter="onTableSearch"
           />
         </template>
+
+        <template #family.mom="{ props }">
+          <span>123123</span>
+        </template>
       </w-table>
     </el-card>
   </div>

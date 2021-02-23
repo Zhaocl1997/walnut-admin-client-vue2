@@ -37,6 +37,7 @@
 
       const onMock = () => {
         const formData = mockData(arr)
+        console.log(formData)
         emit('change', { ...defaultValue, ...formData })
       }
 

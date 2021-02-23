@@ -23,9 +23,9 @@ export const RootRoute = {
       component: () => import('../views/index.vue'),
     },
     {
-      path: 'form',
-      name: 'Form',
-      component: () => import('../views/demo/Form/baseForm.vue'),
+      path: 'table',
+      name: 'Table',
+      component: () => import('../views/demo/Table/baseTable.vue'),
     },
   ],
 }

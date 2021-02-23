@@ -28,16 +28,34 @@
           </template>
         </w-table-columns>
 
-        <template v-for="(item, index) in tableHeader">
-          <el-table-column
+        <template
+          v-for="(item, index) in tableHeader"
+          :key="index.toString() + item.prop"
+        >
+          <table-item :item="item">
+            <template v-for="i in Object.keys($slots)" #[i]="data">
+              <slot :name="i" v-bind="data"></slot>
+            </template>
+
+            <!-- custom slot -->
+            <!-- <template v-if="item.slot" #default="props">
+              <slot :name="item.prop" :props="props" />
+            </template> -->
+
+            <!-- header slot -->
+            <!-- <template #header >
+              <slot :name="`${item.prop}-headerSlot`"></slot>
+            </template> -->
+          </table-item>
+
+          <!-- <el-table-column
             v-if="item.visible"
             :key="index.toString() + item.prop"
             v-bind="item"
-            :column-key="index.toString() + item.prop"
             :align="item.align ? item.align : 'center'"
             :show-overflow-tooltip="item.tooltip ? item.tooltip : true"
           >
-            <!-- header slot -->
+            header slot
             <template v-if="item.headerSlot || item.editable" #header="scope">
               <div v-if="item.headerSlot">
                 <slot :name="`${item.prop}-headerSlot`" />
@@ -51,12 +69,12 @@
               </div>
             </template>
 
-            <!-- custom slot -->
+            custom slot
             <template v-if="item.slot" #default="props">
               <slot :name="item.prop" :props="props" />
             </template>
 
-            <!-- editable column -->
+            editable column
             <template v-if="item.editable" #default="props">
               <w-table-editable-cell
                 :item="item"
@@ -71,7 +89,7 @@
                 </template>
               </w-table-editable-cell>
             </template>
-          </el-table-column>
+          </el-table-column> -->
         </template>
       </el-table>
 

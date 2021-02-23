@@ -1,23 +1,21 @@
 <!-- eslint-disable -->
 <template>
-  <keep-alive>
-    <transition name="fade" mode="out-in" appear>
-      <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
-        <template v-if="$slots[propName]">
-          <slot :name="propName" />
-        </template>
+  <transition name="fade" mode="out-in" appear>
+    <el-form-item v-bind="item.formProp" :class="compact ? 'u-mb10' : ''">
+      <template v-if="$slots[propName]">
+        <slot :name="propName" />
+      </template>
 
-        <template v-else>
-          <component
-            :is="component"
-            v-model="modelValue[propName]"
-            v-bind="componentProps"
-            v-on="componentEvents"
-          ></component>
-        </template>
-      </el-form-item>
-    </transition>
-  </keep-alive>
+      <template v-else>
+        <component
+          :is="component"
+          v-model="modelValue[propName]"
+          v-bind="componentProps"
+          v-on="componentEvents"
+        ></component>
+      </template>
+    </el-form-item>
+  </transition>
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 <template>
   <el-form ref="formRef" class="w-form" v-bind="getBindValue">
     <el-row :gutter="gutter" :class="inline ? 'u-inline' : 'u-flex'">
-      <template v-for="(item, index1) in insideSchemas" :key="index1">
+      <template v-for="(item, index1) in formSchemas" :key="index1">
         <template v-if="item.wType === 'Divider'">
           <el-col v-if="onItemVisible(item)" :span="24">
-            <component :is="'form-divider'" :item="item"></component>
+            <component :is="'form-divider'" :index="index1"></component>
           </el-col>
 
           <template
@@ -40,18 +40,12 @@
 
       <el-col :span="span">
         <el-form-item>
-          <form-query
-            v-if="query"
-            :is-folded="isFolded"
-            @query="onQuery"
-            @reset="onReset"
-            @toggle="onQueryFormToggleFold"
-          ></form-query>
+          <form-query v-if="query"></form-query>
+
+          <form-mock v-if="mock" @change="onMock"></form-mock>
         </el-form-item>
       </el-col>
     </el-row>
-
-    <form-mock v-if="mock" @change="onMock"></form-mock>
   </el-form>
 </template>
 
@@ -82,13 +76,7 @@
 
       const { setProps, getProps } = useFormProps(props)
 
-      const {
-        insideSchemas,
-        isFolded,
-        onQueryFormDefaultFold,
-        onQueryFormToggleFold,
-        onItemVisible,
-      } = useFormSchemas(getProps)
+      const { formSchemas, onItemVisible } = useFormSchemas(unref(getProps))
 
       useFormComponents(getProps)
 
@@ -118,23 +106,20 @@
         emit('update:modelValue', val)
       }
 
-      onMounted(() => {
-        onQueryFormDefaultFold()
-      })
+      onMounted(() => {})
 
-      // form context props
-      setContextProps(getProps)
+      // Form context props
+      setContextProps({ ...unref(getProps), schemas: unref(formSchemas) })
 
-      // useForm hook
+      // `useForm` hook
       emit('hook', formMethods)
 
       return {
         getBindValue,
         formRef,
 
-        insideSchemas,
-        isFolded,
-        onQueryFormToggleFold,
+        formSchemas,
+
         onItemVisible,
 
         onQuery,

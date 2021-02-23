@@ -69,38 +69,8 @@ import { FORM_TYPE } from '../types'
 // TODO
 export const useFormSchemas = (props) => {
   const state = reactive({
-    insideSchemas: [],
-    isFolded: false,
+    formSchemas: [],
   })
-
-  /**
-   * @description Query form default state handler
-   */
-  const onQueryFormDefaultFold = () => {
-    if (props.value.query && props.value.defaultFold) {
-      state.isFolded = true
-      state.insideSchemas = props.value.schemas.slice(
-        0,
-        props.value.countToFold
-      )
-    }
-  }
-
-  /**
-   * @description Query form fold/expand
-   */
-  const onQueryFormToggleFold = () => {
-    state.isFolded = !state.isFolded
-
-    if (!state.isFolded) {
-      state.insideSchemas = props.value.schemas
-    } else {
-      state.insideSchemas = props.value.schemas.slice(
-        0,
-        props.value.countToFold
-      )
-    }
-  }
 
   const onItemVisible = (item) => {
     return (
@@ -109,13 +79,10 @@ export const useFormSchemas = (props) => {
     )
   }
 
-  // watch for computed schemas
   watch(
-    () => props.value.schemas,
+    () => props.schemas,
     (val) => {
-      if (val) {
-        state.insideSchemas = val
-      }
+      state.formSchemas = val
     },
     {
       deep: true,
@@ -125,8 +92,7 @@ export const useFormSchemas = (props) => {
 
   return {
     ...toRefs(state),
-    onQueryFormDefaultFold,
-    onQueryFormToggleFold,
+
     onItemVisible,
   }
 }

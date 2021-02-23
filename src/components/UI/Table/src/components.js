@@ -7,6 +7,7 @@ import wTableColumns from './components/columns/main.vue'
 import wTableEditableCell from './components/editableCell/index.vue'
 import wPagination from '../../Pagination/index.vue'
 import wTableEmpty from './components/state/empty/index.vue'
+import TableItem from './components/TableItem'
 
 export default {
   wTableHeader,
@@ -22,4 +23,6 @@ export default {
   ),
 
   wTableEmpty,
+
+  TableItem,
 }

@@ -42,6 +42,7 @@
   import { reactive, computed, defineComponent, toRefs, ref } from 'vue'
   import wForm from '/@/components/UI/Form'
   import wJSON from '/@/components/Help/JSON/index.vue'
+  import { genUUID } from 'easy-fns-ts'
 
   export default defineComponent({
     name: 'BaseForm',
@@ -324,6 +325,7 @@
             // ==================================
             {
               wType: 'Divider',
+              wId: genUUID(),
               title: 'Input',
               fold: true,
               defaultFold: true,
@@ -331,6 +333,7 @@
               children: [
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputBase',
                     label: '基本',
@@ -342,6 +345,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputVisible',
                     label: '显隐',
@@ -355,6 +359,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputSlot',
                     label: '自定义插槽',
@@ -365,6 +370,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputModifiers',
                     label: '自定义修饰符',
@@ -378,6 +384,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputBlackList',
                     label: '黑名单',
@@ -392,6 +399,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputPassword',
                     label: '密码框',
@@ -404,6 +412,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputProp',
                     label: '前后置内容',
@@ -416,6 +425,7 @@
                 },
                 {
                   wType: 'Input',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputTextarea',
                     label: '文本域',
@@ -436,6 +446,7 @@
             // ======================================
             {
               wType: 'Divider',
+              wId: genUUID(),
               title: 'InputNumber',
               fold: true,
               defaultFold: false,
@@ -443,6 +454,7 @@
               children: [
                 {
                   wType: 'InputNumber',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'inputNumberBase',
                     label: '数字框',
@@ -463,6 +475,7 @@
             // ==================================
             {
               wType: 'Divider',
+              wId: genUUID(),
               title: 'Select',
               fold: true,
               defaultFold: false,
@@ -470,6 +483,7 @@
               children: [
                 {
                   wType: 'Select',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'selectBase',
                     label: '基本',
@@ -485,6 +499,7 @@
                 },
                 {
                   wType: 'Select',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'selectMultipleArray',
                     label: '多选-数组',
@@ -498,6 +513,7 @@
                 },
                 {
                   wType: 'Select',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'selectMultipleCollapse',
                     label: '多选-坍塌',
@@ -512,6 +528,7 @@
                 },
                 {
                   wType: 'Select',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'selectMultipleObject',
                     label: '多选-对象',
@@ -526,6 +543,7 @@
                 },
                 {
                   wType: 'Select',
+                  wId: genUUID(),
                   formProp: {
                     prop: 'selectMultipleString',
                     label: '多选-字符串',

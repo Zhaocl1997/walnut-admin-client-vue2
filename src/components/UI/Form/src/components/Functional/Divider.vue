@@ -5,16 +5,17 @@
       <w-arrow
         v-if="item.fold === true || item.fold === false"
         :active="item.fold"
-        @click="onClickToggle"
+        @click="onToggle"
       ></w-arrow>
     </el-space>
   </el-divider>
 </template>
 
 <script>
-  import { defineComponent, onMounted } from 'vue'
+  import { defineComponent, onMounted, unref } from 'vue'
   import wTitle from '/@/components/Help/Title/index.vue'
   import wArrow from '/@/components/Help/Arrow/index.vue'
+  import { useFormContext } from '../../hooks/useFormContext'
 
   export default defineComponent({
     name: 'FormDivider',
@@ -25,37 +26,39 @@
     },
 
     props: {
-      item: Object,
+      // TODO
+      // use index for temp
+      index: Number,
     },
 
     setup(props) {
-      const onClickToggle = () => {
-        // eslint-disable-next-line
-        props.item.fold = !props.item.fold
+      const { getContextProps } = useFormContext()
+      const { schemas } = getContextProps()
 
-        if (!props.item.countToFold) {
-          // eslint-disable-next-line
-          props.item.children.map((child, index) => {
-            // eslint-disable-next-line
-            props.item.children[index].foldVisible = props.item.fold
+      const item = unref(schemas)[props.index]
+
+      const onToggle = () => {
+        item.fold = !item.fold
+
+        if (!item.countToFold) {
+          item.children.map((child, index) => {
+            item.children[index].foldVisible = item.fold
           })
         } else {
-          const startIndex = props.item.countToFold
-          const endIndex = props.item.children && props.item.children.length
+          const startIndex = item.countToFold
+          const endIndex = item.children && item.children.length
 
           for (let i = startIndex; i < endIndex; i++) {
-            // eslint-disable-next-line
-            props.item.children.map(() => {
-              // eslint-disable-next-line
-              props.item.children[i].foldVisible = props.item.fold
+            item.children.map(() => {
+              item.children[i].foldVisible = item.fold
             })
           }
         }
       }
 
       const init = () => {
-        if (props.item.defaultFold) {
-          onClickToggle()
+        if (item.defaultFold) {
+          onToggle()
         }
       }
 
@@ -64,7 +67,8 @@
       })
 
       return {
-        onClickToggle,
+        item,
+        onToggle,
       }
     },
   })

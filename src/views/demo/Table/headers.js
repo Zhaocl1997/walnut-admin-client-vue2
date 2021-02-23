@@ -60,15 +60,20 @@ export const tableHeader = [
     prop: 'createAt',
     width: '100',
   },
-  // {
-  //   label: '父亲姓名',
-  //   prop: 'family.dad',
-  //   width: '150',
-  // },
-  // {
-  //   label: '母亲姓名',
-  //   prop: 'family.mom',
-  //   width: '150',
-  //   // headerSlot: true,
-  // },
+  {
+    label: '家庭',
+    children: [
+      {
+        label: '父亲姓名',
+        prop: 'family.dad',
+        width: '150',
+      },
+      {
+        label: '母亲姓名',
+        prop: 'family.mom',
+        width: '150',
+        headerSlot: true,
+      },
+    ],
+  },
 ]

@@ -13,14 +13,16 @@ export const useTableContext = () => {
   }
 
   const getContextProps = () => {
-    let state = reactive({})
+    const state = reactive({
+      tableContext: {},
+    })
 
     const injectedProps = getContext(TABLE_CONTEXT_KEYS.PROPS)
 
     watch(
       () => injectedProps,
       (val) => {
-        state = val
+        state.tableContext = val
       },
       {
         deep: true,
@@ -29,7 +31,7 @@ export const useTableContext = () => {
     )
 
     return {
-      ...toRefs(state),
+      ...toRefs(state.tableContext),
     }
   }
 
